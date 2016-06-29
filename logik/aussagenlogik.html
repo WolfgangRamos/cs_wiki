@@ -1,0 +1,1556 @@
+---
+layout: page
+title: Aussagenlogik
+excerpt: Aussagenlogik
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Aussagenlogik</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Eine <i>Aussage</i> ist ein Konstrukt, dem ein Wahrheitswert (wahr oder
+falsch) zugeordnet werden kann.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Symbole</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+\(X \Subset Y\): \(X\) ist <i>endliche Teilmenge</i> von \(Y\)
+</p>
+
+<p>
+<b>Disjunkte Vereinigung:</b> werden zwei disjunkte Mengen \(A,B\) vereinigt, so zeigen wir dies (manchmal) an durch die Schreibweise \(A \dot{\cup} B\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Konstanten</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<b>wahr</b>: \(\top\)
+</p>
+
+<p>
+<b>falsch</b>: \(\bot\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Variablen</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Die Menge aller aussagelogischen Variablen wird mit \(V_{AL}\) bezeichnet.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Junktoren</h3>
+<div class="outline-text-3" id="text-1-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Junktor</th>
+<th scope="col" class="left">Bezeichnung</th>
+<th scope="col" class="left">Lesart</th>
+<th scope="col" class="right">Stelligkeit</th>
+<th scope="col" class="left">Verknüpfte Teilformeln</th>
+<th scope="col" class="left">Bezeichnung der Funktion</th>
+<th scope="col" class="right">Präzedenz<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">\(\neq\)</td>
+<td class="left">Negation</td>
+<td class="left">nicht&#x2026;</td>
+<td class="right">1</td>
+<td class="left">&#xa0;</td>
+<td class="left">neg</td>
+<td class="right">0</td>
+</tr>
+
+<tr>
+<td class="left">\(\vee\)</td>
+<td class="left">Disjunktion</td>
+<td class="left">&#x2026; oder &#x2026;.</td>
+<td class="right">2</td>
+<td class="left">Disjunktionsglieder</td>
+<td class="left">Or</td>
+<td class="right">1</td>
+</tr>
+
+<tr>
+<td class="left">\(\bigvee\)</td>
+<td class="left">Disjunktion</td>
+<td class="left">&#x2026; oder &#x2026;.</td>
+<td class="right">0, 1, 2, &#x2026;</td>
+<td class="left">Disjunktionsglieder</td>
+<td class="left">Or</td>
+<td class="right">1</td>
+</tr>
+
+<tr>
+<td class="left">\(\wedge\)</td>
+<td class="left">Konjunktion</td>
+<td class="left">&#x2026; und &#x2026;</td>
+<td class="right">2</td>
+<td class="left">Konjunktionsglieder</td>
+<td class="left">And</td>
+<td class="right">1</td>
+</tr>
+
+<tr>
+<td class="left">\(\bigwedge\)</td>
+<td class="left">Konjunktion</td>
+<td class="left">&#x2026; und &#x2026;</td>
+<td class="right">0, 1, 2, &#x2026;</td>
+<td class="left">Konjunktionsglieder</td>
+<td class="left">And</td>
+<td class="right">1</td>
+</tr>
+
+<tr>
+<td class="left">\(\bar{\wedge}\)</td>
+<td class="left">Exklusion</td>
+<td class="left">nicht zugleich &#x2026; und &#x2026;</td>
+<td class="right">2</td>
+<td class="left">&#xa0;</td>
+<td class="left">nand</td>
+<td class="right">1</td>
+</tr>
+
+<tr>
+<td class="left">\(\bar{\vee}\)</td>
+<td class="left">Nihiltion</td>
+<td class="left">weder &#x2026; noch &#x2026;</td>
+<td class="right">2</td>
+<td class="left">&#xa0;</td>
+<td class="left">nor</td>
+<td class="right">1</td>
+</tr>
+
+<tr>
+<td class="left">\(\dot{\vee}\),\(\not\leftrightarrow\)</td>
+<td class="left">Kontravalenz</td>
+<td class="left">entweder &#x2026; oder &#x2026;</td>
+<td class="right">2</td>
+<td class="left">&#xa0;</td>
+<td class="left">xor</td>
+<td class="right">1 bzw. 2</td>
+</tr>
+
+<tr>
+<td class="left">\(\dot{\bigvee}\)</td>
+<td class="left">Kontravalenz</td>
+<td class="left">entweder &#x2026; oder &#x2026;</td>
+<td class="right">0, 1, 2, &#x2026;</td>
+<td class="left">&#xa0;</td>
+<td class="left">Xor</td>
+<td class="right">1</td>
+</tr>
+
+<tr>
+<td class="left">\(\rightarrow\)</td>
+<td class="left">Konditional</td>
+<td class="left">wenn &#x2026;, so &#x2026;</td>
+<td class="right">2</td>
+<td class="left">Antezedenz, Sukzedenz</td>
+<td class="left">cond</td>
+<td class="right">2</td>
+</tr>
+
+<tr>
+<td class="left">\(\leftrightarrow\)</td>
+<td class="left">Bikonditional</td>
+<td class="left">&#x2026;, genau dann wenn &#x2026;</td>
+<td class="right">2</td>
+<td class="left">&#xa0;</td>
+<td class="left">equiv</td>
+<td class="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> <span class="todo TODO">TODO</span> In den Folien steht, dass das durch aussagenlogische Gesetzte gerechtfertigt wird. Warum?</h3>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Belegung</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Eine Belegung \(\beta\) ist eine Funktion, die jeder aussagelogischen
+Variablen einen Wert \(0\) oder \(1\) zuordnet \(\beta:V_{AL} \rightarrow \{0,1\}\).
+</p>
+
+<p>
+Sind \(\beta\) und \(\beta'\) Belegungen, so schreiben wir
+\(\beta \leq \beta'\), falls \(\beta(X_i) \leq \beta'(X_i)\) für jedes
+\(i \in \mathbb{N}\) gilt.
+</p>
+
+<p>
+\(\beta | vars(\varphi)\): <i>Einschränkung</i> der \(\beta\) auf die Variablen
+in \(\varphi\). D.h. es gilt 
+\(def(\beta | vars(\varphi)) = vars(\varphi)\).
+</p>
+
+
+<p>
+<b>partitelle Belegung:</b> Eine Belegung \(\beta\) heißt <i>partielle Belegung</i>
+einer Formel \(\varphi\), wenn \(\beta\) eine partielle Funktion ist und
+\(vars(\varphi) \subseteq def(\beta)\) gilt. Belegungen mit endlichem
+Definitionsbereich schreiben wir in der Form
+\(\{X_0 \mapsto 0, X_1 \mapsto, \dots \}\).
+</p>
+
+<p>
+<b>knappe Belegung:</b> Eine Belegung \(\beta\) heißt <i>knappe Belegung</i> einer
+Formel \(\varphi\), wenn \(\beta\) eine partielle Funktion ist und
+\(vars(\varphi) = def(\beta)\) gilt. Belegungen mit endlichem
+Definitionsbereich schreiben wir in der Form
+\(\{X_0 \mapsto 0, X_1 \mapsto, \dots \}\).
+</p>
+
+<p>
+<b>erfüllende Belegung:</b> Eine <i>erfüllende Belegung</i> einer Formel
+\(\varphi \in F_{AL}\) ist eine knappe Belegung
+\(\beta:vars(\varphi) \rightarrow \{0,1\}\), für die \(\beta \models \varphi\)
+gilt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Formeln</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Eine aussagenlogische Formel ist ein verwurzelter Baum mit linear
+geordneten Nachfolgern und beschrifteten Knoten. Blätter sind
+beschriftet mit Variablen oder Konstanten (\(\top, \bot\)), innere Knoten
+sind beschriftet mit Junktoren.
+</p>
+
+<p>
+Die Menge aller aussagenlogischen Formeln wird mit \(F_{AL}\) bezeichnet.
+Sie ist induktiv definiert durch:
+</p>
+
+<p>
+<b>IA</b> (atomare Formeln):
+</p>
+
+<ul class="org-ul">
+<li>Der einknotige Baum mit Beschriftung \(\bot\) ist eine
+aussagenlogische Formel.
+</li>
+<li>Der einknotige Baum mit Beschriftung \(\top\) ist eine
+aussagenlogische Formel.
+</li>
+<li>Für jede Variable \(X_i\) mit \(i \in \mathbb{N}\) ist der einknotige
+Baum mit Beschriftung \(X_i\) eine aussagelogische Formel.
+</li>
+</ul>
+
+<p>
+<b>IS</b> (zusammengesetzte Formeln):
+</p>
+
+<p>
+Ist \(J\) ein \(n\)-stelliger Junktor für festes \(n \in \mathbb{N}\) und
+sind \(\varphi_0, \dots, \varphi_{n-1} \in F_{AL}\) aussagenlogische
+Formeln. Dann ist auch der Baum, dessen Wurzel mit \(J\) beschriftete
+ist und die genau \(n\) Nachfolger hat, wobei Nachfolger \(i\) mit
+\(\varphi_i\) beschriftet ist, eine aussagenlogische Formel.
+</p>
+
+<p>
+Formeln können in <i>Infixnotation</i> (\(\dots J \dots\)) oder
+<i>Präfixnotation</i> (\(J(\dots, \dots)\)) geschrieben werden.
+</p>
+
+<p>
+<b>Auswertung von Formeln:</b> Strategien zur Auswertung von Formeln:
+</p>
+
+<ul class="org-ul">
+<li><i>top-down</i>: Auswertung erfolgt mittels der induktiven Definition
+aussagenlogischer Formeln.
+</li>
+<li><i>bottom-up Auswertung</i>: Auswertung erfolgt im Baum der Formel von den
+Blättern zur Wurzel.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-7-1" class="outline-4">
+<h4 id="sec-1-7-1"><span class="section-number-4">1.7.1</span> Wertetafeln</h4>
+<div class="outline-text-4" id="text-1-7-1">
+<p>
+Aussagenlogische Formeln können auf eindeutige Weise über
+Wertetafeln/Wertetabellen beschrieben werden (die Begründung liefert das
+Koinzidenzlemma). In eine Wertetafel werden mindestens die Belegungen
+der Variablen, die in der Formel auftreten und die zugehörigen Werte der
+Formel aufgenommen. Werden zusätzlich die Werte, die sich für die
+Teilformeln der Formel ergeben aufgelistet, so spricht man von einer
+<b>erweiterten Wertetetafel/Wertetabelle</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7-2" class="outline-4">
+<h4 id="sec-1-7-2"><span class="section-number-4">1.7.2</span> Erfüllbarkeit und Allgemeingültigkeit</h4>
+<div class="outline-text-4" id="text-1-7-2">
+<p>
+Eine Formel \(\varphi \in F_{AL}\) heißt <i>erfüllbar</i>, wenn es eine
+Belegegung \(\beta\) gibt, sodass \(\beta \models \varphi\), also \(\llb
+\varphi \rrb_{\beta} = 1\) gilt. Wir schreiben denn \(\erfb \varphi\).
+</p>
+
+<p>
+Umgekehrt heißt eine Formel \(\varphi \in F_{AL}\) <i>unerfüllbar</i>, wenn für
+alle Belegegung \(\beta\) gilt: \(\beta \not\models \varphi\), also
+\(\beta\model \neg\varphi\), also \(\llb \varphi \rrb_{\beta} = 0\) gilt.
+Wir schreiben dann \(\unerfb \varphi\).
+</p>
+
+<p>
+Eine Formel \(\varphi \in F_{AL}\) heißt <i>allgemeingültig</i>, wenn \(\beta
+\models \varphi\), also \(\llb\varphi\rrb_{\beta}=1\) für alle Belegungen
+\(\beta\) gilt.
+</p>
+
+<p>
+<b>Eigenschaften:</b> Sei \(\varphi\in F_{AL}\):
+</p>
+
+<ul class="org-ul">
+<li>\(\varphi\) ist genau dann erfüllbar, wenn \(\neg \varphi\) nicht
+allgemeingültig ist.
+</li>
+<li>\(\varphi\) ist genau dann allgemeingültig, wenn \(\neg\varphi\) nicht
+erfüllbar ist.
+</li>
+<li>\(\varphi\) ist genau dann erfüllbar, wenn \(\varphi \not\equiv \bot\) gilt.
+</li>
+<li>\(\varphi\) ist genau dann allgemeingültig, wenn \(\varphi \equiv \top\) gilt.
+</li>
+</ul>
+
+<p>
+<b>Vorgehen:</b>
+</p>
+
+<ul class="org-ul">
+<li>zum Nachweis von Allgemeingültigkeit: zeige durch
+Äquivalenzumformungen, dass \(\varphi \equiv \top\) gilt.
+</li>
+<li>zum Nachweis von Erfüllbarkeit: gib eine Belegung \(\beta\) an, für
+die \(\beta \models \varphi\) gilt.
+</li>
+<li>zum Nachweis von nicht Erfüllbarkeit: zeige, dass \(\neg\varphi\)
+  allgemeingültig ist, d.h. dass \(\neg\varphi \equiv \top\) gilt.
+</li>
+<li>zum Nachweis der nicht Allgemeingüligkeit: zeige, dass \(\neg\varphi\)
+  erfüllbar ist, d.h. gib eine Belegung \(\beta\) an, für die \(\beta
+  \models \neg\varphi\) gilt.
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> Formelmengen</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+Eine Menge \(\Phi \subseteq F_{AL}\) heißt <i>Formelmenge</i>. Formelmengen
+können also insbesondere auch unendlich sein!
+</p>
+
+<p>
+Da Konjunktion und Disjunktion beide sowohl kommutativ als auch
+assoziativ und idempotent sind, kommt es bei Konjunktions- und
+Disjunktionsgliedern weder auf deren Reihenfolge an noch darauf, ob
+sie einmal oder mehrfach auftreten. Daher definieren wir für
+Konjunktionen bzw. Disjunktionen von Formeln einer endlicher
+Formelmenge \(\Phi\) folgende Schreibweisen:
+</p>
+
+<ul class="org-ul">
+<li>\(\bigwedge\Phi := \bigwedge_{\varphi \in \Phi} \varphi\) und
+</li>
+<li>\(\bigvee\Phi := \bigvee_{\varphi \in \Phi} \varphi\)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-8-1" class="outline-4">
+<h4 id="sec-1-8-1"><span class="section-number-4">1.8.1</span> <span class="todo TODO">TODO</span> Erfüllbarkeit</h4>
+<div class="outline-text-4" id="text-1-8-1">
+<p>
+Eine Formelmenge \(\Phi \subseteq F_{AL}\) heißt <i>erfüllbar</i>, wenn es eine
+Belegung \(\beta:V_{AL} \rightarrow \{0,1\}\) exisiert für die \(\beta
+\models \varphi\) für alle \(\varphi \in \Phi\).
+</p>
+
+<p>
+Wir schreiben dann \(erfb \Phi\).
+</p>
+
+<p>
+Insbesonder gilt also \(erfb \emptyset\).
+</p>
+
+<p>
+Für <b>endliche Formelmengen</b> \(\Phi \Subset F_{AL}\) sind äquivalent:
+</p>
+
+<ol class="org-ol">
+<li>\(erfb \Phi\)
+</li>
+<li>\(erfb \bigwedge_{\varphi \in \Phi} \varphi\)
+</li>
+</ol>
+
+<p>
+Für <b>beliebige Formelmengen</b> \(\Phi \subset F_{AL}\) sind äquivalent:
+</p>
+
+<ol class="org-ol">
+<li>\(erfb \Phi\)
+</li>
+<li>\(erfb \bigwedge \Psi\) für alle <b>endlichen</b> Teilmengen \(\Psi \Subset \Phi\)
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> Koinzidenzlemma</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+Für jede Formel \(\varphi\) und alle Belegungen \(\beta_0\) und \(\beta_1\),
+für die \(\beta_0 | vars(\varphi) = \beta_1 | vars(\varphi)\) gilt, gilt
+\([[\varphi]]_{\beta_0} = [[\varphi]]_{\beta_1}\).
+</p>
+
+<p>
+Wobei \(\beta | vars(\varphi)\) die Einschränkung der Belegung \(\beta\)
+auf die Variablen in \(\varphi\) ist.
+</p>
+
+<p>
+Das Koinzidenzlemma besagt somit, dass der Wahrheitswert einer Formel
+unter einer Belegung höchstens von den Werten der Belegung der
+Variablen abhängt, die in der Formel vorkommen. Die Konsequenz ist:
+</p>
+
+<ul class="org-ul">
+<li>Wahrheitstafeln/Wertetafeln sind eine eindeutige und vollständige
+Darstellung aussagenlogischer Formeln.
+</li>
+<li>Ein Ausdruck der Form \([[\varphi]]\) ist bereits wohldefiniert, wenn die
+Belegungen aller Variablen, die in \(\varphi\) vokommen bekannt ist.
+\([[\varphi]]\) ist also wohldefiniert, wenn \(vars(\varphi) \subseteq
+  def(\beta)\) für den Definitionsbereich einer Belegung \(\beta\) gilt.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-10" class="outline-3">
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> Relevante Variablen</h3>
+<div class="outline-text-3" id="text-1-10">
+<p>
+Eine Variable \(X_i\) heißt <i>relevant</i> für eine Formel \(\varphi\), wenn es
+zwei unterschiedliche Belegung \(\beta\) und \(\gamma\) gibt, für die gilt
+</p>
+
+<ol class="org-ol">
+<li>\(\beta(X_j) = \gamma(X_j)\) für alle \(j \neq i\)
+</li>
+<li>\([[ \varphi ]]_{\beta} \neq [[ \varphi ]]_{\gamma}\)
+</li>
+</ol>
+
+<p>
+Wir bezeichnen die Menge aller relevanten Variablen einer Formel \(\varphi\)
+mit \(rvars(\varphi)\). Für jede Formel \(\varphi\) gilt
+\(rvars(\varphi) \subseteq vars(\varphi)\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-11" class="outline-3">
+<h3 id="sec-1-11"><span class="section-number-3">1.11</span> Funktionen auf Formeln</h3>
+<div class="outline-text-3" id="text-1-11">
+<p>
+Auf aussagelogischen Formel können Funktionen induktiv definiert werden.
+</p>
+</div>
+
+<div id="outline-container-sec-1-11-1" class="outline-4">
+<h4 id="sec-1-11-1"><span class="section-number-4">1.11.1</span> Wahrheitswert einer Formel</h4>
+<div class="outline-text-4" id="text-1-11-1">
+<p>
+Jeder Formel wird unter einer Variablenbelegung eine Wahrheitswert
+zugeordnet. Zu jeder Variablenbelegung \(\beta\) definieren wir induktiv
+eine Funktion, die den Wahrheitswert einer Formel unter dieser Belegung
+liefert
+\([[ \cdot ]]_{\beta}: F_{AL} \rightarrow \{0,1\}\):
+</p>
+
+<p>
+<b>IA</b>:
+</p>
+
+<ul class="org-ul">
+<li>\([[ \bot ]]_{\beta} = 0\)
+</li>
+<li>\([[ \top ]]_{\beta} = 1\)
+</li>
+<li>\([[ X_i ]]_{\beta} = \beta(X_i)\) für alle \(i \in \mathbb{N}\)
+</li>
+</ul>
+
+<p>
+<b>IS:</b>
+</p>
+
+<p>
+Sei \(J\) ein Junktor mit Stelligkeit \(n\in \mathbb{N}\) und seien
+\(\varphi_0, \dots, \varphi_{n-1} \in F_{AL}\) dann gilt
+</p>
+
+<p>
+\([[ J(\varphi_0, \dots, \varphi_{n-1}) ]] = f_J([[ \varphi_0 ]]_{\beta}, \dots [[ \varphi_{n-1} ]]_{\beta})\)
+</p>
+
+<p>
+wobei \(f_J\) die Boolesche Funktion des Junktors \(J\) ist.
+</p>
+
+<p>
+Man sagt "\(\varphi\) wird unter \(\beta\) zu wahr/falsch (ausgewertet)".
+</p>
+
+<p>
+Statt "\(\varphi\) wird unter \(\beta\) wahr" (\([[ \varphi ]]_{\beta} = 1\))
+schreibt man auch \(\beta \models \varphi\).
+</p>
+
+<p>
+Statt "\(\varphi\) wird unter \(\beta\) falsch" (\([[ \varphi ]]_{\beta} = 0\))
+schreibt man auch \(\beta \not\models \varphi\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-11-2" class="outline-4">
+<h4 id="sec-1-11-2"><span class="section-number-4">1.11.2</span> Anzahl der mit wahr belegten Variablen</h4>
+<div class="outline-text-4" id="text-1-11-2">
+<p>
+Wir schreiben \(\varphi_n^i\) für die Formel, die genau dann wahr ist, wenn
+\(i\) der \(n\) Variablen der Formel mit wahr belegt sind. Die Formel ist
+induktiv definiert:
+</p>
+
+<p>
+<b>IA:</b> Es gilt
+</p>
+
+<p>
+\(\varphi_0^0 = \top\)
+</p>
+
+<p>
+<b>IS:</b>
+</p>
+
+<ul class="org-ul">
+<li>\(\varphi_{n+1}^{i} = (\varphi_n^{i-1} \wedge X_n) \vee (\varphi_n^i
+  \wedge \neg X_n)\) für \(0 < i \leq n\)
+</li>
+<li>\(\varphi_{n+1}^0 = \bigwedge_{i < n+1} \neg X_i\)
+</li>
+<li>\(\varphi_{n+1}^{n+1} = \bigwedge_{i < n+1} X_i\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-11-3" class="outline-4">
+<h4 id="sec-1-11-3"><span class="section-number-4">1.11.3</span> Menge aller Variablen einer Formel</h4>
+<div class="outline-text-4" id="text-1-11-3">
+<p>
+\(vars: F_{AL} \rightarrow \mathcal{P}(V_{AL})\)
+</p>
+
+<p>
+<b>IA</b>: Es gilt
+</p>
+
+<ul class="org-ul">
+<li>\(vars(\bot) = \emptyset\)
+</li>
+<li>\(vars(\top) = \emptyset\)
+</li>
+<li>\(vars(X_i) = \{X_i\}\) für jedes \(i \in \mathbb{N}\)
+</li>
+</ul>
+
+<p>
+<b>IS</b>:
+</p>
+
+<p>
+Sei \(J\) ein Junktor mit Stelligkeit \(n \in \mathbb{N}\) fest aber
+beliebig und seien \(\varphi_0, \dots, \varphi_{n-1} \in F_{AL}\), dann
+gilt \(vars(J(\varphi_0, \dots, \varphi_{n-1}) = \bigcup_{i < n}
+vars(\varphi_i)\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-11-4" class="outline-4">
+<h4 id="sec-1-11-4"><span class="section-number-4">1.11.4</span> Teilformeln einer Formel</h4>
+<div class="outline-text-4" id="text-1-11-4">
+<p>
+\(subf: F_{AL} \rightarrow \mathcal{P}(F_{AL})\)
+</p>
+
+<p>
+<b>IA:</b> Es gilt
+</p>
+
+<ul class="org-ul">
+<li>\(subf(\top) = \{\top\}\)
+</li>
+<li>\(subf(\bot) = \{\bot\}\)
+</li>
+<li>\(subf(X_i) = \{X_i\}\) für jedes \(i \in \mathbb{N}\)
+</li>
+</ul>
+
+<p>
+<b>IS</b>:
+</p>
+
+<p>
+Sei \(J\) ein \(n\)-stelliger Junktor und seien \(\varphi_0, \dots,
+\varphi_{n-1} \in F_{AL}\) aussagenlosgische Formeln, dann gilt
+\(subf(J(\varphi_0, \dots, \varphi_{n-1}) = \{J(\varphi_0, \dots,
+\varphi_{n-1})\} \cup \bigcup_{i < n} subf(\varphi_i)\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-11-5" class="outline-4">
+<h4 id="sec-1-11-5"><span class="section-number-4">1.11.5</span> Junktoren einer Formel</h4>
+<div class="outline-text-4" id="text-1-11-5">
+<p>
+\(conns: F_{AL} \rightarrow \mathcal{P}(\{\neq, \vee, \bigvee, \wedge, \bigwedge, \bar{\wedge}, \bar{\vee}, \dot{\vee}, \not\leftrightarrow, \dot{\bigvee}, \rightarrow, \leftrightarrow \})\)
+</p>
+
+<p>
+<b>IA:</b> Es gilt
+</p>
+
+<ul class="org-ul">
+<li>\(conns{\bot} = \emptyset\)
+</li>
+<li>\(conns{\top} = \emptyset\)
+</li>
+<li>\(conns{X_i} = \emptyset\) für jedes \(i \in \mathbb{N}\)
+</li>
+</ul>
+
+<p>
+<b>IS:</b> 
+</p>
+
+<p>
+Sei \(J\) ein \(n\)-stelliger Junktor und seien \(\varphi_0, \dots,
+\varphi_{n-1} \in F_{AL}\) Formeln, dann gilt \(conns(J(\varphi_0,
+\dots, \varphi_{n-1})) = \{J\} \cup \bigcup_{i < n} conns(\varphi_i)\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-11-6" class="outline-4">
+<h4 id="sec-1-11-6"><span class="section-number-4">1.11.6</span> Größe einer Formel</h4>
+<div class="outline-text-4" id="text-1-11-6">
+<p>
+\(size\) ordnet jeder aussagenlogischen Formel ihre Größe zu, die durch
+die Anzahl der Knoten des entsprechenden Baumes gegeben ist.
+</p>
+
+<p>
+\(size: F_{AL} \rightarrow \mathbb{N}_{\geq 1}\)
+</p>
+
+<p>
+<b>IA:</b> Es gilt
+</p>
+
+<ul class="org-ul">
+<li>\(size{\bot} = 1\)
+</li>
+<li>\(size{\top} = 1\)
+</li>
+<li>\(size{X_i} = 1\) für jedes \(i \in \mathbb{N}\)
+</li>
+</ul>
+
+<p>
+<b>IS:</b> 
+</p>
+
+<p>
+Sei \(J\) ein \(n\)-stelliger Junktor und seien
+\(\varphi_0, \dots, \varphi_{n-1} \in F_{AL}\) Formeln, dann gilt
+\(size(J(\varphi_0, \dots, \varphi_{n-1})) = 1 + \sum_{i=0}^{n-1} size(\varphi_i)\).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-12" class="outline-3">
+<h3 id="sec-1-12"><span class="section-number-3">1.12</span> Äquivalenz</h3>
+<div class="outline-text-3" id="text-1-12">
+<p>
+Zwei Formel \(\varphi, \psi \in F_{AL}\) heißen <i>äquivalent</i>, genau dann
+wenn \([[\varphi]]_{\beta} = [[\psi]]_{\beta}\) für alle Belegungen
+\(\beta\) gilt. D.h. bei äquivalenten Formeln \(\varphi, \psi\) gilt \(\beta
+\models \varphi\) genau dann, wenn \(\beta \models \psi\) gilt.
+</p>
+
+<p>
+Wir schreiben: \(\varphi \equiv \psi\).
+</p>
+
+<p>
+Wegen des Koinzidenzlemmas gilt \(\varphi \equiv \psi\) genau dann, wenn
+\([[\varphi]]_{\beta} = [[\psi]]_{\beta}\)
+für alle partiellen Variablenbelegungen
+\(\beta: vars(\varphi) \cup vars(\psi) \rightarrow \{0,1\}\) gilt.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li><i>Reflexivität</i>: \(\forall \varphi \in F_{AL}: \varphi \equiv \varphi\).
+</li>
+<li><i>Symmetrie</i>: \(\forall \varphi, \psi \in F_{AL}: \varphi \equiv \psi
+  \Leftrightarrow \psi \equiv \varphi\).
+</li>
+<li><i>Transitivität</i>: \(\forall \varphi, \psi, \chi \in F_{AL}: \varphi
+  \equiv \psi \wedge \psi \equiv \chi \Rightarrow \varphi \equiv
+  \chi\).
+</li>
+<li>Sei \(J\) ein \(n\)-stelliger Junktor und seien \(\varphi_0, \dots,
+  \varphi_{n-1}, \psi_0, \dots, \psi_{n-1} \in F_{AL}\)
+  aussagenlogische Formeln mit \(\varphi_i \equiv \psi_i\) für alle \(i <
+  n\). Dann gilt \(J(\varphi_0, \dots, \varphi_{n-1}) \equiv J(\psi_0,
+  \dots, \psi_{n-1})\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-13" class="outline-3">
+<h3 id="sec-1-13"><span class="section-number-3">1.13</span> Gesetze</h3>
+<div class="outline-text-3" id="text-1-13">
+<ul class="org-ul">
+<li><i>Kommutativität</i> von \(\vee\): Für alle Formeln \(\varphi_0, \varphi_1
+  \in F_{AL}\) gilt \(\varphi_0 \vee \varphi_1 \equiv \varphi_1 \vee
+  \varphi_0\).
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-13-1" class="outline-4">
+<h4 id="sec-1-13-1"><span class="section-number-4">1.13.1</span> <span class="todo TODO">TODO</span> weitere Gesetze aus dem Stückwerk übernehmen</h4>
+</div>
+</div>
+
+<div id="outline-container-sec-1-14" class="outline-3">
+<h3 id="sec-1-14"><span class="section-number-3">1.14</span> Substitution</h3>
+<div class="outline-text-3" id="text-1-14">
+<p>
+Substitutionen beschreiben die Ersetzung von Variablen in Formeln durch
+Formeln.
+</p>
+
+<p>
+Eine <i>Substitution</i> ist eine partielle Funktion
+\(\sigma: V_{AL} \rightsquigarrow F_{AL}\).
+</p>
+
+<p>
+Wir schreiben Substitutionen in der Form:
+\(\sigma = \{X_0 \rightarrow X_1 \wedge X_2, \dots\}\)
+</p>
+
+<p>
+Die Anwendung einer Substitution \(\sigma\) auf eine Formel \(\varphi\)
+bezeichnen wir mit \(\varphi\sigma\). Sie ist selbst eine Formel.
+</p>
+
+<p>
+Induktive Definition von Substitutionen:
+</p>
+
+<p>
+Sei \(\sigma\) eine Substitution. Dann gilt
+</p>
+
+<p>
+<b>IA:</b>
+</p>
+
+<ul class="org-ul">
+<li>\(\bot\sigma = \bot\)
+</li>
+<li>\(\top\sigma = \top\)
+</li>
+<li>für alle \(i \in \mathbb{N}\) gilt:
+</li>
+</ul>
+
+\begin{equation*}   
+X_i \sigma = 
+\begin{cases} 
+\sigma(X_i) & \text{falls } X_i \in def(\sigma) \\ 
+X_i & \text{sonst}
+\end{cases}
+\end{equation*}
+
+<p>
+<b>IS:</b>
+</p>
+
+<p>
+Für alle \(n\)-stelligen Junktoren \(J\) und Formeln
+\(\varphi_0, \dots, \varphi_{n-1} \in F_{AL}\) gilt
+\(J(\varphi_0, \dots, \varphi_{n-1})\sigma = J(\varphi_0\sigma, \dots, \varphi_{n-1}\sigma)\)
+</p>
+
+<p>
+"<b>Substitutionsbelegung</b>":
+</p>
+
+<p>
+Zu jeder Belegung \(\beta: V_{AL} \rightarrow \{0,1\}\) und jeder
+Substitution \(\sigma:V_{AL}\rightarrow F_{AL}\) definieren wir eine
+Belegung \(\sigma\beta: V_{AL} \rightarrow \{0,1\}\):
+</p>
+
+\begin{equation*}
+\sigma\beta(X_i) = 
+\begin{cases}
+\beta(X_i) & \text{falls } X_i \not\in def(\sigma) \\
+[[\sigma(X_i)]]_{\beta} & \text{sonst}
+\end{cases}
+\end{equation*}
+</div>
+
+<div id="outline-container-sec-1-14-1" class="outline-4">
+<h4 id="sec-1-14-1"><span class="section-number-4">1.14.1</span> Substitutionslemma</h4>
+<div class="outline-text-4" id="text-1-14-1">
+<p>
+Sei \(\varphi \in F_{AL}\), \(\sigma\) eine Substitution und \(\beta\) eine Belegung, dann gilt:
+</p>
+
+<p>
+\([[\varphi\sigma]]_{\beta} = [[\varphi]]_{\sigma\beta}\)
+</p>
+
+<p>
+Es gilt also \(\beta \models \varphi\sigma\) genau dann wenn \(\sigma\beta \models \varphi\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-14-2" class="outline-4">
+<h4 id="sec-1-14-2"><span class="section-number-4">1.14.2</span> Äquivalenz</h4>
+<div class="outline-text-4" id="text-1-14-2">
+<p>
+Zwei Substitutionen \(\sigma, \sigma'\) heißen äquivalent, wenn gilt:
+</p>
+
+<ol class="org-ol">
+<li>\(def(\sigma) = def(\sigma')\) und
+</li>
+<li>\(\sigma(X_i) = \sigma'(X_i)\) für alle \(X_i \in def(\sigma)\).
+</li>
+</ol>
+
+<p>
+Wir schreiben \(\sigma \equiv \sigma'\).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-15" class="outline-3">
+<h3 id="sec-1-15"><span class="section-number-3">1.15</span> Ersetzungslemma</h3>
+<div class="outline-text-3" id="text-1-15">
+<p>
+Seien \(\sigma, \sigma'\) äquivalente Substitutionen und sei
+\(\varphi \in F_{AL}\), dann gilt \(\varphi\sigma \equiv \varphi\sigma'\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-16" class="outline-3">
+<h3 id="sec-1-16"><span class="section-number-3">1.16</span> Normalformen</h3>
+<div class="outline-text-3" id="text-1-16">
+<p>
+Eine <i>Normalform</i> ist eine Teilmenge aller Formeln, die sich dadurch
+auszeichnet, dass
+</p>
+
+<ul class="org-ul">
+<li>alle Formeln der Normalform eine bestimmte syntaktische Struktur
+besitzen
+</li>
+<li>die Normalform ist repräsentativ für alles Formeln (d.h., dass jede
+Formel aus \(F_{AL}\) eine äquivalente Formel in Normalform besitzt,
+oder, dass dass es zu jeder Formel lediglich eine
+erfüllbarkeitsäquivalente Formel in Normalform gibt.)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-16-1" class="outline-4">
+<h4 id="sec-1-16-1"><span class="section-number-4">1.16.1</span> Boolesche Normalform</h4>
+<div class="outline-text-4" id="text-1-16-1">
+<p>
+Eine Formel \(\varphi\) ist in <i>Boolescher Normalform</i> (\(BNF\)), wenn in
+\(\varphi\) nur \(\neg\) und die 2-stelligen Junktore \(\wedge\) und \(\vee\)
+vorkommen. Induktive Definition:
+</p>
+
+<p>
+<b>IA:</b> Es gilt
+</p>
+
+<ul class="org-ul">
+<li>\(\top \in BNF\)
+</li>
+<li>\(\bot \in BNF\)
+</li>
+<li>\(X_i \in BNF\) für jedes \(i \in \mathbb{N}\).
+</li>
+</ul>
+
+<p>
+<b>IS:</b>
+</p>
+
+<ul class="org-ul">
+<li>Sei \(\varphi \in BNF\), dann gilt \(\neg\varphi \in BNF\).
+</li>
+<li>Seien \(\varphi_0, \varphi_1 \in BNF\), dann gilt \(\varphi_0 \wedge
+  \varphi_1 \in BNF\) und \(\varphi_0 \vee \varphi_1 \in BNF\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-16-2" class="outline-4">
+<h4 id="sec-1-16-2"><span class="section-number-4">1.16.2</span> Negationsnormalform</h4>
+<div class="outline-text-4" id="text-1-16-2">
+<p>
+Eine Formel \(\varphi\) ist in <i>Negationsnormalform</i> (\(NNF\)), wenn in \(\varphi\)
+in Boolescher Normalform ist und \(\neg\) nur <b>direkt vor</b> Variablen
+vorkommt. Induktive Definition:
+</p>
+
+<p>
+<b>IA:</b> Es gilt
+</p>
+
+<ul class="org-ul">
+<li>\(\top \in NNF\)
+</li>
+<li>\(\bot \in NNF\)
+</li>
+<li>\(X_i \in NNF\) für jedes \(i \in \mathbb{N}\).
+</li>
+<li>\(\neg X_i \in NNF\) für jedes \(i \in \mathbb{N}\).
+</li>
+</ul>
+
+<p>
+<b>IS:</b>
+</p>
+
+<p>
+Seien \(\varphi_0, \varphi_1 \in NNF\), dann gilt \(\varphi_0 \wedge
+\varphi_1 \in NNF\) und \(\varphi_0 \vee \varphi_1 \in NNF\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-16-3" class="outline-4">
+<h4 id="sec-1-16-3"><span class="section-number-4">1.16.3</span> <span class="todo TODO">TODO</span> Konjunktive Normalform</h4>
+<div class="outline-text-4" id="text-1-16-3">
+<p>
+Eine Formel \(\varphi\) ist in <i>Konjunkitver Normalform</i> (\(KNF\)), wenn in
+\(\varphi\) in Boolescher Normalform ist und \(\neg\) nur <b>direkt vor</b>
+Variablen vorkommt. Induktive Definition:
+</p>
+
+<p>
+Für eine Klauselmenge \(M\) definieren wir für die KNF die Kurzschreibweise \(\bigwedge\bigvee M := \bigwedge_{K \in M} \bigvee_{L \in K} L\).
+</p>
+
+<p>
+Mit Literaleinschränkungen kann die Anwendung von Substitutionen für
+Klauselmengen in KNF beschrieben werden, denn es gilt:
+</p>
+
+<ul class="org-ul">
+<li>\(\bigwedge\bigvee M|X_i \equiv (\bigwedge\bigvee M)\{X_i \rightarrow \top\}\)
+</li>
+<li>\(\bigwedge\bigvee M|\neg X_i \equiv (\bigwedge\bigvee M)\{X_i \rightarrow \bot\}\)
+</li>
+</ul>
+
+<p>
+Sei \(M\) eine Klauselmenge und \(\{X_i\} \in M\), dann gilt \(\bigwedge\bigvee M|X_i \sqsubseteq \bigwedge\bigvee M\)
+</p>
+
+<p>
+Sei \(M\) eine Klauselmenge und \(\{\neg X_i\} \in M\), dann gilt \(\bigwedge\bigvee M|\neg X_i \sqsubseteq  \bigwedge\bigvee M\)
+</p>
+</div>
+
+<div id="outline-container-sec-1-16-3-1" class="outline-5">
+<h5 id="sec-1-16-3-1"><span class="section-number-5">1.16.3.1</span> <span class="todo TODO">TODO</span> Rechenregeln</h5>
+<div class="outline-text-5" id="text-1-16-3-1">
+<p>
+Es gilt:
+</p>
+
+<ul class="org-ul">
+<li>\(\bigwedge\bigvee \{\{\}\} = \bot\) dabei ist \(\{\{\}\}\) die Klauselmenge, welche die leere Klausel enthält
+</li>
+<li>Seien \(M, M'\) Klauselmengen, dann gilt:
+
+<ul class="org-ul">
+<li>\(\bigwedge\bigvee M \wedge \bigwedge\bigvee M' \equiv \bigwedge\bigvee (M \cup M')\)
+</li>
+<li>\(\bigwedge\bigvee M \vee \bigwedge\bigvee M' \equiv \bigwedge\bigvee M \Cup M' := \bigwedge\bigvee \{K \cup K' \mid K \in M \wedge K' \in M'\}\)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-16-4" class="outline-4">
+<h4 id="sec-1-16-4"><span class="section-number-4">1.16.4</span> <span class="todo TODO">TODO</span> Disjunktive Normalform</h4>
+</div>
+
+<div id="outline-container-sec-1-16-5" class="outline-4">
+<h4 id="sec-1-16-5"><span class="section-number-4">1.16.5</span> <span class="todo TODO">TODO</span> Minimalform</h4>
+</div>
+</div>
+
+<div id="outline-container-sec-1-17" class="outline-3">
+<h3 id="sec-1-17"><span class="section-number-3">1.17</span> Klauselschreibweise</h3>
+<div class="outline-text-3" id="text-1-17">
+<p>
+Variablen und negierte Variablen, d.h. \(X_i\) und \(\neg X_i\) für alle
+\(i \in \mathbb{N}\) heißen <i>Literale</i>.
+</p>
+
+<p>
+Eine <b>endliche</b> Menge von Literalen heißt <i>Klausel</i>. Z.B. ist
+\(\{X_0, \neg X_1, X_2 \}\) eine Klausel.
+</p>
+
+<p>
+Die leere Menge heißt in diesem Zusammenhang auch <i>leere Klausel</i>.
+</p>
+
+<p>
+Eine <b>endliche</b> Menge von Klauseln heißt <i>Klauselmenge</i>.
+</p>
+
+<p>
+Eine <b>unendliche</b> Menge von Klauseln heißt <i>Menge von Klauseln</i>.
+</p>
+
+<p>
+Eine Klausel \(K\) heißt <i>tautologisch</i>, falls es ein \(i \in \mathbb{N}\)
+für das \(X_i, \neg X_i \in K\) gilt.
+</p>
+</div>
+
+<div id="outline-container-sec-1-17-1" class="outline-4">
+<h4 id="sec-1-17-1"><span class="section-number-4">1.17.1</span> Rechenregeln</h4>
+<div class="outline-text-4" id="text-1-17-1">
+<p>
+Es gilt:
+</p>
+
+<ul class="org-ul">
+<li>\(\bigwedge \{\} = \top\)
+</li>
+<li>\(\bigvee \{\} = \bot\)
+</li>
+<li>\(\bigwedge\bigvee \{\{\}\} = \bot\) dabei ist \(\{\{\}\}\) die Klauselmenge, welche die leere Klausel enthält
+</li>
+</ul>
+
+<p>
+<b>innere Vereinigung</b>: Seien \(M_0\), \(M_1\) Klauselmengen, dann gilt \(M_0
+\Cup M_1 = \{K_0 \cup K_1 \mid K_0 \in M_0 \wedge K_1 \in M_1\}\).
+</p>
+
+<p>
+<b>Literaleinschränkungen:</b> 
+</p>
+
+<p>
+Sei \(M\) Klauselmenge und \(L\) Literal, dann gilt 
+</p>
+
+<ul class="org-ul">
+<li>\(M | L := \{K\setminus\{\neg L\} \mid K \in M \wedge L \not\in K\}\).
+Es gilt also \(M | X := \{K\setminus\{\neg X\} \mid K \in M \wedge X
+  \not\in K\}\) und \(M | \neg X := \{K\setminus\{X\} \mid K \in M
+  \wedge \neg X \not\in K\}\). Im Fall der KNF geht \(M|L\) geht aus \(M\)
+durch Ersetzung jedes Vorkommens von \(L\) durch \(\top\) in den
+Klauseln von \(M\) hervor.
+</li>
+<li>Menge der Klauseln, die eine Variable in negierter oder
+nicht-negierter Form enthalten:
+<ul class="org-ul">
+<li>\(M[+X_i] := \{K \in M \mid X_i \in vars(K)\}\) ist die Menge der
+Klauseln, die \(X_i\) oder \(\neg X_i\) enthalten.
+</li>
+<li>\(M[-X_i] := \{K \in M \mid X_i \not\in vars(K)\}\) ist die Menge
+der Klauseln, die weder \(X_i\) noch \(\neg X_i\) enthalten.
+</li>
+</ul>
+</li>
+<li>\(M || X_i := M[+X_i] | X_i = \{K \setminus \{\neg X_i\} \mid K \in
+  M[+X_i] \wedge X_i \not\in K\}\). "\(M || X_i\) ist die Menge der
+Klauseln aus \(M\), die \(\neg X_i\) enthalten, wobei \(\neg X_i\) aus den
+Klauseln entfernt wird."
+</li>
+<li>\(M || \neg X_i := M[+X_i] | \neg X_i = \{K \setminus \{\neg X_i\} \mid K \in
+  M[+X_i] \wedge X_i \not\in K\}\). "\(M || \neg X_i\) ist die Menge der
+Klauseln aus \(M\), die \(X_i\) enthalten, wobei \(X_i\) aus den
+Klauseln entfernt wird."
+</li>
+</ul>
+
+<p>
+Mit Literaleinschränkungen kann die Anwendung von Substitutionen für
+Klauselmengen in KNF beschrieben werden, denn es gilt:
+</p>
+
+<ul class="org-ul">
+<li>\(\bigwedge\bigvee M|X_i \equiv (\bigwedge\bigvee M)\{X_i \rightarrow \top\}\)
+</li>
+<li>\(\bigwedge\bigvee M|\neg X_i \equiv (\bigwedge\bigvee M)\{X_i \rightarrow \bot\}\)
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-1-18" class="outline-3">
+<h3 id="sec-1-18"><span class="section-number-3">1.18</span> Erfüllbarkeitstests</h3>
+<div class="outline-text-3" id="text-1-18">
+</div><div id="outline-container-sec-1-18-1" class="outline-4">
+<h4 id="sec-1-18-1"><span class="section-number-4">1.18.1</span> Erfüllbarkeitsreduzierbarkeit</h4>
+<div class="outline-text-4" id="text-1-18-1">
+<p>
+Seien \(\varphi, \psi \in F_{AL}\), dann schreiben wir
+\(\varphi \sqsubseteq \psi\) ("\(\varphi\) ist <i>erfüllbarkeitsreduzierbar</i>
+auf \(\psi\)"), falls
+</p>
+
+<ul class="org-ul">
+<li>\(vars(\varphi) \subseteq vars(\psi)\)
+</li>
+<li>Jede erfüllende Belegung von \(\varphi\) kann zu einer erfüllenden
+Belegung von \(\psi\) erweitert werden.
+</li>
+<li>Unter jeder erfüllenden Belegung von \(\psi\) wird \(\varphi\) wahr.
+</li>
+</ul>
+
+<p>
+Aus \(\varphi \sqsubseteq \psi\) folgt also \(erfb \varphi\) <i>genau dann wenn</i> \(erfb \psi\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-18-2" class="outline-4">
+<h4 id="sec-1-18-2"><span class="section-number-4">1.18.2</span> Fallunterscheidungslemma</h4>
+<div class="outline-text-4" id="text-1-18-2">
+<p>
+Sei \(\varphi \in F_{AL}\), dann sind äquivalent:
+</p>
+
+<ul class="org-ul">
+<li>\(erfb \varphi\)
+</li>
+<li>\(erfb (\varphi\{X_i \rightarrow \bot\} \vee \varphi\{x_i \rightarrow \bot\})\)
+</li>
+<li>\(erfb \varphi\{X_i \rightarrow \bot\}\) oder  \(erfb \varphi\{x_i \rightarrow \bot\}\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-18-3" class="outline-4">
+<h4 id="sec-1-18-3"><span class="section-number-4">1.18.3</span> DP-Algorithmus</h4>
+<div class="outline-text-4" id="text-1-18-3">
+<p>
+Vorbedingung: \(M\) ist Klauselmenge
+</p>
+
+<ol class="org-ol">
+<li>Streiche aus \(M\) alle tautologischen Klauseln
+</li>
+<li>Falls \(M = \emptyset\), so ist \(M\) erfüllbar
+</li>
+<li>Falls \(\{\} \in M\), so ist \(M\) unerfüllbar.
+</li>
+<li>Wähle eine Variable \(X_i \in M\).
+</li>
+<li>Setze \(M_+ = \{K \in M \mid X_i \in K\}\) und \(M_- = \{K \in M \mid
+   \neg X_i \in K\}\) und \(\overline{M} = \{K \in M\mid \{X_i, \neg
+   X_i\} \cap K = \emptyset\}\)
+</li>
+<li>Setze \(M = \{(K_+\setminus\{X_i\}) \cup (K_-\setminus\{\neg X_i\}) \mid
+   K_+ \in M_+ \wedge K_- \in M_-\} \cup \overline{M} = (M || X_i \Cup M || \neg X_i) \cup M[-X_i]\).
+</li>
+<li>Gehe zu 1
+</li>
+</ol>
+
+<p>
+<b>Korrektheit:</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-18-4" class="outline-4">
+<h4 id="sec-1-18-4"><span class="section-number-4">1.18.4</span> <span class="todo TODO">TODO</span> DPLL-Algorithmus</h4>
+<div class="outline-text-4" id="text-1-18-4">
+<p>
+Vorbedingung: Sei \(M\) eine Klauselmenge
+</p>
+
+<p>
+\(DPLL(M)\):
+</p>
+
+<pre class="example">
+if $M=\{\}$ then
+  return erfüllbar
+else if $\{\} \in M$ then
+  return unerfüllbar
+else if $M$ enthält eine Einheitsklausel $\{L\}$, then
+  return $DPLL(M|L)$
+else
+  let $X_i \in vars(M)$
+  if $DPLL(M|X_i)$ = unerfüllbar then
+    return $DPLL(M|\neg X_i)$
+  else
+    return erfüllbar
+</pre>
+
+<p>
+Nachbedingung: \(DPLL(M)\) gibt erfüllbar zurück, genau dann wenn \(erfb \bigwedge\bigvee M\) gilt.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-19" class="outline-3">
+<h3 id="sec-1-19"><span class="section-number-3">1.19</span> Kompaktheitssatz</h3>
+<div class="outline-text-3" id="text-1-19">
+<p>
+Sei \(\Phi \subseteq F_{AL}\). Dann sind äquivalent:
+</p>
+
+<ol class="org-ol">
+<li>\(\erfb \Phi\)
+</li>
+<li>Es gilt \(erfb \Psi\) für alle \(\Psi \Subset \Phi\)
+</li>
+</ol>
+
+<p>
+Eine beliebige Menge von Formeln \(\Phi\) ist also genau dann erfüllbar,
+wenn jede endliche Teilmenge \(\Phi' \Subset \Phi\) erfüllbar ist.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-20" class="outline-3">
+<h3 id="sec-1-20"><span class="section-number-3">1.20</span> <span class="todo TODO">TODO</span> Kompaktheitssatz</h3>
+</div>
+
+
+<div id="outline-container-sec-1-21" class="outline-3">
+<h3 id="sec-1-21"><span class="section-number-3">1.21</span> Folgerungsbeziehung</h3>
+<div class="outline-text-3" id="text-1-21">
+<p>
+Sei \(\Phi \subseteq F_{AL}\) eine (unendliche) Formelmenge und sei
+\(\varphi \in F_{AL}\) eine Formel, dann <b>folgt</b> \(\varphi\) aus \(\Phi\),
+falls für jede Belegung \(\beta\) gilt: \(\beta \models \Phi\) impliziert
+\(\beta \models \varphi\). 
+</p>
+
+<p>
+Wir schreiben dann \(\Phi \VDash \varphi\) . Außerdem schreiben wir 
+</p>
+
+<ul class="org-ul">
+<li>\(\varphi \VDash \psi\) statt \(\{\varphi\}\VDash \psi\) mit \(\varphi,\psi \in F_{AL}\)
+</li>
+<li>\(\VDash \varphi\) statt \(\emptyset\VDash\varphi\), wenn \(\varphi\) allgemeingültig ist
+</li>
+</ul>
+
+<p>
+Wir definieren \(\Phi^{\VDash} := \{\varphi\in F_{AL} \mid \Phi \VDash \varphi\}\)
+</p>
+
+<p>
+Sei \(\Phi \subseteq F_{AL}\) eine (unedliche) Formelmenge und sei \(\Psi
+\Subset F_{AL}\) eine endliche Formelmenge und sei \(\varphi \in
+F_{AL}\), dann sind äquivalent:
+</p>
+
+<ul class="org-ul">
+<li>\(\Phi \VDash \bigwedge (\Psi) \rightarrow \varphi\)
+</li>
+<li>\(\Phi \cup \Psi \VDash \phi\)
+</li>
+<li>\(\Phi \cup \{\bigwedge \Psi\} \VDash \phi\)
+</li>
+</ul>
+
+<p>
+Insebesondere sind also äquivalent:
+</p>
+
+<ul class="org-ul">
+<li>\(\Psi\VDash\varphi\)
+</li>
+<li>\(\VDash\bigwedge_{\psi\in\Psi} (\psi) \rightarrow \varphi\)
+</li>
+</ul>
+
+<p>
+Sei \(\Phi \subseteq F_{AL}\) eine (unendliche) Formelmenge und sei
+\(\varphi \in F_{AL}\) eine Formel, dann sind äquivalent:
+</p>
+
+<ul class="org-ul">
+<li>\(\Phi \VDash \varphi\)
+</li>
+<li>\(\unerfb \Phi \cup\{\neg \varphi\}\)
+</li>
+</ul>
+
+<p>
+Sei \(\Phi \subset F_{AL}\) eine (unendliche) Formelmenge und sei
+\(\varphi \in F_{AL}\) eine Formel, dann sind äquivalent:
+</p>
+
+<ul class="org-ul">
+<li>\(\Phi \VDash \varphi\)
+</li>
+<li>Es gibt \(\Phi_0 \Subset \Phi\) mit \(\Phi_0 \VDash \varphi\)
+</li>
+</ul>
+
+<p>
+Das Folgerungsproblem für aufzählbare Formelmengen ist also positiv
+semientscheidbar.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-22" class="outline-3">
+<h3 id="sec-1-22"><span class="section-number-3">1.22</span> Modellierung</h3>
+<div class="outline-text-3" id="text-1-22">
+<p>
+Sei \(G=\langle V, E\rangle\) ein endlicher gerichteter Graph. 
+</p>
+</div>
+
+<div id="outline-container-sec-1-22-1" class="outline-4">
+<h4 id="sec-1-22-1"><span class="section-number-4">1.22.1</span> Erreichbarkeit</h4>
+<div class="outline-text-4" id="text-1-22-1">
+<p>
+Sei \(S \subseteq V\), dann gilt \(t\in V\) ist von \(S\) aus in \(G\)
+erreichbar, genau dann, wenn:
+</p>
+
+<p>
+\(\{X_s \mid s \in S\} \cup \{X_i \rightarrow X_j \mid \langle i,j\rangle \in E\} \VDash X_t\)
+</p>
+
+<p>
+Wir verwenden dabei Variablen der Form \(X_i\): "\(i\) ist erreichbar".
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-22-2" class="outline-4">
+<h4 id="sec-1-22-2"><span class="section-number-4">1.22.2</span> Unvermeidbarkeit</h4>
+<div class="outline-text-4" id="text-1-22-2">
+<p>
+Gesucht sind die Knoten, die so sind, dass man egal über welche Kanten
+man ausgehend von diesem Knoten läuft man irgendwann in einer
+Ziel-Knotenmenge \(T\) landet?
+</p>
+
+<p>
+Sei \(T \subseteq V\) und sei \(s \in V\), dann ist \(T\) von \(s\) aus
+unvermeidbar, genau dann, wenn gilt:
+</p>
+
+<p>
+\(\{X_t \mid t \in T\} \cup \{\bigwedge_{j:\langle i, j \rangle \in E} (X_j) \rightarrow
+X_i \mid i \in V'\} \VDash X_s\) mit \(V' = \{v \in V \mid \text{es
+gibt } w \in V \text{ sodass } \langle v, w \rangle \in E\}\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-22-3" class="outline-4">
+<h4 id="sec-1-22-3"><span class="section-number-4">1.22.3</span> Erreichbarkeitsspiele</h4>
+<div class="outline-text-4" id="text-1-22-3">
+<p>
+Gesucht sind die Knoten, von denen aus Spieler \(\bigcirc\) aus einen
+Gewinn erzwingen kann.
+</p>
+
+<p>
+Sei \(V_{\bigcirc} \subseteq V\) die Menge von Knoten von Spieler
+\(\bigcirc\) und sei \(V_{\Box} = V\setminus V_{\bigcirc}\) die Menge der
+Knoten von Spieler \(\Box\) und sei \(T \subset V\), dann ist \(s \in V\)
+genau dann ein gewinnbringender Knoten für Spieler \(\bigcirc\), wenn
+gilt:
+</p>
+
+<p>
+\(\{t \mid t\in T\} \cup \{X_j \rightarrow X_i \mid \langle i,j\rangle \in E \wedge i \in V_{\bigcirc}\} \cup \{\bigwedge_{j: \langle i,j\rangle \in E} (X_j) \rightarrow X_i \mid i \in V_{\Box}\} \VDash X_s\)
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-23" class="outline-3">
+<h3 id="sec-1-23"><span class="section-number-3">1.23</span> Resolution</h3>
+<div class="outline-text-3" id="text-1-23">
+<p>
+Zwei Klauseln \(K\) und \(K'\) heißen <b>resolvierbar</b> bzgl. einer Variablen \(X_i\), wenn es \(X_i\) gibt,
+sodass \(X_i \in K\) und \(\neg X_i \in K'\). Die <b>Resolvente</b> von \(K\) und \(K'\) ist:
+</p>
+
+<p>
+\(\res_{X_i}(K,K') = K\setminus\{X_i} \cup K'\setminus\{\neg X_i}\)
+</p>
+</div>
+
+<div id="outline-container-sec-1-23-1" class="outline-4">
+<h4 id="sec-1-23-1"><span class="section-number-4">1.23.1</span> Resolutionswiderlegunsbeweis</h4>
+<div class="outline-text-4" id="text-1-23-1">
+<p>
+Um zu zeigen, dass eine Formelmenge unerfüllbar ist, kann man einen
+<b>Resolutionswiderlegungsbeweis</b> führen. Dazu wird die Formelmenge in KNF
+gebracht und dann für die sich so ergebende Klauselmenge \(M\) gezeigt,
+dass die leere Klausel aus \(M\) folgt, d.h.
+\(M\vdash_{\res}{*}\emptyset\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-23-2" class="outline-4">
+<h4 id="sec-1-23-2"><span class="section-number-4">1.23.2</span> <span class="todo TODO">TODO</span> SLD Resolution</h4>
+<div class="outline-text-4" id="text-1-23-2">
+</div><div id="outline-container-sec-1-23-2-1" class="outline-5">
+<h5 id="sec-1-23-2-1"><span class="section-number-5">1.23.2.1</span> <span class="todo TODO">TODO</span> SLD-Resolutionswiderlegungsbeweis</h5>
+<div class="outline-text-5" id="text-1-23-2-1">
+<p>
+Um zu zeigen, dass eine Zielklausel \(K\) unter einer Klauselmenge \(M\)
+unerfüllbar ist, kann man einen <b>SLD-Resolutionswiderlegungsbeweis</b>
+führen. Dazu wird gezeigt, dass \(M,K\vdash_{SLD} \emptyset\) gilt.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+niedrige Präzedenz bedeutet höhere Bindungsstärke
+</p>
+
+<p class="footpara">
+Sei \(\Phi = \{\varphi_0, \dots, \varphi_{n-1}\}\) endliche Teilmenge von Formeln
+\(\Phi \Subset F_{AL}\). Dann schreiben wir auch
+</p>
+
+<ul class="org-ul">
+<li>\(\bigvee \Phi\) für \(\bigvee_{i<n} \varphi_i\) und
+</li>
+<li>\(\bigwedge \Phi\) für \(\bigwedge_{i<n} \varphi_i\).
+</li>
+</ul></div>
+
+
+</div>
+</div>

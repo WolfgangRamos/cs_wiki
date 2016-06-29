@@ -1,0 +1,16 @@
+#+TITLE: index
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Logik
+---
+#+END_HTML
+
+* Logik
+
+-  [[./aussagenlogik.org][Aussagenlogik]]
+

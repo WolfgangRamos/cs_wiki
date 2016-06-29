@@ -1,0 +1,10 @@
+# temp files
+*~
+
+# org mode temp files
+/org/*/ltxpng
+
+# jekyll derived directories
+_site
+.sass-cache
+.jekyll-metadata

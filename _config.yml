@@ -1,0 +1,21 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: Computer Science 
+email: webmaster@ramosarhuis.de
+description: > # this means to ignore newlines until "baseurl:"
+  Comprehensive notes from the computer science course at kiel university 2014-2016.
+baseurl: "/cs_wiki" # the subpath of your site, e.g. /blog
+url: "https://wolfgangramos.github.io" # the base hostname & protocol for your site
+# twitter_username: ""
+github_username:  WolfgangRamos
+
+# Build settings
+markdown: kramdown
+
+exclude: [org]

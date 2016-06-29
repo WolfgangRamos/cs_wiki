@@ -1,0 +1,794 @@
+#+TITLE: Aussagenlogik
+#+STARTUP: content
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Aussagenlogik
+excerpt: Aussagenlogik
+---
+#+END_HTML
+
+* Aussagenlogik
+
+Eine /Aussage/ ist ein Konstrukt, dem ein Wahrheitswert (wahr oder
+falsch) zugeordnet werden kann.
+
+** Symbole
+
+$X \Subset Y$: $X$ ist /endliche Teilmenge/ von $Y$
+
+*Disjunkte Vereinigung:* werden zwei disjunkte Mengen $A,B$ vereinigt, so zeigen wir dies (manchmal) an durch die Schreibweise $A \dot{\cup} B$
+
+** Konstanten
+
+*wahr*: $\top$
+
+*falsch*: $\bot$
+
+** Variablen
+
+Die Menge aller aussagelogischen Variablen wird mit $V_{AL}$ bezeichnet.
+
+** Junktoren
+
+| Junktor | Bezeichnung   | Lesart                     |  Stelligkeit | Verknüpfte Teilformeln | Bezeichnung der Funktion | Präzedenz[fn:1] |
+| <5>   |               |                            |              |                        | <5>   |           |
+|-------+---------------+----------------------------+--------------+------------------------+-------+-----------|
+| $\neq$ | Negation      | nicht...                   |            1 |                        | neg   |         0 |
+| $\vee$ | Disjunktion   | ... oder ....              |            2 | Disjunktionsglieder    | Or    |         1 |
+| $\bigvee$ | Disjunktion   | ... oder ....              | 0, 1, 2, ... | Disjunktionsglieder    | Or    |         1 |
+| $\wedge$ | Konjunktion   | ... und ...                |            2 | Konjunktionsglieder    | And   |         1 |
+| $\bigwedge$ | Konjunktion   | ... und ...                | 0, 1, 2, ... | Konjunktionsglieder    | And   |         1 |
+| $\bar{\wedge}$ | Exklusion     | nicht zugleich ... und ... |            2 |                        | nand  |         1 |
+| $\bar{\vee}$ | Nihiltion     | weder ... noch ...         |            2 |                        | nor   |         1 |
+| $\dot{\vee}$,$\not\leftrightarrow$ | Kontravalenz  | entweder ... oder ...      |            2 |                        | xor   |  1 bzw. 2 |
+| $\dot{\bigvee}$ | Kontravalenz  | entweder ... oder ...      | 0, 1, 2, ... |                        | Xor   |         1 |
+| $\rightarrow$ | Konditional   | wenn ..., so ...           |            2 | Antezedenz, Sukzedenz  | cond  |         2 |
+| $\leftrightarrow$ | Bikonditional | ..., genau dann wenn ...   |            2 |                        | equiv |         2 |
+
+[fn:1] niedrige Präzedenz bedeutet höhere Bindungsstärke
+
+Sei $\Phi = \{\varphi_0, \dots, \varphi_{n-1}\}$ endliche Teilmenge von Formeln
+$\Phi \Subset F_{AL}$. Dann schreiben wir auch
+
+- $\bigvee \Phi$ für $\bigvee_{i<n} \varphi_i$ und
+- $\bigwedge \Phi$ für $\bigwedge_{i<n} \varphi_i$.
+
+** TODO In den Folien steht, dass das durch aussagenlogische Gesetzte gerechtfertigt wird. Warum?
+
+** Belegung
+
+Eine Belegung $\beta$ ist eine Funktion, die jeder aussagelogischen
+Variablen einen Wert $0$ oder $1$ zuordnet $\beta:V_{AL} \rightarrow \{0,1\}$.
+
+Sind $\beta$ und $\beta'$ Belegungen, so schreiben wir
+$\beta \leq \beta'$, falls $\beta(X_i) \leq \beta'(X_i)$ für jedes
+$i \in \mathbb{N}$ gilt.
+
+$\beta | vars(\varphi)$: /Einschränkung/ der $\beta$ auf die Variablen
+in $\varphi$. D.h. es gilt 
+$def(\beta | vars(\varphi)) = vars(\varphi)$.
+
+
+*partitelle Belegung:* Eine Belegung $\beta$ heißt /partielle Belegung/
+einer Formel $\varphi$, wenn $\beta$ eine partielle Funktion ist und
+$vars(\varphi) \subseteq def(\beta)$ gilt. Belegungen mit endlichem
+Definitionsbereich schreiben wir in der Form
+$\{X_0 \mapsto 0, X_1 \mapsto, \dots \}$.
+
+*knappe Belegung:* Eine Belegung $\beta$ heißt /knappe Belegung/ einer
+Formel $\varphi$, wenn $\beta$ eine partielle Funktion ist und
+$vars(\varphi) = def(\beta)$ gilt. Belegungen mit endlichem
+Definitionsbereich schreiben wir in der Form
+$\{X_0 \mapsto 0, X_1 \mapsto, \dots \}$.
+
+*erfüllende Belegung:* Eine /erfüllende Belegung/ einer Formel
+$\varphi \in F_{AL}$ ist eine knappe Belegung
+$\beta:vars(\varphi) \rightarrow \{0,1\}$, für die $\beta \models \varphi$
+gilt.
+
+** Formeln
+
+Eine aussagenlogische Formel ist ein verwurzelter Baum mit linear
+geordneten Nachfolgern und beschrifteten Knoten. Blätter sind
+beschriftet mit Variablen oder Konstanten ($\top, \bot$), innere Knoten
+sind beschriftet mit Junktoren.
+
+Die Menge aller aussagenlogischen Formeln wird mit $F_{AL}$ bezeichnet.
+Sie ist induktiv definiert durch:
+
+*IA* (atomare Formeln):
+
+- Der einknotige Baum mit Beschriftung $\bot$ ist eine
+  aussagenlogische Formel.
+- Der einknotige Baum mit Beschriftung $\top$ ist eine
+  aussagenlogische Formel.
+- Für jede Variable $X_i$ mit $i \in \mathbb{N}$ ist der einknotige
+  Baum mit Beschriftung $X_i$ eine aussagelogische Formel.
+
+*IS* (zusammengesetzte Formeln):
+
+Ist $J$ ein $n$-stelliger Junktor für festes $n \in \mathbb{N}$ und
+sind $\varphi_0, \dots, \varphi_{n-1} \in F_{AL}$ aussagenlogische
+Formeln. Dann ist auch der Baum, dessen Wurzel mit $J$ beschriftete
+ist und die genau $n$ Nachfolger hat, wobei Nachfolger $i$ mit
+$\varphi_i$ beschriftet ist, eine aussagenlogische Formel.
+
+Formeln können in /Infixnotation/ ($\dots J \dots$) oder
+/Präfixnotation/ ($J(\dots, \dots)$) geschrieben werden.
+
+*Auswertung von Formeln:* Strategien zur Auswertung von Formeln:
+
+- /top-down/: Auswertung erfolgt mittels der induktiven Definition
+  aussagenlogischer Formeln.
+- /bottom-up Auswertung/: Auswertung erfolgt im Baum der Formel von den
+  Blättern zur Wurzel.
+
+*** Wertetafeln
+
+Aussagenlogische Formeln können auf eindeutige Weise über
+Wertetafeln/Wertetabellen beschrieben werden (die Begründung liefert das
+Koinzidenzlemma). In eine Wertetafel werden mindestens die Belegungen
+der Variablen, die in der Formel auftreten und die zugehörigen Werte der
+Formel aufgenommen. Werden zusätzlich die Werte, die sich für die
+Teilformeln der Formel ergeben aufgelistet, so spricht man von einer
+*erweiterten Wertetetafel/Wertetabelle*.
+
+*** Erfüllbarkeit und Allgemeingültigkeit
+
+Eine Formel $\varphi \in F_{AL}$ heißt /erfüllbar/, wenn es eine
+Belegegung $\beta$ gibt, sodass $\beta \models \varphi$, also $\llb
+\varphi \rrb_{\beta} = 1$ gilt. Wir schreiben denn $\erfb \varphi$.
+
+Umgekehrt heißt eine Formel $\varphi \in F_{AL}$ /unerfüllbar/, wenn für
+alle Belegegung $\beta$ gilt: $\beta \not\models \varphi$, also
+$\beta\model \neg\varphi$, also $\llb \varphi \rrb_{\beta} = 0$ gilt.
+Wir schreiben dann $\unerfb \varphi$.
+
+Eine Formel $\varphi \in F_{AL}$ heißt /allgemeingültig/, wenn $\beta
+\models \varphi$, also $\llb\varphi\rrb_{\beta}=1$ für alle Belegungen
+$\beta$ gilt.
+
+*Eigenschaften:* Sei $\varphi\in F_{AL}$:
+
+- $\varphi$ ist genau dann erfüllbar, wenn $\neg \varphi$ nicht
+  allgemeingültig ist.
+- $\varphi$ ist genau dann allgemeingültig, wenn $\neg\varphi$ nicht
+  erfüllbar ist.
+- $\varphi$ ist genau dann erfüllbar, wenn $\varphi \not\equiv \bot$ gilt.
+- $\varphi$ ist genau dann allgemeingültig, wenn $\varphi \equiv \top$ gilt.
+
+*Vorgehen:*
+
+- zum Nachweis von Allgemeingültigkeit: zeige durch
+  Äquivalenzumformungen, dass $\varphi \equiv \top$ gilt.
+- zum Nachweis von Erfüllbarkeit: gib eine Belegung $\beta$ an, für
+  die $\beta \models \varphi$ gilt.
+- zum Nachweis von nicht Erfüllbarkeit: zeige, dass $\neg\varphi$
+  allgemeingültig ist, d.h. dass $\neg\varphi \equiv \top$ gilt.
+- zum Nachweis der nicht Allgemeingüligkeit: zeige, dass $\neg\varphi$
+  erfüllbar ist, d.h. gib eine Belegung $\beta$ an, für die $\beta
+  \models \neg\varphi$ gilt.
+
+** Formelmengen
+
+Eine Menge $\Phi \subseteq F_{AL}$ heißt /Formelmenge/. Formelmengen
+können also insbesondere auch unendlich sein!
+
+Da Konjunktion und Disjunktion beide sowohl kommutativ als auch
+assoziativ und idempotent sind, kommt es bei Konjunktions- und
+Disjunktionsgliedern weder auf deren Reihenfolge an noch darauf, ob
+sie einmal oder mehrfach auftreten. Daher definieren wir für
+Konjunktionen bzw. Disjunktionen von Formeln einer endlicher
+Formelmenge $\Phi$ folgende Schreibweisen:
+
+- $\bigwedge\Phi := \bigwedge_{\varphi \in \Phi} \varphi$ und
+- $\bigvee\Phi := \bigvee_{\varphi \in \Phi} \varphi$
+
+*** TODO Erfüllbarkeit
+
+Eine Formelmenge $\Phi \subseteq F_{AL}$ heißt /erfüllbar/, wenn es eine
+Belegung $\beta:V_{AL} \rightarrow \{0,1\}$ exisiert für die $\beta
+\models \varphi$ für alle $\varphi \in \Phi$.
+
+Wir schreiben dann $erfb \Phi$.
+
+Insbesonder gilt also $erfb \emptyset$.
+
+Für *endliche Formelmengen* $\Phi \Subset F_{AL}$ sind äquivalent:
+
+A. $erfb \Phi$
+B. $erfb \bigwedge_{\varphi \in \Phi} \varphi$
+
+Für *beliebige Formelmengen* $\Phi \subset F_{AL}$ sind äquivalent:
+
+A. $erfb \Phi$
+B. $erfb \bigwedge \Psi$ für alle *endlichen* Teilmengen $\Psi \Subset \Phi$
+
+** Koinzidenzlemma
+
+Für jede Formel $\varphi$ und alle Belegungen $\beta_0$ und $\beta_1$,
+für die $\beta_0 | vars(\varphi) = \beta_1 | vars(\varphi)$ gilt, gilt
+$[[\varphi]]_{\beta_0} = [[\varphi]]_{\beta_1}$.
+
+Wobei $\beta | vars(\varphi)$ die Einschränkung der Belegung $\beta$
+auf die Variablen in $\varphi$ ist.
+
+Das Koinzidenzlemma besagt somit, dass der Wahrheitswert einer Formel
+unter einer Belegung höchstens von den Werten der Belegung der
+Variablen abhängt, die in der Formel vorkommen. Die Konsequenz ist:
+
+- Wahrheitstafeln/Wertetafeln sind eine eindeutige und vollständige
+  Darstellung aussagenlogischer Formeln.
+- Ein Ausdruck der Form $[[\varphi]]$ ist bereits wohldefiniert, wenn die
+  Belegungen aller Variablen, die in $\varphi$ vokommen bekannt ist.
+  $[[\varphi]]$ ist also wohldefiniert, wenn $vars(\varphi) \subseteq
+  def(\beta)$ für den Definitionsbereich einer Belegung $\beta$ gilt.
+
+** Relevante Variablen
+
+Eine Variable $X_i$ heißt /relevant/ für eine Formel $\varphi$, wenn es
+zwei unterschiedliche Belegung $\beta$ und $\gamma$ gibt, für die gilt
+
+1. $\beta(X_j) = \gamma(X_j)$ für alle $j \neq i$
+2. $[[ \varphi ]]_{\beta} \neq [[ \varphi ]]_{\gamma}$
+
+Wir bezeichnen die Menge aller relevanten Variablen einer Formel $\varphi$
+mit $rvars(\varphi)$. Für jede Formel $\varphi$ gilt
+$rvars(\varphi) \subseteq vars(\varphi)$.
+
+** Funktionen auf Formeln
+
+Auf aussagelogischen Formel können Funktionen induktiv definiert werden.
+
+*** Wahrheitswert einer Formel
+
+Jeder Formel wird unter einer Variablenbelegung eine Wahrheitswert
+zugeordnet. Zu jeder Variablenbelegung $\beta$ definieren wir induktiv
+eine Funktion, die den Wahrheitswert einer Formel unter dieser Belegung
+liefert
+$[[ \cdot ]]_{\beta}: F_{AL} \rightarrow \{0,1\}$:
+
+*IA*:
+
+- $[[ \bot ]]_{\beta} = 0$
+- $[[ \top ]]_{\beta} = 1$
+- $[[ X_i ]]_{\beta} = \beta(X_i)$ für alle $i \in \mathbb{N}$
+
+*IS:*
+
+Sei $J$ ein Junktor mit Stelligkeit $n\in \mathbb{N}$ und seien
+$\varphi_0, \dots, \varphi_{n-1} \in F_{AL}$ dann gilt
+
+$[[ J(\varphi_0, \dots, \varphi_{n-1}) ]] = f_J([[ \varphi_0 ]]_{\beta}, \dots [[ \varphi_{n-1} ]]_{\beta})$
+
+wobei $f_J$ die Boolesche Funktion des Junktors $J$ ist.
+
+Man sagt "$\varphi$ wird unter $\beta$ zu wahr/falsch (ausgewertet)".
+
+Statt "$\varphi$ wird unter $\beta$ wahr" ($[[ \varphi ]]_{\beta} = 1$)
+schreibt man auch $\beta \models \varphi$.
+
+Statt "$\varphi$ wird unter $\beta$ falsch" ($[[ \varphi ]]_{\beta} = 0$)
+schreibt man auch $\beta \not\models \varphi$.
+
+*** Anzahl der mit wahr belegten Variablen
+
+Wir schreiben $\varphi_n^i$ für die Formel, die genau dann wahr ist, wenn
+$i$ der $n$ Variablen der Formel mit wahr belegt sind. Die Formel ist
+induktiv definiert:
+
+*IA:* Es gilt
+
+$\varphi_0^0 = \top$
+
+*IS:*
+
+- $\varphi_{n+1}^{i} = (\varphi_n^{i-1} \wedge X_n) \vee (\varphi_n^i
+  \wedge \neg X_n)$ für $0 < i \leq n$
+- $\varphi_{n+1}^0 = \bigwedge_{i < n+1} \neg X_i$
+- $\varphi_{n+1}^{n+1} = \bigwedge_{i < n+1} X_i$
+
+*** Menge aller Variablen einer Formel
+
+$vars: F_{AL} \rightarrow \mathcal{P}(V_{AL})$
+
+*IA*: Es gilt
+
+- $vars(\bot) = \emptyset$
+- $vars(\top) = \emptyset$
+- $vars(X_i) = \{X_i\}$ für jedes $i \in \mathbb{N}$
+
+*IS*:
+
+Sei $J$ ein Junktor mit Stelligkeit $n \in \mathbb{N}$ fest aber
+beliebig und seien $\varphi_0, \dots, \varphi_{n-1} \in F_{AL}$, dann
+gilt $vars(J(\varphi_0, \dots, \varphi_{n-1}) = \bigcup_{i < n}
+vars(\varphi_i)$
+
+*** Teilformeln einer Formel
+
+$subf: F_{AL} \rightarrow \mathcal{P}(F_{AL})$
+
+*IA:* Es gilt
+
+- $subf(\top) = \{\top\}$
+- $subf(\bot) = \{\bot\}$
+- $subf(X_i) = \{X_i\}$ für jedes $i \in \mathbb{N}$
+
+*IS*:
+
+Sei $J$ ein $n$-stelliger Junktor und seien $\varphi_0, \dots,
+\varphi_{n-1} \in F_{AL}$ aussagenlosgische Formeln, dann gilt
+$subf(J(\varphi_0, \dots, \varphi_{n-1}) = \{J(\varphi_0, \dots,
+\varphi_{n-1})\} \cup \bigcup_{i < n} subf(\varphi_i)$.
+
+*** Junktoren einer Formel
+
+$conns: F_{AL} \rightarrow \mathcal{P}(\{\neq, \vee, \bigvee, \wedge, \bigwedge, \bar{\wedge}, \bar{\vee}, \dot{\vee}, \not\leftrightarrow, \dot{\bigvee}, \rightarrow, \leftrightarrow \})$
+
+*IA:* Es gilt
+
+- $conns{\bot} = \emptyset$
+- $conns{\top} = \emptyset$
+- $conns{X_i} = \emptyset$ für jedes $i \in \mathbb{N}$
+
+*IS:* 
+
+Sei $J$ ein $n$-stelliger Junktor und seien $\varphi_0, \dots,
+\varphi_{n-1} \in F_{AL}$ Formeln, dann gilt $conns(J(\varphi_0,
+\dots, \varphi_{n-1})) = \{J\} \cup \bigcup_{i < n} conns(\varphi_i)$
+
+*** Größe einer Formel
+
+$size$ ordnet jeder aussagenlogischen Formel ihre Größe zu, die durch
+die Anzahl der Knoten des entsprechenden Baumes gegeben ist.
+
+$size: F_{AL} \rightarrow \mathbb{N}_{\geq 1}$
+
+*IA:* Es gilt
+
+- $size{\bot} = 1$
+- $size{\top} = 1$
+- $size{X_i} = 1$ für jedes $i \in \mathbb{N}$
+
+*IS:* 
+
+Sei $J$ ein $n$-stelliger Junktor und seien
+$\varphi_0, \dots, \varphi_{n-1} \in F_{AL}$ Formeln, dann gilt
+$size(J(\varphi_0, \dots, \varphi_{n-1})) = 1 + \sum_{i=0}^{n-1} size(\varphi_i)$.
+
+** Äquivalenz
+
+Zwei Formel $\varphi, \psi \in F_{AL}$ heißen /äquivalent/, genau dann
+wenn $[[\varphi]]_{\beta} = [[\psi]]_{\beta}$ für alle Belegungen
+$\beta$ gilt. D.h. bei äquivalenten Formeln $\varphi, \psi$ gilt $\beta
+\models \varphi$ genau dann, wenn $\beta \models \psi$ gilt.
+
+Wir schreiben: $\varphi \equiv \psi$.
+
+Wegen des Koinzidenzlemmas gilt $\varphi \equiv \psi$ genau dann, wenn
+$[[\varphi]]_{\beta} = [[\psi]]_{\beta}$
+für alle partiellen Variablenbelegungen
+$\beta: vars(\varphi) \cup vars(\psi) \rightarrow \{0,1\}$ gilt.
+
+*Eigenschaften:*
+
+- /Reflexivität/: $\forall \varphi \in F_{AL}: \varphi \equiv \varphi$.
+- /Symmetrie/: $\forall \varphi, \psi \in F_{AL}: \varphi \equiv \psi
+  \Leftrightarrow \psi \equiv \varphi$.
+- /Transitivität/: $\forall \varphi, \psi, \chi \in F_{AL}: \varphi
+  \equiv \psi \wedge \psi \equiv \chi \Rightarrow \varphi \equiv
+  \chi$.
+- Sei $J$ ein $n$-stelliger Junktor und seien $\varphi_0, \dots,
+  \varphi_{n-1}, \psi_0, \dots, \psi_{n-1} \in F_{AL}$
+  aussagenlogische Formeln mit $\varphi_i \equiv \psi_i$ für alle $i <
+  n$. Dann gilt $J(\varphi_0, \dots, \varphi_{n-1}) \equiv J(\psi_0,
+  \dots, \psi_{n-1})$.
+
+** Gesetze
+
+- /Kommutativität/ von $\vee$: Für alle Formeln $\varphi_0, \varphi_1
+  \in F_{AL}$ gilt $\varphi_0 \vee \varphi_1 \equiv \varphi_1 \vee
+  \varphi_0$.
+
+*** TODO weitere Gesetze aus dem Stückwerk übernehmen
+
+** Substitution
+
+Substitutionen beschreiben die Ersetzung von Variablen in Formeln durch
+Formeln.
+
+Eine /Substitution/ ist eine partielle Funktion
+$\sigma: V_{AL} \rightsquigarrow F_{AL}$.
+
+Wir schreiben Substitutionen in der Form:
+$\sigma = \{X_0 \rightarrow X_1 \wedge X_2, \dots\}$
+
+Die Anwendung einer Substitution $\sigma$ auf eine Formel $\varphi$
+bezeichnen wir mit $\varphi\sigma$. Sie ist selbst eine Formel.
+
+Induktive Definition von Substitutionen:
+
+Sei $\sigma$ eine Substitution. Dann gilt
+
+*IA:*
+
+- $\bot\sigma = \bot$
+- $\top\sigma = \top$
+- für alle $i \in \mathbb{N}$ gilt:
+
+\begin{equation*}   
+X_i \sigma = 
+\begin{cases} 
+\sigma(X_i) & \text{falls } X_i \in def(\sigma) \\ 
+X_i & \text{sonst}
+\end{cases}
+\end{equation*}
+
+*IS:*
+
+Für alle $n$-stelligen Junktoren $J$ und Formeln
+$\varphi_0, \dots, \varphi_{n-1} \in F_{AL}$ gilt
+$J(\varphi_0, \dots, \varphi_{n-1})\sigma = J(\varphi_0\sigma, \dots, \varphi_{n-1}\sigma)$
+
+"*Substitutionsbelegung*":
+
+Zu jeder Belegung $\beta: V_{AL} \rightarrow \{0,1\}$ und jeder
+Substitution $\sigma:V_{AL}\rightarrow F_{AL}$ definieren wir eine
+Belegung $\sigma\beta: V_{AL} \rightarrow \{0,1\}$:
+
+\begin{equation*}
+\sigma\beta(X_i) = 
+\begin{cases}
+\beta(X_i) & \text{falls } X_i \not\in def(\sigma) \\
+[[\sigma(X_i)]]_{\beta} & \text{sonst}
+\end{cases}
+\end{equation*}
+
+*** Substitutionslemma
+
+Sei $\varphi \in F_{AL}$, $\sigma$ eine Substitution und $\beta$ eine Belegung, dann gilt:
+
+$[[\varphi\sigma]]_{\beta} = [[\varphi]]_{\sigma\beta}$
+
+Es gilt also $\beta \models \varphi\sigma$ genau dann wenn $\sigma\beta \models \varphi$
+
+*** Äquivalenz
+
+Zwei Substitutionen $\sigma, \sigma'$ heißen äquivalent, wenn gilt:
+
+1. $def(\sigma) = def(\sigma')$ und
+2. $\sigma(X_i) = \sigma'(X_i)$ für alle $X_i \in def(\sigma)$.
+
+Wir schreiben $\sigma \equiv \sigma'$.
+
+** Ersetzungslemma
+
+Seien $\sigma, \sigma'$ äquivalente Substitutionen und sei
+$\varphi \in F_{AL}$, dann gilt $\varphi\sigma \equiv \varphi\sigma'$
+
+** Normalformen
+
+Eine /Normalform/ ist eine Teilmenge aller Formeln, die sich dadurch
+auszeichnet, dass
+
+- alle Formeln der Normalform eine bestimmte syntaktische Struktur
+  besitzen
+- die Normalform ist repräsentativ für alles Formeln (d.h., dass jede
+  Formel aus $F_{AL}$ eine äquivalente Formel in Normalform besitzt,
+  oder, dass dass es zu jeder Formel lediglich eine
+  erfüllbarkeitsäquivalente Formel in Normalform gibt.)
+
+*** Boolesche Normalform
+
+Eine Formel $\varphi$ ist in /Boolescher Normalform/ ($BNF$), wenn in
+$\varphi$ nur $\neg$ und die 2-stelligen Junktore $\wedge$ und $\vee$
+vorkommen. Induktive Definition:
+
+*IA:* Es gilt
+
+- $\top \in BNF$
+- $\bot \in BNF$
+- $X_i \in BNF$ für jedes $i \in \mathbb{N}$.
+
+*IS:*
+
+- Sei $\varphi \in BNF$, dann gilt $\neg\varphi \in BNF$.
+- Seien $\varphi_0, \varphi_1 \in BNF$, dann gilt $\varphi_0 \wedge
+  \varphi_1 \in BNF$ und $\varphi_0 \vee \varphi_1 \in BNF$.
+
+*** Negationsnormalform
+
+Eine Formel $\varphi$ ist in /Negationsnormalform/ ($NNF$), wenn in $\varphi$
+in Boolescher Normalform ist und $\neg$ nur *direkt vor* Variablen
+vorkommt. Induktive Definition:
+
+*IA:* Es gilt
+
+- $\top \in NNF$
+- $\bot \in NNF$
+- $X_i \in NNF$ für jedes $i \in \mathbb{N}$.
+- $\neg X_i \in NNF$ für jedes $i \in \mathbb{N}$.
+
+*IS:*
+
+Seien $\varphi_0, \varphi_1 \in NNF$, dann gilt $\varphi_0 \wedge
+\varphi_1 \in NNF$ und $\varphi_0 \vee \varphi_1 \in NNF$.
+
+*** TODO Konjunktive Normalform
+
+Eine Formel $\varphi$ ist in /Konjunkitver Normalform/ ($KNF$), wenn in
+$\varphi$ in Boolescher Normalform ist und $\neg$ nur *direkt vor*
+Variablen vorkommt. Induktive Definition:
+
+Für eine Klauselmenge $M$ definieren wir für die KNF die Kurzschreibweise $\bigwedge\bigvee M := \bigwedge_{K \in M} \bigvee_{L \in K} L$.
+
+Mit Literaleinschränkungen kann die Anwendung von Substitutionen für
+Klauselmengen in KNF beschrieben werden, denn es gilt:
+
+- $\bigwedge\bigvee M|X_i \equiv (\bigwedge\bigvee M)\{X_i \rightarrow \top\}$
+- $\bigwedge\bigvee M|\neg X_i \equiv (\bigwedge\bigvee M)\{X_i \rightarrow \bot\}$
+
+Sei $M$ eine Klauselmenge und $\{X_i\} \in M$, dann gilt $\bigwedge\bigvee M|X_i \sqsubseteq \bigwedge\bigvee M$
+
+Sei $M$ eine Klauselmenge und $\{\neg X_i\} \in M$, dann gilt $\bigwedge\bigvee M|\neg X_i \sqsubseteq  \bigwedge\bigvee M$
+
+**** TODO Rechenregeln
+
+Es gilt:
+
+- $\bigwedge\bigvee \{\{\}\} = \bot$ dabei ist $\{\{\}\}$ die Klauselmenge, welche die leere Klausel enthält
+- Seien $M, M'$ Klauselmengen, dann gilt:
+
+  - $\bigwedge\bigvee M \wedge \bigwedge\bigvee M' \equiv \bigwedge\bigvee (M \cup M')$
+  - $\bigwedge\bigvee M \vee \bigwedge\bigvee M' \equiv \bigwedge\bigvee M \Cup M' := \bigwedge\bigvee \{K \cup K' \mid K \in M \wedge K' \in M'\}$
+
+*** TODO Disjunktive Normalform
+
+*** TODO Minimalform
+
+** Klauselschreibweise
+
+Variablen und negierte Variablen, d.h. $X_i$ und $\neg X_i$ für alle
+$i \in \mathbb{N}$ heißen /Literale/.
+
+Eine *endliche* Menge von Literalen heißt /Klausel/. Z.B. ist
+$\{X_0, \neg X_1, X_2 \}$ eine Klausel.
+
+Die leere Menge heißt in diesem Zusammenhang auch /leere Klausel/.
+
+Eine *endliche* Menge von Klauseln heißt /Klauselmenge/.
+
+Eine *unendliche* Menge von Klauseln heißt /Menge von Klauseln/.
+
+Eine Klausel $K$ heißt /tautologisch/, falls es ein $i \in \mathbb{N}$
+für das $X_i, \neg X_i \in K$ gilt.
+
+*** Rechenregeln
+
+Es gilt:
+
+- $\bigwedge \{\} = \top$
+- $\bigvee \{\} = \bot$
+- $\bigwedge\bigvee \{\{\}\} = \bot$ dabei ist $\{\{\}\}$ die Klauselmenge, welche die leere Klausel enthält
+
+*innere Vereinigung*: Seien $M_0$, $M_1$ Klauselmengen, dann gilt $M_0
+\Cup M_1 = \{K_0 \cup K_1 \mid K_0 \in M_0 \wedge K_1 \in M_1\}$.
+
+*Literaleinschränkungen:* 
+
+Sei $M$ Klauselmenge und $L$ Literal, dann gilt 
+
+- $M | L := \{K\setminus\{\neg L\} \mid K \in M \wedge L \not\in K\}$.
+  Es gilt also $M | X := \{K\setminus\{\neg X\} \mid K \in M \wedge X
+  \not\in K\}$ und $M | \neg X := \{K\setminus\{X\} \mid K \in M
+  \wedge \neg X \not\in K\}$. Im Fall der KNF geht $M|L$ geht aus $M$
+  durch Ersetzung jedes Vorkommens von $L$ durch $\top$ in den
+  Klauseln von $M$ hervor.
+- Menge der Klauseln, die eine Variable in negierter oder
+  nicht-negierter Form enthalten:
+  - $M[+X_i] := \{K \in M \mid X_i \in vars(K)\}$ ist die Menge der
+    Klauseln, die $X_i$ oder $\neg X_i$ enthalten.
+  - $M[-X_i] := \{K \in M \mid X_i \not\in vars(K)\}$ ist die Menge
+    der Klauseln, die weder $X_i$ noch $\neg X_i$ enthalten.
+- $M || X_i := M[+X_i] | X_i = \{K \setminus \{\neg X_i\} \mid K \in
+  M[+X_i] \wedge X_i \not\in K\}$. "$M || X_i$ ist die Menge der
+  Klauseln aus $M$, die $\neg X_i$ enthalten, wobei $\neg X_i$ aus den
+  Klauseln entfernt wird."
+- $M || \neg X_i := M[+X_i] | \neg X_i = \{K \setminus \{\neg X_i\} \mid K \in
+  M[+X_i] \wedge X_i \not\in K\}$. "$M || \neg X_i$ ist die Menge der
+  Klauseln aus $M$, die $X_i$ enthalten, wobei $X_i$ aus den
+  Klauseln entfernt wird."
+
+Mit Literaleinschränkungen kann die Anwendung von Substitutionen für
+Klauselmengen in KNF beschrieben werden, denn es gilt:
+
+- $\bigwedge\bigvee M|X_i \equiv (\bigwedge\bigvee M)\{X_i \rightarrow \top\}$
+- $\bigwedge\bigvee M|\neg X_i \equiv (\bigwedge\bigvee M)\{X_i \rightarrow \bot\}$
+
+
+
+** Erfüllbarkeitstests
+
+*** Erfüllbarkeitsreduzierbarkeit
+
+Seien $\varphi, \psi \in F_{AL}$, dann schreiben wir
+$\varphi \sqsubseteq \psi$ ("$\varphi$ ist /erfüllbarkeitsreduzierbar/
+auf $\psi$"), falls
+
+- $vars(\varphi) \subseteq vars(\psi)$
+- Jede erfüllende Belegung von $\varphi$ kann zu einer erfüllenden
+  Belegung von $\psi$ erweitert werden.
+- Unter jeder erfüllenden Belegung von $\psi$ wird $\varphi$ wahr.
+
+Aus $\varphi \sqsubseteq \psi$ folgt also $erfb \varphi$ /genau dann wenn/ $erfb \psi$.
+
+*** Fallunterscheidungslemma
+
+Sei $\varphi \in F_{AL}$, dann sind äquivalent:
+
+- $erfb \varphi$
+- $erfb (\varphi\{X_i \rightarrow \bot\} \vee \varphi\{x_i \rightarrow \bot\})$
+- $erfb \varphi\{X_i \rightarrow \bot\}$ oder  $erfb \varphi\{x_i \rightarrow \bot\}$
+
+*** DP-Algorithmus
+
+Vorbedingung: $M$ ist Klauselmenge
+
+1. Streiche aus $M$ alle tautologischen Klauseln
+2. Falls $M = \emptyset$, so ist $M$ erfüllbar
+3. Falls $\{\} \in M$, so ist $M$ unerfüllbar.
+4. Wähle eine Variable $X_i \in M$.
+5. Setze $M_+ = \{K \in M \mid X_i \in K\}$ und $M_- = \{K \in M \mid
+   \neg X_i \in K\}$ und $\overline{M} = \{K \in M\mid \{X_i, \neg
+   X_i\} \cap K = \emptyset\}$
+6. Setze $M = \{(K_+\setminus\{X_i\}) \cup (K_-\setminus\{\neg X_i\}) \mid
+   K_+ \in M_+ \wedge K_- \in M_-\} \cup \overline{M} = (M || X_i \Cup M || \neg X_i) \cup M[-X_i]$.
+7. Gehe zu 1
+
+*Korrektheit:*
+
+*** TODO DPLL-Algorithmus
+
+Vorbedingung: Sei $M$ eine Klauselmenge
+
+$DPLL(M)$:
+
+#+BEGIN_EXAMPLE
+if $M=\{\}$ then
+  return erfüllbar
+else if $\{\} \in M$ then
+  return unerfüllbar
+else if $M$ enthält eine Einheitsklausel $\{L\}$, then
+  return $DPLL(M|L)$
+else
+  let $X_i \in vars(M)$
+  if $DPLL(M|X_i)$ = unerfüllbar then
+    return $DPLL(M|\neg X_i)$
+  else
+    return erfüllbar
+#+END_EXAMPLE
+
+Nachbedingung: $DPLL(M)$ gibt erfüllbar zurück, genau dann wenn $erfb \bigwedge\bigvee M$ gilt.
+
+** Kompaktheitssatz
+
+Sei $\Phi \subseteq F_{AL}$. Dann sind äquivalent:
+
+1. $\erfb \Phi$
+2. Es gilt $erfb \Psi$ für alle $\Psi \Subset \Phi$
+
+Eine beliebige Menge von Formeln $\Phi$ ist also genau dann erfüllbar,
+wenn jede endliche Teilmenge $\Phi' \Subset \Phi$ erfüllbar ist.
+
+** TODO Kompaktheitssatz
+
+
+** Folgerungsbeziehung
+
+Sei $\Phi \subseteq F_{AL}$ eine (unendliche) Formelmenge und sei
+$\varphi \in F_{AL}$ eine Formel, dann *folgt* $\varphi$ aus $\Phi$,
+falls für jede Belegung $\beta$ gilt: $\beta \models \Phi$ impliziert
+$\beta \models \varphi$. 
+
+Wir schreiben dann $\Phi \VDash \varphi$ . Außerdem schreiben wir 
+
+- $\varphi \VDash \psi$ statt $\{\varphi\}\VDash \psi$ mit $\varphi,\psi \in F_{AL}$
+- $\VDash \varphi$ statt $\emptyset\VDash\varphi$, wenn $\varphi$ allgemeingültig ist
+
+Wir definieren $\Phi^{\VDash} := \{\varphi\in F_{AL} \mid \Phi \VDash \varphi\}$
+
+Sei $\Phi \subseteq F_{AL}$ eine (unedliche) Formelmenge und sei $\Psi
+\Subset F_{AL}$ eine endliche Formelmenge und sei $\varphi \in
+F_{AL}$, dann sind äquivalent:
+
+- $\Phi \VDash \bigwedge (\Psi) \rightarrow \varphi$
+- $\Phi \cup \Psi \VDash \phi$
+- $\Phi \cup \{\bigwedge \Psi\} \VDash \phi$
+
+Insebesondere sind also äquivalent:
+
+- $\Psi\VDash\varphi$
+- $\VDash\bigwedge_{\psi\in\Psi} (\psi) \rightarrow \varphi$
+
+Sei $\Phi \subseteq F_{AL}$ eine (unendliche) Formelmenge und sei
+$\varphi \in F_{AL}$ eine Formel, dann sind äquivalent:
+
+- $\Phi \VDash \varphi$
+- $\unerfb \Phi \cup\{\neg \varphi\}$
+
+Sei $\Phi \subset F_{AL}$ eine (unendliche) Formelmenge und sei
+$\varphi \in F_{AL}$ eine Formel, dann sind äquivalent:
+
+- $\Phi \VDash \varphi$
+- Es gibt $\Phi_0 \Subset \Phi$ mit $\Phi_0 \VDash \varphi$
+
+Das Folgerungsproblem für aufzählbare Formelmengen ist also positiv
+semientscheidbar.
+
+** Modellierung
+
+Sei $G=\langle V, E\rangle$ ein endlicher gerichteter Graph. 
+
+*** Erreichbarkeit
+
+Sei $S \subseteq V$, dann gilt $t\in V$ ist von $S$ aus in $G$
+erreichbar, genau dann, wenn:
+
+$\{X_s \mid s \in S\} \cup \{X_i \rightarrow X_j \mid \langle i,j\rangle \in E\} \VDash X_t$
+
+Wir verwenden dabei Variablen der Form $X_i$: "$i$ ist erreichbar".
+
+*** Unvermeidbarkeit
+
+Gesucht sind die Knoten, die so sind, dass man egal über welche Kanten
+man ausgehend von diesem Knoten läuft man irgendwann in einer
+Ziel-Knotenmenge $T$ landet?
+
+Sei $T \subseteq V$ und sei $s \in V$, dann ist $T$ von $s$ aus
+unvermeidbar, genau dann, wenn gilt:
+
+$\{X_t \mid t \in T\} \cup \{\bigwedge_{j:\langle i, j \rangle \in E} (X_j) \rightarrow
+X_i \mid i \in V'\} \VDash X_s$ mit $V' = \{v \in V \mid \text{es
+gibt } w \in V \text{ sodass } \langle v, w \rangle \in E\}$.
+
+*** Erreichbarkeitsspiele
+
+Gesucht sind die Knoten, von denen aus Spieler $\bigcirc$ aus einen
+Gewinn erzwingen kann.
+
+Sei $V_{\bigcirc} \subseteq V$ die Menge von Knoten von Spieler
+$\bigcirc$ und sei $V_{\Box} = V\setminus V_{\bigcirc}$ die Menge der
+Knoten von Spieler $\Box$ und sei $T \subset V$, dann ist $s \in V$
+genau dann ein gewinnbringender Knoten für Spieler $\bigcirc$, wenn
+gilt:
+
+$\{t \mid t\in T\} \cup \{X_j \rightarrow X_i \mid \langle i,j\rangle \in E \wedge i \in V_{\bigcirc}\} \cup \{\bigwedge_{j: \langle i,j\rangle \in E} (X_j) \rightarrow X_i \mid i \in V_{\Box}\} \VDash X_s$
+
+
+** Resolution
+
+Zwei Klauseln $K$ und $K'$ heißen *resolvierbar* bzgl. einer Variablen $X_i$, wenn es $X_i$ gibt,
+sodass $X_i \in K$ und $\neg X_i \in K'$. Die *Resolvente* von $K$ und $K'$ ist:
+
+$\res_{X_i}(K,K') = K\setminus\{X_i} \cup K'\setminus\{\neg X_i}$
+
+*** Resolutionswiderlegunsbeweis
+
+Um zu zeigen, dass eine Formelmenge unerfüllbar ist, kann man einen
+*Resolutionswiderlegungsbeweis* führen. Dazu wird die Formelmenge in KNF
+gebracht und dann für die sich so ergebende Klauselmenge $M$ gezeigt,
+dass die leere Klausel aus $M$ folgt, d.h.
+$M\vdash_{\res}{*}\emptyset$.
+
+*** TODO SLD Resolution
+
+**** TODO SLD-Resolutionswiderlegungsbeweis
+
+Um zu zeigen, dass eine Zielklausel $K$ unter einer Klauselmenge $M$
+unerfüllbar ist, kann man einen *SLD-Resolutionswiderlegungsbeweis*
+führen. Dazu wird gezeigt, dass $M,K\vdash_{SLD} \emptyset$ gilt.
