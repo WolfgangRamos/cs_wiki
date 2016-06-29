@@ -6,9 +6,12 @@
 #+BEGIN_HTML
 ---
 layout: page
-title: Computer Science Wiki
 ---
 #+END_HTML
+
+* Hinweis
+
+I'm currently migrating this wiki from Markdown to Emacs Org Mode. The old sources can be found here [[https://bitbucket.org/alphaAndOmega/inf_wiki]]
 
 * Inhalt
 
