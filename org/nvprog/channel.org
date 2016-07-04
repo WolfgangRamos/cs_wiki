@@ -1,0 +1,96 @@
+#+TITLE: Channel
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Channel
+---
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    class Chan<T> {
+
+      private MVar<MVar<ChanElem<T>>> read, write;
+      
+      private ChanElem<T> {
+
+        private T value;
+        private MVar<ChanElem<T>> next;
+
+        public ChanElem(T v, MVar<ChanElem<T>> n) {
+          this.value = v;
+          this.next = n;
+        }
+
+        public T value() {
+          return this.value;
+        }
+
+        public MVar<ChanElem<T>> next() {
+          return this.next;
+        }
+
+      }
+
+      public Chan() throws Interrupted Exception {
+        MVar<ChanElem> hole = new MVar<T>();
+        read = new MVar<>(hole);
+        write = new MVar<>(hole);
+      }
+
+      public void read() {
+        MVar<ChanElem<T>> rEnd = read.take();
+        ChanElem<T> item = rEnd.take();
+        read.put(item.next());
+        return item.value();
+      }
+
+      public void write(T value) {
+        MVar<ChanElem<T>> newHole = new MVar<>();
+        ChanElem<T> item = new ChanElem<>(value, newHole);
+        MVar<ChanElem<T>> wEnd = write.take();
+        wEnd.put(item);
+        write.put(newHole);
+      }
+
+      public boolean isEmpty() throws InterruptedException{
+        MVar<ChanElem<T>> rEnd read.read();
+        MVar<ChanElem<T>> wEnd write.read();
+        return rEnd == wEnd;
+      }
+
+      
+    }
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+    class ChanTest extends Thread {
+
+      static Chan<Object> ch;
+      
+      public void run() {
+        try {
+          ch.read();
+          System.out.println("Gelesen");
+        } catch(Exception e) {
+        }
+      }
+
+      // results in a deadlock
+      public void main (String[] args) {
+        ch = new Chan<>();
+        new ChanTest().start();
+
+        sleep(10);
+        if(ch.isEmpty()) {
+          ch.write(new Object());
+        }
+
+        System.out.println("Fertig");
+      }
+    }
+#+END_EXAMPLE

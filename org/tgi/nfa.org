@@ -1,0 +1,66 @@
+#+TITLE: Nfa
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Nfa
+---
+#+END_HTML
+
+* Endliche nicht-deterministische Automaten
+
+Ein endlicher /nicht-deterministischer Automat/ (NFA oder NEA) ist ein
+Tupel $M=(Q,\Sigma,\delta,q_{0},F)$ aus:
+
+-  einer endlichen Menge $Q$ von Zuständen (/Zustandsmenge/)
+-  einem Alphabet $\Sigma$
+-  einer Transitionsfunktion
+   $\delta: Q \times \Sigma_{\epsilon} \rightarrow \mathcal{P}(Q)$
+-  einem /Anfangszustand/ $q_{0} \in Q$
+-  einer Menge $F$ von /Endzuständen/
+
+Dieses Automatenmodell heißt /nicht-deterministisch/, da es zu jedem
+Wort $w$ mehrere Möglichkeiten (oder auch keine Möglichkeit) gibt das
+Wort zu lesen. Es kann also zu jedem Wort $w \in \Sigma^*$ *mehrere*
+(oder auch keine) Berechnungen geben. Diese können akzeptierend oder
+nicht akzeptierend sein (wenn $w \in L(M)$ gilt gibt es mindestens eine
+akzeptierende Berechnung).
+
+Man kann sich einen NFA so vorstellen, dass er zu einem gegeben Wort $w$
+allen mit $w$ beschrifteten Pfaden sucht. Er kann sich also so gesehen
+in mehreren Zuständen (oder auch in keinem Zustand) befinden.
+
+*Eigenschaften:*
+
+-  Jede Sprache, die von einem NFA erkannt wird ist regulär,
+-  Jeder NFA ist zu einem DFA äquivalent.
+
+** Berechnung
+
+Sei $M = (Q,\Sigma,\delta,q_0,F)$ ein NFA und $w$ ein Wort über
+$\Sigma$. Eine /Berechnung/ von $M$ auf $w$ ist eine Folge
+$r:=(r_0,r_1,\dots,r_n)$ von Zuständen $r_i \in Q$ für mit folgenden
+Eigenschaften:
+
+1. $w$ lässt sich schreiben als $w=w_0\dots{}w_{n-1}$ mit
+   $w_i \in \Sigma_{\epsilon}$ ($w_i$ kann also auch $\epsilon$ sein)
+2. $r_0 = q_0$
+3. $\forall i \leq n: r_{i+1} \in \delta(r_i,w_i)$
+
+$M$ /akzeptiert/ (engl. /accept/) $w$ (man sagt auch eine Berechnung auf
+$w$ ist /akzeptierend/), falls gilt:
+
+4. $r_m \in F$
+
+Die Menge der von $M$ akzeptierten Wörter bildet eine /formale Sprache/
+$L(M) := \{ w \in \Sigma* | M \text{ akzeptiert } w \}$. $L(M)$ wird
+auch die von $M$ /erkannte Sprache/ genannt (engl. /recognize/).
+(*Merke:* ein Automat kann viele Wörter /akzeptieren/, aber nur eine
+Sprache /erkennen/.)
+
+Berechnungen kann man sich vorstellen als Pfade, die in $q_0$ beginnen
+und die mit $w$ beschriftet sind.

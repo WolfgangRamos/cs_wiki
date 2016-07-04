@@ -1,0 +1,100 @@
+#+TITLE: Quicksort
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Quicksort
+---
+#+END_HTML
+
+* Quicksort
+
+*geg:* Feld $A$ mit $n$ Elementen.
+
+*Idee:* Wähle Pivotelement $x$ aus $A$ (i.d.R. $x := A[0]$; s.
+[[randomized_quicksort]] für eine Quicksort-Version, die ein zufällig
+gewähltes Pivotelement verwendet). Ordne das Feld so um, dass zwei
+Teilfelder entstehen, wobei im vorderen Teilfeld alle Elemete $\leq x$
+sind und im hinteren Teilfeld alle Element $\geq x$ sind (verwende zum
+Umordnen eine der nachfolgend genannten Techniken). Dann sortiere die
+beiden Teilfelder rekursiv.
+
+*1. Technik zum Umordnen des Feldes:* Verwende ein zusätzliches Feld $B$
+und kopiere zunächst die Elemente $\<x$ nach $B$, danach $x$ selbst und
+zuletzt die Elemente $\geq x$.
+
+-  Vorteil: Reihenfolge der Elemente $\<x$ und bzw. $\geq x$ bleibt
+   erhalten.
+-  Nachteil: zusätzlicher Speicher nötig
+
+*2. Technik zum Umordnen des Feldes:* Verwende zwei Zeiger (Indizes)
+$i,j$. Setze zu Anfang $i:=l+1$ und $j:=r$, wobei $l$ die linke Grenze
+des umzuordnenden Bereichs und $r$ die recht Grenze ist. Solange
+$i \leq j$:
+
+1. lasse $i$ von links nach rechts über Feld $A$ laufen, bis $A[i] > x$
+   gilt.
+2. lasse $j$ von rechts nach links über Feld $A$ laufen, bis $A[j] < x$
+   gilt.
+3. vertausche $A[i]$ und $A[j]$, falls $i < j$ ist
+4. füge Pivotel. an Position $i-1$ bzw. $j$ ein.
+
+*Algorithmus:*
+
+#+BEGIN_EXAMPLE
+    quicksort(A, l, r) {
+      integer x, i, j, temp;
+      if l < r then
+        x = A[l];
+        i = l+1;
+        j = r;
+        while i <= j) do
+          while i <= j and A[i] <= x do
+            i = i+1;
+          od
+          while i<= j and A[j] >= x do
+            j = j-1;
+          od
+          if i < j then
+            temp = A[i];
+            A[i] = A[j];
+            A[j] = temp;
+          fi
+        od
+        i = i-1;
+        A[l] = A[i];
+        A[i] = x;
+        quicksort(A, l, i-1);
+        quicksort(A, i+1, r);
+      fi
+    }
+#+END_EXAMPLE
+
+*Vermeidung von Zugriffsfehler:* Zugriffe auf $A[r+1]$ können vermieden
+werden durch:
+
+-  Verwendung eines Felds der Länge $n+1$ (dann existiert $A[r+1]$),
+   oder
+-  Verwendung einer $\wedge$-Operation, die /short-circuit evaluation/
+   [[http://de.wikipedia.org/wiki/Kurzschlussauswertung][Kurzschlussauswertung]]
+   unterstützt.
+
+*Laufzeit:* (s. [[sortierverfahren][Übersicht über Sortierverfahren]])
+
+-  LZ des Umordnens liegt in $ \mathcal{O}(r-l)$
+
+* Randomized Quicksort
+
+*Idee:* Wähle zunächst zufällig ein Pivotelement $A[k]$ aus dem Teilfeld
+$A[l],...,A[r]$ (also $k \in \\{l,...,r\\}$). Vertauche danach $A[l]$
+und $A[k]$. Durch die zufällige Wahl des Pivotelements ist die erwartete
+Größe der beiden Teilprobleme (Teilfelder) etwa gleich groß.
+
+TODO: Bild
+
+*Laufzeit:* Die erwartete durchschnittliche Laufzeit von Randomized
+Quicksort ist $\mathcal{O}(n \log(n))$.

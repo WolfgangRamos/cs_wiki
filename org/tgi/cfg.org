@@ -1,0 +1,148 @@
+#+TITLE: Cfg
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Cfg
+---
+#+END_HTML
+
+* Context free grammar
+
+Eine /Context Free Grammar/ (CFG, dt. /kontextfreie Grammatik/) ist ein
+4-Tupel $(V,\Sigma,R,S)$ aus:
+
+-  einer endliche Menge von /Variablen/ $V$
+-  einer endliche Menge von /Terminalen/ $\Sigma$, mit
+   $\Sigma \cap V = \emptyset$
+-  einer endliche Menge von /(Produktions-)Regeln/ $R$, wobei jede Regel
+   aus einer Variablen und einem Wort aus $(V \cup \Sigma)^*$ (also ein
+   Folge von Variablen und Terminalen) besteht. Regeln werden in der
+   Form $\langle Variable \rangle \longrightarrow \langle Wort \rangle$
+   aufgeschrieben.
+-  einer /Startvariablen/ $S \in V$
+
+Sei $G$ eine CFG, dann bezeichnet
+$L(G) := \{w \in \Sigma^* | S \Rightarrow_* w\}$ die Sprache, die durch
+$G$ /erzeugt/ wird.
+
+*Eigenschaften:*
+
+-  Eine Grammatik $G$ ist /genau dann/ kontextfrei, wenn sie von einem
+   PDA /erkannt/ wird (d.h. es gibt einen PDA $P$ gibt mit
+   $L(P) = L(G)$).
+
+** Substitution
+
+Das Ersetzen einer Variablen durch die rechte Seite einer Regel heißt
+/Substitution/.
+
+Eine Substitution ist /left-most/, wenn die Variable, die im Wort am
+weitesten links steht ersetzt wird.
+
+** Ableitung
+
+Seien $u,v \in (V \cup \Sigma)^*$. Wir sagen $v$ kann von $u$
+/abgeleitet/ (engl. derived) werden und schreiben $u \Rightarrow_* v$,
+wenn es eine Folge von /left-most/ Substitutionen gibt, sodass
+$u \Rightarrow u_1 \Rightarrow u_2 \Rightarrow \dots \Rightarrow u_k \Rightarrow v$
+gilt mit $k>0$ und $u_i \in (V \cup \Sigma)^*$ für alle
+$i \in \{1,\dots,k\}$.
+
+** Mehrdeutigkeit
+
+Eine Grammatik $G$ heißt /mehrdeutig/, wenn es $w \in L(G)$ gibt, dass
+mehrdeutig aus $S$ abgeleitet werden kann.
+
+Eine Ableitung heißt /mehrdeutig/ oder /nicht-eindeutig/ (engl.
+ambiguous), wenn es für $v,w \in (V \cup \Sigma)^*$ mehrere Ableitungen
+$v \Rightarrow w$ gibt.
+
+Eine Sprache heißt /inherent mehrdeutig/ (engl. inherently ambiguous),
+wenn sie nur durch eine mehrdeutige Grammatik erzeugt werden kann.
+
+** Operationen
+
+-  Vereinigung kontexfreier Sprachen $L_1 \cup ... \cup L_n$ sind
+   kontextfrei: Vereinige Menge der Regeln, erstelle neue Regel
+   $S \rightarrow S_1 | S_2 | \dots | S_n$
+-  Umwandlung DFA in CFG
+
+   -  erstelle Variable $R_i$ für jeden Zustand $q_i \in Q$
+   -  erstelle Regel $R_i \rightarrow aR_j$, wenn $\delta(q_i,a) = q_j$
+      gilt
+   -  erstelle Regel $R_i \rightarrow \epsilon$, wenn $q_i \in F$ gilt
+   -  wähle $S = R_0$, wenn $q_0$ Startzustand des DFA ist
+
+** Chomsky Normalform
+
+Eine CFG $G=(V,\Sigma,R,S)$ ist in /Chomsky Normalform/ (CNF), wenn alle
+Regeln $r \in R$ folgende Form haben:
+
+-  $A \rightarrow BC$ für $A \in V$ und $B,C \in V\setminus\{S\}$ oder
+-  $A \rightarrow a$ für $A \in V$ und $a \in \Sigma$ oder
+-  $S \rightarrow \epsilon$
+
+*Eigenschaften*
+
+-  Jede CFL kann durch eine CFG in Chomsky Normalform erzeugt werden.
+
+-  Sei $G$ eine CFG in CNF und $M$ die kleinste Menge, die die
+   Bedingungen erfüllt:
+
+   1. Falls $S\rightarrow \epsilon$ Regel von $G$, dann gilt $S \in M$
+   2. Falls $A\rightarrow a$ Regel von $G$, dann gilt $A \in M$
+   3. Falls $B,C \in M$, und $A\rightarrow BC$ Regel von $G$, dann gilt
+      $A \in M$
+
+   Dann gilt für jede Variable $A$:
+   $\exists w \in \Sigma^*: A \vdash_{G}^{*} w$, genau dann wenn
+   $A \in M$ $L(G) \neq \emptyset$ genau dann wenn $S \in M$
+
+*Verfahren um eine CFG in Chomsky Normalform zu bringen:*
+
+Sei $G:=(V,\Sigma,R,S)$ ein CFG. Führe folgende Schritte aus, um $G$ in
+Chomsky Normalform zu bringen:
+
+1. Füge neuen Startzustand $S_0$ und die Regel $S_0 \rightarrow S$
+   hinzu.
+2. Entferne iterativ Regeln der Form $A\rightarrow\epsilon$, mit
+   $A \neq S$ (Eine Regel $S \rightarrow \epsilon$ darf erhalten
+   bleiben). Lösche zunächst die Regel $A \rightarrow \epsilon$. Füge
+   dann für /jedes/ Auftreten von $A$ auf der rechten Seite einer Regel
+   eine neue Regel hinzu, in der dieses $A$ nicht mehr auftritt. Die
+   Regel $B \rightarrow uAvAw$ führt also dazu, dass die Regeln
+   $B \rightarrow uvAw | uAvw | uvw$ hinzugefügt werden. Die Regel
+   $B \rightarrow A$ führt also dazu, dass die Regel
+   $B \rightarrow \epsilon$ hinzugefügt wird, *außer*
+   $B \rightarrow \epsilon$ wurde bereits vorher entfernt.
+3. Entferne iterativ Regeln der Form $A \rightarrow B$ (sog.
+   /Unit-Rules/). Lösche zunächst die Regel $A \rightarrow B$. Wenn es
+   die Regeln $B \rightarrow CDE | FG$ und $B \rightarrow a$ gibt, dann
+   füge die Regeln $A \rightarrow CDE | FG | a$ hinzu, außer eine dieser
+   Regeln wurde bereits vorher ersetzt.
+4. Bringe alle Regeln in die Form $A \rightarrow BC$ oder
+   $A \rightarrow a$ durch Einführung von /Hilfsregeln/. Die Regel
+   $A \rightarrow BCDu$ wird also ersetzt durch $A \rightarrow BA_1$,
+   $A_1 \rightarrow CA_2$, $A_2 \rightarrow DA_3$ und
+   $A_3 \rightarrow u$.
+
+** Pumping Lemma
+
+Sei $L$ eine formale Sprache. Wenn $L$ kontextfrei ist, dann gibt es
+eine Zahl $p$, so dass für alle $w \in L$ mit $|w| \geq p$ eine
+Zerlegung $w=xuyvz$ mit $|uyv| \leq p$ und $|uv| \geq 1$ existiert und
+$x u^{i} y v^{i} z \in L$ für alle $i \in \mathbb{N}$ gilt.
+
+In Prädikatenlogik: Wenn $L$ kontextfrei ist, dann gilt
+$\exists p \geq 1: \forall w \in L: |w| \geq p \Rightarrow \exists x,u,y,v,z \in \Sigma^* : w = xuyvz \wedge |uyv| \leq p \wedge |uv| \geq 1 \wedge \forall i \in \mathbb{N}: x u^{i} y v^{i} z \in L$.
+
+Mit Hilfe der *Kontraposition* des Pumping Lemmas kann man zeigen, dass
+eine Sprache /nicht/ kontextfrei ist: Wenn es für alle $p \geq 1$ ein
+Wort $w \in L$ gibt mit $|w| \geq p$ und für jede Zerlegung $w=xuyvz$
+mit $|uyv| \leq p$ und $|uv| \geq 1$ ein $i$ existiert mit
+$x u^i y v^i z \not\in L$, dann ist $L$ nicht kontextfrei ist.

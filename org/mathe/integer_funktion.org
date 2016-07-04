@@ -1,0 +1,18 @@
+#+TITLE: Integer_funktion
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Integer_funktion
+---
+#+END_HTML
+
+* Integer Funktion
+
+-  Die $int$ FUnktion ist für $x_0 \in \mathbb{Z}$ nicht stetig.
+-  Die $int$ FUnktion ist für $x_0 \in \mathbb{R}\setminus\mathbb{Z}$
+   stetig.

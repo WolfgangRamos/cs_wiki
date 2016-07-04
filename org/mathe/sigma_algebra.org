@@ -1,0 +1,47 @@
+#+TITLE: Sigma_algebra
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Sigma_algebra
+---
+#+END_HTML
+
+* Sigma-Algebra / Messraum
+
+Sei $\Omega$ eine nicht-leere Menge von Ergebnissen. Dann heißt eine
+Teilmenge ihrer Potenzmenge $\mathcal{A} \subseteq \mathcal{P}(\Omega)$
+eine $\sigma$-Algebra, wenn gilt:
+
+1. $\Omega \in \mathcal{A}$
+2. $A \in \mathcal{A} \Rightarrow A^C := \Omega \setminus A \in \mathcal{A}$
+3. $\forall n \in \mathbb{N}: A_n \in \mathcal{A} \rightarrow \bigcup_{n \in \mathbb{N}} A_n \in \mathcal{A}$.
+
+Das Paar aus der /Ergebnismenge/ und der $\sigma$-Algebra
+$(\Omega,\mathcal{A})$ heißt dann /Messraum/.
+
+*Eigenschaften:*
+
+-  $\emptyset \in \mathcal{A}$
+-  Endliche Vereinigungen von Elementen aus $\mathcal{A}$ sind immer
+   selbst Element von $\mathca{A}$
+-  Abzählbare Schnittmengen von Elementen aus $\mathcal{A}$ sind immer
+   selbst Element von $\mathcal{A}$
+
+** Fein / Grob
+
+Seien $\mathcal{A}_1, \mathcal{A}$ $\sigma$-Algebren über $\Omega$ mit
+$\mathcal{A}_2 \subseteq \mathcal{A}_1$. Dann heißt $\mathcal{A}_1$
+/feiner/ als $\mathcal{A}_2$.
+
+** Spezielle Sigma Algebren
+
+$\mathcal{A} = \mathcal{P}(\Omega)$ ist $\sigma$-Algebra (sog. /feinste/
+$\sigma$-Algebra)
+
+$\mathcal{A} = \{\Omega,\emptyset\}$ ist $\sigma$-Algebra (sog.
+/gröbste/ $\sigma$-Algebra)

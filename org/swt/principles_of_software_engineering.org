@@ -1,0 +1,85 @@
+#+TITLE: Principles_of_software_engineering
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Principles_of_software_engineering
+---
+#+END_HTML
+
+* Prinzipien des Software-Engineering
+
+** Abstraktion
+
+Enwicklung eines Modells zur Repräsenation ausgewählter Aspekte einer
+Vorlage (z.B. der Außenwelt, oder einer anderen Klasse).
+
+** Strukturierung
+
+Unterteilung von in Prozessen und Produkten in einzelne Bestandteile
+u.a. zum Zweck der Arbeitsteilung. Strukturiert wird in der
+SW-Entwicklung:
+
+-  zeitliche Strukturierung: Unterteilung des Entwicklungsprozesses in
+   verschiedene Phasen
+-  Unterteilung der SW in verschiedene Bestandteile (s.a.
+   Modularisierung)
+
+** Modularisierung
+
+Aufbau eines Gesamtsystems aus Einheiten (Modulen). Ziel von
+Modularisierung ist hohe Kohäsion und geringe Kopplung.
+
+-  *Kohäsion*: Grad der Abhängigkeit zwischen Komponenten /desselben/
+   Moduls
+-  *Kopplung*: Grad der Abhängigkeit zwischen Modulen
+
+Modularisierung unterstützt:
+
+-  Kapselung (Information Hiding)
+-  Separation of Concernes
+-  Wiederverwertung
+
+** Kapselung
+
+Kapselung bezeichnet das gezielte Verstecken von Details (der
+Implementierung) eines Moduls vor Zugriffen von außen. Kapselung
+unterstützt:
+
+-  Separation of Concerns
+-  Modularisierung
+
+** Separation of Concerns
+
+Aufteilung von Zuständigkeiten/Verantwortlichkeiten bei der
+SW-Entwicklung, wie z.B.:
+
+-  Aufteilung der Funktionalität einer SW auf Module
+-  Arbeitsteilung in Entwicklerteams
+
+** Änderbarkeit
+
+SW soll leicht veränderbar gestaltet werden um die Wartung von SW zu
+vereinfachen:
+
+-  korrektive Wartung: Beseitigung von Fehlern
+-  perfektive Wartung:
+-  adaptive Wartung: Anpassung von SW an veränderte Rahmenbedingungen
+-  inkrementelle Wartung
+
+** Inkrementabilität
+
+Schrittweises entwickeln von SW (z.B. erst Entwicklung von Modulen, dass
+Integration der Module).
+
+** Gründlichkeit & Formalität
+
+Umfasst u.a.:
+
+-  formale Spezifikation von Anforderungen an eine SW
+-  formale Dokumentation einer SW
+-  formale Verifikation einer SW

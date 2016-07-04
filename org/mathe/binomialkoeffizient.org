@@ -1,0 +1,27 @@
+#+TITLE: Binomialkoeffizient
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Binomialkoeffizient
+---
+#+END_HTML
+
+* Binomialkoeffizient
+
+Sei $n \in \mathbb{C}$ und $k \in \mathbb{N}_0$, dann heißt
+$\binom{n}{k} := \prod_{j=1}^{k} \frac{n+1-j}{j}$ /Binomialkoeffizient/
+"n über k". Insbesonder gilt dann $\binom{n}{0} = 1$ für alle
+$n \in \mathbb{C}$.
+
+Im Fall von $n \in \mathbb{N}_0$ und $k \leq n$ gilt
+$\binom{n}{k} = \frac{n!}{k! (n-k)!}$.
+
+* Binomischer Lehrsatz
+
+Sei $x, y \in \mathbb{C}$ und $n \in \mathbb{N}_0$. Dann gilt
+$(x+y)^n = \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}$.

@@ -1,0 +1,83 @@
+#+TITLE: Stetigkeit
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Stetigkeit
+---
+#+END_HTML
+
+* Stetige Funktionen
+
+Sei $f: D \rightarrow \mathbb{K}$ eine Funktion auf
+$D \subseteq \mathbb{K}$ mit $\mathbb{K} = \mathbb{R}$ oder
+$\mathbb{C}$.
+
+*Lokale Stetigkeit:* $f$ heißt /stetig in Punkt/ $x_0$, wenn für alle
+Folgen $(x_n)\_{n \in \mathbb{N}} \subseteq D$ mit
+$\lim\_{n \rightarrow \infty} x_n = x_0$ gilt
+$\lim_{n \rightarrow \infty} f(x_n) = f(x_0)$. D.h., wenn gilt:
+
+$\forall (x_n)_{n \in \mathbb{N}} \subseteq D: \lim_{n \rightarrow \infty} x_n = x_0 \Rightarrow \lim_{n \rightarrow \infty} f(x_n) = f(x_0)$
+
+*Globale Stetigkeit:* $f$ heißt /stetig/ in $D$, wenn $f$ in jedem Punkt
+$x \in D$ stetig ist.
+
+*Eigenschaften:*
+
+-  Polynome $p \in \mathbb{K}[x]$ sind global stetig in $\mathbb{K}$.
+-  Seien $f,g: D \rightarrow \mathbb{K}$ stetig in $x_0 \in D$ bzw.
+   global, dann ist auch
+
+   -  $f+g$ stetig in $x_0$ bzw. global (endliche Produkte stetiger
+      Funktionen wieder stetig).
+   -  $f-g$ stetig (in $x_0$ oder global (endliche Produkte stetiger
+      Funktionen wieder stetig).
+   -  $\frac{f}{g}$ stetig in $x_0$, wenn $g(x_0) \neq 0$.
+   -  $|f|$ stetig in $x_0$ bzw. global.
+   -  $\max\{f,g\}$ stetig in $x_0$ bwz. global
+
+-  Die Komposition stetiger Funktionen in $\mathbb{K}$ ist wieder
+   stetig, d.h. seien $f_1: D_1 \rightarrow \mathbb{K}$ stetig in
+   $x_1 \in D_1$ bzw. global und $f_2: D_2 \rightarrow \mathbb{K}$
+   stetig in $x_2 \in D_2$ bzw. global und sei
+   $D_1, D_2 \subseteq \mathbb{K}$ und $f(D_1) \subseteq D_2$, dann ist
+   auch $f_1 \circ f_2: D_1 \rightarrow \mathbb{K}$ stetig in $x_1$ bzw.
+   global.
+-  Sei $D \subseteq \mathbb{R}$ offen oder abgeschlossen,
+   $f:D \rightarrow \mathbb{R}$ sei stetig und streng monoton steigend
+   bzw. fallend. Dann existiert die Umkehrabbildung
+   $f^{-1} : f(D) \rightarrow D$ und diese ist stetig und streng monoton
+   steigend bzw. fallend.
+
+** Epsilon-Delta-Kriterium
+
+Sei $D \subseteq \mathbb{K}$ offen, $x_0 \in D$, dann ist
+$f:D \rightarrow \mathbb{K}$ ist stetig in $x_0$, genau dann wenn gilt:
+
+$\forall \epsilon > 0: \exists \delta > 0:\forall x \in D: |x-x_0| < \delta \Rightarrow |f(x) - f(x_0)| < \epsilon$.
+
+** Zwischenwertsatz
+
+Sei $[a,b] \subseteq \mathbb{R}$ und $f:[a,b] \rightarrow \mathbb{R}$
+stetig mit $f(a) < f(b)$, dann wird jeder Wert $\xi \in [f(a),f(b)]$ von
+$f$ angenommen. D.h. es gilt
+
+$\forall y \in [f(a), f(b)]: \exists x \in [a,b]: f(x) = y$
+
+** Maximum-Minimum Satz
+
+Sei $[a,b] \subseteq \mathbb{R}$ und $f:[a,b] \rightarrow \mathbb{R}$
+stetig, dann nimmt $f$ auf $[a,b]$ ihr Maximum und Minimum an.
+
+** Stückweise Stetigkeit
+
+Sei $[a,b] \subseteq \mathbb{R}$. Dann heißt eine Funktion
+$f:[a,b]\rightarrow \mathbb{R}$ /stückweise stetig/, wenn endlich viele
+Punkte $a<x_0<\dots<x_n<b$ exsitieren, sodass $f$ auf allen Intervallen
+$(x_{k-1},x_k)$ stetig ist und an den Ausnahmestellen $x_k$ mit
+$k\in \{0,\dots,n\}$ der einseitige Grenzwert stets existiert.

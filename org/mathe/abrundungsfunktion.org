@@ -1,0 +1,31 @@
+#+TITLE: Abrundungsfunktion
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Abrundungsfunktion
+---
+#+END_HTML
+
+* Abrundungsfunktion
+
+$\lfloor \cdot \rfloor : \mathbb{R} \rightarrow \mathbb{Z}$
+
+*Eigenschaften:*
+
+1. Grenzen:
+   $\forall x \in \mathbb{R}: \lfloor x \rfloor \leq x < \lfloor x \rfloor + 1$
+2. Idempotenz:
+   $\forall x \in \mathbb{R}: \lfloor \lfloor x \rfloor \rfloor = \lfloor x \rfloor$.
+3. ganze Zahlen können aus der Klammer gezogen werden:
+   $\forall x \in \mathbb{R}, k \in \mathbb{Z}: \lfloor x + k \rfloor = \lfloor x \rfloor + k$
+4. Die Summe der abgerundeten ist höchstens so groß wie die abgerundete
+   Summe, d.h es gilt
+   $\forall x,y \in \mathbb{R}: \lfloor x \rfloor + \lfloor y \rfloor \leq \lfloor x + y \rfloor$.
+5. Die abgerundete Summe ist höchstens um $1$ größer als die Summe der
+   abgerundeten, d.h es gilt
+   $\forall x,y \in \mathbb{R}: \lfloor x + y \rfloor \leq \lfloor x \rfloor + \lfloor y \rfloor + 1$.

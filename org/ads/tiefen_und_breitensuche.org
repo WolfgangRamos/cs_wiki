@@ -1,0 +1,174 @@
+#+TITLE: Tiefen_und_breitensuche
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Tiefen_und_breitensuche
+---
+#+END_HTML
+
+* Tiefen- und Breitensuche
+
+/Depth First Search/ (DFS) und /Breadth First Search/ (BFS) sind
+Strategien die einen Graphen systematisch durchlaufen und jeden Knoten
+und jede Kante besuchen.
+
+*geg:* [[ungerichtete_graphen][ungerichteter, zusammenhängender Graph]]
+$G=(V,E)$.
+
+** Tiefensuche
+
+*Idee:*
+
+1. wähle einen Startknoten $x \in V$ und besuche ihn, dann besuche einen
+   zu $x$ adjazenten (unbesuchten) Knoten $b$, dann einen zu $b$
+   adjazenten, unbesuchten Knoten $c$, usw.
+2. irgendwann erreichen wir Knoten, dessen Nachbarn alle schon besucht
+   worden sind. Dann gehe zum vorherigen besuchten Knoten zurück (wie
+   bei Backtracking) und setze den Alg. dort fort.
+3. breche ab, wenn Ausgangsknoten $x$ wieder erreicht ist und alle
+   Nachbarn von $x$ besucht worden sind.
+
+*Algorithmus:*
+
+#+BEGIN_EXAMPLE
+    // globale Variablen
+    integer DFSNummer[]; // speichert die Reihenfolge, in der die Knoten besucht werden;
+                         // der 1. Knoten erhält die 1, der 2. die 2, usw.
+    integer Besucht[];   // 0 = unbesucht; 1 = besucht
+    integer x;           // Startknoten
+    integer label;
+
+    HAUPTPROGRAMM() {
+      // Initialisierung
+      foreach (v ∈ V) do
+        DFSNummer[v] = 0;
+      od
+        
+      foreach (e ∈ E) do
+        Besucht[e] = 0;
+      od
+      
+      x = 0;
+      label = 0;
+
+      DFS(x, 0);
+    }
+
+    DFS(v, label) {
+      int label = label + 1;
+      DFSNummer[v] = label;
+
+      foreach (u ∈ Adj(v)) do
+        betrachte e = {v,u};       // wähle u immer so, dass e den kleinsten Index oder das kleinste Gewicht hat
+
+        if (Besucht[e] = 0) then   // e unbesucht
+          Besucht[e] = 1;
+          if DFSNummer[u] = 0 then // u unbesucht
+            Vater[u] = v;          // für Backtracking
+            DFS(u, label);
+          fi
+        fi
+      od
+    }
+#+END_EXAMPLE
+
+*Eigenschaften:* Der Algorithmus erzeugt mit der Vater-Relation einen
+[[gerichtete_graphen][gerichteten Baum]]. Es gilt
+
+1. $T=(V,E')$ mit $E'= \\{ (Vater[v],v) | v \in V \wedge v \neq r\\}$
+   ist ein gerichteter Baum, wobei $r$ der Startknoten der DFS-Suche
+   ist.
+2. Ist $v$ ein Vorgänger von $u$ in $T$, so gilt
+   =DFSNummer[v] < DFSNummer[u]=.
+3. Es gibt keine "Querkanten"m d.h. für alle Kanten $e=(u,v) \in E'$
+   gilt, dass $u$ Vorgänger von $v$ ist.
+
+*Laufzeit:* $\mathcal{O}(|V| + |E|)$
+
+** Breitensuche
+
+*Idee:*
+
+1. wähle einen Startknoten $a \in V$ und schreibe ihn in eine anfangs
+   leere Warteschlange $Q$
+2. nimm den ersten Knoten aus $Q$, besuche alle seine Nachbarn und
+   schreibe diese in der Besuchsreihenfolge ans Ende von $Q$
+3. fahre entsprechend so fort, bis $Q$ leer ist.
+
+*Algorithmus:*
+
+#+BEGIN_EXAMPLE
+    // globale Variablen
+    integer DFSNummer[]; // speichert die Reihenfolge, in der die Knoten besucht werden;
+                         // der 1. Knoten erhält die 1, der 2. die 2, usw.
+    integer Besucht[];   // 0 = unbesucht; 1 = besucht
+    integer x;           // Startknoten
+    integer label;
+
+    HAUPTPROGRAMM() {
+      // Initialisierung
+      foreach (v in V) do
+        BFSNummer[v] = 0;
+      od
+      foreach (e in E) do
+        KanteBesucht[e] = 0;
+      od
+      x = 0;
+      label = 0;
+
+      BFS(G, 0);
+    }
+
+    BFZ(G=(V,E), r)
+      foreach (v in V) do
+        BFSNummer[v] = 0;
+        KnotenBesucht[v] = false;
+      od
+
+      foreach (e in E) do
+        KanteBesucht[e] = false;
+      od
+
+      errichte Warteschlange Q = (r);
+
+      integer label = 0;
+      KnotenBesucht[r] = true;
+      
+      while not(empty(Q)) do
+        nimm ersten Knoten v aus der Queue Q und lösche v in Q;
+        label = label + 1;
+        BFSNummer[v] = label;
+
+        foreach (u in Adj(v)) do
+          betrachte e = {u,v};
+        
+          if (KanteBesucht[e] = false) then
+            KanteBesucht[e] = true;
+            if (KnotenBesucht[u] = false) then
+              Vater[u] = v;
+              füge u ans Ende der Queue Q ein;
+              KnotenBesucht[u] = true;
+            fi
+          fi
+        od
+      od
+    }
+#+END_EXAMPLE
+
+*Eigenschaften:* Der Algorithmus erzeugt mit der Vater-Relation einen
+[[gerichtete_graphen][gerichteten Baum]]. Es gilt
+
+1. $T=(V,E')$ mit $E'= \\{ (Vater[v],v) | v \in V \wedge v \neq r\\}$
+   ist ein gerichteter Baum, wobei $r$ der Startknoten der BFS-Suche
+   ist.
+2. Ist $v$ ein Vorgänger von $u$ in $T$, so gilt
+   =BFSNummer[v] < BFSNummer[u]=.
+3. Jede Kante $e = \\{u,v\\}$ von $T$ verbindet Knoten, deren Ebene in
+   $T$ sich um $\leq 1$ unterscheiden.
+
+*Laufzeit:* $\mathcal{O}(|V| + |E|)$

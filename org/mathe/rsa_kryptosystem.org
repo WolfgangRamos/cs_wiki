@@ -1,0 +1,25 @@
+#+TITLE: Rsa_kryptosystem
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Rsa_kryptosystem
+---
+#+END_HTML
+
+* RSA Algorithmus
+
+*geg:*
+
+-  Primzahlen $p$ und $q$
+-  $n := pq$ und $m := (p-1)(q-1)$
+-  $e$, sodass $\gcd (e,m) = 1$ gilt
+-  $d$, sodass $ed \equiv 1 \mod m$
+
+Chiffrieren: $C(a) := a^e \mod n$
+
+Dechiffrieren: $D(b) := b^d \mod n$

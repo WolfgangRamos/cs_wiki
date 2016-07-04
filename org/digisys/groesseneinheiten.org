@@ -1,0 +1,41 @@
+#+TITLE: Groesseneinheiten
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Groesseneinheiten
+---
+#+END_HTML
+
+* Byte (B)
+
+| Einheit   | Größe                |
+|-----------+----------------------|
+| 1 B       | 8 bit                |
+| 1 kB      | $1024 B = 2^10 B$    |
+| 1 MB      | $1024 kB = 2^20 B$   |
+| 1 GB      | $1024 MB = 2\^30 B   |
+
+Speicher wird i.d.R. byteweise adressiert.
+
+* Wort
+
+Die Wortlänge ist systemabhängig. I.d.R. ist ein Wort die Größe einer
+Adresse auf dem jeweiligen System. Wortgrößen:
+
+-  IA32: 4 byte = 32 bits (Adresse des erstes byte eines Wortes ist
+   vielfaches von 4)
+-  x86-64: 8 byte = 64 bits (Adresse des erstes byte eines Wortes ist
+   vielfaches von 8)
+
+** Bytereihenfolge in mehr-byte großen Worten
+
+-  /big endian/: least significant byte hat höchste adresse (das
+   entspricht der gewohnten Zahlendarstellung, dass größere Stellen
+   zuerst genannt werden)
+-  /little endian/: least significant byte hat niedriste Adresse (Linux
+   verwendet i.d.R das little endian Bytereihenfolge)

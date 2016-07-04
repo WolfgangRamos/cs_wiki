@@ -1,0 +1,20 @@
+#+TITLE: Aequivalenzrelation
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Aequivalenzrelation
+---
+#+END_HTML
+
+* Äquivalenzrelation
+
+-  Reflexivität
+-  Symmetrie
+-  Transitivität
+
+siehe auch [[aequivalenzklassen][Äquivalenzklassen]]

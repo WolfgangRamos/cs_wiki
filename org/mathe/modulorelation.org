@@ -1,0 +1,70 @@
+#+TITLE: Modulorelation
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Modulorelation
+---
+#+END_HTML
+
+* Modulorelation
+
+Die Relation
+$\equiv \cdot \mod m \subseteq \mathbb{Z} \times \mathbb{Z}$ mit
+$x \equiv y \mod m :\Longleftrightarrow m | (x-y)$ (s.a.
+[[teilbarkeitsrelation][Teilbarkeitsrelation]]) für
+$m \in \mathbb{N} \setminus \\{0\\}$ heißt /Modulorelation/. Nach
+Definition der [[teilbarkeitsrelation][Teilbarkeitsrelation]] gilt also:
+$m | (x-y) \Longleftrightarrow \exists z \in \mathbb{Z}: zm = (x-y)$.
+Gilt $x \equiv y \mod m$, so sagt man "$x$ ist kongruent zu $y$ Modulo
+$m$".
+
+*Eigenschaften:*
+
+-  Die Modulorelation ist eine
+   [[aequivalenzrelation][Äquivalenzrelation]]:
+
+   -  Reflexivität:
+   -  Symmetrie:
+   -  Transitivität:
+
+* Restklassen
+
+Die Menge $[x]\_{m} := \\{y | y \equiv x \mod m\\}$ heißt /Restklasse
+von/ $x$ /modulo/ $m$.
+
+*Eigenschaften:*
+
+-  $a \in [b]\_{m} \Longleftrightarrow a \equiv b \mod m \Longleftrightarrow [a]\_{m} = [b]\_{m}$
+
+* Menge aller Restklassen
+
+Sei $m \in \mathbb{N}\_{\geq 2}$, dann heißt die Menge
+$\mathbb{Z}\_{m} := \\{ [z]\_{m} | z \in \mathbb{Z}\\}$ /Menge der
+Restklassen modulo/ $m$.
+
+* Prime Restklassengruppe
+
+Sei
+$\mathbb{Z}\_{n}^{\ast} := \\{ [z]\_{n} \in \mathbb{Z}\_{n} | \gcd (z,n) = 1 \\}$,
+dann heißt die [[gruppe][kommutative Gruppe]]
+$(\mathbb{Z}\_{n}^{\ast}, \cdot)$ /prime Restklassengruppe/ zu $n$.
+
+*Eigenschaften:*
+
+-  in $(\mathbb{Z}\_{n}^{\ast}, \cdot)$ exisiteren multiplikative
+   Inverse.
+-  ist $n$ Primzahl, so gilt
+   $\mathbb{Z}\_{n}^{\ast} = \mathbb{Z}\_{n} \setminus \\{0\\}$
+
+* eulersche Funktion
+
+Die Funktion $\rho(n) := |\mathbb{Z}\_{n}^{\ast}|$, welche die
+Mächtigkeit der primen Restklassengruppe zu $n$ angibt heißt /eulersche
+Funktion/.
+
+*Eigenschaften:*

@@ -1,0 +1,5 @@
+#+TITLE: IPv6
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+

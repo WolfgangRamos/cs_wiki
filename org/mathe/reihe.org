@@ -1,0 +1,199 @@
+#+TITLE: Reihe
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Reihe
+---
+#+END_HTML
+
+* Reihe
+
+Sei $(a_n)\_{n \in \mathbb{N}}$ eine Folge reeller oder komplexer Zahlen
+(d.h. es gilt $(a_n)\_{n \in \mathbb{N}} \subseteq \mathbb{R}$ oder
+$(a_n)\_{n \in \mathbb{N}} \subseteq \mathbb{C}$). Dann heißt
+$s_{k} = \sum_{k=1}^{n} a_k$ $k$-te /Partialsumme/. Die Folge der
+Partialsummen einer Folge $(s_{n})\_{n \in \mathbb{N}}$ heißt die
+zugeordnete /Reihe/. Sie wird mit "$\sum_{n=1}^{\infty} a_n$"
+bezeichnet. Hierbei handelt es sich um eine symbolische Schreibweise,
+d.h. das Summenzeichen ist nicht wörtlich zu verstehen.
+
+** Grenzwert eine Reihe
+
+Wir schreiben "$\sum_{n=1}^{\infty} a_n = a$", wenn die Reihe
+$\sum_{n=1}^{\infty} a_n \subseteq X$ gegen $a \in X$ konvergiert. $a$
+wird heißt dann Grenzwert von $\sum_{n=1}^{\infty} a_n$ bezeichnet.
+Hierbei handelt es sich um eine symbolische Schreiweise, d.h. das
+Summenzeichen ist nicht wörtlich zu versetehen.
+
+Um anzuzeigen, dass ein eine Reihe konvergiert verwenden wir auch die
+Schreibweise "$\sum_{n=1}^{\infty} a_n < \infty$" (auch hier handelt es
+sich um eine symbolische Schreibweise, so dass weder das Summenzeichen,
+noch $\infty$ wörtlich zu verstehen sind).
+
+*** Absolute Konvergenz
+
+Eine Reihe $\sum_{k=0}^{\infty} a_k$ heißt absolut konvergent, wenn die
+Reihe $\sum_{k=0}^{\infty} |a_k|$ konvergiert.
+
+*Eigenschaften*
+
+-  sofern eine Reihe absolut konvergiert, konvergiert sie auch normal,
+   d.h.
+   $\sum_{k=1}^{\infty} |a_k| < \infty \Longrightarrow \sum_{k=1}^{\infty} a_k < \infty$
+   *absolut konvergente Reihen bleiben nach Umsortierung absolut
+   konvergent.
+
+* geometrische Reihe
+
+Die Reihe $\sum_{n=0}^{\infty} q^n$ heißt /geometrische Reihe/.
+
+*Eigenschaften:*
+
+-  Falls $q \geq 1$, dann divergiert die geometrische Reihe bestimmt
+   gegen $+\infty$, d.h. es gilt $\sum_{n=0}^{\infty} q^n = +\infty$
+-  Falls $q \leq 1$, dann divergiert die geometrische Reihe, d.h. es
+   gilt $\sum_{n=0}^{\infty} q^n = \infty$
+-  Falls $|q| < 1$, dann konvergiert die geometrische Reihe gegen
+   $\frac{1}{1-q}$, d.h. es gilt
+   $\sum_{n=0}^{\infty} q^n = \frac{1}{1-q}$
+
+* harmonische Reihe
+
+Die Reihe $\sum_{n=1}^{\infty} \frac{1}{n}$ heißt /harmonische Reihe/.
+
+*Eigenschaften:*
+
+-  Die harmonische Reihe divergiert bestimmt gegen $+\infty$, d.h. es
+   gilt $\sum_{n=1}^{\infty} \frac{1}{n} = +\infty$.
+
+* Konvergenzkriterien für Reihen
+
+** Majorantenkriterium
+
+Eine Reihe nichtnegativer Glieder $\sum_{n=0}^{\infty} a_{n}'$ mit
+$a_{n}' \geq 0$ heißt /Majorante/ der Reihe $\sum_{n=1}^{\infty} a_n$,
+wenn ein $c \geq 0$ existiert, sodass $|a_{n}| \leq c a_{n}'$ für "fast
+alle" (d.h. alle bis auf endlich viele) $n \in \mathbb{N}$ gilt. D.h.
+wenn gilt:
+
+$\exists c \geq 0: \exists n_0 \in \mathbb{N}: \forall n \geq n_{0}: |a_{n}| \leq c a_{n}'$
+
+Eine Reihe ist /absolut konvergent/, wenn sie eine konvergente
+/Majorante/ besitzt.
+
+** Wurzelkriterium
+
+Eine Reihe $\sum_{n=0}^{\infty} a_n$ ist /absolut konvergent/, wenn ein
+$0 \leq q < 1$ existiert, sodass $\sqrt[n]{|a_{n}|} \leq q$ für fast
+alle $n$ gilt. D.h. wenn gilt
+
+$\exists 0 \leq q < 1: \exists n_0 \in \mathbb{N}: \forall n \geq n_0: \sqrt[n]{|a_{n}|} \leq q$
+
+** Quotientenkriterium
+
+Eine Reihe $\sum_{n=0}^{\infty} a_n$ ist /absolut konvergent/, wenn ein
+$0 \leq q < 1$ existiert, sodass $|\frac{a_{n+1}}{a_n}| \leq q$ für fast
+alle $n$ gilt. D.h. es gilt
+
+$\exists 0 \leq q < 1: \exists n_0 \in \mathbb{N}: \forall n \geq n_0: |\frac{a_{n+1}}{a_n}| \leq q$
+
+Gilt hingegen $|\frac{a_{n+1}}{a_n}| \geq q > 1$ für fast alle $n$, dann
+ist die Reihe nicht /absolut konvergent/, D.h. es gilt
+
+$\exists q > 1: \exists n_0 \in \mathbb{N}: \forall n \geq n_0: |\frac{a_{n+1}}{a_n}| \geq q > 1$
+
+* Potenzreihen
+
+Unter einer /reellen Potenzreihe/ versteht man eine Reihe der Form
+$P(x)=\sum_{n=0}^{\infty} a_n x^n$ mit $a_n \in \mathbb{R}$.
+
+Sei $M \subseteq \mathbb{R}$, die Menge der $x$ für welche die
+Potenzreihe $\sum_{n=0}^{\infty} a_n x^n$ konvergiert. Dann kann man
+eine Funktion $P: M \rightarrow \mathbb{R}$ definieren mit
+$P(x) := \sum_{n=0}^{\infty} a_n x^n$.
+
+Allgemeinere Form der Potenzreihe:
+
+$P(x) = \sum_{n=0}^{\infty} a_n (x-x_0 )^n$ mit $x_0 \in \mathbb{R}$
+fest.
+
+** Konvergenzradius
+
+Sei $P(x) = \sum_{n=0}^{\infty} a_n x^n$ eine reelle Potenzreihe, dann
+heißt
+
+$R(P) = \sup\{|x| \mid x \in \mathbb{R} \wedge P(x) < \infty\}$
+
+/Konvergenzradius/ der Potenzreihe.
+
+Wir schreiben $R(P) = \infty$ um anzudeuten, dass die Potenzreihe $P(x)$
+für beliebig große $x \in \mathbb{R}$ konvergiert.
+
+*Konvergenzkriteium für Potenzreihen:*
+
+Sei $P(x) = \sum_{n=0}^{\infty} a_n x^n$ eine Potenzreihe mit
+Koeffizienten ungleich Null, d.h. $\forall n \in \mathbb{N}: a_n \neq 0$
+und existiert $r := \lim_{n\rightarrow\infty} |\frac{a_n}{a_{n+1}}|$.
+Dann gilt für den Konvergenzradius
+$R(P) = \lim_{n\rightarrow\infty} |\frac{a_n}{a_{n+1}}|$.
+
+*Eigenschaften:*
+
+-  Konvergiert eine reelle Potenzreihe
+   $P(x) = \sum_{n=0}^{\infty} a_n x^n$ in einem Punkt
+   $x_0 \in \mathbb{R}$, so konvergiert sie auch absolut für alle
+   $x \in \mathbb{R}$ mit $|x| < |x_0|$.
+-  Sei $P(x) = \sum_{n=0}^{\infty} a_n x^n$ eine Potenzreihe mit
+   $R(P) > 0$, dann
+
+   -  konvergiert $P(x)$ absolut für $|x| < R(P)$.
+   -  divergiert $P(x)$ für $|x| > R(P)$.
+   -  lässt sich keine Aussage über die Konvergenz von $P(x)$ für
+      $x=R(P)$ treffen.
+
+** Spezielle Potenzreihen
+
+*** Exponentialfunktion
+
+Die Potenzreihe $e^x := \sum_{k=0}^{\infty} \frac{1}{k!} x^k$ heißt
+/Exponentialfunktion/. Statt $e^x$ schreibt man auch $\exp(x)$.
+
+*Eigenschaften:*
+
+-  Die Exponentialfunktion konvergiert für alle $z \in \mathbb{C}$, d.h.
+   der Konvergenzradius von $\exp$ ist $R(\exp) = \infty$.
+
+*** Sinus und Cosinus
+
+Die /Sinusfunktion/ lässt sich über die Potenzreihe
+$\sin(x) := \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!} x^{2n+1}$ mit
+$x \in \mathbb{R}$ definieren.
+
+Die /Cosinusfunktion/ lässt sich über die Potenzreihe
+$\cos(x) := \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n}$ mit
+$x \in \mathbb{x}$ definieren.
+
+*Eigenschaften:*
+
+-  Die Sinusfunktion konvergiert für alle $x \in \mathbb{R}$, d.h. der
+   Konvergenzradius von $\sin$ ist $R(\sin) = \infty$.
+-  Die Cosinusfunktion konvergiert für alle $x \in \mathbb{R}$, d.h. der
+   Konvergenzradius von $\cos$ ist $R(\cos) = \infty$.
+
+*** Binomialreihe
+
+Die Potenzreihe $B_m (z) := \sum_{n=0}^{\infty} \binom{m}{n} z^n$ für
+$z \in \mathbb{C}$ und festes $m \in \mathbb{N}_0$ heißt
+/Binomialreihe/. $R(P) = \infty$.
+
+*Eigenschaften:*
+
+-  Die Binomialreihe konvergiert für alle $z \in \mathbb{C}$ und alle
+   $m \in \mathbb{N}_0$ mit Grenzwert
+   $\sum_{n=0}^{\infty} \binom{m}{n} z^n = (z+1)^m$, d.h. der
+   Konvergenzradius ist $R(B_m) = \infty$.

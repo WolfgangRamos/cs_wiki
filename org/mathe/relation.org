@@ -1,0 +1,21 @@
+#+TITLE: Relation
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Relation
+---
+#+END_HTML
+
+* Relation
+
+Sein $M, N$ Mengen, dann heißt eine Menge von Paaren
+$R \subseteq M \times N$ eine /Relation/ von $M$ nach $N$.
+
+$M$ heißt auch /Quelle/ und $N$ heißt auch /Ziel/. Wenn $M = N$ gilt
+heißt $R$ auch Relation auf $M$. Gilt $(a,b) \in R$, dann sagt man, dass
+$a$ und $b$ in Relation $R$ stehen.

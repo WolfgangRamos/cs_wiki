@@ -1,0 +1,44 @@
+#+TITLE: Design_by_contract
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Design_by_contract
+---
+#+END_HTML
+
+* Design by Contract
+
+Als Design by Contract bezeichnet man die formale Spezifikation der
+Semantik von Methoden durch Zusicherungen. Zusicherungen beschreiben
+einen Vertrag zwischen dem Aufrufer einer Methode und dem aufgerufenen.
+Es gibt drei Arten von Zusicherungen:
+
+-  /Vorbedingungen/: Eigenschaften, die beim Aufruf einer Methode gelten
+   müssen. Die Einhaltung der Vorbedingungen ist die Pflicht des
+   Aufrufenden (d.h. Einhaltung der Vorbedingungen muss nicht durch den
+   Aufgerufenen geprüft werden).
+-  /Nachbedingungen/: Eigenschaften, die nach Ausführung einer Methode
+   gewährleistet werden, wenn die Vorbedingungen erfüllt waren. Die
+   Einhaltung der Nachbedingungen ist die Pflicht des Aufgerufenen.
+-  /Invarianten/: Rahmenbedingungen, die immer gelten müssen.
+
+Ausnahmesituationen (z.B. Fehler, Exceptions) treten auf, wenn
+Zusicherungen nicht erfüllt werden.
+
+** Vererbung von Zusicherungen
+
+-  Vorbedingungen können in Subklassen nur abgeschwächt werden
+-  Nachbedingungen können in Subklassen nur verschärft werden
+-  Invarianten können in Subklassen nur verschörft werden
+
+** Zusicherungen in Java
+
+In Java gibt es keine Zusicherungen, die Teil der Methodensignatur sind.
+Mit =assert ⟨Bedingung⟩ : ⟨Fehlermeldung⟩= können im Body einer Methode
+Bedingungen geprüft werden. =assert= liefert einen =AssertionError= mit
+entsprechender Fehlermeldung, wenn die Bedingung nicht erfüllt ist.

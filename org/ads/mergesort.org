@@ -1,0 +1,53 @@
+#+TITLE: Mergesort
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Mergesort
+---
+#+END_HTML
+
+* Mergesort
+
+*geg:* Feld $A$ mit $n \in \mathbb{N}$ Elementen.
+
+*Idee:* Wenn $A$ mindestens weniger als 1 Element enthält, tue nichts,
+denn dann ist $A$ sortiert und keine weiteren Schritte sind nötig. Wenn
+$A$ mindestens $n \geq 2$ Elemente enthält:
+
+1. teile $A$ in zwei Teilfelder $S_{1}$ mit
+   $\lfloor \frac{n}{2} \rfloor$ Elementen und $S_{2}$ mit
+   $\lceil \frac{n}{2} \rceil$ auf.
+2. sortiere $S_{1}$ rekursiv (wie $A$)
+3. sortiere $S_{2}$ rekursiv (wie $A$)
+4. verbinde $S_{1}$ und $S_{2}$ zu einem sortierten Feld der Länge $n$.
+
+#+BEGIN_EXAMPLE
+    Mergesort(S) {
+      integer n = length(s);
+      integer m, i; // for loops
+      if (n >= 2) then 
+        m = n div 2;
+        erzeuge ein Feld  d S1 mit m Elementen;
+        erzeuge ein Feld  d S2 mit n-m Elementen;
+        for i = 0 to m-1 do
+          S1[i] = S[i]
+        od
+        for i = 0 to n-m-1 do
+          S2[i] = S[m+i];
+        od
+        Mergesort(S1);
+        Mergesort(S2);
+        Merge(S1, S2, S);
+      fi
+    }
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+    Merge(S1, S2, S) {
+      
+#+END_EXAMPLE

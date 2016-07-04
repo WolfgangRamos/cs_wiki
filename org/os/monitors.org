@@ -1,0 +1,78 @@
+#+TITLE: Monitors
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Monitors
+---
+#+END_HTML
+
+* Monitore
+
+Ein Monitor ist ein abstrakter Datentyp, der gemeinsam genutzte Daten
+und zugehörige Zugriffsfunktionen kapselt. Dabei wird beim Aufruf der
+Zugriffsfunktionen Mutual Exclusion sichergestellt (Compiler schützt zur
+Kompilierzeit die Aufrufe der Zugriffsfunktionen durch Semaphoren;
+/Implicit Mutual Exclusion/). Zu jeder Zeit kann also nur ein
+Prozess/Thread eine Zugriffsfunktion ausführen. Innerhalb eines Monitors
+können außerdem Condition Variables (CV) zum Warten auf Events bei der
+Abarbeitung der Zugriffsfunktionen verwendet werden.
+
+Damit ergeben sich folgende Queues von Prozessen, die auf die Nutzung
+eines Monitors warten:
+
+-  /Entry Queue/ (EQ),
+-  eine /Condition Queue/ (CQ) für jede Condition Variable,
+-  /Waiting Queue/ (WQ) und
+-  /Signalling Queue/(SQ)
+
+#+CAPTION: Monitor
+
+[[monitor.png]]
+** Monitorsemantiken
+
+Man unterscheidet verschiedene /Monitorsemantiken/ hinsichtlich der
+Priorisierung der Queues:
+
+-  /Wait & Notify/ (MESA-Typ) $\text{EQ} = \text{WQ} < \text{SQ}$, z.B.
+   Java Synchronized
+-  /Signal & Continue/ (MESA-Typ) $\text{EQ} < \text{WQ} < \text{SQ}$
+-  /Signal & Wait/ (Hoare-Typ) $\text{EQ} = \text{SQ} < \text{WQ}$
+-  /Signal & Urgent Wait/ (Hoare-Typ)
+   $\text{EQ} < \text{SQ} < \text{WQ}$
+
+** Condition Variables
+
+Innerhalb eines Monitors können /Condition Variables/ (CV) zum Warten
+auf Events bei der Abarbeitung der Zugriffsfunktionen verwendet werden.
+Condition Variables haben keinen Wert sondern lediglich eine /Condition
+Queue/ mit Prozessen/Threads, die darauf warten, dass der Condition
+Variable signallisiert wird. Condition Variablen stellen zwei
+Operationen zur Verfügung:
+
+-  =cwait(⟨cv⟩)=:
+
+   -  blockiert den aufrufenden Thread/Prozess
+   -  reiht den aufrufenden Prozess/Thread hinten in die Condition Queue
+      der CV ein
+   -  gibt den Monitor für den nächsten Thread frei.
+
+-  =csignal(⟨cv⟩)=:
+
+   -  wenn die Condtion Queue nicht leer ist:
+
+      -  versetzt den ersten Prozess aus der Condtion Queue in den Ready
+         Zustand
+      -  entfernt diesen Prozess/Thread aus der Condtion Queue
+      -  reiht diesen Prozess/Thread hinten in die Waiting Queue des
+         Monitors ein.
+
+   -  wenn die Condition Queue leer ist geht das Signal verloren und
+      nichts geschieht
+
+Unterschiede zwischen Condition Variablen und
+[[semaphores][Semaphoren]]:

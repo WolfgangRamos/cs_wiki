@@ -1,0 +1,18 @@
+#+TITLE: Dimension
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Dimension
+---
+#+END_HTML
+
+* Dimension
+
+TODO: genaue Definition
+
+ungefähre Definition: Mächtigkeit einer Basis

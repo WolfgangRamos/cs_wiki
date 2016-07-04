@@ -1,0 +1,26 @@
+#+TITLE: Aufwandsschaetzung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Aufwandsschaetzung
+---
+#+END_HTML
+
+* Aufwandsschätzung
+
+Methoden zur Aufwandsschätzung sind z.B.:
+
+-  Schätzung des Aufwands in /Lines of Code/ (LOC)
+
+   -  Ermittlung des zeitlichen Aufwands durch Relativierung der
+      benötigten LOC an der Produktivität eines Mitarbeiters (in LOC pro
+      Zeitintervall)
+   -  zusätzliche Gewichtung der LOC mit /Funktionspunkten/ möglich
+
+-  Analogiemethode: Vergleich mit dem Aufwand ähnlicher, bereits
+   fertiggestellter Projekte

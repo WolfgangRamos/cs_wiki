@@ -1,0 +1,64 @@
+#+TITLE: Semaphores
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Semaphores
+---
+#+END_HTML
+
+* Semaphoren
+
+Ein Semaphor (auch /Counting Semaphore/ oder /General Semaphore/)
+besteht aus
+
+-  einem Integer Wert und
+-  einer Queue mit wartenden (blockierten) Prozessen/Threads.
+
+Ein Semaphor stellt zwei [[atomic_operations][/atomare Operationen/]]
+zur Verfügung:
+
+-  =wait(⟨semaphore⟩)= / =p(⟨semaphore⟩)=: Wert dekrementieren und
+   Prozess ggf. blockieren (wenn Wert < 0) und hinten in die Queue
+   einreihen
+-  =signal(⟨semaphore⟩)= /=v(⟨semaphore⟩)=: Wert inkrementieren und ggf.
+   den ersten wartenden Prozess aus der Queue in Ready Zustand versetzen
+   (wenn Wert <= 0) und aus der Queue entfernen
+
+#+BEGIN_EXAMPLE
+    wait() {
+      s.value--;
+      if(s.value < 0) {
+        tail(s.queue) = p;
+        block(p);
+    }
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+    signal()
+      s.value++;
+      if(s.value <= 0) {
+        ready(head(s.queue));
+        deletehead(s.queue);
+    }
+#+END_EXAMPLE
+
+** Binäre Semaphoren
+
+Ein binärer Semaphor (engl. /binary semaphore/) kann nur die Werte =0=
+und =1= annehmen. Ein Binärer Semaphor wird häufig auch als /Mutex/
+bezeichnet, da damit wechselseitger Ausschluss von Prozessen beim
+Zugriff auf Ressourcen realisierbar ist.
+
+** Mutual Exclusion mit Semaphoren
+
+#+BEGIN_EXAMPLE
+    // Mutual Exclusion mit Semaphoren
+    wait(⟨semaphore⟩);
+    ⟨Critical Section⟩
+    signal(⟨semaphore⟩);
+#+END_EXAMPLE

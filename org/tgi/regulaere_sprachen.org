@@ -1,0 +1,83 @@
+#+TITLE: Regulaere_sprachen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Regulaere_sprachen
+---
+#+END_HTML
+
+* Reguläre Sprachen
+
+*Eigenschaften:*
+
+-  Eine formale Sprache ist *genau dann* regulär, wenn sie von einem
+   endlichen Automaten (DFA oder NFA) erkannt wird.
+-  Eine formale Sprache $L$ ist genau dann regulär, wenn sie durch einen
+   [[regulaere_ausdruecke][regulären Ausdruck]] $R$ bestimmt wird, d.h.
+   $L(R) = L$ gilt.
+-  Jede reguläre Sprache ist [[cfg][kontextfrei]].
+-  Jede endliche Sprache ist regulär.
+-  Sei $L$ eine Sprache und sei $w$ ein Wort maximaler Länge $n := |w|$
+   in $L$, dann hat jeder DFA (und NFA), der $L$ erkennt M mindestens
+   $n$ Zustände.
+
+* Abschlusseigenschaften
+
+Reguläre Sprachen sind abgeschlossen bzgl. der sog. /regulären
+Operationen/:
+
+-  *Vereinigung:* $A \cup B = \{w | w \in A \vee w \in B\}$
+-  *Konkatentation:* $A \circ B = \{uv | u \in A \vee v \in B\}$
+-  *Kleene Stern:*
+   $A^* = \{w_0w_1...w_{n-1}| n \in \mathbb{N} \wedge \forall i \in \mathbb{N}_0: i < n \Rightarrow w_i \in A\}$
+
+Außerdem sind reguläre Sprachen abgeschlossen unter
+
+-  *Schnitt:* $A \cap B = \{w | w \in A \wedge w \in B \}$
+-  *Komplement:*
+   $\Sigma^* \setminus A = \{w | w \in \Sigma^* \wedge \neg w \in A \}$
+
+Sind also $A$ und $B$ reguläre Sprachen, dann sind auch $A \cup B$,
+$A \circ B$, $A^*$, $A \cap B$, $\Sigma^+ \setminus A$ reguläre
+Sprachen.
+
+* Pumping Lemma
+
+Sei $L$ eine formale Sprache. Wenn $L$ regulär ist, dann gibt es eine
+Konstante $p \geq 1$, sodass für jedes Wort $w \in L$ mit $|w| \geq p$
+eine Zerlegung $w = xyz$ existiert mit:
+
+1. $x,y,z \in \Sigma^*$,
+2. $|xy| \leq p$,
+3. $|y| \geq 1$ und
+4. $xy^iz \in L$ für alle $i \in \mathbb{N}$.
+
+In Prädikatenlogik: Wenn $L$ regulär ist, dann gilt
+$\exists p \geq 1: \forall w \in L: |w| \geq p \Rightarrow \exists x,y,z \in \Sigma^*: w = xyz \wedge |xy| \leq p \wedge |y| \geq 1 \wedge \forall i \in \mathbb{N}:xy^iz \in L$.
+
+Mit Hilfe der *Kontraposition* des Pumping Lemmas kann man zeigen, dass
+eine Sprache nicht regulär ist: Wenn es für alle $p \geq 1$ ein Wort
+$w \in L$ gibt mit $|w| \geq p$ und für jede Zerlegung $w=xyz$ mit
+$|xy| \leq p$ und $|y| > 0$ ein $i$ existiert mit $xy^iz \not\in L$,
+dann ist $L$ nicht regulär.
+
+Mit Hilfe der Kontraposition des Pumping Lemma können fast alle
+nicht-regulären Sprachen als solche identifiziert werden.
+
+*Alternative Definitionen:*
+
+Sei $L$ eine reguläre Sprache, dann gibt es eine Konstante $p \geq 1$,
+sodass für jedes Wort $w \in L$ mit $|w| \geq p$ gilt: Es gibt
+$x,y,z \in \Sigma^*$, sodass $w = xyz$, $|yz| \leq p$, $|y| \geq 1$,
+$xy^iz \in L$ für alle $i \in \mathbb{N}$
+
+Sei $L$ eine reguläre Sprache, dann gibt es eine Konstante $p \geq 1$,
+sodass für jedes Wort $wL$ mit $|w| \geq p$ gilt: Es gibt
+$x,y,z \in \Sigma^*$, sodass $w = xyz$, $|xy| \leq p$, $|y| \geq 1$,
+$xy^iz \in L \Longleftrightarrow xy^jz \in L$ für alle
+$i,j \in \mathbb{N}$

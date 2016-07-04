@@ -1,0 +1,19 @@
+#+TITLE: Kantengewichtungsfunktion
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Kantengewichtungsfunktion
+---
+#+END_HTML
+
+** Kantengewichtungsfunktion
+
+Sei $G=(V,E)$ ein [[gerichteter_graph][gerichteter]] oder
+[[ungerichteter_graph][ungerichter]] Graph, dann heißt eine Abbildung
+$w: E \rightarrow \mathbb{R}$ /(Kanten-)Gewichtungsfunktion/. $G$ heißt
+dann auch /gewichtet/.

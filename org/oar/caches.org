@@ -1,0 +1,99 @@
+#+TITLE: Caches
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Caches
+---
+#+END_HTML
+
+* Caches
+
+Als /cache/ bezeichnet man einen kleinen schnellen Speicher, der als
+Zwischenspeicher für Speicherinhalte eines größeren langsameren
+Speichers verwendet wird. Caches verwenden i.d.R. SRAM
+
+-  /cache hit/:
+-  /cache miss/:
+
+   -  /conflict miss/: (nicht in direct mapped caches) Lines Beschränken
+      den Ort, wo Inhalte von Adressen gespeichert werden können. Wenn
+      im Cache noch Platz wäre, aber cache misses auftreten, da mehrere
+      Inhalte im selben cache block gespeichert werden spricht man von
+      /conflict misses/
+   -  /capacity miss/:
+
+-  /cold cache/: ein leere cache
+
+-  /lines/: die Assoziativität des caches
+-  /set/: die Speicherblöcke (über alle lines hinweg), die parallel
+   durchsucht werden
+-  /block/: ein Speicherblock von $b$ bytes
+
+/direct mapped cache/: 1-fach assoziativer Speicher (1 line)
+
+-  /miss rate/: relative Häufigkeit von cache misses: Sei $z$ die Anzahl
+   der Zugriffe und $m$ die Anzahl der cache misses, dann ist die miss
+   rate $\frac{m}{z}$).
+-  /hit rate/: relative Häufigkeit von cache hits: Sei $z$ die Anzahl
+   der Zugriffe und $h$ die Anzahl der cache hits, dann ist die miss
+   rate $\frac{h}{z}$).
+-  /hit time/: Zeit, die benötigt wird, um zu prüfen, ob sich ein Ziel
+   im cache befindet und um dieses an den Prozessor zu senden
+-  /miss penalty/: Zeit, die ein miss zusätzlich zur hit time benötigt.
+
+** Ablauf eines cache miss
+
+-  nachladen des Inhalts in einen passenden cache block (es wird immer
+   ein gesamter cacke block nachgeladen) und wiederholen der
+   (fehlererzeugenden) Instruktion
+-  Verwendung von (Re-)Placmentplocies (z.B. /least recently used/,
+   etc.)
+
+** Addressierung von Caches
+
+Zur Addressierung von Speicherbereichen in einem Cache werden Adresse in
+/Cache-Block/, /Cache-Set-Index/ und /Cache-Tag/ unterteilt:
+
+#+BEGIN_EXAMPLE
+    +-----------+-----------------+--------------------+
+    | Cache-Tag | Cache-Set-Index | Cache-Block-Offset |
+    +-----------+-----------------+--------------------+
+#+END_EXAMPLE
+
+Seien:
+
+-  $a$ die Länge einer Adresse in bits
+-  $B$ die Blockgröße in Bytes,
+-  $S$ die Anzahl von Sets pro Line
+-  $L$ die Assoziatitvität des chaches (die Anzahl der lines)
+
+Dann gilt:
+
+-  Bits für Cache-Block-Offset: $b := \log_{2} B$
+-  Bits für Cache-Set-Index $s := \log_{2} S$
+-  Bits für Cache-Tag: $t := a - s - b$
+-  Kapazität des Caches: $C := LSB$
+
+** Strategien zum Schreiben in caches
+
+*write back & write allocate:* (populärste Strategie):
+
+-  bei einem cache hit: schreibe in den cache und markiere den block
+   (setzten des /dirty bits/), damit dieser in den Speicher
+   zurückgeschrieben wird, wenn der Block aus den cache entfernt wird
+   (/write back/)
+-  bei einem cache miss: laden den Block zunächst in den cache (/write
+   allocate/), dann schreibe in den gecachten block und markiere diesen
+   für write back
+
+*write through & no write allocate:*
+
+-  bei einem cache hit: schreibe direkt in den zugrundeliegenden
+   Speicher (write through)
+-  bei einem cache miss: lade den block nicht in den cache sondern
+   schreibe direkt in den zugrundeliegenden Speicher (no write allocate)

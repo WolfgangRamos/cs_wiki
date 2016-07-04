@@ -1,0 +1,208 @@
+#+TITLE: Folge
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Folge
+---
+#+END_HTML
+
+* Folgen
+
+Eine /Folge/ in einer Menge $M$ ist eine Abbildung
+$a: \mathbb{N} \rightarrow M$, mit $a(n) = a_n \in M$ für
+$n \in \mathbb{N}$. Wir bezeichnen eine Folge mit
+$(a_n)_{n \in \mathbb{N}}$, oder auch kurz $(a_n)$.
+
+$n$ heißt /Index/. $a_n$ heißt $n$-tes Glied der Folge.
+
+Um anzudeuten, dass die Glieder einer Folge $(a_{n})_{n \in \mathbb{N}}$
+in $M$ verwenden wir die symbolische Schreibweise
+"$(a_n)\_{n \in \mathbb{N}} \subseteq M$" (das Zeichen $\subseteq$ ist
+hier nicht wörtlich zu verstehen, da eine Folge keine Menge ist).
+
+* Teilfolge
+
+Sei $(a_n)\_{n \in \mathbb{N}}$ eine Folge und sei $n_1, n_2, ...$ eine
+[[monotonie][streng monoton wachsende]] Folge in den natürlichen Zahlen,
+dann heißt die Folge $(a\_{n_i})\_{i \in \mathbb{N}}$ /Teilfolge/ von
+$(a_n)\_{n \in \mathbb{N}}$.
+
+Teilfolgen konvergenter Folgen konvergieren gegen denselben Grenzwert.
+
+* Konvergenz in metrischen Räumen
+
+Eine Folge $(a_n)\_{n \in \mathbb{N}} \subseteq X$ in einem
+[[analysis/metrik][/metrischen Raum/]] $(X,d)$ [1] heißt /konvergent/
+gegen ein $a \in X$, wenn für eine beliebige [[umgebung][Umgebung]] $U$
+von $a$ gilt
+
+$\exists n_0 \in \mathbb{N}: \forall n \in \geq n_0: a_n \in U$
+
+D.h. eine Folge $(a_n)\_{n \in \mathbb{N}}$ in einem
+[[analysis/metrik][/metrischen Raum/]] $(X,d)$ konvergiert /genau dann/
+mit $\lim\_{n \rightarrow \infty} a_n = a \in X$, wenn
+
+$\forall \epsilon \in \mathbb{R}\_{>0}: \exists n_0 \in \mathbb{N}: \forall n \in \mathbb{N}\_{\geq n_0}: d(a_n, a) < \epsilon$
+
+gilt.
+
+In diesem Fall nennen wir $a$ den /Limes/ (dt. /Grenzwert/) der Folge
+und schreiben $\lim\_{n \rightarrow \infty} a_n = a$.
+
+Eine Folge, die nicht konvergiert heißt /divergent/.
+
+Eine Folge, die gegen Null konvergiert (d.h. es gilt
+$\lim_{n \rightarrow \infty} a_n = 0$) heißt /Nullfolge/.
+
+*Eigenschaften:*
+
+-  Der Grenzwert einer konvergenten Folge ist eindeutig.
+
+*Lösungsschemata zum Bestimmen von Grenzwerte:*
+
+1. Möglichkeit (nur für Brüche von Polynomen): Betrachte höchstgradige
+   Summanden des Nenner- und Zählerpolynoms
+2. Möglichkeit: Führe Umformung durch. Wenn dabei keine Divergenzen
+   auftreten sind die Umformungen a posteriori gerechtfertigt.
+3. Möglichkeit: Versuche die Terme so umzuformen, dass Grenzwerte für
+   Teilterme exisieren (bringe z.B. $x$ aus dem Zähler eines Bruches in
+   den Nenner, o.ä.)
+
+** Häufungspunkt
+
+Ein Häufungspunkt ist der Grenzwert einer Teilfolge.
+
+*Eigenschaften:*
+
+-  Eine Folge kann mehrere Häufungspunkte besitzen
+-  Der Grenzwert einer Folge ist auch ein Häufungspunkt der Folge.
+
+** Äquivalenz von Folgen
+
+Zwei Folgen $(x_n)\_{n\in\mathbb{N}}, (y_n)\_{n\in\mathbb{N}}$ heißen
+/äquivalent/, genau dann wenn
+$\lim\_{i \rightarrow \infty} (x_i - y_i) = 0$ gilt.
+
+** Cauchy-Folgen
+
+Eine Folge $(a_n)\_{n \in \mathbb{N}}$ in einem
+[[analysis/metrik][/metrischen Raum/]] $(X,d)$ heißt /Cauchy-Folge/,
+wenn
+$\forall \epsilon \in \mathbb{R}\_{>0}: \exists n_0 \in \mathbb{N}: \forall n,m \in \mathbb{N}\_{\geq n_0}: d(a_n, a_m) < \epsilon$
+
+*Eigenschaften:*
+
+-  jede konvergente Folge in einem [[analysis/metrik][/metrischen
+   Raum/]] ist eine Cauchy-Folgen (aber nicht jede Cauchy-Folge
+   konvergiert!)
+-  /Vollständigkeitsaxiom:/ In $\mathbb{R}$ konvergiert jede
+   Cauchy-Folge.
+
+* Folgen in angeordneten Körpern
+
+Auf einem [[koerper][angeordnete Körper]] $(\mathbb{K},+,\cdot)$ können
+Ordnungsrelationen $<, \leq, >$ und $\geq$ definiert werden.
+
+Wir definieren auf $(\mathbb{K},+,\cdot)$ eine Metrik
+$d:\mathbb{K} \times \mathbb{K} \rightarrow \mathbb{R}$ auf einfache
+Weise durch $d(a,b) := |a-b|$ mit
+
+$|a| := \begin{cases} a & \text{falls } a \in P \\\\ -a & \text{sonst} \end{cases}$
+
+** Beschränkte Folgen
+
+Eine Folge $(a_n)\_{n \in \mathbb{N}} \in \mathbb{K}$ in einem
+[[koerper][angeordneten Körper]] $(\mathbb{K},+,\cdot)$ heißt (nach
+unten/oben) beschränkt, wenn die Menge ihrer Glieder
+$\\{ a_i \mid i \in \mathbb{N}\\}$ [[extreme_elemente][beschränkt]] ist.
+D.h. die Folge $(a_n)_{n\in\mathbb{N}}$ heißt ...
+
+-  /nach oben beschränkt/, wenn
+   $\exists M \in \mathbb{K}: \forall n \in \mathbb{N}: a_n \leq M$.
+-  /nach unten beschränkt/, wenn
+   $\exists m \in \mathbb{K}: \forall n \in \mathbb{N}: m \leq a_n$.
+-  /beschränkt/, wenn sie nach oben /und/ unten beschränkt ist.
+
+Diese Aussage ist äquivalent zu:
+$\exists R > 0: \forall n \in \mathbb{N}: a_n \in \mathcal{B}_R(0)$.
+
+*Eigenschaften:*
+
+-  jede konvergente in einem angeordneten Körper ist (nach oben /und/
+   unten) beschränkt.
+-  Sind $(a_n)\_{n \in \mathbb{N}}$ und $(b_n)\_{n \in \mathbb{N}}$
+   konvergente reelle Folgen und gilt
+   $\forall n \in \mathbb{N}: a_n \leq b_n$, dann gilt
+   $\lim_{n \rightarrow \infty} a_n \leq \lim_{n \rightarrow \infty} b_n$
+-  Sind $(a_n)\_{n \in \mathbb{N}}$ und $(b_n)\_{n \in \mathbb{N}}$
+   konvergente reelle Folgen mit $\lim a_n = a$ und $\lim b_n =b$, dann
+   gilt:
+
+   -  $\lim a_n + b_n = a+b$
+   -  $\lim a_n - b_n = a-b$
+   -  $\lim \frac{a_n}{b_n} = \frac{a}{b}$, falls $b \neq 0$
+
+-  *Satz von Bolzano-Weierstraß:* Jede beschränkte Folge reeller Zahlen
+   besitzt (mindestens) einen Häufungspunkt.
+
+** Bestimmte Divergenz
+
+Eine Folge $(a_n)_{n \in \mathbb{N}}$ in einem angeordneten Körper
+$(\mathbb{K},+,\cdot)$ heißt /bestimmt divergent gegen/ $\infty$, wenn
+$\forall m \in \mathbb{N}: \exists n_{0} \in \mathbb{N}: \forall n \in \mathbb{N}\_{\geq n_{0}}: a_n \geq m$.
+Man schreibt dann $\lim_{n \rightarrow \infty} a_n = \infty$.
+
+Eine Folge $(a_n)_{n \in \mathbb{N}}$ heißt /bestimmt divergent gegen/
+$-\infty$, wenn $(-a_n)_{n \in \mathbb{N}}$ bestimmt konvergent gegen
+$\infty$ ist. Man schreibt dann
+$\lim_{n \rightarrow \infty} a_n = - \infty$.
+
+* Reelle Folgen
+
+wir gehen von der Metrik $d(x,y) = |x-y|$ aus und nennen
+$(a_n) \subseteq \mathb{R}$ /eine Folge reeller Zahlen/.
+
+Eine Folge reeller Zahlen $(a_{n})_{n \in \mathbb{N}}$ konvergiert genau
+dann mit $\lim_{n \rightarrow \infty} a_n = a \in \mathbb{R}$, wenn
+$\forall \epsilon > 0: \exists n_0 \in \mathbb{N}: \forall n \in \mathbb{N}_{\geq n_{0}}: |a_n - a| < \epsilon$
+
+*Rechenregeln:* für Folgen in $\mathbb{R}$
+
+-  Sei $a = \lim a_n$ und $b = \lim b_n$, dann gilt:
+   $\lim_{n \rightarrow \infty} (a_n + b_n) = a + b$.
+-  Sei $a = \lim a_n$ und $b = \lim b_n$, dann gilt:
+   $\lim_{n \rightarrow \infty} (a_n - b_n) = a - b$.
+-  Sei $a = \lim a_n$ und $b = \lim b_n$, dann gilt:
+   $\lim_{n \rightarrow \infty} (a_n \cdot b_n) = a \cdot b$.
+-  Sei $a = \lim a_n$ und $b = \lim b_n \neq 0$, dann gilt:
+   $\lim_{n \rightarrow \infty} \frac{a_n}{b_n} = \frac{a}{b}$.
+-  Sei $a = \lim a_n$ und $\lambda \in \mathbb{R}$, dann gilt:
+   $\lim_{n \rightarrow \infty} (\lambda a_n) = \lambda a$.
+-  Sei $a = \lim a_n$, dann gilt:
+   $\lim_{n \rightarrow \infty} |a_{n}| = |a|$.
+
+* Partialsumme
+
+Sei $(a_n)_{n \in \mathbb{N}}$ eine Folge reeller oder komplexer Zahlen.
+Dann heißt $s_{k} = \sum_{k=1}^{n} a_k$ $k$-te /Partialsumme/. Die Folge
+der Partialsummen einer Folge heißt [[reihe][Reihe]].
+
+* Regel von l'Hospital
+
+Seien $f:(a,b) \rightarrow \mathbb{R}$ und
+$g:(a,b) \rightarrow \mathbb{R}$ stetig differenzierbar in
+$x_0 \in (a,b)$ und gelte $g'(x_0) \neq 0$ sowie $f(x_0) = g(x_0) = 0$
+bzw. $f(x_0) = g(x_0) = \infty$, dann gilt
+
+$\lim\_{x\rightarrow x_0} \frac{f(x)}{g(x)} = \lim\_{x\rightarrow x_0} \frac{f'(x)}{g'(x)}$
+
+sofern der Grenzwert $\lim\_{x\rightarrow x_0} \frac{f'(x)}{g'(x)}$
+existiert.
+
+[1] Nur Folgen, deren Glieder in einem metrischen Raum liegen, können
+    konvergieren/divergieren!

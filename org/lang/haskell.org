@@ -1,0 +1,150 @@
+#+TITLE: Haskell
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* Haskell
+
+** Datentypen
+
+-  Tupel =(x,y)=
+-  Listen =x:xs=
+
+** Layoutregel
+
+** Pattern Matching
+
+-  Variable =x=
+-  Wildcard =_=
+-  Konstruktor mit Argumenten, z.B.
+-  /as pattern/ (\_@-Notation\_) =⟨Name⟩@⟨Pattern⟩=. Damit ist es
+   möglich zugleich das gesamte Pattern, als auch dessen Bestandteile an
+   Namen zu binden, z.B. =(x1: xs@(x2:_))=
+
+Pattern können auch in =where=- und =let=-Ausdrücken verwendet werden.
+
+** Guards
+
+Pattern können um boolesche Bedingungen erweitern werden, die /Guards/
+genannt werden:
+
+#+BEGIN_EXAMPLE
+    ⟨Pattern⟩ | ⟨Bedingung 1⟩ = ⟨Ausdruck⟩
+              | ⟨...⟩         = ⟨Ausdruck⟩
+              | ⟨Bedingung n⟩ = ⟨Ausdruck⟩
+              | otherwise     = ⟨Ausdruck⟩ -- ein else-Fall
+#+END_EXAMPLE
+
+** Listen
+
+Indexoperator: =(!!) :: [a] index -> a=
+
+Unednliche Liste von =a=: =repeat :: a -> [a]=
+
+** Lazy Evaluation
+
+** Typklassen
+
+-  =Eq a=: Funktionen ==== und =/== sind definiert
+-  =Ord a=: Funktionen =<=, =<==, ====, =/==, =>== und =>= sind
+   definiert
+
+** Ein- und Ausgabe (IO-Monaden)
+
+*** Aktion
+
+Eine /Aktion/ ist eine Funktion vom Typ =world -> (a, world)=.
+
+Eine IO-Aktion ist ein =type IO a = world -> (a, world)=
+
+vordefinierte Ausgabefunktionen:
+
+-  =putStr :: String -> IO ()=: Ausgabe eines Strings
+-  =putChar :: Char -> IO ()=: Ausgabe eines Chars
+
+Das Zusammensetzen von IO-Aktionen ist mit dem /Sequenzoperator/
+=(>>) :: IO () -> IO () -> IO ()= möglich.
+
+** Nebenläufigkeit
+
+#+BEGIN_SRC haskell
+  import Control.Concurrent
+
+  main :: IO ()
+  main = do
+    putStrLn "Hallo"
+    putStrLn "liebe Studies"
+    str <- getLine
+    putStr("Du hast \" ++ str ++ "\" eingegeben")
+
+#+END_SRC
+
+#+begin_SRC haskell
+  module Phil () where
+
+  import Control.Concurrent
+
+  type Stick = MVar ()
+
+  main :: IO ()
+  main = do
+    s1 <- newMVar () -- zwei Zustände: leer und voll
+    s2 <- newMVar () -- zwei Zustände: leer und voll
+    s3 <- newMVar () -- zwei Zustände: leer und voll
+    s4 <- newMVar () -- zwei Zustände: leer und voll
+    s5 <- newMVar () -- zwei Zustände: leer und voll
+    forkIO $ phil 1 s1 s2
+    forkIO $ phil 1 s2 s3
+    forkIO $ phil 1 s3 s4
+    forkIO $ phil 1 s4 s5
+    getLine
+    phil 1 s5 s1
+
+  phil :: Int -> Stick -> Stick IO ()
+  phil n sl sr = do
+    putStrLn (show n++" is thinking")
+    takeMVar sl ()
+    takeMVar sr ()
+    putStrLn (show n++" is eating")
+    putMVar sr ()
+    putMVar sl ()
+    phil n sl sr
+
+#+end_SRC
+
+*** Transaktionstyp
+
+Software Transaktionstyp (STM)
+
+Eigenschaften transaktionaler Programme:
+
+A: atomar
+C: consistant (Daten sind konsistent)
+I: isolation (isolieren einzelner Zugriffe, d.h. es kann so programmiert werden als gäbe es keine Nebenläufigkeit
+D: durability
+
+Datenbanktransaktionen:
+
+Bei Datenbanken sind Transaktionen pessimistisch implementiert. Transaktionen können leicht fehlschlagen.
+
+Softwaretransaktionen:
+
+- optimistische implementierung
+- *writeset*: protioklliert die TVar-Änderungen
+- *readset*: protokolliert die gelesenen TVars
+- Nach Ende der Transaktion:
+  - Validierung des readsets durch
+	- Wertevergleich
+	- Vergleich der Versionsnummern (jede Zustandsänderung erhält eine
+      Versionsnummer)
+  - bei Erfolg: /Commit/ des writesets (Commits müssen
+    sequentialisiert werden. Das geschieht durch locken von TVars.
+    Gelockt werden die TVars der readsets und des writesets. Dabei
+    muss eine Deadlock-Vermeidungsstrategie verwendet werden:
+	- /globale Ordnung/: die Locks werden von allen in einer festen
+      Reihenfolge aufgenommen
+	- /zurücklegen falls nicht verfügbar/: kann ein lock nicht
+      aufgenommen werden, so werden alle bereits aufgenommenenn Lock
+      zurückgelegt.
+  - bei Misserfolg: /Rollback/, d.h. die Änderungen werden rückgängig
+    gemacht.

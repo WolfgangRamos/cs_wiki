@@ -1,0 +1,31 @@
+#+TITLE: Stellwertsystem
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Stellwertsystem
+---
+#+END_HTML
+
+Ein /Stellwertsystem/ ist eine Zahlendarstellung, bei der der (additive)
+Wert einer Ziffer (ein Symbol aus einer Menge von Symbolen) von ihrer
+Stelle abhängt.
+
+* B-adische Zahlendarstellung
+
+Die Darstellung einer natürlichen Zahl $n \in \mathbb{N}$ als Summe der
+Produkte der Ziffern $b_{i} \in \{0, ..., B-1\}$ mit den Stellwerten
+zur Basis $B \geq 2$ heißt $B$-adische Zahlendarstellung von $n$:
+
+$$n = (b_{N-1} b_{N-2} ... b_{1} b_{0})_{B} = \sum_{i=0}^{N-1} b_{i}B^{i}$$
+
+mit $N \in \mathbb{N}\setminus \{0\}$ Ziffern.
+
+*Eigenschaften:*
+
+-  darstellbarer Wertebereich mit $N$ Ziffern: $[0, ..., B^{N}-1]$
+-  die Darstellung ist eindeutig

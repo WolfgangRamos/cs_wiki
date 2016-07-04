@@ -1,0 +1,169 @@
+#+TITLE: Threads
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Threads
+---
+#+END_HTML
+
+* Threads/Threadkonzept
+
+Ein Thread ist eine Ausführungsstrang in der Abarbeitung eines
+Programmes, der dispatched und interrupted werden kann. Threads können
+also nebenläufig ausgeführt werden.
+
+Stattdessen verwenden Threads die Ressourcen des Prozesses, zu dem sie
+gehören. Damit ermöglichen Threads eine Entkopplung von:
+
+-  Resourceownership und Protection (/a process is a unit of resource
+   ownership and protection/)
+-  Ausführungssträngen (/a thread is a unit of dispatching/)
+
+Threads werden verwendet, um:
+
+-  Ausnutzung von Nebenläufigkeit zur Ausführung /eines/ Programms
+
+Die Unterstützung von mehreren Threads (Ausführungssträngen) pro Prozess
+bezeichnet man als *Multithreading*.
+
+** Erweiterung der Prozessdefinition für Multithreading
+
+Bei Multithreading haben alle Threads eines Prozesses einen eigenen
+
+-  Zustand (Ready, Running, Blocked, etc.)
+-  Threadkontext
+
+   -  Program Counter
+   -  Stack und Stack Pointer
+   -  Registerinhalte
+
+Ein Prozess ist eine Unit of Resourceownership. Ein Prozess:
+
+-  hat einen eigenen virtuellen Adressraum, der das Prozess Image
+   enthält
+-  geschützter Zugriff auf Ressourcen (CPU, geöffnete Dateien,
+   I/O-Geräte, etc.)
+-  umfasst einen oder mehrere Ausführungsstänge (Threads) in der
+   Abarbeitung eines Programms
+-  Globale Variablen
+-  Child Prozesse
+
+#+CAPTION: Prozess Image für Single Threaded Approach (links) und
+Mulithreading (rechts)
+
+[[multithreading_process_image.png]]
+** Zustände von Threads und Prozessen
+
+-  Zuständsübergänge, die alle Threads einen Prozesses betreffen:
+
+   -  Suspendierung: wenn ein Prozess in den Sekundärspeicher
+      ausgelagert wird, werden alle Threads des Prozesses gleichzeitig
+      suspendiert, da sie alle den Adressraum des Prozesses verwenden
+   -  Terminierung: wenn ein Prozess terminiert, werden alle Threads des
+      Prozesses gleichzeitig terminiert, da der Adressraum des Prozesses
+      freigegeben wird
+
+-  Threadoperationen, die nur den Zustand /eines/ Threads verändern:
+
+   -  Spawn: Erzeugung eines neuen Threads
+   -  Block: Running → Blocked
+   -  Unblock: Blocked → Ready
+   -  Finish: Terminierung des Threads
+
+** Verhältnis von Threads zu Prozessen auf verschiedenen Systemen
+
+-  *Single Threaded Approach*: keine Unterscheidung zwischen Threads und
+   Prozessen (jeder Thread hat einen eigenen Adressraum und eigene
+   Ressourcen)
+
+   -  /ein/ Thread in /einem/ User Prozess (z.B. MS DOS)
+   -  /ein/ Thread pro Prozess (z.B. UNIX)
+
+-  *Multithreading:* n Threads pro Prozess (z.B. Windows, Linux)
+
+   -  Trennung von Ressourcenownership und Scheduling
+   -  jeder Prozess hat einen Adressraum und allozierte Ressourcen
+   -  jeder Thread ist eine Ausführungsstrang
+
+** Vorteile von Threads gegenüber Prozessen
+
+-  Threads sind leichtgewichtiger als Prozesse
+
+   -  sie werden schneller erstellt (ca. 10-Mal schneller)
+   -  sie werden schneller terminiert als Prozesse (da sie weniger
+      Ressourcen allozieren)
+   -  Context Switches zwischen Threads (desselben Prozesses) sind
+      weniger aufwendig, da Threads einen Teil des Prozesskontexts
+      teilen (z.B. den (virtuellen) Adressraum, globale Variablen, etc.)
+      und daher kein vollständiger Context Switch notwendig ist.
+
+-  Kommunikation zwischen Threads desselben Prozesses ist einfacher, da
+   sie bestimmte Ressourcen des Prozesses (geöffnete Dateien, globale
+   Variablen) gemeinsam verwenden. Das ermöglicht Kommunikation zwischen
+   Threads ohne Beteiligung des Kernels (welche bei Kommunikation
+   zwischen Prozessen notwendig ist).
+
+** User-Level vs. Kernel-Level Threads
+
+-  *User-Level Threads*: Threads werden vom Prozess, zu dem sie gehören
+   verwaltet (Kernel kennt die Threads eines Prozesses nicht)
+
+   -  Scheduling durch den Kernel auf Prozess-Ebene
+   -  Realisierbar mit Hilfe von
+      [[threads#Thread-Libraries][Thread-Librarys]]
+   -  Vorteile:
+
+      -  Scheduling zwischen Threads kommt ohne einen Switch zum
+         Kernel-Mode aus
+      -  Scheduling-Algorithmen können individuell für Programme
+         angepasst (optimiert) werden
+
+   -  Nachteile:
+
+      -  wenn ein Thread eines Prozesses einen System Call ausführt,
+         wird der gesamte Prozess blockiert. Dann können auch die
+         anderen Threads des Prozesses nicht ausgeführt werden. Es ist
+         allerdings möglich dieses Problem mit *Jacketing* zu umgehene,
+         welches non-blocking System Calls ermöglicht.
+      -  da Prozesse immer auf einer CPU ausgeführt werden, können
+         User-Level Threads nicht auf verschiedne CPUs (CPU-Kerne)
+         aufgeteilt werden.
+
+-  *Kernel-Level Threads*: Threads und Prozesse werden vom Kernel
+   verwaltet
+
+   -  Scheduling durch den Kernel auf Thread-Ebene
+   -  Vorteile:
+
+      -  Wenn ein Thread einen System Call ausführt, wird nur der Thread
+         (und nicht gleichzeitig auch alle anderen Threads desselben
+         Prozesses) blockiert
+      -  Threads desselben Prozesses können auf verschiedene CPUs
+         dispatched (und somit wirklich parallel ausgeführt) werden
+      -  ermöglicht Multithreading in Kernel-Routinen
+
+   -  Nachteile:
+
+      -  Scheduling zwischen Threads erfordert einen Context Switch zum
+         Kernel (eigentlich zwei Context Switches, da auch wieder zurück
+         zu einem Thread gewechselt werden muss)
+
+-  Kombination von User-Level und Kernel-Level Threads: Erzeugung von
+   Threads, sowie Teile des Scheduling zwischen Threads und der
+   Synchronisation zwischen Threads wird vom Prozess verwaltet
+
+   -  User-Level Threads können Kernel Level-Threads zugeordnet werden
+
+** Thread-Libraries
+
+Thread Libraries enthalten enthalten i.d.R. Funktionen:
+
+-  zur Erzeugung und Terminierung von Threads
+-  zum Scheduling zwischen Threads
+-  zum Speichern und Wiederherstellen des Thread-Contexts
+-  Austausch von Daten und Nachrichten zwischen Threads

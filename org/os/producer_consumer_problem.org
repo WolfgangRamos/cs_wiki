@@ -1,0 +1,85 @@
+#+TITLE: Producer_consumer_problem
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Producer_consumer_problem
+---
+#+END_HTML
+
+* Producer/Consumer Problem
+
+Setting:
+
+-  /ein/ Produzent schreiben Daten in einen Puffer
+-  /ein/ Konsument liest Daten aus diesem Puffer
+-  zu jeder Zeit darf entweder der Konsument aus dem Puffer lesen oder
+   der Produzent in den Puffer schreiben
+-  der Produzent darf keine Daten in den Puffer Schreiben, wenn dieser
+   voll ist
+-  der Konsument darf keine Daten aus dem Puffer lesen, wenn dieser leer
+   ist
+
+** Lösungen mit Semaphoren
+
+#+BEGIN_EXAMPLE
+    //Lösung für Puffer mit endelicher Größe
+    int buffer[n];
+    int in = 0;       // index of item to be produced
+    int out = 0;      // index of item to be consumed
+    sem spaces = n;   // counting semaphore for number of spaces in the buffer
+    sem items = 0;    // counting semaphore for number of items in the buffer
+
+    void producer() { // executed by ONE thread
+      while(true) {
+        int data = produce();
+        sem_wait(spaces);
+        buffer[in] = data;
+        in = (in + 1) % n;
+        sem_signal(items);
+      }
+    }
+
+    void consumer() { // executed by ONE thread
+      while(true) {
+         sem_wait(items);
+         int data = buffer[out];
+         out = (out + 1) % n;
+         sem_signal(spaces);
+         consume(data);
+      }
+    }
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+    // Lösung für Puffer mit unendlicher Größe
+    int in = 0;       // index of item to be produced
+    int out = 0;      // index of item to be consumed
+    sem xbuffer = 1;  // exclusive access to buffer
+    sem spaces = n;   // counting semaphore for number of spaces in the buffer
+    sem items = 0;    // counting semaphore for number of items in the buffer
+
+    void producer() { // executed by ONE thread
+      while(true) {
+        data = produce();
+        sem_wait(xbuffer);
+        buffer.add(data);
+        in = (in + 1) % n;
+        sem_signal(items);
+      }
+    }
+
+    void consumer() { // executed by ONE thread
+      while(true) {
+        sem_wait(items);
+        int data = buffer[out];
+        out = (out + 1) % n;
+        sem_signal(spaces);
+        consume(data);
+      }
+    }
+#+END_EXAMPLE

@@ -1,0 +1,59 @@
+#+TITLE: Elixir
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Elixir
+---
+#+END_HTML
+
+* Elixir
+
+Atome beginnen mit =:=
+
+Kompilieren mit =c("test.exs")=
+
+#+BEGIN_EXAMPLE
+    defmodule Test do
+
+      def fac(0) do
+        1
+      end
+
+      def fac(n) when n>0 do
+        n * fac(n-1)
+      end
+
+      def lookup(_,[]) do
+        :nothing
+      end
+
+      def lookup(k,[{k,v},_]) do
+        {:just, v}
+      end
+
+      def lookup(k,[_|kvs]) do
+        lookup(k,kvs)
+      end
+
+      def t(n) do
+        n = n + 1
+        n
+      end
+
+      def map(f,xs) do
+        case xs do
+          [] -> []
+          [y|ys] -> [f.(y)|map(f,ys)]
+        end
+      end
+    end
+#+END_EXAMPLE
+
+Aufruf mit =Test.lookup=
+
+Ausführen mit =Test.map fn ...=

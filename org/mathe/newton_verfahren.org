@@ -1,0 +1,62 @@
+#+TITLE: Newton_verfahren
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Newton_verfahren
+---
+#+END_HTML
+
+* Newton Verfahren
+
+*Ziel:* Approximation von Nullstellen einer Funktion $f$.
+
+Sei $f:\mathbb{R} \rightarrow \mathbb{R}$
+
+Startwert $x_0 \in \mathbb{R}$
+
+Iteriere $n = 0,1,2,\dots$
+
+$x_{n+1} = x_n - \frac{x_n}{f'(x_n)}$, sofern $|f'(x_n)| > \epsilon$
+
+Abbruchkriterium: Beende Iteration, falls
+
+-  absoluter Fehler klein ist $|f(x_n)| < \epsilon_{absolut}$ und
+-  realtiver Fehler klein ist $|f(x_n)| \leq \epsilon_{rel} |f(x_0)|$
+
+*Eigenschaften:*
+
+-  Sei $f:\mathbb{R} \rightarrow \mathbb{R}$ zweimal stetig
+   differenzierbar mit Nullstelle $x* \in I = [a,b]$. Ferner gelte
+   $\forall x \in I:f'(x) \neq 0$. Dann ist das Newton Verfahren zur
+   Bestimmung von $x*$ quadratisch konvergent.
+-  Das Newton-Verfahren ist i.a. nicht global konvergent
+-  Falls Startwert hinreichend nah an der Nullstelle liegt und
+   $\min_{x\in I}|f'(x)| > 0$ und $f''$ exisitert und stetig ist. Dann
+   konvergiert das Newton-Verfahren /schnell/
+
+** Konvergenzordnung
+
+Ein (rekusives) Verfahren zur Berechnung von $x^* \in \mathbb{R}$ heißt
+konvergenz von der Ordnung $\alpha \geq 1$, wenn ein $c > 0$ existiert,
+sodass $|x_n - x^*| \leq c |x_{n-1} - x^*|^{\alpha}$.
+
+$\alpha$ heißt /Konvergenzordnung/. Bei $\alpha = 1$ spricht man von
+linearer Konvergenz(-ordnung)$. Bei $\alpha = 2$ spricht man von
+quadratischer Konvergenz(-ordnung)$.
+
+$c$ heißt /Konvergenzrate/
+
+*Eigenschaften:*
+
+-  Ein rekursiv defininiertes Verfahren mit linearer Konvergenzordnung
+   ($\alpha = 1$) und Konvergenzrate $c<1$ ist immer konvergent (für
+   beliebige Startwerte).
+-  Ein rekursiv definiertes Verfahren mit Konvergenzordnung
+   ($\alpha > 1$) konvergiert, falls der Startwert $x_0$ hinreichend nah
+   an $x*$ liegt, konkret, wenn
+   $|x_0 - x^*| < c^{\frac{\alpha}{1-\alpha}}$ gilt.

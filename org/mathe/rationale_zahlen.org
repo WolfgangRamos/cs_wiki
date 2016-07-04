@@ -1,0 +1,16 @@
+#+TITLE: Rationale_zahlen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Rationale_zahlen
+---
+#+END_HTML
+
+* Rationale Zahlen
+
+$\mathbb{Q} := \{ \frac{p}{q} | p,q \in \mathbb{Z} \wedge q \neq 0\}$

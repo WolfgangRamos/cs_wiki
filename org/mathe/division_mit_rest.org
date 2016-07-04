@@ -1,0 +1,26 @@
+#+TITLE: Division_mit_rest
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Division_mit_rest
+---
+#+END_HTML
+
+* Division mit Rest
+
+Zu jedem Zahlenpaar
+$(a,d) \in \mathbb{Z} \times \mathbb{Z} \setminus \\{ 0 \\}$ gibt es
+eindeutig bestimmte Zahlen $q,r \in \mathbb{Z}$ mit $a = dq + r$ und
+$0 \leq r < |d|$.
+
+Wenn $r = 0$ gilt, so heißt $d$ Teiler von $a$ (s.a.
+[[teilbarkeitsrelation][Teilbarkeitsrelation]]).
+
+Die Eindeutigkeit des (positiven Rests) wird in Programmierpsrachen in
+de Implementierung der Modulooperation ausgenutzt. Diese gibt i.R. den
+positiven Rest einer Division zurück.

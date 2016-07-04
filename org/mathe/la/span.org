@@ -1,0 +1,21 @@
+#+TITLE: Span
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Span
+---
+#+END_HTML
+
+* Span/Lineare Hülle
+
+Sei $(V, \oplus)$ [[vektorraum][Vektorraum]] über dem
+[[koerper][Körper]] $(\mathbb{K}, +, \cdot)$, dann ist der /Span/ der
+Vektoren $\mathbf{v}\_{1}, ..., \mathbf{v}\_{n} \in V$ die Menge aller
+Linearkombinationen dieser Vektoren, d.h.
+
+$$span(\mathbf{v}\_{1}, ..., \mathbf{v}\_{n}) = \\{\sum_{i=1}^{n} \lambda_{i} \odot \mathbf{v}\_{i} | \lambda_{i} \in \mathbb{K} \\}$$

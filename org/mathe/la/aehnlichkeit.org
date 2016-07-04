@@ -1,0 +1,21 @@
+#+TITLE: Aehnlichkeit
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Aehnlichkeit
+---
+#+END_HTML
+
+* Ähnlichkeit
+
+$A,B \in \mathbb{K}^{n \times n}$ heißen /ähnlich/, wenn
+$S \in GL(n, \mathbb{K})$ existiert, sodass $B = S^{-1} A S$ gilt.
+
+** Eigenschaften
+
+-  Determinanten ähnlicher Matrizen sind identisch.

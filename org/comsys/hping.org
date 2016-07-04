@@ -1,0 +1,21 @@
+#+TITLE: Hping
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Hping
+---
+#+END_HTML
+
+* Hping
+
+-  Variablen setzen: =set <Variablenname>=
+-  STDOUT Ausgabe: =puts "<String>"= String kann dabei Variablen
+   =$<Variablenname>= enthalten
+
+*TTL (time to live):* Anzahl der Nodes, die das Paket passieren darf.
+Ein geeigneter Wert kann mit =traceroute <domain>= ermittelt werden.

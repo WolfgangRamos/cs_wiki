@@ -1,0 +1,291 @@
+#+TITLE: Turing_machinen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Turing_machinen
+---
+#+END_HTML
+
+* Turing Machinen
+
+Eine Turing Machine (TM) ist ein 7-Tupel
+$(Q,\Sigma,\Gamma,\delta,q_0,q_{acc},q_{rej})$ aus:
+
+-  einer endliche Zustandsmenge $Q$,
+-  einem /Eingabealphabet/ $\Sigma$, mit
+   $\textvisiblespace \not\in \Sigma$,
+-  einem /Arbeitsalphabet/ $\Gamma$ mit
+   $\Sigma \cup \{\textvisiblespace\} \subseteq \Gamma$ und
+   $Q \cap \Gamma = \emptyset$,
+-  einer Transitionsfunktion
+   $\delta: Q\setminus\{q_{acc},q_{rej}\} \times \Gamma \rightarrow Q \times \Gamma \times \{L,R\}$,
+   ($L$: gehe nach links auf dem Band, $R$: gehe nach rechts auf dem
+   Band),
+-  einem /Startzustand/ $\q_0 \in Q$,
+-  einem /akzeptierender Zustand/ $\q_{acc} \in Q$ und
+-  einem /verwerfender Zustand/ $q_{rej} \in Q$ mit
+   $q_{reject} \neq q_{acc}$.
+
+Das Band ist /linksbeschränkt/, d.h., wenn der Schreib-/Lesekopf an der
+linkesten Position ist und nach links geht verändert der
+Schreib-/Lesekopf seine Position nicht. Markiere den Bandanfang durch
+ein $\textvisiblespace$.
+
+*Alternativen zur formalen Beschreibung einer TM:*
+
+-  informelle Beschreibung (Fließtext, Flow-Chart oder Pseudocode mit
+   Bezug zur Implementierung der TM). Gängige Formulierungen sind dabei:
+
+   -  /in der endlichen Kontrolle merken/: ein Zustand für jedes Objekt
+      von Interesse erzeugt.
+   -  /markieren:/ Es wird ein Arbeitsaphabet aus Tupeln erzeugt, wobei
+      ein Element des Tupels zur Markierung mit Hilfe der Werte $0$ und
+      $1$ genuzt wird, z.B. Tupel $(a,1)$ und $(a,0)$
+
+-  graphische Beschreibung (gleichwertig zur formalen Beschreibung)
+-  high-level Beschreibung
+
+** Konfigurationen
+
+*Anfangskonfiguration* zu $w \in \Sigma^*$: $q_0w$, falls
+$w \neq \epsilon$, sonst $q_0\textvisiblespace$.
+
+*Haltekonfiguration* zu $u,v \in \Sigma^*$: $u q_{acc}v$ und
+$u q_{rej}v$.
+
+*Folgekonfiguration* zu $u q av$ für $q\not\in\{q_{acc},q_{rej}\}$:
+
+-  falls $\delta(q,a) = (q',b,R)$ und $v \neq \epsilon$ dann ist die
+   Folgekonfiguration $ub q'v$
+-  falls $\delta(q,a) = (q',b,R)$ und $v = \epsilon$ dann ist die
+   Folgekonfiguration $ub q'\textvisiblespace$
+-  falls $\delta(q,a) = (q',b,L)$ und $u = \epsilon$ dann ist die
+   Folgekonfiguration $q'bv$
+-  falls $\delta(q,a) = (q',b,L)$ und $u = u'c$ dann ist die
+   Folgekonfiguration $u'q'cbv$
+
+Falls $q = q_{acc}$ oder $q = q_{rej}$ gilt gibt es /keine/
+Folgekonfiguration, d.h. es gibt keine Transitionen aus $q_{acc}$ oder
+$q_{rej}$ in andere Zustände!
+
+** Berechnung
+
+Eine Berechnung zu $w\in\Sigma^*$ ist eine Folge von Konfigurationen
+$(\kappa_0,\kappa_1,\kappa_2,\dots)$ mit folgenden Eigenschaften:
+
+1. $\kappa_0$ ist Anfangskonfiguration zu $w$
+2. wenn $\kappa_i$ definiert ist und eine Folgekonfiguration besitzt,
+   dann ist $\kappa_{i+1}$ diese Folgekonfiguration.
+
+Es gibt also unendliche Berechnungen.
+
+Wir schreiben auch
+$q_0 W \vdash u_1 q_1 v_1 \vdash u_2 q_2 v_2 \vdash \dots$
+
+Eine TM /akzeptiert/ eine Wort $w$, falls die Berechnung zu $w$ endlich
+ist und die letzte Konfiguration eine akzeptierende Haltekonfiguration
+ist.
+
+Eine TM /verwirft/ eine Wort $w$, falls die Berechnung zu $w$ endlich
+ist und die letzte Konfiguration eine verwerfende Haltekonfiguration
+ist.
+
+Eine TM /erkennt/ die Sprache der Wörter, die sie akzeptiert. (Merke
+jede TM erkennt /genau/ eine Sprache)
+
+Eine TM /entscheidet/ eine Sprache $L \subseteq \Sigma^*$, falls sie
+jedes Wort $w \in L$ akzeptiert und jedes Wort
+$w \in \Sigma^*\setminus L$ verwirft (statt entscheiden sagt man auch
+/rekursiv aufzählbar/ oder /positiv semientscheidbar/).
+
+Eine Sprache ist /Turingerkennbar/, falls es eine TM gibt, die sie
+erkennt
+
+Eine Sprache ist (Turing-)/Entscheidbar/ (man sagt auch
+/Turing-berechnbar/, falls es eine TM gibt, die sie entscheidet.
+
+** Varianten von Turingmachinen
+
+Es gibt ganz viele Variante von Turingmachinen. Alle führen jedoch zu
+demselben Entscheidbarkeits- und Erkennbarkeitsbegriff.
+
+*** Mehrband Turingmachinen
+
+Eine $k$-Band-TM (auch /Mehrband/ TM, kurz MTM) mit $k \geq 1$:
+$(Q,\Sigma,\Gamma,\delta,q_0,q_{acc},q_{rej})$ mit
+
+-  $\delta:Q \times \Gamma^k \rightarrow Q \times \Gamma^k \times \{L,R,S\}^k$
+   ($S$: bleibe stehen)
+
+*Eigenschaften:*
+
+-  Jede $k$-Band-TM ist äquivalent zu einer 1-Band-TM.
+-  Jede 1-Band-TM ist äquivalent zu einer TM.
+
+*** Nicht-deterministische Turing Machinen
+
+/nicht-deterministische/ TM (NTM)
+$(Q,\Sigma,\Gamma,\delta,q_0,q_{acc},q_{rej})$ mit:
+
+-  $\delta: Q \times \Gamma \rightarrow \mathcal{P}(Q\times \Gamma \times \{L,R\})$
+
+NTM sind komplizierter als TM, weil es für ein Wort sowohl:
+
+-  eine akzeptierende Berechnung
+-  eine verwerfende Berechnung,
+-  eine haltende, aber weder akzeptierende noch verwerfende Berechnung
+   und
+-  eine nicht haltende Berechnung
+
+geben kann.
+
+Die von einer NTM erkannte Sprache besteht aus allen Wörtern, für die
+die NTM /mindestens/ eine akzeptierende Berechnung besitzt.
+
+Eine NTM entscheidet eine Sprache, falls
+
+-  sie nur endliche (terminierende) Berechnungen besizt.
+-  sie die Sprache erkennt.
+
+*Eigenschaften:*
+
+-  Zu jeder NTM gibt es eine mehrband TM, welche dieselbe Sprache
+   erkennt.
+-  Zu jeder NTM gibt es eine TM $T$, die dieselbe Sprache erkennt und
+   ggf. entscheidet.
+-  Jede NTM kann in eine äquivalente NTM (erkennt und entscheidet ggf.
+   dieselbe Sprache) mit Grad des Nichtdeterminismus 2 (d.h.
+   $\forall q \in Q, a \in \Gamma: |\delta(q,a)| = 2$) überführt werden.
+
+*** aufzählende TM
+
+Eine aufzählende TM ist eine 2-Band TM mit
+
+1. Wenn es sich um eine TM handelt, die eine eine Sprache über dem
+   Alphabet $\Sigma$ aufzählen soll, dann gilt
+   $\Sigma \cup \\{\textvisiblespace\\} \cup \\{\\#\\} \subset \Gamma$.
+2. Für die Transitionsfunktion gilt
+   $\delta: Q \times \Gamma^2 \rightarrow Q \times \Gamma \times (\Sigma \cup \\{\textvisiblespace\\} \cup \\{\\#\\}) \times \{L,R,S\} \times \{R,S\}$.
+   Auf dem zweiten Band darf nicht gelöscht werden, da. falls
+   $\delta(q,a,b) = (q',a',b',d,S)$ gilt, dann gilt
+   $b=b'=\textvisiblespace$. Falls $\delta(q,a,b) = (q',a',b',d,R)$
+   gilt, dann gilt $b\neq \textvisiblespace$. Somit entsteht auf Band
+   zwei von links nach rechts ein Wort der Form $u_0\\#u_1\\#\dots$ mit
+   $u_i \in \Sigma^{\*}$ entsteht.
+3. Die aufzählende TM startet immer mit leerer Eingabe.
+
+Die von der TM aufgezählten Sprache enthält die $u_i$'s.
+
+*Eigenschaften:*
+
+-  Eine Sprache ist genau dann erkennbar, wenn sie aufzählbar ist.
+
+** Äquivalenz
+
+TMen heißen /äquivalent/, wenn sie dieselben Sprachen erkennen und
+dieselben Sprachen entscheiden, falls min. eine Sprache entschieden
+wird.
+
+* Church-Turing-These
+
+Der intuitive Entscheidbarkeitsbegriff stimmt mit dem formalen Begriff
+der /Turing-Entscheidbarkeit/ überein.
+
+Die These ist notwendig, um nachzuweisen, dass eine gegebenes Problem
+nicht entscheidbar ist. Es wird allgemein angenommen, dass die These
+stimmt, obwohl sie nicht beweisbar ist, da der "intuitive
+Entscheidbarkeitsbegriff" nicht formal definiert ist.
+
+* Codierung
+
+Um Mit Hilfe von TM Aussagen über interessante Objekte (z.B. Zahlen,
+Funktionen, Graphen, etc.) treffen zu können, müssen diese Objekte als
+Wörter einer Sprache codiert werden (Beispiele für Codierungen s.
+Vorlesung vom 12.01.16).
+
+*Konvention:*
+
+-  Wir schreiben $\langle O \rangle$ für die Codierung des Objektes $O$.
+-  Wir schreiben
+   $\langle O_0, O_1 \rangle := (\langle O_0 \rangle , \langle O_1 \rangle)$
+   für die Codierung zweier Objekte $O_0$ und $O_1$ in Form eines Paars
+   von Codierungen.
+
+* Beispiele für interessante Probleme
+
+-  Gehört Wort $w$ zur Sprache $G$? Probleme dieser Art heißen
+   *Wortprobleme*. Wir definieren $A_x$ oder $ACC_x$ als die Sprache der
+   Codierungen für Sprachkategorie $x$, z.B.
+   $A_{CFG} := \{\langle G, w \rangle | \text{$G$ ist CFG und $G$ erzeugt $w$} \}$
+-  Ist die erzeugte Sprache leer? Probleme dieser Art heißen
+   *Leerheitsprobleme*, kurz $E_x$ oder $EMPTY_x$ für Sprachkategorie
+   $x$. Das Leerheitsproblem für CFG ist also
+   $E_{CFG} := \{\langle G\rangle | \text{$G$ ist CFG und $G$ erzeugt kein Wort} \}$
+-  Sind zwei Objekte äquivalent? Probleme dieser Art heißen
+   *Äquivalenzprobleme*. Das Äquivalenzproblem für CFG ist also
+   $EQ_{CFG} := \{\langle G_0, G_1\rangle | \text{$G_0$ und $G_1$ sind CFG und $G_0$ erzerzeugt dieselbe Sprache wie $G_1$} \}$
+-  Akzeptiert ein Objekt alle Wörter, die mit einem gegbenen Alphabet
+   konstruiert werden können? Probleme dieser Art heißen
+   *Universalitätsproblem*. Wir definieren
+   $UNIV_x := \{\langle u \rangle | u \text{ist x und akzeptiert alle Wörter über dem gegebenen Alphabet} \}$.
+   Also z.B.
+   $UNIV_{CFG} = \{\langle G \rangle | G \text{ ist CFG und} L(G) = \Sigma^*\}$.
+
+Probleme können
+
+-  entscheidbar sein (ent)
+-  erkennbar aber nicht entscheidbar (erk)
+-  /co-erkennbar/, d.h. das Komplement ist erkennbar (coerk)
+-  nicht /co-erkennbar/, d.h. das Komplement ist nicht erkennbar (coerk)
+-  nicht erkennbar (nerk)
+
+Es gilt: $L$ erkannbar und co-erkennbar, genau dann, wenn $L$
+entscheidbar.
+
+|        | DFA   | NFA   | REX   | DPDA   | CFG                 | PDA   | TM                   |
+|--------+-------+-------+-------+--------+---------------------+-------+----------------------|
+| A      | ent   | ent   | ent   | ent    | ent                 | ent   | nent, erk, ncoerk    |
+| E      | ent   | ent   | ent   | ent    | ent                 | ent   | nent, nerk, coerk    |
+| EQ     | ent   | ent   | ent   | ent    | nent, nerk, coerk   | ner   | nent, nerk, ncoerk   |
+| UNIV   |       |       |       |        | nent                |       |                      |
+
+$NON-EMPTY_{TM} := \{\langle M \rangle | M \text{ ist TM und } M \text{akzeptiert mindestens ein Wort} \}$
+enrkennbar, aber nicht entscheidbar.
+
+*Beweisschema um zu zeigen, dass ein gegebenes Problem nicht
+entscheidbar ist (d.h. die Sprache der Codierungen dieses Problems ist
+nicht Turing-entscheidbar):*
+
+Beweis durch Widerspruch: Nimm an, dass es eine TM gibt, die das
+gegebene Problem entscheidet und konstruiere mit Hilfe dieser TM eine
+TM, die $A_{TM}$ oder $E_{TM}$ entscheidet. Das ist ein Widerspruch, da
+$A_{TM}$ und $E_{TM}$ bekanntermaßen nicht entscheidbar sind (Meist
+verwendet man $A_{TM}$, da sie die einfachste der nicht entscheidbaren
+Sprachen ist).
+
+*Beweisschema um zu zeigen, dass ein gegebenes Problem welches nichts
+mit Turing Machinen zu tun hat (z.B. CFG) nicht entscheidbar ist (d.h.
+die Sprache der Codierungen dieses Problems ist nicht
+Turing-entscheidbar):*
+
+Arbeite mit Berechnungen (genauer gesagt mit Codierungen von
+Berechnungen) von Turing Machinen.
+
+Z.B. $UNIV_CFG$: Stelle eine Beziehung folgender Form her: Eine TM $T$
+akzeptiert ein Wort (nicht) $w$ genau dann wenn $L(G) = \Sigma^*$ gilt.
+
+** Dominoproblem
+
+$DOMINO = \{\langle S,K \rangle \mid S \text{ist endlicher Satz von Kacheln, $K \in S$ mit $S$ lässt sich ausgehend von $K$, der erste Quadrant parkettieren}\}$
+
+Dominoprobleme sind unentscheidbar.
+
+** Polynomprobleme
+
+Es ist nicht entscheidbar, ob ein Polynom mit mindestens 26 Variablen
+eine ganzzahlige Nullstelle besitzt.

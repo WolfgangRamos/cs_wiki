@@ -1,0 +1,378 @@
+#+TITLE: Multivariate_funktionen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Multivariate_funktionen
+---
+#+END_HTML
+
+* Multivariate Funktionen
+
+Wir betrachten Funktionen der Form $f: D \rightarrow \mathbb{R}$ mit
+$D \subseteq \mathbb{R}^n$ oder $D \subseteq \mathbb{C}^n$ und
+/vektorwertige Funktionen/, also Funktionen, der Form
+$f: D \rightarrow \mathbb{R}^m$
+
+** Konvergenz in R
+
+$x_n \rightarrow x :\Longleftrightarrow \lim_{n\rightarrow \infty} \|x - x_n\| = 0$
+für beliebige Norm $\|\cdot\|$ in $\mathbb{K}^n$
+
+** Stetigkeit
+
+Eine Funktion $f:D \rightarrow \mathbb{R}^m$ auf einer offenen Menge
+$D \subset \mathbb{R}^n$, heißt /stetig/ in $x \in D$, wenn für jede
+Folge $(x_n)_{n \in \mathbb{N}} \subset D$ mit
+$\lim\_{n\rightarrow\infty} x_n = x$ gilt
+
+$\lim_{n\rightarrow\infty} f(x_n) = f(x)$.
+
+Die Funktion heißt (/global/) /stetig/ in (ganz) $D$, wenn sie in jedem
+Punkt $x \in D$ stetig ist.
+
+*Eigenschaften:*
+
+-  Endliche Summen stetiger Funktionen sind stetig.
+-  Endliche Produkte stetiger Funktionen sind stetig.
+-  Ist $f:D \rightarrow \mathbb{R}$ stetig in $x \in D$ und gilt
+   $f(x) \neq 0$, dann ist auch $\frac{1}{f}$ stetig in $x$.
+-  Kompositionen stetiger Funktionen sind mit geeignetem
+   Funktionsbereich stetig.
+
+*Epsilon-Delta-Kriterium:*
+
+$D \subset \mathbb{R}^n$ offen, $f:D \rightarrow \mathbb{R}^m$ ist
+stetig in $x^* \in D$ genau dann wenn
+
+$\forall \epsilon > 0: \exists \delta > 0 \forall x \in D: \|x - x^{*}\| < \delta \Rightarrow \|f(x) - f(x^{*})\| < \epsilon$
+
+gilt.
+
+** Kompaktheit
+
+Eine Teilmenge des $\mathbb{K}^n$ heißt /kompakt/, wenn sie beschränkt
+und abgeschlossen ist.
+
+$M \subset \mathbb{K}^n$ ist beschränkt, wenn
+$\sup\{ \|x\| | x \in M\} < \infty$
+
+*Eigenschaften:*
+
+-  Kompakte Menge werden durch stetige Funktionen auf Kompakte Mengen
+   abgebildet, d.h. wenn $D \subseteq \mathbb{R}^n$ offen und
+   $f:D \rightarrow \mathbb{R}^{n}$ stetig und $M \subseteq D$ kompakt,
+   dann ist auch $f(M)$ kompakt.
+-  stetige Funktionen sind auf kompakten Mengen $M \subseteq D$
+   beschränkt und nehmen dort ihr Minimum und ihr Maximum an, d.h. es
+   existieren $x^+, x^- \in M$ mit $f(x^+) = \sup_{x\in M} f(x)$ und
+   $f(x^-) = \inf_{x\in M} f(x)$.
+
+** Lipschitz-Stetigkeit
+
+Eine Funktion heißt /Lipschitz-stetig/, wenn es $L > 0$ gibt, sodass
+$\forall x,y \in D: \|f(x) - f(y)\| \leq L\|x-y\|$. $L$ heißt auch
+/Lipschitz-Konstante/.
+
+Die Lipschitz-Stetigkeit ist eine Verschärfung des
+Stetigkeitskriteriums.
+
+*Eigenschaften:*
+
+-  jede Lipschitz-stetige Funktion ist stetig.
+
+** Fixpunktgleichungen
+
+Sei $f:D\rightarrow \mathbb{R}^n$ eine Funktion auf
+$D \subseteq \mathbb{R}^n$. Ein Punkt $x \in D$ heißt /Fixpunkt/ der
+Funktion $f$, wenn $f(x) = x$ gilt. Gleichungen dieser Form nennt man
+/Fixpunktgleichungen/.
+
+** Kontraktion
+
+Eine Lipschitz-stetige Funktion $f:D\rightarrow \mathbb{R}^n$ auf
+$D \subseteq \mathbb{R}^n$ heißt /Kontraktion/ bzgl. einer Norm
+$\|\cdot\|$, wenn für die Lipschitz-Konstante zu dieser Norm $L<1$ gilt.
+
+*Eigenschaften:*
+
+-  Kontraktionen können maximal einen Fixpunkt besitzen, d.h. Fixpunkte
+   einer Kontraktion $f$ sind eindeutig.
+
+** Fixpunktiteration
+
+Die /Fixpunktiteration/ ist ein Verfahren zur näherungsweisen Lösung
+(Genauigkeit $\epsilon > 0$) einer Fixpunktgleichung, *vorausgesetzt* es
+gilt: $f(M) \subseteq M$.
+
+1. Wähle Startwert $x^{(0)} \in M$ und setze $k=0$.
+2. Setze $x^{(k+1)} := f(x^{(k)})$.
+3. Ist $\|f(x^{(k+1)}) - x^{(k+1)}\| \leq \epsilon$ dann stoppe. Sonst
+   setze $k:= k+1$ und fahre fort mit 2.
+
+Ist $f$ Lipschitz-stetig dann gilt:
+
+$\|x^{(k+1)} - x^k\| = \|f(x^{(k)} - f(x^{(k-1)})\| \leq L \|x^{(k)} - x^{(k-1)}\| = L\|f(x^{(k-1)} - f(x^{(k-2)})\| = \dots = L^k \|x^{(1)} - x^{(0)}\|$.
+
+Der Abstand zwischen $x^{(k+1)}$ und $x^{(k)}$ wird also immer kleiner,
+wenn $f$ eine Kontraktion ist. Es ist aber nicht gesagt, dass der
+Abstand auch konvergiert.
+
+*Kriterium für die Konvergenz des Abstands beim Fixpunktsatz
+(Banach'scher Fixpunktsatz):*
+
+Sei $f:D\rightarrow \mathbb{R}^n$ eine Lipschitz-stetige Funktion auf
+einer offenen Menge $D \subseteq \mathbb{R}^n$ und sei $M \subseteq D$
+eine abgeschlossene Teilmenge mit $f(M) \subseteq M$ und sei $f$ auf $M$
+eine Kontraktion. Dann besitzt $f$ in $M$ genau einen Fixpunkt $x^*$ und
+die Fixpunktiteration (s.o.) konvergiert gegen $x^*$ für jeden
+beliebigen Startwert $x^{(0)} \in M$ mit der Fehlerabschätzung:
+
+$\|x^{(k)} - x^{*}\| \leq \frac{L^k}{1-L} \|x^{(1)} - x^{(0)}\|$.
+
+*** Fixpunkte von linearen Funktionen
+
+Im Fall einer linearen Funktion
+$f: \mathbb{K}^n \rightarrow \mathbb{K}^n$ entspricht die Suche nach
+einem (nicht-trivialen) Fixpunkt $x \in \mathbb{K}^n$ der Suche nach
+einem Eigenvektor zum Eigenwert $\lambda = 1$, also $Ax=x$.
+
+TODO
+
+Wenn für eine Matrixnorm $\|\cdot\|_{M}$, die mit einer Vektornorm
+$\|\cdot\|_{V}$ verträglich ist $\|A\|_{M} < 1$ gilt, dann existiert ein
+nicht-trivialer Fixpunkt, da .... $A$ ist dann notwendigerweise eine
+Kontraktion.
+
+** Differenzierbarkeit
+
+Sei Funktion $f:D \rightarrow \mathbb{R}$ auf $D \subseteq \mathbb{R}^n$
+offen mit $n\in\mathbb{N}$.
+
+*** Differenzenquotient in die i-te Richtung
+
+Sei $x \in D$ und $0 < h$ hinreichend klein. Dann heißt
+$D_{h}^{(i)} f(x) := \frac{1}{h}(f(x+he_i) - f(x))$ /Differenzenquotient
+in die i-te (Koordinaten-)Richtung/.
+
+*** Partielle Differenzierbarkeit
+
+$f$ heißt /partiell differenzierbar in die i-te (Koordinaten-)Richtung/,
+in Punkt $x \in D$, wenn
+$\frac{\partial f(x)}{\partial x_i} := \lim_{h \rightarrow 0} D_{h}^{(i)} f(x)$
+existiert.
+
+$\frac{\partial f(x)}{\partial x_i}$ heißt dann /partielle Ableitung/
+von $f$ an der Stelle $x$ in die $i$-te Koordinatenrichtung.
+
+Statt $\frac{\partial f(x)}{\partial x_i}$ schreibt man z.T. auch kurz
+$\partial_i f(x)$.
+
+$f$ heißt partielle differenzierbar in Punkt $x$, wenn sie in alle $n$
+Richtungen partiell differenzierbar ist.
+
+*Eigenschaften:*
+
+-  i.A. folgt aus partieller Differenzierbarkeit in einem Punkt $x$ im
+   multivariaten Fall /nicht/ Stetigkeit (s. Fréchet-Ableitung)
+
+*Rechenregeln:*
+
+Seien $f,g:D\rightarrow \mathbb{R}$ Funktionen auf
+$D\subset\mathbb{R}^n$ partiell differenzierbar in die $i$-te Richtung,
+in Punkt $x \in D$. Dann gilt:
+
+-  /Produktregel/:
+   $\frac{\partial f(x)g(x)}{\partial x_i} = g(x) \frac{\partial f(x)}{\partial x_i} + \frac{\partial g(x)}{\partial x_i} f(x)$
+-  /Quotientenregel/:
+   $\frac{\partial}{\partial x_i} \frac{f(x)}{g(x)} = \frac{1}{g(x)^2} \cdot \left(g(x) \frac{\partial f(x)}{\partial x_i} - \frac{\partial g(x)}{\partial x_i} f(x)\right)$
+   für $g(x) \neq 0$.
+
+Sei $f,g:D\rightarrow I$ eine Funktion auf $D\subset\mathbb{R}^n$ nach
+$I \subset \mathbb{R}$ partiell differenzierbar in die $i$-te Richtung,
+in Punkt $x \in D$ und sei $g:I \rightarrow \mathbb{R}$ differenzierbar
+in $f(x)$. Dann gilt:
+
+-  /Kettenregel/:
+   $\frac{\partial g(f(x)}{\partial x_i} = g'(f(x)) \cdot \frac{\partial f(x)}{\partial x_i}$
+
+*** Gradient
+
+Sei $f:D \rightarrow \mathbb{R}$ eine Funktion auf
+$D \subset \mathbb{R}^n$ offen und sei $x\in D$ und $f$ in $x \in D$
+partiell differenzierbar. Dann heißt der Zeilenvektor, der ersten
+Ableitungen einer Funktion
+
+$\nabla f(x) := \left(\frac{\partial f(x)}{\partial x_1}, \dots, \frac{\partial f(x)}{\partial x_n}\right) \in \mathbb{R}^n$
+
+/Gradient/ von $f$ im Punkt $x$. Machmal schreibt man auch
+$\mathrm{grad}\, f(x)$ statt $\nabla f(x)$.
+
+Zu einer partiell differenzierbaren vektorwertigen Funktion
+$f:D\rightarrow \mathbb{R}^m$ auf $D \subset \mathbb{R}^n$ heißt die
+Matrix der ersten Ableitungen
+
+$J_f (x) := \begin{pmatrix*} \frac{\partial f_1(x)}{\partial x_1} & \cdots & \frac{\partial f_1(x)}{\partial x_n} \\ \vdots & \ddots & \vdots \\ \frac{\partial f_m(x)}{\partial x_1} & \cdots & \frac{\partial f_m(x)}{\partial x_n} \end{pmatrix*}\in \mathbb{R}^{m \times n}$
+
+/Jakobimatrix/ (oder auch /Funktionalmatrix/) von $f$ im Punkt $x$.
+
+*Eigenschaft:*
+
+-  Für skalare Funktionen (also Funktionen mit eindimensionaler
+   Zielmenge) gilt $J f(x) = \nabla f(x)$
+-  Der Gradient $\nabla f(x)$ gibt die Richtung des stärksten Anstiegs
+   von $f$ in $x$ an.
+-  /Produktregel/ für Gradienten:
+   $\nabla f(x)g(x) = g(x) (\nabla f(x)) + (\nabla g(x)) f(x)$ (folgt
+   aus der Produktregel der partiellen Differenzierbarkeit)
+
+*** Fréchet-Ableitung
+
+Sei $f:D \rightarrow \mathbb{R}^m$ eine Funktion auf
+$D \subseteq \mathbb{R}^n$ offen, dann heißt $f$ /(total)
+differenzierbar/ (oder auch /Fréchet-differenzierbar/) in $x$, wenn eine
+lineare Abbildung (nicht affin-linear!)
+$A: \mathbb{R}^n \rightarrow \mathbb{R}^m$ existiert, sodass
+$f(x+h) = f(x) + Ah + \phi(\|h\|)$ mit $\phi(h) \in o(\|h\|)$ gilt (die
+lineare Abbildung ist hier als Standardabbildung einer Matrix
+$A \in \mathbb{R}^{m \times n}$ gegeben).
+
+*Eigenschaften:*
+
+-  Eine Funktion $f:D \rightarrow \mathbb{R}^m$ auf
+   $D \subseteq \mathbb{R}^n$ offen ist genau dann in einem Punkt
+   $x \in D$ Fréchet-differenzierbar, wenn sie in ganz $D$ in alle
+   Koordinaten-Richtungen partiell differenzierbar ist und diese
+   Ableitungen im Punkt $x$ stetig sind. Die lineare Abbildung
+   $A:\mathbb{R}^n \rightarrow \mathbb{R}^n$ ist dann gerade die
+   Jakobi-Matrix in diesem Punkt $J_f (x)$.
+-  Aus der totalen differenzierbarkeit folgt Stetigkeit sowie partielle
+   Differenzierbarkeit.
+-  Sei $f: D \rightarrow \mathbb{R}$ partiell differenzierbar in
+   $x\in D$ mit stetiger partieller Ableitung. Dann ist $f$ auch total
+   differenzierbar in $x$
+
+*** Allgemeine Kettenregel
+
+Sei $g:D_g \rightarrow D_f$ mit $D_g \subseteq \mathbb{R}^n$ und
+$D_f \subseteq \mathbb{R}^r$ total differenzierbar in $x \in D_g$ und
+sei $f:D_f \rightarrow \mathbb{R}^m$ total differenzierbar in $y:=g(x)$.
+Dann ist $(f \circ g)$ total differenzierbar in $x$ mit
+$J_{(f \circ g)} (x) = J_f (g(x)) \cdot J_g (x)$ bzw.:
+
+$(J\_{(f \circ g)} (x))\_{ij} = \frac{\partial (f \circ g)\_i(x)}{\partial x_j} = \sum_{k=1}^{r} \partial_k f_i(y) \cdot \frac{\partial g_k(x)}{\partial x_j}$
+
+* Richtungsableitungen
+
+Sei $f:D \rightarrow \mathbb{R}$ Funktion auf $D\subseteq \mathbb{R}^n$
+offen und sei $x \in D$, $v\in \mathbb{R}^n$ und $\|v\|\_2 = 1$. Dann
+heißt im Falle der Konvergenz
+$\frac{\partial f(x)}{\partial v} := \partial_v f(x) := \lim_{\epsilon \rightarrow 0} \frac{f(x+\epsilon v) - f(x)}{\epsilon}$
+*Richtungsableitung** von $f$ in Richtung $v$.
+
+*Eigenschaften:*
+
+-  Für $v = e_i$ gilt gerade
+   $\partial_{e_i} f(x) = \lim_{\epsilon \rightarrow 0} \frac{f(x+\epsilon e_i) - f(x)}{\epsilon} = \partial_i f(x)$
+-  Sei $D \subseteq \mathbb{R}^n$ offen $f:D \roghtarrow \mathbb{R}$ und
+   sei $x \in D$ total differenzierbar. Sei weiterhin
+   $v \in \mathbb{R}^n$ mit $\|v\|_2 =1$. Dann ist $f$ in Richtung $v$
+   differenzierbar und es gilt
+   $\partial_v f(x) = \nabla f(x) \cdot v = \sum_{i=1}^{n} \farc{\partial f(x)}{\partial x_i} \cdot v_i$.
+
+* Höhere partielle Ableitungen
+
+Konvention:
+
+$\frac{\partial^2 f(x,y)}{\partial x \partial x} = \frac{\partial^2 f(x,y)}{(\partial x)^2} = \frac{\partial^2 f(x,y)}{\partial x^2} = \frac{\partial \frac{\partial f(x,y)}{\partial x}}{\partial x}$
+
+*Eigenschaften:*
+
+-  Die Reihenfolge der Ableitung ist egal: Sei
+   $D \subseteq \mathbb{R}^n$ offen, $f:D\rightarrow \mathbb{R}$ im
+   Punkt $x \in D$ zweimal stetig paritell differenzierbar. Dann gilt:
+
+$\frac{\partial^2 f(x)}{\partial x_i \partial x_j} = \frac{\partial^2 f(x)}{\partial x_j \partial x_i}$
+
+** Mittelwertsatz
+
+$h_x \cdot \phi'(x + \Theta_x h_x) = \phi(x+h_x) - \phi(x)$
+
+mit geeignetem $0 \leq \Theta_x \leq 1$
+
+** Hesse-Matrix
+
+Ist $f:D\rightarrow \mathbb{R}$ zweimal stetig partiell differenzierbar
+in $x\in D$, so heißt
+$H_f (x) = (\frac{\partial^2 f(x)}{\partial x_i \partial x_j})_{1 \leq i \leq n \wedge 1\leq j \leq n}$
+/Hesse-Matrix/ von $f$.
+
+*Eigenschaften:*
+
+-  Ist $f$ zweimal stetig differenzierbar in $x$. Dann ist die
+   Hesse-Matrix $H_f (x)$ symmetrisch, d.h. $(H_f (x))^T = H_f (x)$
+
+* mehrdimensionale Taylor-Entwicklung
+
+Sei $f:D\rightarrow \mathbb{R}$ Funktion auf $D \subseteq \mathbb{R}^n$
+offen im Punkt $x \in D$ $m+1$-mal stetig partiell differenzierbar. Dann
+gilt für $h \in \mathbb{R}^n$ mit
+$\forall 0\leq \lambda \leq 1: x+ \lambda h \in D$:
+
+$f(x+h) = \sum_{|\alpha=0}^{m} \frac{1}{\alpha!} D^{\alpha} f(x) h^{\alpha} + o(h^m)$
+
+für Multiindex $|\alpha| = 0 \wedge \alpha \in \mathbb{N}_0^n$.
+
+** Mult-Indices
+
+TODO
+
+Ein Vektor $\alpha \in \mathbb{N}_0^n$ heißt /Multiindex/, wenn gilt:
+
+-  $|\alpha| := \sum_{i=1}{n} \alpha_{i} \geq 0$
+-  $\alpha! := \prod_{i=1}{n} \alpha_{i}!$
+
+Sei $f$ in $x^* \in D$ stetig partiell differnzierbar und besitze ein
+Extremum in $x^*$, dann gilt $\nabla f(x^*) = 0$.
+
+** Lokale Extrema
+
+*Hinreichende Bedingung:*
+
+Sei $f:D\rightarrow \mathbb{R}$ Funktion auf $D \subseteq \mathbb{R}^n$
+offen in $D$ zwei-mal stetig partiell differenzierbar. Für $x^* \in D$
+gelte zum einen $\nabla f(x^*) = 0$ und außerdem
+
+1. $H_f (x^*)$ sei positiv definit, dann besitzt $f$ in $x^*$ ein
+   lokales Minimum
+2. $H_f (x^*)$ sei negativ definit, dann besitzt $f$ in $x^*$ ein
+   lokales Maximum
+3. $H_f (x^*)$ sei indefinit, dann besitzt $f$ in $x^*$ *kein* lokales
+   Maximum
+
+* Newton-Verfahren
+
+Sei $f:D\rightarrow \mathbb{R}^n$ Funktion auf
+$D \subseteq \mathbb{R}^n$ offen und in $D$ stetig partiell
+differenzierbar. Wir suchen eine Nullstelle $f(x) = 0 \in \mathbb{R}^n$.
+
+0. Wähle Startwert: $x^{(0)} \in D$
+1. Berechne Korrektur $\Delta x^{(k)}$ mit dem liearen Gleichungssystem
+   $H_f (x^{(k)}) \Delta x^{(k)} = -f(x^{(k)})$
+2. Setze $x^{(k+1)} = x^{(k)} + \Delta x^{(k)}$
+3. Ist $\| f(x^{(k+1)}) \| < \epsilon$ dann stoppe
+4. Setze $k \rightarrow k+1$ und gehe zu 1.
+
+Wichtig: TODO $H_f (x^{(k)}) \neq \dots$
+
+Sei $f:D\rightarrow \mathbb{R}$ Funktion auf $D \subseteq \mathbb{R}^n$
+offen im Punkt $x \in D$ zweimal stetig partiell differenzierbar mit
+beschränkter 2. Ableitung in $D$, $J_k$ in $D$ stets regulär,
+$f(x^*) = 0$, $x^* \in D$.
+
+Dann konvergiert Newton-Verfahren in einer hinreichend kleinen Umgebung
+von $x^*$

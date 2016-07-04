@@ -1,0 +1,56 @@
+#+TITLE: Potenzfunktion
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Potenzfunktion
+---
+#+END_HTML
+
+* Potenzfunktion
+
+* Potenzfunktionen mit rationalen Exponenten
+
+*Rechengesetze:*
+
+-  $x^n x^m = x^{n+m}$
+-  $(x^n)^m = x^{nm}$
+-  $x^n y^n = (xy)^n$
+-  Sei $f: \mathbb{R}^+ \rigtharrow \mathbb{R}^+$ ist stetig und streng
+   monoton wachsend. Dann ist auch $f^{-1}$ stetig und streng monoton
+   wachsend. $f^{-1}(y) = \root^{n}{y} = y^{\frac{1}{n}$. Also gilt
+   $x^{\frac{m}{n}} := \root^{n}{x^m}$
+-  $x^q := \frac{1}{x^q}$ für $q \in \mathbb{Q}^-$
+
+* Exponentialfunktion in $\mathbb{Q}$
+
+$f_a: \mathbb{Q} \rightarrow \mathbb{R}_{0}^+$ mit $q \mapsto a^q$
+erfüllt Funktionalgleichung: $f_a(q+p) = f_a(q) \cdot f_a(p)$
+
+*Erinnerung: Exponentialfunktion*
+
+$\exp(q+p) = \exp(q) \cdot \exp(p)$
+
+$\exp{1} =: e \in \mathbb{R}\setminus\mathbb{Q}$
+
+*Eigenschaften:*
+
+-  Es gilt $e^q = \exp(q)$
+
+* Exponentialfunktion in $\mathbb{R}, \mathbb{C}$
+
+Wir definieren:
+
+$e^x := \exp(x)$, $e^z := \exp(z)$ mit $x \in \mathbb{R}$ und
+$z \in \mathbb{C}$
+
+$x^y := \exp(y \cdot \ln x)$ für $x,y \in \mathbb{R}$ und $x >0$
+
+*Eigenschaften:*
+
+-  Die Exponentialfunktion ist auf ganz $\mathbb{C}$ stetig (und damit
+   auch auf $\mathbb{R}$).

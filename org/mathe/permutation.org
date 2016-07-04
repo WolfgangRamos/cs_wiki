@@ -1,0 +1,27 @@
+#+TITLE: Permutation
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Permutation
+---
+#+END_HTML
+
+* Permutation
+
+** Vorzeichen einer Permutation
+
+Sei $S_{n}$ die Gruppe aller Permutationen der Menge
+$M_{n} = \{1, ..., n\}$. Dann ist $sign(\pi) \in \{-1,1\}$ das
+/Vorzeichen einer Permutation/
+$\pi = (\pi(1), \pi(2)), ..., \pi(n)) \in S-{n}$ definiert durch
+$\sign(\pi) = (-1)^{|inv(\pi)|}$, wobei
+$inv(\pi)= \{(i,j) \in M_{n} \times M_{n} |i < j \wedge \pi(i) > \pi(j)\}$
+die /Menge der Fehlstände der Permutation/ ist.
+
+-  Das Vorzeichen gibt die Anzahl der paarweisen Vertauchungen an, mit
+   denen die Permutation $\pi$ erreicht werden kann.

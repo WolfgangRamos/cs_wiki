@@ -1,0 +1,180 @@
+#+TITLE: Index
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Index
+---
+#+END_HTML
+
+* Theoretische Grundlagen der Informatik
+
+-  [[./regulaere_sprachen.org][Reguläre Sprachen]]
+
+   -  [[./endliche_automaten.org][Endliche Automaten]]
+
+      -  [[./dfa.org][DFA]]
+      -  [[./nfa.org][NFA]]
+      -  [[./gnfa.org][GNFA]]
+      -  [[./pda.org][PDA]]
+
+-  [[./cfl.org][Kontextfreie Sprachen]]
+
+   -  [[./cfg.org][Kontextfreie Grammatiken]]
+   -  [[./pda.org][PDA]]
+
+-  [[./turing_machinen.org][Turing Machinen]]
+-  [[./complexity.org][Komplexitätstheorie]]
+
+* Grundbegriffe
+
+** Folgen
+
+Eine endliche Folgen der Länge $n \in \mathbb{N}$ bezeichnen wir mit
+$(a_0, \dots, a_{n-1})$. Endliche Folgen können auch als $n$-Tupel
+aufgefasst werden.
+
+Zwei Folgen/Tupel sind gleich, wenn ihre Komponenten gleich sind.
+
+** Alphabet
+
+Ein /Alphabet/ ist eine *nichtleere endliche* Menge $\Sigma$. Die
+Elemente eines Alphabets heißen /Symbole/.
+
+Ist das leere Wort Element eines Alphabets $\Sigma$ so kennzeichnen wir
+dies durch den Index $\epsilon$. Es gilt also
+$\Sigma_{\epsilon}:= \Sigma \cup \{ \epsilon \}$.
+
+** Wörter
+
+*Endliche* Folgen von Symbolen aus einem Alphabet $\Sigma$ heißen
+/Wörter/ (engl. /strings/). Wörter sind also Elemente von
+$\Sigma^* := \{(w_0,\dots,w_{k-1}) | k \in \mathbb{N} \wedge \forall i \in \{0,\dots,k\}: w_i \in \Sigma\}$.
+
+Das /leere Wort/ wird mit $\epsilon$ bezeichnet. Es gilt
+$|\epsilon| = 0$. $\epsilon$ ist Element jeder Menge $\Sigma^*$.
+
+*Notationskonventionen:*
+
+-  Die Anzahl der Symbole in einem Wort $w$ bezeichnen wir mit $|w|$.
+-  Die Häufigkeit, mit der ein Symbol $s \in \Sigma$ in einem Wort $w$
+   vorkommt bezeichnen wir mit $|w|_s$. Beispielsweise bezeichnet
+   $|w|_1$ die Anzahl der Einsen in $w$.
+
+** Formale Sprache
+
+Sei $\Sigma$ ein Alphabet, dann heißt eine Teilmenge von $\Sigma^*$
+/formale Sprache/.
+
+** Übersicht über Beweisschemata
+
+Möglichkeiten zu zeigen, dass eine Sprache $L$ ...
+
+*... regulär ist:*
+
+1. Mit Hilfe eines DFA oder NFA: Gib einen DFA oder NFA $M$ an (Schritt
+   1) und zeige, dass $L(M) = L$ gilt (Schritt 2).
+2. Mit Hilfe eines regulären Ausdrucks: Stelle $L$ als
+   [[./regulaere_ausdruecke.org][regulären Ausdruck]] dar.
+3. Mit Hilfe der Operationen unter denen reguläre Sprachen abgeschlossen
+   sind: Stelle $L$ als Vereingung, Konkatenation, Kleene-Stern, Schnitt
+   und Komplement anderer (bekanntermaßen) regulärer Sprachen dar.
+4. Zeige dass $L$ endlich ist: Dann ist $L$ regulär, da jede endliche
+   Sprache regulär ist.
+
+*... nicht regulär ist:*
+
+1. Mit Hilfe des Pumping Lemma für reguläre Sprachen: ...
+2. Mit Hilfe der regulären Operationen: Erzeuge durch Vereinigung,
+   Konkatenation und Kleene-Stern von $L$ mit ausschließlich regulären
+   Sprachen eine (bekannterweise) nicht reguläre Sprache. Dann folgt
+   aufgrund der Abgeschlossenheit regulärer Sprachen bzgl. regulärer
+   Operationen, dass $L$ nicht regulär ist.
+
+*... kontextfrei ist:*
+
+1. Mit Hilfe einer CFG: Gib einen CFG $G$ an und zeige, dass $L(G) = L$
+   gilt (i.d.R. durch Induktion über die Wortlänge und durch Induktion
+   über die Länge der Ableitung mit Fallunterscheidung entsprechend den
+   Regeln der Grammatik oder den Regeln, nach denen das Wort aufgebaut
+   ist).
+2. Mit Hilfe eines PDA: Gib einen PDA $P$ an und zeige, dass $L(P) = L$
+   gilt. Man kann das über eine strukturelle Induktion über die Worte
+   von $L$ versuchen. In anderen Fälle ist das oft schwierig. Hier kann
+   man versuchen zu zeigen, dass man durch Lesen eines Teilworts in
+   einen Zustand $q$ mit Stackinhalt $s$ kommt und dass man aus diesem
+   Zustand mit dem gegebnen Stackinhalt durch lesen des Restwortes in
+   den Endzustand kommt. I.d.R. sind Korrektheitsbeweise für eine
+   Grammatik einfacher und daher vorzuziehen.
+3. Mit Hilfe der Vereinigung und des Schnitts: Stelle $L$ als Vereingung
+   anderer (bekannterweise) kontextfreier Sprachen oder als Schnitt
+   (bekannterweise) regulärer Sprachen mit kontextfreien Sprachen dar.
+
+*... nicht kontextfrei ist:*
+
+1. Mit Hilfe des Pumping Lemma für kontextfreie Sprachen
+2. Mit Hilfe der Vereinigung: Erzeuge durch Vereinigung von $L$ mit
+   ausschließlich kontextfreien Sprachen eine (bekannterweise) nicht
+   kontextfreie Sprache. Dann folgt aufgrund der Abgeschlossenheit
+   kontextfreier Sprachen bzgl. Vereinigung, dass $L$ nicht regulär ist.
+   (weitere Operationen unter denen CFL abgeschlossen sind, sind:
+   Konkatenation, Kleene Stern, aber diese waren nicht Teil der
+   Vorlesung)
+3. Mit Hilfe des Durschnitts: Erzeuge durch Schnitt von $L$ mit
+   ausschließlich regulären Sprachen eine (bekannterweise) nicht
+   reguläre Sprache. Dann folgt aufgrund der Abgeschlossenheit
+   kontextfreier Sprachen bzgl. des Schnitts mit regulären Sprachen,
+   dass $L$ nicht regulär ist.
+
+*... Turingerkennbar ist:*
+
+1. Mit Hilfe einer TM/NTM/MTM: Gib eine TM/NTM/MTM $T$ an und zeige,
+   dass $L(T) = L$ gilt. Für uns genügt dabei eine informelle
+   Beschreibung, also eine Beschreibung durch ein Flow-Chart oder
+   Pseudocode oder eine graphische Beschreibung von $T$. Eine formale
+   Beschreibung ist für uns zu aufwendig. Außerdem sind
+   Korrektheitsbeweis nicht erforderlich, da sie ebenfalls zu aufwendig
+   sind (und nicht Teil der Vorlesung) sind.
+
+*... (Turing)-entscheidbar/(Turing)-berechenbar ist:*
+
+1. Mit Hilfe einer TM/NTM/MTM: Gib eine TM/NTM/MTM $T$ an und zeige,
+   dass $L(T) = L$ gilt. Für uns genügt dabei eine informelle
+   Beschreibung, also eine Beschreibung durch ein Flow-Chart oder
+   Pseudocode oder eine graphische Beschreibung von $T$. Eine formale
+   Beschreibung ist für uns zu aufwendig. Außerdem sind
+   Korrektheitsbeweis nicht erforderlich, da sie ebenfalls zu aufwendig
+   sind (und nicht Teil der Vorlesung) sind.
+
+** Übersicht über Konstruktionsverfahren:
+
+*NFA -> DFA:* Potenzmengenkonstruktion (s. Vorlesung vom 04.11.2015)
+
+*regulärer Ausdruck -> NFA:* induktive Konstruktion s.
+[[./regulaere_ausdruecke.org][Reguläre Ausdrücke]]
+
+*NFA -> GNFA:* jeder NFA ist ein GNFA.
+
+*GNFA -> regulärer Ausdruck:* Eliminationsregel (s. Vorlesung
+11.11.2015)
+
+*GNFA -> NFA:* müsste über die Umkehrung der Eliminationsregel möglich
+sein
+
+*CFG -> PDA:* s. Buch (Idee: pushe Variablen der Grammatik auf den
+Stack)
+
+*PDA -> CFG:* s. Vorlesung vom 02.12.15
+
+*CFG in Chomsky Normal Form bringen:* s. [[./cfg.org][CFG]]
+
+*DFA -> CFG:* s. [[./cfg.org][CFG]]
+
+*MTM -> TM:* s. Vorlesung vom 09.12.2015 und Ergänzung k-tape-dtm vom
+20.12.2015
+
+*NTM -> MTM:* s. Vorlesung 15.12.2015 und Ergänzung ntm vom 16.12.2015

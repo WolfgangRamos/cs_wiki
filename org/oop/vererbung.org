@@ -1,0 +1,24 @@
+#+TITLE: Vererbung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Vererbung
+---
+#+END_HTML
+
+* Vererbung
+
+Eine Vererbungsbeziehung ist eine
+Generalisierung-Spezialisierungsbeziehung zwischen zwei Klassen.
+
+** Dynamische Polymorphie
+
+Erfordert dynamisches Binden von Methoden, da Klasse eines Objekts erst
+zur Laufzeit bekannt ist.
+
+** Liskovsches Substitutionsprinzip

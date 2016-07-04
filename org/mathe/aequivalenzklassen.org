@@ -1,0 +1,19 @@
+#+TITLE: Aequivalenzklassen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Aequivalenzklassen
+---
+#+END_HTML
+
+* Äquivalenzklassen
+
+Sei $M$ eine (nichtleere?) Menge und sei $\equiv : M \times M$ eine
+[[aequivalenzrelation][Äquivalenzrelation]]. Dann heißt die zu $x \in M$
+festgelegte Menge $$[x]_{\equiv} := \\{y \in M | y \equiv x\\}$$
+Äquivalenzklasse von $x$.

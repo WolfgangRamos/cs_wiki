@@ -1,0 +1,151 @@
+#+TITLE: Kuerzeste_wege
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Kuerzeste_wege
+---
+#+END_HTML
+
+* Kürzeste Wege zwischen Wurzel und Knoten
+
+*Voraussetzung:* Sei $V = \{1,...,n\}$ eine Knotenmenge und sei
+$D = (V,E)$ ein [[gerichtete_graphen][*gerichteter* und gewichteter
+Graph]] mit Kantengewichtungsfunktion $w: E \rightarrow \mathbb{R}$.
+Wichtig ist, dass $G$ keine Kreise negativer Länge enthält, d.h. es gilt
+$ZL \geq 0$ (denn nur dann existieren kürzeste Wege ohne
+Knotenwiederholungen).
+
+Wir verwenden für die Algorithmen eine $n \times n$ /Entfernungsmatrix/
+$A$, die wir wie folgt mit Werten füllen:
+
+\begin{equation}
+a_{ij} = 
+\begin{cases}
+w((i,j)) & \text{falls } (i,j) \in E \\
+0        & \text{falls } i = j \\
+\infty   & \text{sonst}
+\end{cases}
+\end{equation}
+
+*ges:* für alle $v \in V$ die kürzeste Weglänge von der Wurzel $1$ zu
+$v$ (im Englischen spricht man auch von einem /single source shortest
+path problem/)
+
+*Idee:* Verwende die /Bellman-Gleichungen/ zur Berechnung des kürzesten
+Wegs $u_j$ von der Wurzel $1$ zu einem Knoten $j$. Diese lauten:
+
+$$u_1 := 0$$ $$u_j := \min \{u_k, a_{kj}\}$$
+
+** Algorithmus von Bellman-Ford
+
+*Idee:* berechne iterativ die kürzeste Weglänge von $1$ zu einem Knoten
+$j$ mit höchstens $m$ Kanten und speichere die Länge dieses Weges in
+einem zweidimensionalen Feld $u$ an Position $u[j,m]$.
+
+#+BEGIN_EXAMPLE
+    BELLMAN-FORD(D=(V,E), V, A) {  // A = Entfernungsmatrix; V = {1,...,n}
+      integer n = |V|;
+
+      // initialisierung
+      for j = 1 to n do
+        u[j][1] = A[1][j];
+      od
+
+      for k = 2 to n-1 do
+        for j = 1 to n do
+          u[j,k] = min{ u[j,k-1], min{ (u[h,k-1] + A[h][j]) | h ≠ j } };
+        od
+      od
+    }
+#+END_EXAMPLE
+
+*Laufzeit:* $\mathcal{O}(|V|^3)$
+
+Um die konkreten Wege zu berechnen müssen zusätzlich die Kanten
+abgespeichert werden. Diese erzeugen dann einen gerichteten Baum mit
+Wurzel $1$, in dem Jeder Pfad von $1$ zu einem Knoten $v$ einem
+kürzesten Weg in $G$ entspricht.
+
+** Algorithmus von Dijkstra
+
+*Zusätzliche Voraussetzung:* Es gibt keine negativen Kantengewichte,
+d.h. $\forall e \in E: w(e) \geq 0$
+
+*Idee:* Verwende zwei Mengen $P$, $Q$, wobei $V = P \cup Q$ gilt. Die
+Knoten in $P$ sind bereits permanent beschriftet mit $u_j$ (Länge des
+kürzesten Wegs von $1$ nach $j$), die Knoten in $Q$ sind erst vorläufig
+beschriftet mit einem $v_j \geq u_j$. Solange $P \neq V$:
+
+1. wähle einen Knoten $k \in Q$ mit minimaler vorläufiger Beschriftung
+   $v[k]$.
+2. verschiebe $k$ von $Q$ nach $P$
+3. übernimm die vorläufige Beschriftung als permanente Beschriftung,
+   d.h. setzte $u[k] = v[k]$
+4. aktualisiere die vorläufigen Beschriftungen aller Knoten in $Q$
+
+#+BEGIN_EXAMPLE
+    DIJKSTRA (D=(V,E), V, A) {  // A = Entfernungsmatrix; V = {1,...,n}
+      integer n = |V|;
+      Set P = {1};  // Startknoten: 1
+      Set Q = {2,...,n};
+      u[1] = 0;
+
+      for j = 2 to n do
+        v[j] = A[1][j];
+      od
+      
+      while P ≠ V do
+        wähle k ∈ Q mit minimalem v[k] = min {v[j] | j ∈ Q}; // Kante mit geringstem Gewicht
+        P = P ∪ {k};
+        Q = Q \ {k};
+        u[k] = v[k];
+
+        foreach j ∈ Q do
+          v[j] = min {v[j], u[k] + A[k][j]};
+        od
+      od
+
+      return Distanzen u[i] , ..., u[n];
+    }
+#+END_EXAMPLE
+
+*Laufzeit:* $\mathcal{O}(|V|^2)$
+
+- Heap, Priority Queue: Laufzeit: $\mathcal{O}( (|V| + |E|) \log |V|)$
+- Fibonacci-Heap: Laufzeit: $\mathcal{O}( (|V| \log |V| + |E|))$
+
+* Kürzeste Wege zwischen beliebigen Knoten
+
+*Voraussetzung:* Sei $V = \{1,...,n\}$ eine Knotenmenge und sei
+$D = (V,E)$ ein gerichteter und gewichteter Graph mit
+Kantengewichtungsfunktion $w: E \rightarrow \mathbb{R}$. Wichtig ist,
+dass es in $G$ keine Kreise negativer Länge, d.h. es gilt $ZL \geq 0$
+(denn nur dann existieren kürzeste Wege ohne Knotenwiederholungen).
+
+*ges:* für alle $i,j \in V$ die kürzeste Weglänge von $i$ nach zu $j$
+(im Englischen spricht man auch von einem /all pair shortest path
+problem/)
+
+*Idee:* berechne $u[i,j,m]$ = kürzeste Weglänge von $i$ nach $j$ mit
+Zwischenknoten aus $\{1,...,m-1\}$.
+
+*Algorithmus von Floyd-Warshall:*
+
+-  verwende Matrix $U^{(1)} = A$
+-  berechne $U^{(m+1)} = (u[i,j,m+1])_{ij}$ aus $U^{(m)}$ durch
+   Verwendung der $m$-ten Zeile und $m$-ten Spalte. Vergleiche dazu
+   $u[i,j,m]$ mit dem Wert $u[i,m,m] + u[u,j,m]$ und speicherer
+   kleinsten Wert in $(U^{(m+1)})\_{ij}$ ab.
+
+Sei $Z = \{ i \in V | i \text{liegt auf Kreis neg. Länge} \}$. Dann
+gilt
+
+1. $Z = \{ i \in V | u[i,i,n+1] < 0 \text{im Floyd-War Alg.}\}
+2. $Z$ kann in $\mathcal{O}(n^3)$ Zeit berechnet werden.
+
+*Laufzeit:* $\mathcal{O}(|V|^3)$

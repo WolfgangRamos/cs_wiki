@@ -1,0 +1,28 @@
+#+TITLE: Unterraum
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Unterraum
+---
+#+END_HTML
+
+* Unterraum
+
+Sei $(V, \oplus)$ ein [[vektorraum][Vektorraum]] über dem
+[[koerper][Körper]] $(K, +, \cdot)$ und sei $W \subseteq V$ eine Menge,
+sodass $W$ ebenfalls $\mathbb{K}$-Vektorraum ist, dann heißt $W$
+/Unterraum/ von $V$.
+
+** Eigenschaften
+
+-  $(W, \oplus)$ ist genau dann Unterraum von $(V, \oplus)$, wenn:
+
+   1. $W$ bzgl. "$\oplus$" abgeschlossen ist und
+   2. $W$ bzgl. "$\odot$" (Skalarmultiplikation) abgeschlossen ist.
+
+

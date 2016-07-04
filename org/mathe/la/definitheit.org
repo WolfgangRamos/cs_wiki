@@ -1,0 +1,32 @@
+#+TITLE: Definitheit
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Definitheit
+---
+#+END_HTML
+
+* Definitheit von Matrizen
+
+Sei $A \in \mathbb{n \times n}$
+
+*positiv definit:* $A$ heißt /positv definit/, wenn
+$\forall x \in \mathbb{R}^{n} \setminus \\{\mathbf{0}\\}: x^{T}Ax > 0$
+gilt.
+
+*positiv semidefinit:* $A$ heißt /positv semidefinit/, wenn
+$\forall x \in \mathbb{R}^{n} \setminus \\{\mathbf{0}\\}: x^{T}Ax \geq 0$
+gilt.
+
+*negativ definit:* $A$ heißt /negativ definit/, wenn
+$\forall x \in \mathbb{R}^{n} \setminus \\{\mathbf{0}\\}: x^{T}Ax < 0$
+gilt.
+
+*negativ semidefinit:* $A$ heißt /negativ semidefinit/, wenn
+$\forall x \in \mathbb{R}^{n} \setminus \\{\mathbf{0}\\}: x^{T}Ax \leq 0$
+gilt.

@@ -1,0 +1,21 @@
+#+TITLE: Computer_architecture
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Computer_architecture
+---
+#+END_HTML
+
+* Architektur von Computersystemen
+
+Computersysteme bestehen aus vier Schichten:
+
+1. Hardware
+2. Instruction Set Architecture
+3. Operating System
+4. Application Software

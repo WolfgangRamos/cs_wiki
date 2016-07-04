@@ -1,0 +1,25 @@
+#+TITLE: Bijektiv
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Bijektiv
+---
+#+END_HTML
+
+* bijektiv
+
+Möglichkeiten um zu zeigen, dass eine Funktion $f$ bijektiv ist:
+
+-  "klassisch": zeigen, dass $f$ injektiv und surjektiv ist
+-  "über Wahl einer Links- und Rechtsinversen":
+
+   -  Auflösen der Funktionsgleichung nach $x$
+   -  zeigen, dass die sich so ergebende Funktion Rechtsinverse ist
+   -  zeigen, dass die sich so ergebende Funktion Linksinverse ist
+
+

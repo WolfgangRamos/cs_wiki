@@ -1,0 +1,73 @@
+#+TITLE: Regulaere_ausdruecke
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Regulaere_ausdruecke
+---
+#+END_HTML
+
+* Reguläre Ausdrücke
+
+Sei $\Sigma$ ein Alphabet, dann ist die Menge der regulären Ausdrücke
+über $\Sigma$ induktiv wie folgt definiert:
+
+-  $\{a\}$ ist ein regulärer Ausdruck für $a \in \Sigma$. Statt $\{a\}$
+   wird häufig einfach $a$ geschrieben.
+-  $\epsilon$ ist ein regulärer Ausdruck. Statt $\{\epsilon\}$ wird
+   häufig einfach $\epsilon$ geschrieben.
+-  $\emptyset$ ist ein regulärer Ausdruck.
+-  Falls $R_0$ und $R_1$ reguläre Ausdrücke sind, dann $(R_0 \cup R_1)$
+   und $(R_0 \circ R_1)$. Statt $(R_0 \circ R_1)$ wird häufig einfach
+   $(R_0\,R_1)$ geschrieben.
+-  Falls $R_0$ ein regulärer Ausdruck ist, dann auch $(R_0^*)$.
+
+Jeder reguläre Ausdruck $R$ bezeichnet eine Sprache $L(R)$ (d.h.
+reguläre Ausdrücke Beschreiben Mengen). Es gilt:
+
+-  $L(a) := \{a\}$ für $a \in \Sigma$
+-  $L(\epsilon) := \{\epsilon\}$
+-  $L(\emptyset) := \emptyset$
+-  $L(R_0 \cup R_1) := L(R_0) \cup L(R_1)$
+-  $L(R_0 \circ R_1) := L(R_0) \circ L(R_1)$
+-  $L(R^*) := L(R)^*$
+
+Insbesondere gilt:
+
+-  $L(\emptyset^*) = \emptyset^* = \{\epsilon\}$
+-  Konkatenation mit $\emptyset$ liefert $\emptyset$. Für alle regulären
+   Ausdrücke $R$ gilt also $R \circ \emptyset = \emptyset$
+
+*Konventionen:*
+
+-  Reihenfolge der Bindungsstärke: $^*$, $\circ$, $\cup$
+-  äußere Klammern dürfen wegfallen
+
+*Eigenschaften:*
+
+-  Eine Sprache $L$ ist genau dann regulär, wenn sie durch einen
+   regulären Ausdruck $R$ bestimmt wird, d.h. es gilt $L(R) = L$
+
+** Konstruktion eines NFA aus einem regulären Ausdruck
+
+Auf induktive Weise kann aus einem regulären Ausdruck ein NFA
+konstruiert werden. Die Idee ist:
+
+-  Gelte $R := a$ mit $a \in \Sigma$: ...
+-  Gelte $R := \epsilon$: ...
+-  Gelte $R := \emptyset$: ...
+-  Gelte $R := R_1 \cup R_2$: Führe einen neuen Anfangszustand ein,
+   sowie $\epsilon$-Transitionen von diesem neuen Anfangszustand zu den
+   "alten" von $R_1$ und $R_2$.
+-  Gelte $R := R_1 \circ R_2$: Führe $\epsilon$-Transitionen von allen
+   Endzuständen von $R_1$ zum Anfangszustand von $R_2$ ein.
+-  Gelte $R := R_1^*$: Führe einen neuen akzeptierenden Anfangszustand
+   ein (um das leere Wort zu akzeptieren) und führe
+   $\epsilon$-Transitionen von allen Endzuständen von $R_1$ zum
+   Anfangszustand von $R_1$ ein.
+
+Formal bedeutet das: ...

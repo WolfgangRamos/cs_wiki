@@ -1,0 +1,63 @@
+#+TITLE: Resolution
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* Resolution
+
+$res_{X_i} := K \setminus \{X_i\} \cup K' \setminus \{\neg X_i\}$.
+
+Sei $M$ eine Menge von Klauseln und $K, K' \in M$ resolvierbar bzgl. $X_i$, dann gilt:
+
+$\{\bigvee K \mid K \in M \} |\models \bigvee res_{X_i}(K, K')$ 
+
+Ein *Resolutionsbeweis* einer Klausel $K$ aus einer Menge von Klauseln
+$M$ ist eine /endliche/ Folge $K_0, \dots, K_n$ von Klauseln mit
+folgenden Eigenschaften:
+
+- $K_n = K$
+- Für jedes $i < n$ gilt eine der drei folgenden Bedingungen:
+
+1. /Voraussetungsregel/ (V): $K_i \in M$
+2. /Monotonieregel/ (M): Es gibt $j < i$ mit $K_j \subseteq K_i$
+3. /Resolutionsregel/ (R): Es gibt $X_l$, sodass $K_i = res_{X_l}(K_j, K_k}$ für $j,k < i$
+
+Wir schreiben $M\vdash_{res}^n K$, wenn es einen Resolutionsbeweis von
+$K$ aus $M$ mit der Länge $n$ gibt.
+
+Wir schreiben $M\vdash_{res}^{*} K$, wenn es einen Resolutionsbeweis
+von $K$ aus $M$ gibt.
+
+** Korrektheit
+
+Sei $M$ eine Menge von Klauseln und $K$ eine Klausel. Wenn $M
+\vdash_{res}^{*} K$ gilt, so gilt auch $\{\bigvee K' \mid K' \in
+M\} |\models \bigvee K$.
+
+** Vollständigkeit
+
+Ist $M$ eine Klauselmenge und $K$ eine nicht-tautologische Klausel,
+für die $\{ \bigvee K \mid K \in M \} |\models \bigvee K$ gilt, dann
+gilt auch $M\vdash_{res}^{*}K$.
+
+Insbesondere gilt: Ist $M$ eine unerfüllbare Klauselmenge, dann gibt
+es einen Resolutionsbeweis für die leere Klausel aus $M$, d.h. es gilt
+$M \vdash_{res}^{*} \{\}$.
+
+* SDL-Resolution
+
+Für bestimmte Klauselmengen kann man zielgerichtet resolvieren.
+
+Eine *Hornformel* ist eine Konjunktion von *Hornklauseln*.
+
+Eine *Hornklausel* ist eine Klausel, mit höchstens einem positivem
+Literal, z.B. 
+
+- /leere Klausel/: $\bigvee \{\} \equiv \bot$
+- /Zielklausel/: $\{\neg X_0, \dots \neg X_n\}$
+- /Tatsachenklausel/: $\bigvee \{X_0\} \equiv X_0$
+- /Programmklausel/: $\bigvee \{\neg X_0, \dots, \neg X_n, X_{n+1}\} \equiv X_0 \wedge \dots \wedge X_n \rightarrow X_{n+1}$
+
+Bei der SLD Resolution wird ausgehend von einer Zielklausel in jedem
+Schritt mit einer vorausgesetzten Klausel (Tatsachen und
+Programmklauseln) resolviert.

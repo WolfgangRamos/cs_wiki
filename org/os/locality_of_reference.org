@@ -1,0 +1,41 @@
+#+TITLE: Locality_of_reference
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Locality_of_reference
+---
+#+END_HTML
+
+* Locality of Reference
+
+Das Phänomen, dass Zugriffe auf Daten und Code eines Programmes sich
+nach bestimmten Mustern häufen heißt /Lokalität/ (engl. /locality of
+reference/). Man unterscheidet:
+
+-  /temporal locality/: auf Speicherstellen, auf die kürzlich
+   zugegriffen wurde, wird wahrscheinlich bald wieder zugegriffen.
+-  /spatial locality/: auf Speicherstellen, die nah an den letzten
+   Zugriffspunkten liegen wird wahrscheinlich bald (wieder) zugegriffen
+
+Lokalität basiert auf:
+
+-  sequentieller Ausführung von Programmen (spatial locality)
+-  Code von Schleifen (temporal locality)
+-  wiederholte Verwendung von Variablen in Schleifen (temporal locality)
+-  Rekursion (temporal locality)
+-  Schleifen über Arrays (spatial locality)
+
+Im Memory Management wird Lokalität als Basis für Optimierungstrategien
+verwendet. Z.B.:
+
+-  Bevorzugte Auslagerung von lange nicht mehr benötigten
+   Speicherinhalten in untere Ebenen der
+   [[../oar/speicherhierarchie][Speicherhierarchie]]
+-  Laden von größeren Zusammenhängenden Speicherblöcken in höhere Ebenen
+   der Speicherhierarchie (Ausnutzung von Spatial Locality, s.a.
+   [[os/paging][pre-paging]]

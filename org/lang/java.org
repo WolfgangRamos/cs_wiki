@@ -1,0 +1,289 @@
+#+TITLE: Java
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Java
+---
+#+END_HTML
+
+* Generics
+
+/Parametrische Polymorphie/ = Parametrisierung von Klassen und Methoden
+mit Typen (diese heißen dann /Typparameter/)
+
+Form: =Klasse <⟨Typparameter⟩>=, z.B. =Optional <T>=, =T= heißt dann
+auch /formaler Typparameter/
+
+parametrisierung von Klassenmethoden:
+=static <Typparamter> ⟨Rückgabewert⟩ methode (...)=
+
+Klassenvariablen können nicht parametrisiert werden.
+
+Vererbungsbeziehungen von Typparamtern übertragen sich nicht auf die
+parametrisierten Klassen. Z.B. ist =Klasse<Integer>= kein Subtyp von
+=Klasse<Number>=
+
+Als Typparameter sind nur Subklassen von =Object= zulässig, keine
+atomaren Datentypen
+
+** Einschränkung von Typparementern
+
+auch in der Typparametersektion von Klassen und Methoden erlaubt
+
+-  =T extends ⟨Superklasse⟩=: =T= heißt auch \_formaler Typparameter
+-  =T extends ⟨Interface⟩=:
+
+   -  angabe mehrerer Interfaces und max. einer Superklasse möglich:
+      =T extends ⟨Superklasse⟩ & ⟨Interface 1⟩ & ⟨Interface 2⟩ & ...=
+
+Bei Übersetzen generischer Klassen wird /Type Erasure/ angewendet. Dabei
+werden durch den Compiler alle Vorkommen des formalen Typpaaramters
+durch =Object= ersetzt und die Typparameter-Sektion aus dem Klassennamen
+entfernt. Der so generierte Byte-Code heißt /raw type/. Gleichzeit
+werden vom Compiler Typcasts eingefügt, um die Typsicherheit generischer
+Klassen wieder sicherzustellen.
+
+*** Wildcards zur Polymorphie
+
+Nur zur Deklaration von Referenzvariablen erlaubt (nicht in der
+Typparametersetion von Klassen/Methoden)
+
+-  /unbounded wildcard/ =?=: Parametrisierung von Refernzvariablen, die
+   Objekte einer beliebig parametrisierten Klasse referenzieren können,
+   Bsp: =MyClass<?> ref = new MyClasse<String>();=
+
+   -  darf nur in der Definition von Referenzvariablen verwendet werden,
+      nicht abe in der Tapparametersektion einer generischen
+      Klasse/Interface/Methode
+
+-  /upper bounded wildcard/ =<? extends ⟨Superklasse⟩>= (Kovarianz):
+   ⟨Superklasse⟩ und alle ihre Subklassen (beim Type Erasure wird der
+   Typparameter durch en Namen der Superklasse ersetzt)
+-  /lower bounded wildcard/ =<? super ⟨Subklasse⟩>=: ⟨Subklasse⟩ und
+   alle ihre Superklassen
+
+*Kovarianz:* Erlaubt sind alle Methodenaufrufe, die den Subklassen von
+⟨Superklasse⟩ gemeinsam sind mit Argumenten, die von allen Klassen
+verarbeitete werden können. Aus einer Referenzvariablen die mit
+=? extends Y= parametrisiert wurde
+
+-  können wir nur Objekte vom Typ =null= hineinstecken
+-  können wir nur Objekte vom Typ =Y= herausholen
+
+Bsp:
+
+#+BEGIN_EXAMPLE
+    Optional<? extends Number> on = oi;
+
+    on.set(null); // erlaubt
+    on.set(new Integer(42)); // nicht erlaubt, da nur für Klasse Intege zulässig
+
+    Number n = on.get(); // erlaubt
+    Integer n = on.get(); // nicht erlaubt
+#+END_EXAMPLE
+
+*Kontravarianz:* Aus einer Referenzvariablen, die mit =? super Y=
+parametrisiert wurde können wir:
+
+-  nur Objekte vom Typ =Y= hineinstecken
+-  Objekte vom Typ =Object= herausholen
+
+*Typparameterinferenz:* Seit Java 7 kann die Angabe des Typparameters
+i.d.R. bei der Instanziierung entfallen und durch den /Diamantoperator/
+=<>= ersetzt werden. Dieser wird dann aus dem Typ der Referenzvariablen
+abgeleitet:
+
+#+BEGIN_EXAMPLE
+    MyClass<Integer> = new MyClass<>(); 
+#+END_EXAMPLE
+
+* Nebenläufigkeit
+
+** Threads
+
+*Klasse* =Thread=: Bsp: =MyThreadClass extends Thread=
+
+*Interface* =Runable=: Bsp: =MyThreadClass implements Runable= (aktuelle
+Thread Objekt erreichbar über: =Thread.currentThread()=)
+
+-  Methode =public void run()=: Code, der beim Aufruf von =start()=
+   ausgeführt wird
+-  =start()=: startet einen Thread
+
+Threads freiwillig unterbrechen:
+
+-  =yield=: synchronized Methode wird nicht verlassen
+-  =suspend=
+-  =sleep(⟨Millisekunden⟩)=, =Thread.sleep(⟨Millisekunden⟩)=:
+   suspendiert Thread, synchronized Methode wird nicht verlassen
+
+-  =wait()=, =⟨object⟩.wait()=:
+
+   -  Methode der Klasse =Object=
+   -  kann nur innerhalb eines =synchronized=-Blocks des Objekts
+      =⟨object⟩= aufgerufen werden
+   -  suspendiert den Thread und gibt das /lock/ von =⟨object⟩= frei
+   -  =wait(⟨ms⟩)=, =wait(⟨ms⟩, ⟨ns⟩)=: Causes the current thread to
+      wait until either another thread invokes the notify() method or
+      the notifyAll() method for this object, or a specified amount of
+      time has elapsed.
+
+-  =notify()=, =⟨object⟩.notify()=: deblockiert irgendeinen Thread aus
+   dem waiting set von ⟨object⟩
+
+   -  Deblockiert irgendeinen Thread aus dem waiting set von =⟨object⟩=
+      (der Thread wird in die /waiting queue/ des Objekts verschoben).
+      Wenn kein Thread auf das lock wartet geht das Signal verloren.
+
+-  =notifyAll()=, =⟨object⟩.notifyAll()=:
+
+   -  kann nur innerhalb eines =synchronized=-Blocks des Objekts
+      =⟨object⟩= aufgerufen werden
+   -  Deblockiert alle Threads aus dem waiting set von =⟨object⟩=. Wenn
+      kein Thread auf das lock wartet geht das Signal verloren. Die
+      aufgeweckten Threads müssen sich neu um das lock bewerben.
+
+=wait()=, =notify()= und =notifyAll()= dürfen nur in =synchronized=
+Methoden oder =synchronized=-Blöcken verwendet werden. Ansonsten ergibt
+sich zur Laufzeit eine =IllegalMoitorStateException=.
+
+Semantik des Monitorskonzepts in Java: EQ = WQ < SQ;
+
+*Zustände von Threads:*
+
+-  =NEW=
+-  =RUNABLE=: Thread ist in ausführung (d.h. jedoch nicht zwangsläufig,
+   dass der Thread sich zu jedem Zeitpunkt in Ausführung befindet)
+-  =WAITING=: Thread ist ausführbereit und wartet auf das lock eines
+   Objekts
+-  =BLOCKED=: Thread wartet darauf durch ein =notify()= oder
+   =notifyAll()= geweckt zu werden.
+-  =TIMED_WAITING=: Thread wartet darauf durch ein =notify()= oder
+   =notifyAll()= oder durch Ablauf einer spezifizierten Zeit geweckt zu
+   werden.
+-  =TERMINATED=:
+
+** Semaphoren
+
+Klasse: =java.util.concurrent.Semaphore=
+
+-  =aquireUninterruptibly()=:
+-  =release()=:
+
+** Synchronized
+
+Das Monitor-Konzept für Codeblöcke, Klassen- und Instanzmethoden wird in
+Java wird mit Hilfe des Schlüsselworts =synchronized= realisiert.
+
+-  jedes Objekt hat ein genau ein sog. /intrinsic lock/, welches für die
+   Synchronisation auf Instanzmethoden verwendet wird
+-  jede Klasse hat ein /lock/, welches für die Synchronisation auf
+   Klassenmethoden verwendet wird
+-  zu jedem Zeitpunkt darf sich in /allen/ =synchronized=
+   Methoden/Blöcken eines Objekts oder einer Klasse /höchstens/ ein
+   Thread befinden
+-  jede Klasse/jedes Objekt hat ein /wait set/, d.h. eine Menge von
+   Threads, die ausführbereit sind (Status =BLOCKED=) und auf das lock
+   dieses Objekts/dieser Klasse warten. Das Warten auf ein lock erfolgt
+   in Java also nicht über eine Warteschlange. Stattdessen erhalten
+   Threads das lock in zufälliger Reihenfolge
+-  Instanz- oder Klassenvariablen können nicht =synchronized= sein! Soll
+   der Zugriff synchronisiert erfolgen, so muss der Zugriff in Methoden
+   gekapselt werden
+-  Konstruktoren können nicht =synchronized= sein!
+-  =synchronized= ist /reentrend/, d.h. ein Tread, der das Lock eines
+   Objekts / einer Klasse hat kann ohne Suspendierung weitere
+   synchronized Instanz- bzw. Klassenmethoden aufrufen
+
+*synchronized block*: Ermöglichen
+
+-  Synchronisierung auf variablen Codeabschnitten (und nicht nur auf
+   ganzen Methoden)
+-  Synchronisierung auf beliebigen Synchronisationsobjekten (und nicht
+   nur auf =this=)
+-  Client-Side Synchronization
+
+#+BEGIN_EXAMPLE
+    synchronized(⟨Synchronisationsobjekt⟩) { // es wird auf dem lock des Synchronisationsobjekt synchronisiert
+      ⟨block⟩
+    }
+#+END_EXAMPLE
+
+*synchronized Methoden:*
+
+#+BEGIN_EXAMPLE
+    synchronized void aMethod() {
+      ...
+    }
+#+END_EXAMPLE
+
+ist syntaktischer Zucker und wird durch den Compiler in einen
+=synchronized= Block (synchronisiert wir aud =this=) übersetzt, der den
+Methodenrumpf umgibt:
+
+#+BEGIN_EXAMPLE
+    void aMethod() {
+      synchronized(this) {
+        ... // Methodenrumpf
+      }
+    }
+#+END_EXAMPLE
+
+Zur Realisierung eines Monitors in Java muss sichergestellt werden, dass
+der Zugriff auf alle Attribute synchronized erfolgt. Das kann wie folgt
+realisiert werden:
+
+-  mache alle Attribute =private=
+-  mache alle Methoden, die auf Attribute (oder wenigstens diejenigen,
+   die schreibend zugreifen) =synchronized=
+
+Man unterscheidet:
+
+*server side synchronization:* Hier stellt die Klasse (eigentlich die
+VM) die Synchronisation sicher. Das ist möglich für einzelne
+Methodenaufrufe (und alle Methode, die innerhalb von synchronized
+Methoden aufgerufen werden).
+
+*client side synchronization:* Hier muss der Client die Synchronisation
+sicherstellen. Das ist nötig, wenn mehrere aufeianderfolgende Aufrufe
+unsbhängiger Methoden synchronisiert werden müssen
+
+Bsp:
+
+#+BEGIN_EXAMPLE
+    List<Integer> unsynclist = new List<>();
+    List<Integer> list = Collections.synchronizedList(list);
+
+    // client side synchronization
+    synchronized(list) {
+      b = new Integer[list.size()]; // prevent scheduling between call to size() and toArray()
+      list.toArray[b];
+    }
+
+    //server-side synchronization
+    Integer[] a = list.toArray(new Integer[0]); // the determination of the size and the call to toArray() are synchronized
+#+END_EXAMPLE
+
+* RMI
+
+-  sequentielle Programmierung wird auf verteilten Objekten fortgesetzt
+-  Objekte werden als Parameter oder als Rückgabewert verschickt
+   (entspricht dem Senden eines Pids in Erlang)
+-  Registry sollte nur für Erstkontakt genutzt werden
+-  Synchronisation auf Serverobjekten nötig!
+-  Objekte werden verändert (anders als in Erlang, wo es "keine
+   Nebeneffekte" gibt)
+-  Objekte werden als Referenzen (Objektidentität bleibt erhalten) oder
+   als Kopie auf Zielknoten (Kopie!) übergeben.
+
+   -  eine Kopie macht Sinn, wenn man viele Daten aus dem Objekt
+      auslesen möchte und keine schreiben möchte (das veränder ja nur
+      die lokale Kopie)
+
+-  Viele Methodenaufrufe können zu viel Netzwerkkommunikation führen
+   (insbesondere, wenn die Kapselung im Code hoch ist)

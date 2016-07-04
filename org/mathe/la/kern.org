@@ -1,0 +1,23 @@
+#+TITLE: Kern
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Kern
+---
+#+END_HTML
+
+* Bild
+
+Seien $V,W$ $\mathbb{K}$-Vektorräume und sei $F: V \rightarrow W$ eine
+lineare Abbildung. Dann ist der /Kern/ von $F$:
+
+$$Ker(F) = \{ v \in V | F(v) = \vec{0}\}$$
+
+** Eigenschaften
+
+-  $Ker(F)$ ist Unterraum von $V$

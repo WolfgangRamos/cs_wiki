@@ -1,0 +1,65 @@
+#+TITLE: Kernel
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Kernel
+---
+#+END_HTML
+
+* Kernel
+
+** Typische Funktionen eines Kernel
+
+-  Prozessmanagement
+
+   -  Erzeugung von Prozessen
+   -  Scheduling zwischen Prozessen und Dispatching
+   -  Context Switches
+   -  Interprozesskommunikation
+   -  Verwaltung der Process Control Blocks
+
+-  Memory Mangement
+
+   -  Allokation von Adressräumen für Prozesse (Verwaltung des Virtual
+      Memory)
+   -  Swapping
+
+-  I/O-Management
+
+   -  Allozierung von I/O-Channels und I/O-Geräten für Prozesse
+
+-  Interrupt Handling
+-  File Management
+
+** Monolithic Kernel vs. Microkernel
+
+-  *Monolithic Kernel (Layered Kernel)*:
+
+   -  erledigt alle klassischen Kernelfunktionen (Memory Management,
+      Process Management, etc.)
+   -  Kernfunktionen können direkt aufgerufen werden
+
+-  *Microkernel*:
+
+   -  leichtgewichtiger als ein monolithischer Kernel (Layered Kernel)
+   -  enthält ausschließlich zentrale Betriebssystemfunktionenen
+   -  viele klassiche Kernelfunktionen werden in User-Prozesse
+      ausgelagert (z.B. Virtual Memory, File Server, Device Drivers,
+      etc.). Diese Funktionen können über Messages an die Prozesse
+      aufgerufen werden. Der Microkernel stellt Funktionen zum
+      Messagepassing zwischen den Prozessen zur Verfügung. * Vorteile:
+
+      -  Portabilität: Prozessorspezifischer Code befindet sich fast
+         ausschlieblich im Microkernel (darauf aufbauende Prozesse
+         müssen nicht an Veränderungen der Hardware angepasst werden)
+      -  Erweiterbarkeit: neue Funktionalitäten können einfach über neue
+         Prozesse hinzugefügt werden
+      -  Zuverlässigkeit: Microkernels können aufgrund ihres geringern
+         Funktionsumfangs ausgibiger getestet werden
+
+

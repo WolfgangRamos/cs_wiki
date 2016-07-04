@@ -1,0 +1,43 @@
+#+TITLE: ICMP
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* ICMP
+
+*Router Solicitation* (dt. Router Anfrage): Werden von Hosts gesendet, um
+die lokalen Router zu finden.
+
+Next Hop Determination: Stelle fest ob das Zielsystem lokal ist oder nicht
+
+Funktion:
+
+- Senden von Diagnoseinformationen an den Versender
+- Erreichbarkeitstests z.B. hello requests
+- ...
+
+* Host Autoconfiguration
+
+- stateful: mit DHCP Server
+- stateless: Client handlen ihr Konfiguration unterienander aus
+
+** Stateless
+
+1. DAD (duplicate adress detection): Erzeuge eine /tentative adress/
+2. Adress autoconfiguration: Prefix vom Router erhalten
+
+** ICMPv6
+
+Ersetzt DHCP und ARP.
+
+*Neighbor Discovery Protocol* 
+
+*Router Advertisement:* Werden vom Router verschickt ...
+
+Funktionen:
+
+- Host-Router Discovery: Host kann lokale Router finden und
+  Informationen über das Netzwerk erhalten
+- Host-Host Communicaton: Duplicate Address Detection, ...
+- NDP Redirect Function: vom Router vesendet, um host über bessere
+  Routen zu bestimmten Endsystemen zu informieren.

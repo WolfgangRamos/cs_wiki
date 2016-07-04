@@ -1,0 +1,110 @@
+#+TITLE: IPv4
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* IPv4
+
+IPv4 ist das zentrale Protokoll der Netzwerkschicht. Alle Protokolle
+der darüberliegenden Schichten und auch der Netzwerkschicht nutzen
+IPv4 (z.B. verschickt auch ICMP IP Pakete).
+
+Adressierungstymen:
+
+- Unicast: 1 zu 1
+  - Zieladresse gehört zu genau einem Interface
+- Broadcast: 1 zu alle
+  - z.B. DHCP und allgemein Service discovery
+- Multicast (benötigt IGMP): 1 zu viele
+  - z.B. IP-TV
+- Anycast: zum nächstliegenden interface aus einer Gruppe (z.B. relevant für Load-balancing)
+
+#+CAPTION: IP-Header
+[[./gfx/ip_header.png]]
+
+Header Felder:
+
+- Paketgröße max $2^{16}$ byte
+- Protocol: Protokoll der Payload, z.B. (6 = TCP, 17 = UDP)
+- Header Checksum:
+- Header Length: Länge des Header als Vielfache von 4 byte
+- Identification: genutzt für fragmentation/reassembly
+- DF: Do not fragment
+- MF: more fragments
+
+** TODO Warum kein Routing über MAC-Adressen?
+
+MAC-Adressen sind nicht sinnvoll hierarchisch aufgeteilt. Sie werden
+nach Hersteller vergeben, nicht nach Lokalisation des Systems. Daher
+würde Routing über MAC-Adressen zu großen Routing-Tables führen, da
+die Route zu jedem einzelnen System gegacht werden müsste.
+
+** TODO Vorlesung IPv4
+
+- Reservieren von Adressen für private Netzwerke:
+  - private Adressen können im Internet nicht geroutet werden
+  - werden mehrfach genutzt (in verschiedenen privaten Netzwerken)
+
+
+** NAT
+
+Beim Übergang von Paketen zwischen privaten und öffentlichen
+Netzwerken ist *network address translation* (NAT) erforderlich.
+NAT bezeichnet: 
+
+- das Ersetzen von privaten durch öffentliche IP-Adressen im Header
+  von IP-Paketen,
+- die Zuordnung von eingehenden Paketen zu Endsystemen im lokalen
+  Netzwerk auf Basis einer *NAT-Tabelle*
+
+NAT kommt typischerweise in Routern zum Einsatz.
+
+#+CAPTION: NAT: Router ersetzen private Adressen im Header der IP-Pakete
+[[./gfx/nat.png]]
+
+
+NAT verstößt gegen das End-zu-End Prinzip, da von außen keine
+Verbindung mit einem System in einem privaten Netzwerk (LAN) hinter
+einem Router aufgebaut werden kann. Das kann mit *port-forwarding*
+erreicht werden.
+
+
+*loopback*-Adresse (127.0.0.1): Paket, die an diese Adresse versendet
+ werden verbleiben auf dem System.
+
+** Adressierungsmodell
+
+- hierarchisch mit Network Prefix
+
+*** Classful Adressing
+
+- Klasse von Netzen:
+  - A: Präfix 8 bit
+  - B: Präfix: 16 bit
+  - C: Präfix 32 bit
+  - Group (für Multicast)
+  - Experimental (1111 0xxx)
+
+Vorteile:
+- Größe der vergebenen Adressblöcke (keine
+- evtl. größere Routingtabellen, wenn z.B. ein Unternehmen zwei Class C Netze benötigt
+
+*** Classless Adressing
+
+variabler Netzwerk prefix, der in Suffixschreibweise angegeben wird, z.B. 134.245.0.0/16
+
+Vorteile:
+
+- Größe der vergebenen Adressblöcke kann fein granularer gesteuert werden
+
+** öffentliche/private Adressen
+
+- öffentliche Adressen können weltweit geroutet werden
+- Gründe für die Festlegung eines privaten Adressraums:
+  - Lösung des Problems der Verknappung von IPv4 Adressen
+  - Sicherheitsaspekte: Geräte mit privaten Adressen können nich ohne
+    weiteres von außen erreicht werden
+
+ARP: IP -> MAC
+
+RARP: MAC -> IP

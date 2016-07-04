@@ -1,0 +1,30 @@
+#+TITLE: Bild
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Bild
+---
+#+END_HTML
+
+* Bild
+
+Seien $V,W$ $\mathbb{K}$-Vektorräume und sei $F: V \rightarrow W$ eine
+lineare Abbildung. Dann ist das /Bild/ von $F$:
+
+$$Im(F) = \{ F(v) | v \in V\}$$
+
+** Eigenschaften
+
+-  $Im(F)$ ist Unterraum von $W$
+
+** Bestimmung des Bildes
+
+*Strategien:*
+
+1. Erzeugen der Standardbasis des vermuteten Bildes
+2. 

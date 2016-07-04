@@ -1,0 +1,66 @@
+#+TITLE: Ocl
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Ocl
+---
+#+END_HTML
+
+* Object Constraint Language (OCL)
+
+Die OCL ist eine deklarative Sprache zur Beschreibung von Zusicherungen
+für OO-Modelle. Die OCL ist Teil der [[uml][UML]].
+
+** OCL-Ausdrücke
+
+-  OCL-Ausdrücke haben den Typ =boolean=
+-  boolesche Operatoren in OCL-Ausdrücken:
+
+   -  Gleichheit: ===
+   -  Ungleichheit: =<>=
+   -  UND: =and=
+   -  ODER: =or=
+   -  NOT: =not=
+
+-  Kontext:
+
+   -  einer Instanz eine Klasse: =context: ⟨Klasse⟩=
+   -  eines Methodenaufrufs: =context: ⟨Klasse⟩::⟨Methode⟩(⟨Argumente⟩)=
+   -  eines Methodeaufrufs, mit einer Instanz einer bestimmten Klasse:
+      =context: ⟨Klasse⟩::⟨Methode⟩(x: ⟨Klasse⟩, ...)=)
+   -  mit =self= kann auf die konkret zu prüfende Instanz zugegriffen
+      werden\\
+
+-  Invarianten (=inv=):
+-  Vorbedingungen (=pre=):
+-  Nachbedingungen (=post=):
+
+   -  in Nachbedingungen kann auf den Zustand eines Ausdrucks vor
+      Methodenaufruf mit =⟨Ausdruck⟩@pre= zugegriffen werden
+   -  mit =result= kann auf den Rückgabewert einer Methode zugegriffen
+      werden
+
+-  /Collections/: Mengen von Objekten
+
+   -  /Set/: Menge
+   -  /Bag/: Multimenge
+   -  /Sequence/: Sequenz von Objekten
+   -  =⟨Klasse⟩.allInstances()=: Menge aller Instanzen einer Klasse
+   -  Operationen auf Collections:
+
+      -  =⟨Collection⟩->size=: Anzahl der Objekte in der Collection?
+      -  =⟨Collection⟩->isEmpty=: ist die Collection leer?
+      -  =⟨Collection⟩->notEmpty=: ist die Collection nicht leer?
+      -  =⟨Collection⟩->count(⟨Element⟩)=: wie oft kommt =⟨Element⟩= in
+         der Collection vor?
+      -  =⟨Collection⟩->exists(x:⟨Klasse⟩ | ⟨Ausdruck mit x⟩)=: gibt es
+         ein Element, dass den Ausdruck erfüllt?
+      -  =⟨Collection⟩->forAll(x:⟨Klasse⟩ | ⟨Ausdruck mit x⟩)=: erfüllen
+         alle Elemente einer Collection den Ausdruck?
+
+

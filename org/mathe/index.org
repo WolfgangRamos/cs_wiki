@@ -1,0 +1,195 @@
+#+TITLE: Index
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+//#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Index
+---
+#+END_HTML
+
+* Mathe
+
+- Mengen
+
+  - Gleichheit
+  - Kardinalität
+
+	- Kardinalitätsvergleiche
+
+  - Komplement
+  - beliebige Vereinigung
+  - beliebiger Schnitt
+  - Potenzmenge
+
+- Relationen
+
+  - eindeutig
+  - total
+  - [[./homogene_relationen.org][homogene Relationen]]
+
+	- reflexiv
+	- symmetrisch
+	- transitiv
+	- antisymmetrisch
+	- irreflexiv
+	- linear
+	- identische Relation
+	- [[./division_mit_rest.org][Division mit Rest]]
+	- [[./modulorelation.org][Modulorelation]]
+	- [[./teilbarkeitsrelation.org][Teilbarkeitsrelation]]
+	- [[./ordnungsrelation.org][Ordnungsrelation]] (reflexiv,
+      antisymmetrisch, transitiv)
+	- [[./aequivalenzrelation.org][Äquivalenzrelation]] (reflexiv,
+      symmetrisch, transitiv)
+	- [[./aequivalenzklassen.org][Äquivalenzklassen]]
+
+- Funktionen
+
+  - injektiv
+  - surjektiv
+  - [[./bijektiv.org]]
+  - monoton
+  - Gleichheit
+  - Bild
+  - Urbild
+  - [[./funktionskomposition.org][Funktionskomposition]]
+  - [[./abrundungsfunktion.org][Abrundungsfuktion]]
+  - [[./logarithmus.org][Logarithmusfunktion]]
+
+- Listen
+
+  - nichtleere Listen ($M^{+}$)
+  - lineare Listen ($M^{*}$)
+  - Listenoperationen
+
+	- Konkatenation (&)
+	- Kopf ($kopf$)
+	- Rest ($rest$)
+	- Länge
+
+  - Listeninduktion
+
+- knotenmarkierte Binärbäume ($\mathcal{B}(M)$)
+
+  - [[./bauminduktion.org][Bauminduktion]]
+
+- Ordnungen
+
+  - Hassee-Diagramme
+  - [[./extreme_elemente.org][extreme Elemente]]
+
+	- kleinstes Element
+	- größtes Element
+	- minimales Element
+	- maximales Element
+	- Infimum
+	- Supremum
+	- obere Schranke
+	- untere Schranke
+
+  - Noethersche Ordnung
+
+- [[./vollstaendige_induktion.org][Vollständige Induktion]]
+- Fixpunktsatz von B. Knaster
+- Satz von Schröder-Bernstein
+- gerichtete Graphen
+- [[./permutation.org][Permutation]]
+- [[./polynom.org][Polynom]]
+
+  - Horner-Schema
+
+- Algebra
+
+  - [[./gruppe.org][Gruppe]]
+
+	- [[./gruppe.org][abelsche/kommutative Gruppe]]
+	- [[./gruppen.org][Homomorphismus/Isomorphismus]]
+	- [[./modulorelation.org][Prime Restklassengruppe]]
+	- Anwendung: [[./rsa_kryptosystem.org][RSA Krypotsystem]]
+
+  - [[./ring.org][Ring]]
+
+	- [[./ring.org][Polynomring]]
+	- Anwendung: Polynomdivision zur Datensicherung
+
+  - [[./koerper.org][Körper]]
+
+	- der Körper der primen Restklassen
+	- der Körper der reellen Zahlen
+	- der Körper der [[./komplexe_zahlen.org][komplexe Zahlen]]
+
+- Lineare Algebra
+
+  - [[./la/lineare_gleichungssysteme.org][lineare Gleichungssysteme]]
+  - [[./la/vektorraum.org][Vektorraum]]
+
+	- [[./la/vektorraum.org][Euklidischer (Vektor-)Raum]]
+	- [[./la/vektorraum.org][Unitärer (Vektor-)Raum]]
+
+  - [[./la/unterraum.org][Unterraum]]
+  - [[./la/span.org][Span]]
+  - [[./la/lineare_abhaengigkeit.org][lineare Abhängigkeit]]
+  - [[./la/lineare_abbildung.org][lineare Abbildung]]
+  - [[./la/bild.org][Bild]]
+  - [[./la/kern.org][Kern]]
+  - [[./la/span.org][Span]]
+  - [[./la/erzeugendensystem.org][Erzeugendensystem]]
+  - [[./la/dimension.org][Dimension]]
+  - [[./la/determinante.org][Determinante]]
+  - [[./la/matrix.org][Matrizen]]
+
+	- Dreiecksmatrix
+	- General Linear Group
+	- [[./la/definitheit.org][Definitheit von Matrizen]]
+	- [[./la/eigenwert.org][Eigenwert]]
+	- [[./la/aehnlichkeit.org][Ähnlichkeit]]
+	- [[./la/diagonalisierbarkeit.org][Diagonalisierbarkeit]]
+
+  - [[./la/skalarprodukt.org][Skalarprodukt]]
+  - [[./la/norm.org][Norm]]
+
+	- [[./la/norm.org][Euklidische Norm]]
+
+- Analysis
+  - [[./analysis/metrik.org][metrische Räume]]
+  - [[./analysis/metrik.org][Metrik]]
+  - [[./folge.org][Folge]]
+	- [[./grenzwert.org][Grenzwert/Limes]]
+  - [[./reihe.org][Reihe]]
+  - [[./stetigkeit.org][Stetigkeit]]
+  - [[./potenzfunktion.org][Potenzfunktion]]
+  - [[./differenzierbarkeit.org][Differenzierbarkeit]]
+  - [[./integralrechnung.org][Integralrechnung]]
+  - multivariate Analysis
+	- [[./multivariate_funktionen.org][multivariate Funktionen]]
+	- [[./multivariate_funktionen.org][multivariater Stetigkeitsbegriff]]
+- [[./wahrscheinlichkeitsrechnung.org][Wahrscheinlichkeitsrechnung]]
+  - [[./binomialverteilung.org][Binomialverteilung]]
+  - [[./erwartungswert.org][Erwartungswert]]
+  - [[./geometrische_verteilung.org][Geometrische Verteilung]]
+  - [[./sigma_algebra.org][Sigma Algebra]]
+  - [[./zva.org][Zufallsvariable]]
+
+** Übersicht über Berechnungsverfahren
+
+| Problem                                             | Berechnungsverfahren                                             |
+|-----------------------------------------------------+------------------------------------------------------------------|
+| Bild einer Matrix                                   |                                                                  |
+| Kern einer Matrix                                   | löse $Ax=0$                                                      |
+| Determinante einer Matrix                           | Entwicklungssatz von Laplace                                     |
+| Eigenwerte einer Matrix                             | Nullstellen des charakteristische Polynoms $\det(A-\lambda I)$   |
+| Eigenvektoren einer Matrix zu Eigenwert $\lambda$   | Lösungsraum von $(A-\lambda I)$                                  |
+| Rang einer Matrix                                   | Herstellen der Zeilen-Stufenform                                 |
+| Polynom                                             | Horner-Schema                                                    |
+
+*Unstetigkeit:* Zeige, dass eine Funktion $f:D \rightarrow \mathbb{R}$
+in einem Punkt $a \in D$ nicht stetig ist, indem du eine Folge
+$(a_n)\_{n\in\mathbb{N} \subseteq D$ angibst für die
+$\lim\_{n\rightarrow\infty} a_n = a$ und
+$\lim\_{n\rightarrow\infty} f(a_n) \neq f(a)$ gilt.
+
+*Stetigkeit:* Verwende das $\epsilon$-$\delta$-Kriterium

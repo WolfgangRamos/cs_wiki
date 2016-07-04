@@ -1,0 +1,23 @@
+#+TITLE: Kurven
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Kurven
+---
+#+END_HTML
+
+* Längenberechnung von Kurven
+
+Unter einer /parametrisierten Kurve/ $\gamma$ verstehen wir eine stetig
+Abbildung $\gamma:[a,b] \rightarrow \mathbb{R}^n$. Die Kurve heißt
+(stetig) differenzierbar, wenn $\gamma$ (stetig) differenzierbar ist.
+
+Sei $\gamma:[a,b]\rightarrow \mathbb{R}^n$ stetig sifferenzierbar im
+$\mathbb{R}^n$. Dann ist die Länge der Kurve gegeben durch
+$L(\gamma):= \int_a^b \| \gamma'(t)\|_{2} dt$. Dieser Wert ist
+unabhängig von der speziellen Parametrisierung.

@@ -1,0 +1,59 @@
+#+TITLE: Eigenwert
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Eigenwert
+---
+#+END_HTML
+
+* Eigenwert
+
+Sei $A \in \mathbb{K}^{n \times n}$, dann heißt $\lambda \in \mathbb{K}$
+/Eigenwert/ von $A$, wenn ein $v \in \mathbb{K}^{n} \setminus \{ 0 \}$
+existiert, sodass $Av = \lambda v$ gilt. $v$ heißt dann /Eigenvektor/
+von $A$ zum Eigenwert $\lambda$.
+
+*Wichtig:* Nur quadratische Matrizen haben Eigenwerte!
+
+(Man könnte sagen: "Eigenvektoren behalten ihre Richtung bei Abbildung
+mit $A$.")
+
+(Für $v = 0$ ist die Bedingung immer erfüllt.)
+
+Sei $F: V \rightarrow V$ [[lineare_abbildung][Endomorphismus]] auf einem
+$\mathbb{K}$-Vektorraum. Dann heißt $\lambda \in \mathbb{K}$ /Eigenwert/
+von $F$, wenn $F(v) = \lambda v$ für $v \in V \setminus \{ 0 \}$ gilt.
+
+*Eigenschaften:*
+
+-  Vielfache von Eigenvektoren sind ebenfalls Eigenvektoren: Wenn $v$
+   Eigenvektor von $A$ zum Eigenwert $\lambda$ ist, dann ist
+   $\forall \mu \in \mathbb{K} \setminus \{ 0 \}$ auch $\mu v$
+   Eigenvektor zum Eigenwert $\lambda$.
+-  Sei $A \in \mathbb{K}^{n \times n}$ eine Diagonalmatrix, dann sind
+   die Diagonalelemente $a_{ii} =: \lambda_{i}$ Eigenwerte von $A$
+   zugehörigen Eigenvektoren $e_{i}$ (Einheitsvektoren).
+-  nicht jede reelle Matrix beseitzt reelle Eigenwerte
+-  Eigenvektoren zu unterschiedlichen Eigenwerten sind stets linear
+   unabhängig
+-  Sei $A \in \mathbb{K}^{n \times n}$. Dann ist $\lambda in \mathbb{K}$
+   genau dann Eigenwert von $A$, wenn $\det (A - \lambda I_{n}) = 0$
+   gilt.
+
+** Berechnung
+
+*Berechnung der Eigenwerte:* Bestimme Nullstellen des charaktersitischen
+Polynoms $\det (A - \lambda I) = 0$. Dieses sind die Eigenwerte von $A$.
+
+*Berechnung der Eigenvektoren:* Sei $\lamda$ Eigenwert von $A$. Die
+Eigenvektoren zu $\lambda$ sind die Lösungen des LGS
+$(A - \lambda I)x = 0$.
+
+* charakteristisches Polynom
+
+$P_{A}(\lambda) = \det (A - \lambda I)$

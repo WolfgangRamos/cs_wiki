@@ -1,0 +1,35 @@
+#+TITLE: Index
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Softwaretechnik
+---
+#+END_HTML
+
+* Themenübersicht
+
+-  [[./principles_of_software_engineering.org][Prinzipien des
+   Software-Engineering]]
+-  [[./software_quality.org][Qualitätsanforderungen an Software]]
+-  [[./anforderungsanalyse.org][Anforderungsanalyse]]
+-  [[./configuration_management.org][Konfigurationsmanagement]]
+-  [[./uml.org][UML]]
+
+   -  [[./ocl.org][OCL]]
+
+-  [[./design_pattern.org][Entwurfsmuster]] (engl. Design Pattern)
+-  [[./qualitaetssicherung.org][Qualitätssicherung]]
+
+   -  [[./design_by_contract.org][Design by contract]]
+
+-  Projektmanagement:
+
+   -  [[./vorgehensmodelle.org][Vorgehensmodelle]]
+   -  [[./time_management.org][Zeitplanung]]
+   -  [[./aufwandsschaetzung.org][Aufwandsschätzung]]
+   -  [[./prototyping.org][Prototypen]]

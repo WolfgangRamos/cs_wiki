@@ -1,0 +1,33 @@
+#+TITLE: Anforderungsanalyse
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Anforderungsanalyse
+---
+#+END_HTML
+
+* Anforderungsanalyse
+
+Taxonomie von Anforderungen an SW:
+
+-  /funktionale Anforderungen/: fachliche Anforderungen an eine Software
+-  /nicht-funktionale Anforderungen/: technische Anforderungen an eine
+   Software
+-  Rahmenbedingungen
+
+Produkte der Anfoderungsanalyse sind: Lasten- und Pflichtenheften: s.
+[[http://www.vdi.de/technik/fachthemen/produktion-und-logistik/fachbereiche/technische-logistik/fa302-logistikprozesse-und-it/vdi-2519-blatt-1-vorgehensweise-bei-der-erstellung-von-lastenpflichtenheften/][VDI
+Richtlinie 2519 Blatt 1]]
+
+** Lastenheft
+
+Beschriebung der Anfoderungen aus Kundensicht.
+
+** Pflichtenheft
+
+Beschreibung der Anforderungen aus Lieferantensicht.

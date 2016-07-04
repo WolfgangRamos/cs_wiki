@@ -1,0 +1,60 @@
+#+TITLE: Lineare_abbildung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Lineare_abbildung
+---
+#+END_HTML
+
+* Lineare Abbildung
+
+Sein $(V, \oplus_{V}), (W, \boxplus)$ Vektorräume über demselben
+[[koerper][Körper]] $(\mathbb{K}, +, \cdot)$. Dann heißt eine Abbildung
+$F: V \rightarrow W$ /lineare Abbildung/ (oder
+/Vektorraumhomomorphismus/), wenn gilt:
+
+1. $\forall v_{1}, v_{2} \in V: F(v_{1} \oplus v_{2}) = F(v_{1}) \boxplus F(v_{2})$
+2. $\forall \lambda \in \mathbb{K}: \forall v \in V: F(\lambda \odot v) = \lambda \odot F(v)$
+
+Ist $F$ außerdem [[../bijektiv][bijektiv]], so heißt $F$
+/Isomorphismus/. Im Fall $V = W$ heißen Homomorphismen auch
+/Endomorphismen/.
+
+*Eigenschaften:*
+
+-  zwischen zwei endlich-dimensionalen Vektorraäumen $V$ und $W$ gibt es
+   genau dann einen Isomorphismus $F: v \rightarrow W$, wenn
+   $\dim(V) = \dim(W)$ gilt
+
+*Injektivität einer linearen Abbildung:*
+
+Sei $F: V \rightarrow W$ lineare Abbildung. Sei $\mathcal{B}$ eine Basis
+von $V$. Dann gelten folgende Äquivalenzen:
+
+$$F \text{ ist injektiv}$$
+$$\Longleftrightarrow \ker(f) = \\{ \vec{0} \\}$$
+$$\Longleftrightarrow F(b_1), ..., F(b_n) \text{ sind linear unahhängig}$$
+
+* Rang
+
+Der /Rang/ einer lineare Abbildung ist die Dimension des Bildes der
+Abbildung, also:
+
+$$rang(F) = \dim(\Im(F))$$
+
+auch: Rang der Abbildungsmatrix
+
+** Dimensionssatz
+
+Sei $(V, \oplus)$ ein [[vektorraum][Vektorraum]] über dem
+[[../koerper][Körper]] $(K, +, \cdot)$ mit endlicher Dimension. Sei
+$(W, \oplus)$ ein beliebiger $\mathbb{K}$-Vektorraum und sei
+$F: V \rightarrow W$ eine [[lineare_abbildung][lineare Abbildung]]. Dann
+gilt:
+
+$$\dim V = \dim (\ker F) + rang(F) = \dim (\ker F) + \dim(\Im F)$$

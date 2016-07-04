@@ -1,0 +1,84 @@
+#+TITLE: Qualitaetssicherung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Qualitaetssicherung
+---
+#+END_HTML
+
+* Qualitätssicherung
+
+Qualitätssicherung besteht aus:
+
+-  /Verifikation/: Prüfung, ob ein System die Anforderungen erfüllt
+   (d.h. entsprechend der Anforderungsbeschreibungen arbeitet)
+-  /Validierung/: Prüfung, ob ein System die /tatsächlichen/
+   Anforderungen erfüllt, d.h. seinen Zweck valide erfüllt (kann durch
+   Prototyping unterstütz werden)
+
+Man unterscheidet zwei Vorgehensweisen:
+
+-  /analytische Qualitätssicherung/: Suche nach Fehlern und deren
+   Verbesserung in einer bestehenden SW (z.B. durch Testen, Reviews,
+   formale Verifikation)
+-  /konstruktive Qualitätssicherung/: Durch gezielte Maßnahmen (z.B
+   VOrgehensmodelle) wird versucht das Entstehen von Fehlern weit wie
+   möglich zu verhindern
+
+** Testen
+
+-  Komponententests: Tests einzelner Komponenten
+-  Integrationstests: gemeinsame Test abhängiger Komponenten
+-  Systemtest: Test des gesamten Systems
+
+*** White-Box Tests
+
+Tests mit Kenntniss der Implementierung. Für White-Box Tests gibt es die
+folgenden /Überdeckungskriterien/ zur Bestimmung sinnvoller Testmengen
+für White-Box Tests:
+
+-  /Anweisungsüberdeckung/: durch eine Testmenge wird jede Anweisung
+   mindestens einmal durchlaufen
+-  /Kantenüberdeckung/: durch eine Testmenge wird jede Kante des
+   Kontrollflussgraphen mindestens einmal durchlaufen
+-  /Bedingunsüberdeckung/: durch eine Testmenge wird jede mögliche
+   Kombination von Teilbedingungen mindestens einmal durchlaufen
+-  /Pfadüberdeckung/: durch eine Testmenge wird jeder Pfad (vom Start-
+   bis zum Endknoten) des Kontrollflussgraphen mindestens einmal
+   durchlaufen
+
+*** Black-Box Tests
+
+Tests ohne Kenntnis der Implementierung. Zur Bestimmung geeigneter
+Testmengen können nur die Spezifikationen der Schnittstellen
+herangezogen werden. Bildung von Äquivalenzklassen.
+
+** Statische Analyse
+
+*** Peer Reviews
+
+Die Implementierung wird andere Softwareentwickler (z.B. Kollegen) zur
+Fehleridentifikation vorgelegt.
+
+*** Kontroll- und Datenflussanalyse
+
+Automatisiertes Auffinden von potentiellen Fehlern (z.B. unerreichbaren
+Anweisungen, nicht aufgerufene Funktionen, nicht benutzte Variablen)
+durch Fehleridentifikationssoftware (z.B.
+[[http://findbugs.sourceforge.net/][Findbugs]]).
+
+*** Formale Korrektheitsbeweise
+
+Verwendung von Struktorgrammen zur Darstellungen von Zusicherungen vor
+und nach Ausführung einzelner Anweisungen.
+
+-  Konsequenzregel: Vorbedingungen dürfen verschärft, Nachbedingungen
+   dürfen abgeschwächt werden
+-  Sequenzregel: Programmstücke können zu einer Sequenz verbunden
+   werden, wenn die Vorbedingung des zweiten Prgrammstücks zur
+   Nachbedingung des ersten Stücks passt (Implikation genügt)

@@ -1,0 +1,30 @@
+#+TITLE: Binomialverteilung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Binomialverteilung
+---
+#+END_HTML
+
+* Binomialverteilung
+
+Die $n$-Malige Durchführung von gleichartigen und unabhängigen
+Versuchen, die jeweils genau zwei mögliche Ergebnisse haben ("Erfolg"
+oder "Misserfolg") heißet /Bernoulli-Prozess/ oder
+/Bernoulli-Experiment/. Die Binomialverteilung modelliert die
+Wahrscheinlichkeit dabei genau $k$ Treffer zu erzielen.
+
+Eine [[zva][Zufallsvariable]] $X$ heißt /binomial-verteilt/, wenn
+$\exists n \in \mathbb{N}, p \in [0,1]: \forall k \in \{0,\dots,n\}: P(X=k) = \binom{n}{k} p^k (1-p)^{n-k}$.
+
+Wir schreiben $X \sim B_{n,p}$, um anzudeuten, dass eine ZVA $X$
+binomial-verteilt ist.
+
+*Eigenschaften:*
+
+-  Binomial-verteilte ZVA sind [[zva][endlich]]

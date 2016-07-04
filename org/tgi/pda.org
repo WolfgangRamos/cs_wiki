@@ -1,0 +1,91 @@
+#+TITLE: Pda
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Pda
+---
+#+END_HTML
+
+* Push Down Automata
+
+Ein nicht-deterministischer /Push Down Automaton/ (PDA, dt.
+/Kellerautomaten/) ist ein 6-Tupel $P=(Q,\Sigma,\Gamma,\delta,q_0,F)$
+mit:
+
+-  einer endlichen /Zustandsmenge/ $Q$,
+-  einem endlichen Menge $\Sigma$ (/Eingabealphabet/)
+-  einem endlichen Menge $\Gamma$ (/Stackalphabet/)
+-  einer /Transitionsfunktion/
+   $\delta: Q \times \Sigma_{\epsilon} \times \Gamma_{\epsilon} \rightarrow \mathcal{P}(Q \times \Gamma_{\epsilon})$
+-  einem /Startzustand/ $q_0$
+-  einer endlichen Menge von /Endzuständen/
+
+*Eigenschaften:*
+
+-  DPDAs (deterministic push down automaton) und PDAs sind /nicht/
+   äquivalent, d.h. sie erkennen nicht dieselbe Menge von Sprachen! Es
+   gibt Sprachen, die nur von einem PDA erkannt werden können.
+
+*Wie ein PDA das Ende des Stack erkennen kann:* Verwende ein
+/Kellerbodensymbol/, welches als erstes auf den Stack gepusht wird.
+
+*Wie ein PDA das Ende eines Eingabeworts erkennen kann:* Gemäß
+Definition muss ein PDA $P$ ein Wort $w$ /vollständig/ lesen. Ist dies
+nicht der Fall, gibt es keine Berechnung von $P$ auf $w$.
+
+** Berechnung
+
+Sei $P = (Q,\Sigma,\Gamma,\delta,q_0,F)$ ein PDA und
+$w = (w_0,\dots{},w_{n-1})$ ein Wort mit $w_{i} \in \Sigma_{\epsilon}$
+für alle $i \in \{0,\dots,n-1\}$. Eine /Berechnung/ ist:
+
+1. eine Folge von Zuständen $r:=(r_0,r_1,\dots,r_n)$ mit $r_i \in Q$ für
+   alle $i \in \{0,\dots,n\}$ und
+2. eine Folge von Stackinhalten (/Stackwörtern/)
+   $s:=(s_0,s_1,\dots,s_n)$ mit $s_i \in \Gamma^*$ für alle
+   $i \in \{0,\dots,n\}$
+
+mit folgenden Eigenschaften:
+
+1. $r_0 = q_0$ und $s_0 = \epsilon$
+2. $\forall i \in \{0,\dots,n-1\}: (r_{i+1},b) \in \delta(r_i,w_i,a)$,
+   mit $s_i = at$ und $s_{i+1} = bt$ mit $a,b \in \Gamma_{\epsilon}$ und
+   $t \in \Gamma^*$.
+
+$P$ /akzeptiert/ (engl. /accept/) $w$ (man sagt auch die Berechnung ist
+/akzeptierend/), falls gilt:
+
+3. $r_n \in F$
+
+Die Menge der von $P$ akzeptierten Wörter bildet eine
+[[cfl][/kontextfreie Sprache/]]
+$L(P) := \{ w \in \Sigma* | P \text{ akzeptiert } w \}$. $L(P)$ wird
+auch die von $P$ /erkannte Sprache/ genannt (engl. /recognize/).
+(*Merke:* ein PDA kann viele verschiedene Wörter /akzeptieren/, aber nur
+eine Sprache /erkennen/.)
+
+*Terminologie:* Wir schreiben $(q,u) \vdash_{n}^{w} (q',v)$ wenn der PDA
+ausgehend vom Zustand $q$ und Kellerinhalt $u$ durch Lesen von
+$w\in\Sigma^*$ in $n$ Schritten zum Zustand $q'$ und Kellerinhalt $v$
+gelangen kann.
+
+** Push-Pop-Normalform
+
+Ein PDA $P=(Q,\Sigma,\Gamma,\delta,q_0,F)$ ist in /Push-Pop-Normalform/,
+wenn gilt:
+
+1. Es gibt /genau einen/ akzeptierenden Zustand, d.h. $F=\{q_{accept}\}$
+2. Akzeptiert wird immer nur mit leerem Keller, d.h.
+   $(q_{start},\epsilon) \vdash_{*} (q_{acc}, v \Rightarrow v=\epsilon$.
+3. In einem Schritt wird entweder push oder pop ausgeführt (aber nicht
+   beides gleichzeitig), d.h.
+   $\delta: Q \times \Sigma_{\epsilon} \times \Gamma \rightarrow \mathcal{P}(Q \times \{\epsilon\}) \cup Q \times \Sigma_{\epsilon} \times \{\epsilon\} \rightarrow \mathcal{P}(Q \times \Gamma)$
+
+*Eigenschaften:*
+
+-  Zu jedem PDA gibt es einen äquivalenten PDA in Push-Pop-Normalform.

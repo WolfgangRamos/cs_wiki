@@ -1,0 +1,130 @@
+#+TITLE: Lineare_gleichungssysteme
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Lineare_gleichungssysteme
+---
+#+END_HTML
+
+* Lineare Gleichungssysteme (LGS)
+
+Seien $x_j, b_i, a_{ij} \in \mathbb{K}$ für $1 \leq i \leq m$ und
+$1 \leq j \leq n$, dann lässt sich das lineare Gleichungssystem
+
+#+BEGIN_HTML
+  <!-- TODO insert picture -->
+#+END_HTML
+
+kompakt schreiben als $Ax=b$ mit
+
+-  /Koeffizientenmatrix/ $A=(a_{ij}) \in \mathbb{K}^{m \times n}$
+-  /Lösungsvektor/ $x = (x_{j}) \in \mathbb{K}^{n}$ und
+-  /rechte Seite/ $b = (b_{i}) \in \mathbb{K}^{m}$.
+
+Wenn $b \neq 0$, dann heißt das LGS /inhoogen/ und $Ax=0$, das
+zugehörige /homogene/ LGS.
+
+** Eigenschaften
+
+-  Wenn $A \in GL(n, \mathbb{K})$, dann hat das LGS $Ax = b$ eine
+   eindeutige Lösung.
+-  Multipliziren der Gleichung mit regulären Matrizen
+   $S \in GL(m, \mathbb{K})$ ändert die Lösung nicht, d.h. es gilt:
+   $Ax= b \Leftrightarrow SAx = Sb$.
+-  Ist $x$ /eine/ Lösung von $Ax=b$, dann gilt für die Lösungsmenge von
+   $Ax=b$:
+   $\{z \in \mathbb{K}^{n} | Az=b \} = \{x+y \in \mathbb{K}^{n} | y \in \ker(A)\}$.
+   Anders ausgedrückt: Wenn man eine Lösung kennt und den $\ker(A)$,
+   dann kann man die Lösungsmenge bestimmen.
+
+** Lösbarkeit linearer Gleichungsssteme
+
+Sei $A \in \mathbb{K}^{m \times n}$
+
+*Definition:* $rang(A,b)$ bezeichne den Rang der um den Spaltenvektor
+$b$ erweiterten Matrix $(A|b)$.
+
+-  Es sind äquivalent:
+
+   -  $Ax=b$ hat eine Lösung
+   -  $b \in \Im (A)$
+   -  $rang(A) = rang(A,b)$
+
+-  $Ax=b$ ist genau dann lösbar, wenn $rang(A) = rang(A,b)$ gilt
+-  $Ax=b$ ist genau dann eindeutig lösbar, wenn
+   $rang(A) = rang(A,b) = n \leq m$ gilt
+-  $Ax=b$ ist nicht lösbar, wenn $rang(A,b) > rang(A)$ gilt
+
+-  Es gilt $rang(A)=n \leq m$, genau dann, wenn $\ker(A) = \\{0\\}$.
+-  Falls $Ax=b$ genau eine Lösung besitzt, dann gilt
+   $\ker(A) = \\{0\\}$.
+-  Falls $\ker (A) = \\{0\\}$, so besitzt $Ax=b$ maximal eine Lösung.
+
+** Bestimmung der Lösungsmenge
+
+*Vorgehen:*
+
+(a). Finde eine spezielle Lösung eines inhomogenen LGS und (b). /alle/
+Lösungen des zugehörigen homogenen LGS
+
+*Techniken:*
+
+1. "Vorwärts- und Rückwertseinsetzen"
+2. "Gaußsches Eliminierungsverfahren"
+
+*** Vorwärts- und Rückwertseinsetzen
+
+Sei $A$ eine reguläre obere Dreiecksmatrix. Dann erhält man eine
+eindeutige Lösung von $Ax=b$ durch die folgende Vorschrift
+(/Rückwärtseinsetzen/):
+
+$x_m$
+
+Sei $A$ eine reguläre untere Dreiecksmatrix. Dann erhält man eine
+eindeutige Lösung von $Ax=b$ durch die folgende Vorschrift
+(/Vorwärtsseinsetzen/):
+
+*** Gaußsches Eliminierungsverfahren
+
+Eine Matrix befindet sich in /Zeilen-Stufenform/ (ZSF), wenn
+
+(a). die Nichtnullzeilen oberhalt aller Nullzeilen stehen. (b). die
+Anzahl der links stehenden Nullen in den Nichtnullzeilen von oben nach
+unten echt größer wird.
+
+1. Jede obere Dreiecksmatrix ist bereits in Zeilen-Stufenform.
+2. Wenn ein quadratische Matrix in Zeilen-Stufenform ist, dann ist sie
+   auch eine oberer Dreicksmatrix.
+
+*Idee:*
+
+Überführe $A$ durch die folgenden /Zeilenumformungen/ in ZSF
+
+1. Vertauschen zweier Zeilen
+2. Multiplikation einer Zeile mit einem Skalar $\lambda \in mathbb{K}$
+3. Addieren des $\lambda$-fachen einer Zeile $j$ zu einer Zeile $i$.
+
+*** Rezept für allgmeine LGS
+
+1. *Umformung der Matrix in ZSF:*
+
+   1. Fall 1: in einer der unteren Nullzeilen ist der Koefffizient der
+      rechten Seite $\neq 0$. Dann hat $Ax=b$ keine Lösung, denn
+      $rang(A,b) = rang(A) + 1$. Dann ist man fertig.
+   2. Fall 2: alle Nullzeilen haben auf der rechten Seite $\hat{b}$
+      einen Nulleintrag. Dann gilt $rang(A) = rang(A,b)$. Also existiert
+      mindestesn eine Lösung.
+
+2. *Finde spezielle Lösung des inhomogenen Systems:* Für alle Spalten
+   $l$, die entweder eine Nullspalte sind oder deren unterster
+   Nichtnulleintrag nicht am Anfang einer Zeile steht, setze $x_l = 0$.
+   Die übrigen $x_j$ erhält man durch Rückwärtseinsetzen.
+3. *Finde alle Lösungen des homogenen Systems:* Alle im 2. Schritt auf
+   $0$ gesetzten Komponenten $x_l$ werden zu freien Parametern und
+   bilden eine neue rechte Seite. Die übrigen Komponenten ergeben sich
+   dann wieder durch Rückwärtseinsetzen

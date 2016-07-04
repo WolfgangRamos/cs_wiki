@@ -1,0 +1,105 @@
+#+TITLE: Index
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Index
+---
+#+END_HTML
+
+* Wahrscheinlichkeitsrechnung
+
+** Grundbegriffe
+
+$\Omega$ heißt /Ergebnismenge/
+
+Ein /Ereignis/ $E$ ist eine Teilmenge von $\Omega$. Es gilt also
+$E \subseteq \Omega$ bzw. $E \in \mathcal{P}(\Omega)$.
+
+* Wahrscheinlichkeitsmaß / Wahrscheinlichkeitsraum
+
+Sei $(\Omega, \mathcal{A})$ ein Messraum und
+$P:\mathcal{A} \rightarrow [0,1]$ mit folgenden Eigenschaften:
+
+1. $P(\Omega) = 1$
+2. $P(\bigcup_{n \in \mathbb{N}} A_n = \sum_{n\in\mathbb{N}} P(A_n)$ für
+   alle *paarweise disjunkten* $A_n \in \mathcal{A}$ für
+   $n \in \mathbb{N}$.
+
+Das Tripel aus /Ergebnisraum/, [[sigma_algebra][Sigma-Algebra]] und
+Wahrscheinlichkeitsmaß $(\Omega, \mathcal{A}, P)$ heißt dann
+/Wahrscheinlichkeitsraumm/.
+
+*Eigenschaften:*
+
+-  $\forall A \in \mathcal{A}: P(A^C) = 1 - P(A)$
+-  $\forall A,B \in \mathcal{A}: P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+-  $\forall A,B \in \mathcal{A}: A \subseteq B \Rightarrow P(B \setminus A) = P(B) - P(A)$
+-  $\forall A,B \in \mathcal{A}: A \subseteq B \Rightarrow P(A) \leq P(B)$
+
+*Konvention:* Wir schreiben $A \dot{\cup} B$, wenn $A$ und $B$ disjunkte
+Zerlegung von $A \cup B$ sind.
+
+** Siebformel von Sylvester-Poincaré
+
+$P(A_1 \cup A_2 \cup \dots \cup A_n) = \sum_{k=10}^{n} (-1)^{k-1} \sum_{1\leq i_1 < \dots i_k \leq n} P(\bigcap_{l=1}^{k} A_{i_l}$
+
+** Ungleichung von Bonferroni
+
+Sei $(\Omega, \mathcal{A}, P)$ Wahrscheinlichkeitsraum. Dann gilt für
+/endliche/ Schnitte von $A_1 , \dots, \A_n \in \mathcal{A}$ für festes
+$n \geq 2$:
+
+$P(\bigcap_{k=1}^{n}) \geq 1 - \sum_{k=1}^{n} P(A_k^C)$.
+
+** Laplace'sches Wahrscheinlichkeitsmaß
+
+Ein Wahrscheinlichkeitsmaß $P: \mathcal{A} \rightarrow [0,1]$ heißt
+/Laplace'sches Wahrscheinlichkeitsmaß/ wenn für alle
+$A \in \mathcal{P}(\Omega): P(A) = \frac{|A|}{|\Omega|}$ gilt (es muss
+also $\mathcal{A} = \mathcal{P}(\Omega)$ gelten).
+
+** Bedingte Wahrscheinlichkeit
+
+Sei $(\Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum und seien
+$A,B \in \mathcal{A}$. Dann heißt $P(A|B) := \frac{P(A \cap B)}{P(B)}$
+die /bedingte Wahrscheinlichkeit/ von $A$ unter $B$.
+
+*** Satz von Bayes
+
+Sei $(\Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum und seien
+$A,B \in \mathcal{A}$. Dann gilt
+$\frac{P(A|B)}{P(A)} = \frac{P(B|A)}{P(B)}$
+
+*** Satz der totalen Wahrscheinlichkeit
+
+Sei $(\Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum und sei
+$\Omega = \dot{\bigcup_{n \in \mathbb{N}}} B_n$ mit
+$B_n \in \mathcal{A}$ für alle $n \in \mathbb{N}$ und
+$\forall i,j \in \mathbb{N}: i \neq j \Rightarrow B_i \cap B_j = \emptyset$.
+Dann gilt
+
+$P(A) = \sum_{n \in \mathbb{N}} P(A|B_n) \cdot P(B_n)$
+
+** Stochastische Unabhängigkeit
+
+Sei $(\Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum und seien
+$A,B \in \mathcal{A}$, dann heißen $A$ und $B$ /stochastisch
+unabhängig/, wenn $P(A \cap B) = P(A) \cdot P(B)$ gilt.
+
+Sei $(\Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum und seien
+$A_1,\dots,A_n \in \mathcal{A}$ mit $n \geq 2$, dann heißen
+$A_1,\dots,A_n$ /stochastisch unabhängig/, wenn
+
+$P(\bigcap_{j=1}^{k} A_{i_j})= \prod_{j=1}^{k} P(A_{i_j})$
+
+für alle $k \in \{2,\dots,n\}$ und $1 \leq i_1 < \dots < i_k \leq n$
+gilt.
+
+D.h. die Ereignisse $A_1, \dots, A_n \in \mathcal{A}$ für festes
+$n \in \mathbb{N}$ heißen /stochastisch unabhängig/, genaus dann wenn
+alle endlichen Teilmengen dieser Ereignisse stochstisch unabhängig sind.

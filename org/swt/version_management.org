@@ -1,0 +1,19 @@
+#+TITLE: Version_management
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Version_management
+---
+#+END_HTML
+
+* Versionsverwaltung
+
+-  *Lost Updates*: ...
+-  Verhindern von Lost Updates: ...
+-  *optimistisches Locking*: ...
+-  *pessimisitsches Locking*: ...

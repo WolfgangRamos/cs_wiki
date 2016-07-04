@@ -1,0 +1,51 @@
+#+TITLE: Speicherhierarchie
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Speicherhierarchie
+---
+#+END_HTML
+
+* Speicherhierarchie
+
+TODO Bild:
+
+*Idee:* Schaffung eines Speichers, der zugleich groß und schnell ist
+durch Verwendung kleiner schneller Speicher (teuer) als caches für
+Inhalte aus langsameren aber größeren Speichern (günstiger). Das Prinzip
+der [[../os/locality_of_reference][/Lokalität/]] bildet die Basis für
+die Funktionstüchtigkeit solcher Speicherhierarchien.
+
+** Verschiede Arten von Speicher
+
+-  flüchtig (Daten nur bei Stromfluss erhalten):
+
+   -  /SRAM/: static random access memory (z.B. L1 Cache)
+   -  /DRAM/: dynamic random access memory (z.B.
+      Hauptspeicher/Arbeitsspeicher)
+
+-  nicht-flüchtig:
+
+   -  /ROM/: read only memory
+   -  /PROM/: programmable ROM
+   -  /EPROM/: eraseable PROM
+   -  /EEPROM/: elecrically erasable PROM (z.B. SSDs)
+
+** Harddisks
+
+-  surface
+-  track
+-  sector
+-  gap
+
+-  Seek time: Dauer bis der Lesekopf den Track erreicht hat
+-  Rotational Latency: Dauer zwischen Ende des seek und dem Moment, an
+   dem der Zielsektor den Lesekopf erreicht
+-  transfer time: Dauer zum Lesen des Zielsektors
+
+

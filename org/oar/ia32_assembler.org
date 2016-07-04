@@ -1,0 +1,269 @@
+#+TITLE: Ia32_assembler
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Ia32_assembler
+---
+#+END_HTML
+
+* Assembler (IA32)
+
+** Wortlänge
+
+| Suffix              | Länge   |
+|---------------------+---------|
+| =b= (/Byte/)        |         |
+| =w= (/word/)        | 2 B     |
+| =l= (/long word/)   | 4 B     |
+| =q= (/quad word/)   | 8 B     |
+
+** Register
+
+TODO: Bild einfügen
+
+Konventionen zur Sicherung von Registerinhalten:
+
+-  /Caller-Save/: =%eax=, =%ecx=, =%edx=,
+-  /Callee-Save/: =%ebx=, =%esi=, =%edi=
+-  spezielle Register (spezielle Form des /Callee-Save/): =%esp=, =%ebp=
+
+** Flags / Condition Codes
+
+-  /zero flag/ (ZF)
+-  /overflow flag/ (OF)
+-  /sign flag/ (SF)
+-  /carry flag/ (CF): v.a. für Operationen, die Operanden in 2-adischer
+   Darstellung interpretieren gedacht
+
+** Stack
+
+Stack für Funktionsaufrufe verdendet.
+
+Jede Funktion hat einen eigenen /stack frame/. Dieser enthält:
+
+-  Adresse des stack frames der Prozedur, welche die Prozedur aufgerufen
+   hat
+-  lokale Variablen, wenn diese von anderen Prozeduren referenzierbar
+   sein sollen
+-  ggf. gespeicherte Werte aus Registern (s. Register)
+-  Adresse der nächsten Operation der Prozedur, wenn eine andere
+   Prozedur aufrufen wird (s.a. =call=)
+-  Werte der Paramenter, wenn eine Prozedur mit Parametern aufgerufen
+   wird
+
+** Operationen
+
+*** Laden
+
+-  =movl ⟨x⟩, ⟨y⟩=:
+-  =movzbl ⟨8 bit reg⟩, ⟨reg⟩=: setzt den Rest von =⟨reg⟩= auf =0= und
+   behält nur die Werte in =⟨8 bit reg⟩=
+-  =movsbl ⟨8 bit reg⟩, ⟨reg⟩=: Laden von Adresse =⟨x⟩= in Register
+   =⟨reg⟩= mit sign extend
+
+Verschieden Modi für =movl=:
+
+-  Immediate, z.B. =$0x1c= in Hexadezimaldarstellung oder =$-32= in
+   Dezimaldarstellung
+-  indexed: =⟨d⟩(⟨b⟩, ⟨i⟩, ⟨s⟩)= ergibt Adresse =d + (b + i*s)=
+
+   -  d (/displacement/): immediate mit Länge von bis zu 4 bytes
+   -  b (/base/): Register mit Basisadresse
+   -  i (/index/): Register mit Indexadresse
+   -  s (/scale/): immediate =$1=, =$2=, =$4= oder =$8=
+
+-  Spezialformen von indexed:
+
+   -  =(⟨b⟩)= => b
+   -  =⟨d⟩(⟨b⟩)= => d + b (auch /displacement/ genannt)
+   -  =(⟨b⟩, ⟨i⟩)= => b + i
+   -  =(⟨b⟩, ⟨i⟩, ⟨s⟩)= => b + i*s
+
+*** Logik
+
+-  =not ⟨x⟩=:
+-  =andl ⟨x⟩, ⟨y⟩=:
+-  =orl ⟨x⟩, ⟨y⟩=:
+-  =xorl ⟨x⟩, ⟨y⟩=:
+
+*** Arithmetik
+
+-  =addl ⟨x⟩, ⟨y⟩=: y = y + x;
+
+   -  =x= kann sein: immediate, register, displacement, indexed
+   -  =y= kann sein: register, displacement, indexed
+
+-  =addl ⟨x⟩, (⟨y⟩)=: /y = /y + x
+-  =subl ⟨x⟩, ⟨y⟩=:
+-  =incl ⟨x⟩, ⟨y⟩=:
+-  =decl ⟨x⟩, ⟨y⟩=:
+-  =imull ⟨x⟩, ⟨y⟩=: ...(Multiplikationen/Divisionen mit Vielfachen von
+   2 sind auch mit Shifts möglich)
+
+*** Shifts
+
+-  =shll ⟨x⟩, ⟨y⟩= oder =sall ⟨x⟩, ⟨y⟩=: Linksshift (Nullen werden
+   nachgezogen). Das Verhalten von =sall= ist undefiniert, wenn um Werte
+   $\mathtt{x} \geq 32$ geshiftet wird. Auf einigen Architekturen kann
+   =sall= daher nur mit Konstanten (Immediate) oder =%cl= aufgerufen
+   werden. Auf anderen Architekturen wird derselbe Effekt erreicht,
+   indem nur die ersten 4 bits vo =⟨x⟩= verwendet und der Rest ignoriert
+   werden.
+-  =sarl ⟨x⟩, ⟨y⟩=: arithmetischer Rechtsshift (MSB wird nachgezogen)
+-  =shrl ⟨x⟩, ⟨y⟩=: logischer Rechtsshift (Nullen werden nachgezogen)
+
+*** Adressrechnung
+
+-  =leal ⟨x⟩, ⟨y⟩=: ... (=lea= Instruktionen setzen keine Flags)
+
+*** Sprünge
+
+*Setzen von Flags:*
+
+-  =testl ⟨a⟩, ⟨b⟩=: setzt Flags für das Ergebnis der Operation =a & b=
+-  =cmpl ⟨a⟩, ⟨b⟩=: setzt Flags für das Ergebnis der Operation =b - a=
+
+   -  CF gesetzt, wenn $a > b$ (a und b 2-adischer Darstellung
+      interpretiert)
+   -  SF gesetzt, wenn $a > b$ (a und b in Zweierkomplement Darstellung
+      interpretiert)
+   -  OF gesetzt, wenn
+      $(b > 0 \wedge a < 0 \wedge (b-a) < 0) \vee (b < 0 \wedge a > 0 \wedge (b-a) > 0)$
+
+*Sprungbefehle:* (die Benennungen der Befehle beschreiben, wie =b= sich
+zu =a= verhält)
+
+-  =jmp ⟨label⟩= (/unconditional jump/)
+-  =jmp *⟨label⟩(,⟨reg⟩,4)= (/unconditional jump/): setze =%eip= auf
+   =⟨label⟩ + 4*⟨reg⟩= (nur für $0 \leq \mathtt{reg} \leq 6$)
+-  =je ⟨label⟩= (/jump equal/): wenn ZF gesetzt ist setze =%eip= auf
+   =⟨label⟩=
+-  =jne ⟨label⟩= (/jump not equal/): wenn ZF nicht gesetzt ist setze
+   =%eip= auf =⟨label⟩=
+-  =js ⟨label⟩= (/jump sign/): wenn SF gesetzt ist setze =%eip= auf
+   =⟨label⟩=
+-  =jns ⟨label⟩= (/jump no sign/): wenn SF nicht gesetzt ist setze
+   =%eip= auf =⟨label⟩=~SF
+-  Operationen, die Operanden in Zweierkomplementdarstellung
+   interpretieren:
+
+   -  =jge ⟨label⟩= (/jump greater equal/):
+   -  =jg ⟨label⟩= (/jump greater/):
+   -  =jl ⟨label⟩= (/jump less/):
+   -  =jle ⟨label⟩= (/jump less equal/):
+
+-  Sprungbefehle, die Operanden in 2-adischer Darstllung interpretieren:
+
+   -  =ja ⟨label⟩= (/jump above/): wenn
+      $\neg \mathtt{CF} \wedge \neg \mathtt{ZF}$ gilt, gehe zu =⟨label⟩=
+   -  =jb ⟨label⟩= (/jump below/): wenn CF gesetzt ist setze =%eip= auf
+      =⟨label⟩=
+
+*** Zugriff auf Flags Operationen
+
+*Flags auslesen:* * =sete ⟨reg⟩=: setze * =setne ⟨reg⟩= * ...
+
+*** Stackoperationen
+
+-  =push ⟨src⟩=:
+-  =pop ⟨dest⟩=:
+
+*Ablauf von* =push=:
+
+1. dekrementiere =%esp= um =4=
+2. Schreibe Wert von =⟨src⟩= an die Stelle, auf die =%esp= zeigt.
+
+=push ⟨src⟩= führt also atomar im Prinzip folgende Instruktionen aus:
+
+#+BEGIN_EXAMPLE
+    subl $0x4, %esp
+    movl ⟨src⟩, (%esp)
+#+END_EXAMPLE
+
+*Ablauf von* =pop ⟨dest⟩=:
+
+1. schreibe Wert, auf den =%esp= aktuell zeigt in das Register =⟨dest⟩=
+2. dekrementiere =%esp= um =4=
+
+=pop ⟨dest⟩= führt also atomar im Prinzip folgende Instruktionen aus:
+
+#+BEGIN_EXAMPLE
+    movl (%esp), ⟨dest⟩
+    subl $0x4, %esp
+#+END_EXAMPLE
+
+*** Aufruf von Prozeduren
+
+*Ablauf eines Prozeduraufrufs mit* =call ⟨label⟩=:
+
+1. Addresse der nächsten Instruktion (=%eip= + $x$, wobei $x$ die Länge
+   der aktuellen Instruktion ist) wird auf den Stack gelegt. An dieser
+   Adresse, wird nach Ausführung der aufgerufenen Prozedur die
+   Ausführung der aufrufenden Prozedur fortgesetzt (der Wert des alten
+   =%eip= liegt dann im Stack an der Adresse =%ebp + 4=).
+2. =%eip= wird auf =⟨label⟩= (die Adresse der aufgerufenen Prozedur)
+   gesetzt (hierfür wird die Referenztabelle)
+
+*Konvention zur Übergabe von Parametern:* Lege die Parameter, mit denen
+die Prozedur aufgerufen wird in umgekehrter Reihenfolge auf den Stack.
+Das erste Argument wird also als letztes auf den Stack gelegt (die
+aufgerufene Prozedur kann dann mit =%ebp + 8= auf das erste Argument
+zugreifen und mit =%ebp + 12= auf das zweite, usw.)
+
+*Setup-Code:*
+
+Als Setup-Code bezeichnet man die Instruktionen, mit denen ... und ein
+/stack frame/ für die aufgerufenen Prozedur erzeugt wird. Der Ablauf ist
+wie folgt:
+
+1. lege Wert des alten =%ebp= auf den Stack
+2. setze neuen =%ebp= auf den aktuellen Wert des stack pointers in
+   =%esp= (der Wert des alte =%ebp= liegt dann im Stack an der Adresse
+   des neuen =%ebp=)
+3. dekrementiere =%esp= um Platz im neuen stack frame für lokale
+   Variablen zu schaffen
+
+Der Setup-Code sieht also so aus:
+
+#+BEGIN_EXAMPLE
+    push %ebp
+    movl %esp, %ebp
+    subl $40, %esp // Konvention: Stack Pointer wird um Vielfache von 16 dekrementiert
+#+END_EXAMPLE
+
+*Finish-Code:*
+
+Also /finish code/ werden die Instruktionen bezeichnet, mit denen der
+Wert des =%eip= und des =%ebp= der aufrufenden Prozedur
+wiederhergesetllt werden.
+
+#+BEGIN_EXAMPLE
+    // ggf. überschriebene Werte in Callee Save Register wieder herstellen
+    movl %ebp, %esp // %esp zeigt auf %ebp
+    pop %ebp       // restore old %ebp
+    ret             // restore old %eip
+#+END_EXAMPLE
+
+*Ablaufs des Zurückkehrens einer Prozedur mit* =ret=: =ret= popt ein
+Element vom Stack und läd dessen Wert in =%eip=. Der Instruktionpointer
+wird also auf den gepopten Wert gesetzte (d.h. die Ausführung der
+Instruktionen wird an dieser Adresse fortgesetzt). Damit =ret= also
+korrekt funktioniert, muss der =%esp= vorher auf =%ebp= der
+retournierenden Prozedur zeigen.
+
+*Ablaufs des Zurückkehrens einer Prozedur mit* =leave=: =leave= entfernt
+den aktuellen Stackframe und springt zurück in den vorherigen
+Stackframe. Dazu wird der Stackpointer auf die Basisadresse des
+aktuellen Stackframes gesetzt und anschließend der Wert des alten =%ebp=
+mit =pop= in =%ebp= geladen. Es werden also folgende Instruktionen
+ausgeführt:
+
+#+BEGIN_EXAMPLE
+    movl %ebp, %esp
+    pop %ebp
+#+END_EXAMPLE

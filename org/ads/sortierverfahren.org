@@ -1,0 +1,50 @@
+#+TITLE: Sortierverfahren
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Sortierverfahren
+---
+#+END_HTML
+
+* Sortieralgorithmen
+
+| stabile Sortierverfahren           | instabile Sortierverfahren         |
+|------------------------------------+------------------------------------|
+| [[insertionsort][Insertionsort]]   | [[selectionsort][Selectionsort]]   |
+| [[bubblesort][Bubblesort]]         | [[quicksort][Quicksort]]           |
+| [[radixsort][Radixsort]]           | [[heapsort][Heapsort]]             |
+| [[mergesort][Mergesort]]           |                                    |
+| [[bucketsort][Bucketsort]]         |                                    |
+
+** Übersicht über Laufzeiten
+
+| Sortierverfahren                   | Worst-Case Laufzeiten                       | Average-Case Laufzeiten   | Best-Case Laufzeiten      | zusätzlicher Speicherbedarf   |
+|------------------------------------+---------------------------------------------+---------------------------+---------------------------+-------------------------------|
+| [[insertionsort][Insertionsort]]   | $\mathcal{O}(n^2), \Omega(n^2)$             | $\mathcal{O}(n^2)$        | $\mathcal{O}(n)$          | -                             |
+| [[selectionsort][Selectionsort]]   | $\mathcal{O}(n^2), \Omega(n^2)$             | $\mathcal{O}(n^2)$        | $\mathcal{O}(n^2)$        | -                             |
+| [[bubblesort][Bubblesort]]         | $\mathcal{O}(n^2), \Omega(n^2)$             | $\mathcal{O}(n^2)$        | $\mathcal{O}(n)$          | -                             |
+| [[quicksort][Quicksort]]           | $\mathcal{O}(n^2), \Omega(n^2)$             | $\mathcal{O}(n \log n)$   | $\mathcal{O}(n \log n)$   | $\mathcal{O}(\log n)$         |
+| [[mergesort][Mergesort]]           | $\mathcal{O}(n \log n), \Omega(n \log n)$   | dito                      | dito                      | $\mathcal{O}(n \log n)$       |
+| [[bucketsort][Bucketsort]]         | $\mathcal{O}(n+m), \Omega(n+m)$             | dito                      | dito                      | $\mathcal{O}(k)$              |
+| [[radixsort][Radixsort]]           | $\mathcal{O}(d(n+k)), \Omega(d(n+k))$       | dito                      | dito                      | $\mathcal{O}(n)$              |
+| [[heapsort][Heapsort]]             | $\mathcal{O}(n \log n), \Omega(n \log n)$   | dito                      | dito                      | -                             |
+
+-  zu zusätzlichem Speicherbedarf: "-" bedeutet konstatner zusätzlicher
+   Speicherbedarf (in $\mathcal{O}(1)$)
+-  zu Radixsort: $d$ ist die Anzahl der Ziffern, $n$ die Anzahl der
+   Elemente im Feld und $k$ die Anzahl der möglichen Werte jeder Ziffer.
+-  zu Bucketsort: $n$ ist die Anzahl der Elemente im Feld ist und $m$
+   die Anzahl der Buckets
+-  zu Bubblesort: gemeint ist eine Version von Bubblesort, die abbricht,
+   sobald in einer Iteration keine Vertauschungen vorgenommen wurden.
+
+** Untere Schranken von vergleichsbasierten Sortieralgorithmen
+
+Vergleichsbasierte Sortierverfahren, die $n$ Elemente mit Hilfe von
+Vergleichen der Elementen miteinander sortieren, können nicht schneller
+als $\Omega (n \log n)$ sein.

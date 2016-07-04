@@ -15,10 +15,6 @@ I'm currently migrating this wiki from Markdown to Emacs Org Mode. The old sourc
 
 * Inhalt
 
-- [[./logik/index.org][Logik]]
-
-* Coming soon ...
-
 - [[./digisys/index.org][Digitale Systeme]]
 - [[./os/index.org][Betriebssysteme]]
 - [[./swt/index.org][Softwaretechnik]]
@@ -27,11 +23,12 @@ I'm currently migrating this wiki from Markdown to Emacs Org Mode. The old sourc
 - [[./ads/index.org][Algorithmen und Datenstrukturen]]
 - [[./oar/index.org][Organisation und Architektur von Rechnern]]
 - [[./tgi/index.org][Theoretische Grundlagen der Informatik]]
+- [[./logik/index.org][Logik]]
 - [[./nlv/index.org][Nebenläufige und Verteilte Prgrammierung]]
 - [[./comsys/index.org][Kommunikationssysteme]]
 - Programmiersprachen
 
   - [[./lang/c.org][C]]
-  - [[lang/java.org][Java]]
-  - [[lang/haskell.org][Haskell]]
-  - [[lang/prolog.org][Prolog]]
+  - [[.lang/java.org][Java]]
+  - [[.lang/haskell.org][Haskell]]
+  - [[.lang/prolog.org][Prolog]]

@@ -1,0 +1,36 @@
+#+TITLE: Radixsort
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Radixsort
+---
+#+END_HTML
+
+* Radixsort
+
+*Idee:* Sortiere $n$ natürliche Zahlen, die aus jeweils $d$ Ziffern
+bestehen (vgl. B-adische Zahlendarstellung) und jede Ziffer einen Wert
+aus $\{0,...,k-1\}$ hat mit Hilfe von [[bucketsort][Bucketsort]]. Die
+Ziffernpositionen seien von rechts nach links durchnummeriert mit 1 bis
+d.
+
+#+BEGIN_EXAMPLE
+    RADIXSORT(A, d, k) {
+      integer l = length(A);
+      for l = 1 to d do
+        sortiere die n Zahlen in A gemäß Ziffer l mit Bucketsort und k Buckets;
+      od
+    }
+#+END_EXAMPLE
+
+*Laufzeit:* $\mathcal{O}(d(n+k))$
+
+** Eigenschaften
+
+-  nach $l$ Iterationen sind dann die $n$ Zahlen gemäß der letzten $l$
+   Ziffern sortiert

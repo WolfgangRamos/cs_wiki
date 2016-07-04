@@ -1,0 +1,92 @@
+#+TITLE: Interrupts
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Interrupts
+---
+#+END_HTML
+
+* Interrupt
+
+Die Übertragung der Kontrolle (über die CPU) an das Betriebsystem als
+Reaktion auf ein Systemereignis (engl. /system event/) bezeichnet man
+als /Interrupt/ (z.T. auch /Exception/ genannt). Man unterscheidet
+zwischen /synchronen/ und /asynchronen/ Interrupts. Bei den /synchronen
+Interrupts/ unterscheidet man /Traps/, /Faults/ und /Aborts/.
+
+* Interrupthandler
+
+Als /Interrupthandler/ bezeichnet man Programme, die zur Behandlung
+eines Interrupts dienen und beim Auftreten eines Interrupts aufgerufen
+werden.
+
+* Interrupthandling
+
+Zur Behandlung von Interrupts werden Interrupts in verschiedene Typen
+eingeteilt. Jedem Typ wird eine eindeutige /Interrupt Number/
+zugewiesen. Diese dient als Index in einen /Interrupt Vector/ (eine
+Tabelle von /Interrupthandlern/).
+
+* Interrupt Vector
+
+Eine Tabelle von auf /Interrupthandlern/ wird /Interrupt Vector/
+genannt.
+
+* Synchrone Interrupts
+
+Interrputs, die durch Ausführung von Instruktionen hervorgerufen werden
+heißen /synchron/. Man unterscheidet zwischen /Traps/, /Faults/ und
+/Aborts/:
+
+-  /Traps/ sind intentional hervorgerufene Interrupts. Nach einer Trap
+   kann die Ausführung eines Programms i.d.R. an der nächsten Intruktion
+   fortgesetzt. Traps sind z.B.:
+
+   -  Aufrufe von Routinen des Betriebssystems (engl. /system calls/),
+      z.B. zum Öffnen einer Datei
+
+-  /Faults/ sind nicht intentional hervorgerufene Interrupts. Sie können
+   (manchmal) behoben werden. Wenn der Fault behobe werden konnte wird
+   i.d.R. die fehlererzeugende Instruktion erneut ausgeführt. Wenn nicht
+   wird der Prozess beendet. Faults sind z.B.:
+
+   -  /page fault/ (Interrupt Number =14= in IA32 Architektur)
+   -  /protection fault/ (z.B. ein /segmentation fault/; Interrupt
+      Number =13= in IA32 Architektur)
+   -  Divisionsfehler (Interrupt Number =0= in IA32 Architektur)
+
+-  /Aborts/ sind nicht intential hervorgerufene Interrupts. Sie können
+   nicht behoben werden, d.h. der entsprechende Prozess wird beendet.
+   Aborts sind z.B.:
+
+   -  Probleme beim /machine check/ (Interrupt Number =18= in IA32
+      Architektur)
+
+* Asynchrone Interrupts
+
+Interrupts, die durch externe Ereignisse (nicht durch CPU-interne
+Ereignisse) hervorgerufen werden heißen /asynchron/. Sie werden durch
+Setzen der Interrupt Pins des Prozessors angezeigt. Asynchrone
+Interrupts sind z.B.:
+
+-  Abschluss von I/O Requests (Daten von Festplatte oder Netzwerk, etc.
+   sind angekommen)
+-  Reset (drücken des Reset-Knopfes oder Ctrl-Alt-Entf)
+
+* Ablauf eines Interrupts
+
+1. Speichern des Program Counters
+2. Identifikation des Interrupts über seine Interrupt Number
+3. Speichern der Registerinhalte
+4. Ausführen des zugehörigen Interrupt Handlers
+5. Ausführen des Schedulers
+6. Auswahl des Prozesses der als nächstes bearbeitete werden soll (das
+   kann der Prozess sein, bei dem der Interrupt auftrat oder ein
+   anderer)
+7. Laden des Program Counters und der Register für den auszuführenden
+   Prozess

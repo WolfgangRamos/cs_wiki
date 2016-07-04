@@ -1,0 +1,36 @@
+#+TITLE: Heapsort
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Heapsort
+---
+#+END_HTML
+
+* Heapsort
+
+*Idee:* Baue sortiert Folge von hinten nach vorn auf (d.h. suche zuerst
+das größte Element und verschiebe es ans Ende des Felds). Vertauche
+wiederholt die Wurzel des Heaps (d.h. das maximale Element im
+unsortierten Berecih) mit dem letzen Element des Heaps (das an der
+Grenze zum sortierten Bereich steht). Verkleinere den unsortierten
+Bereich (Bereich des Heaps) um 1. Danach rufe =HEAPIFY= wieder auf, um
+die Heap-Eigenschaft im unsortierten Bereich wiederherzustellen.
+
+#+BEGIN_EXAMPLE
+    HEAPSORT(A)
+      integer size = length(A);
+      BUILDHEAP(A);
+
+      for in = size - 1 downto 1 do
+        vertauche A[0] und A[i]; // vertausche Wurzel mit erstem Element des sortierten Bereichs (d.h. das max. landet hinten)
+        size = size - 1;         // verkleinere unsortierten Bereich
+        HEAPIFY(A, 0, size);
+      od
+#+END_EXAMPLE
+
+*Laufzeit*: $\mathcal{O}(n \log n)$

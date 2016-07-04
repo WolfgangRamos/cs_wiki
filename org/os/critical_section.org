@@ -1,0 +1,82 @@
+#+TITLE: Critical_section
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Critical_section
+---
+#+END_HTML
+
+* Critical Section
+
+Ein Codeabschnitt in dem auf gemeinsamen Ressourcen (Speicher, Geräte,
+etc.) zugegriffen wird und der zur Vermeidung von Race Conditions nur
+von einem Prozess/Thread zeitgleich abgearbeitet werden darf (Mutual
+Exclusion muss sichergestellt werden).
+
+Kritieren für die Implementierung von Critical Sections:
+
+-  /Saftey Properties/ (nothing bad happens):
+
+   -  *Mutual Exclusion*: Zu jedem Zeitpunkt darf nur ein Prozess/Thread
+      sich in seiner Critical Section befinden
+   -  *Absence of Deadlock/Livelock*: Wenn zwei oder mehr Prozesse
+      versuchen ihre Critical Section auszuführen ist sichergestellt,
+      dass einer es auch schafft
+   -  *Absence Unecessary Delay*: ein Prozess, der seine Critical
+      Section ausführen möchte wird nicht von anderen Prozessen
+      blockiert, die nicht gerade ihre Critical Section ausführen
+
+-  /Liveness Properties/ (something good eventually happens):
+
+   -  *Fairness/Eventual Entry*: Jeder Prozess, der seine Critical
+      Section ausführen möchte kann dies nach endlicher Zeit tun und
+      verhungert (Starvation) nicht.
+
+** Implementierungen
+
+*** Alternating Token
+
+-  ein Token wird zwischen zwei oder mehr Prozessen hin- und hergereicht
+-  Token wird beim Verlassen der Critical Section von einem Prozess an
+   den nächsten weitergegeben
+-  Vorteile:
+
+   -  Mutual Exclusion ist sichergestellt
+   -  Eventual Entry ist sichergestellt
+
+-  Nachteile:
+
+   -  Unnecessary Delay möglich (wenn ein Prozess einer darauf warten
+      muss, dass der andere den Token weitergibt, obwohl die Critical
+      Section schon wieder frei ist)
+
+*** Dekker's Algorithmus
+
+-  Nachteil: Busy Wait
+
+*** Peterson's Algorithmus
+
+#+BEGIN_EXAMPLE
+    //Peterson's Algorithmus
+    bool interested[] = {false, false};
+    int turn = 0;
+
+    void enterCriticalSection() {
+      interested[self] = true;
+      turn = rival;   // gewollte race condition
+      while(interested[rival] & turn == rival) {
+        // busy wait //
+      }
+    }
+
+    void exitCriticalSection() {
+      interested[self] = false;
+    }
+#+END_EXAMPLE
+
+-  Nachteil: Busy Wait

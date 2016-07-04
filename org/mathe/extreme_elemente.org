@@ -1,0 +1,83 @@
+#+TITLE: Extreme_elemente
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Extreme_elemente
+---
+#+END_HTML
+
+* Extreme Elemente
+
+Sei $(M,\sqsubseteq)$ eine [[ordnung][Ordnung]] [1] und $N \subseteq M$,
+dann heißt $x \in N$:
+
+-  /größtes Element/ von $N$, wenn $\forall y \in N: y \sqsubseteq x$
+   gilt
+-  /kleinstes Element/ von $N$, wenn $\forall y \in N: x \sqsubseteq y$
+   gilt
+-  /maximales Element/ von $N$, wenn
+   $\neg \exists y \in N: x \sqsubset y$ gilt
+-  /minimales Element/ von $N$, wenn
+   $\neg \exists y \in N: y \sqsubset x$ gilt
+
+*Eigenschaften:*
+
+-  in einer Menge $N$ gibt es höchstens /ein/ größtes und /ein/
+   kleinstes Element
+-  wenn $x$ größtes Element von $N$ ist, dann ist $x$ auch maximales
+   Element von $N$
+-  wenn $x$ kleinstes Element von $N$ ist, dann ist $x$ auch minimales
+   Element von $N$
+-  $x$ ist genau dann maximales Element von $N$, wenn
+   $\forall y \in N: x \sqsubseteq y \Rightarrow y=x$ gilt.
+-  $x$ ist genau dann minimales Element von $N$, wenn
+   $\forall y \in N: y \sqsubseteq x \Rightarrow y=x$ gilt.
+
+* Schranken
+
+Sei $(M,\sqsubseteq)$ eine [[ordnung][Ordnung]] [2] und $N \subseteq M$,
+dann heißt $x \in M$:
+
+-  /obere Schranke/ von $N$, wenn $\forall y \in N: y \sqsubseteq x$
+   gilt
+-  /untere Schranke/ von $N$, wenn $\forall y \in N: x \sqsubseteq y$
+   gilt
+
+Falls ...
+
+-  eine untere Schranke $x$ von $N$ existiert, heißt $N$ /nach unten
+   beschränkt/ (bezüglich der Relation $\sqsubseteq$).
+-  eine obere Schranke $x$ von $N$ existiert, heißt $N$ /nach oben
+   beschränkt/ (bezüglich der Relation $\sqsubseteq$).
+-  eine untere und obere Schranke $x_u$ und $x_o$ von $N$ existieren,
+   heißt $N$ /beschränkt/ (bezüglich der Relation $\sqsubseteq$).
+
+Wir definieren:
+
+-  die Menge der /oberen Schranken/ von $N$ als:
+   $N^{\vartriangle} := \{x \in M | \forall y \in N: y \sqsubseteq x\}$.
+-  die Menge der /unteren Schranken/ von $N$ als:
+   $N^{\triangledown} := \{x \in M | \forall y \in N: x \sqsubseteq y\}$.
+
+** Supremum
+
+Das kleinste Element der Menge der oberen Schranken heißt /Supremum/ von
+$N$, geschrieben als $\sup\,N$. Es gilt also
+$\sup\,N \in N^{\vartriangle} \wedge \forall y \in N^{\vartriangle}: \sup\,N \sqsubseteq y$.
+
+** Infimum
+
+Das größte Element der Menge der unteren Schranken heißt /Infimum/ von
+$N$, geschrieben als $\inf\,N$. Es gilt also
+$\inf\,N \in N^{\triangledown} \wedge \forall y \in N^{\triangledown}: y \sqsubseteq \inf\,N$.
+
+[1] $M$ ist eine nichtleere /Trägermenge/ und $\sqsubseteq$ ist eine
+    [[ordnungsrelation][Ordnungsrelation]] auf $M$
+
+[2] $M$ ist eine nichtleere /Trägermenge/ und $\sqsubseteq$ ist eine
+    [[ordnungsrelation][Ordnungsrelation]] auf $M$

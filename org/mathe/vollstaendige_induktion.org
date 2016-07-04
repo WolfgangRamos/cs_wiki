@@ -1,0 +1,32 @@
+#+TITLE: Vollstaendige_induktion
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Vollstaendige_induktion
+---
+#+END_HTML
+
+* Vollständige Induktion
+
+TODO: Prinzip
+
+** Aufbau eines Induktionsbeweis
+
+*Beh:* $\forall n \in \mathbb{N}: \text{⟨Formel⟩}$
+
+*Beweis durch vollständige Induktion:* Im Folgenden verwenden wir $A(n)$
+mit $n \in \mathbb{N}$ als Abkürzung für ⟨Formel⟩.
+
+*IB [1]:* Es gilt $A(0)$, wegen ⟨Beweis⟩ / Wir zeigen, dass $A(0)$ gilt.
+⟨Beweis⟩
+
+*IS [2]:* Sei $n \in \mathbb{N}$ so gegeben, dass $A(n)$ gilt. ⟨Beweis⟩
+
+[1] IB = /Induktionsbeginn/
+
+[2] IS = /Induktionsschluss/

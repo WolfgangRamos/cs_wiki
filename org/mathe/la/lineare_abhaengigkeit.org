@@ -1,0 +1,45 @@
+#+TITLE: Lineare_abhaengigkeit
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Lineare_abhaengigkeit
+---
+#+END_HTML
+
+* Linearkombination
+
+* Lineare Abhängigkeit
+
+Sei $(V, \oplus)$ [[vektorraum][Vektorraum]] über dem Körper
+$(\mathbb{K}, +, \cdot)$, dann heißen $m \in \mathbb{N}$ (also endlich
+endlich viele) Vektoren $v_{1}, ..., v_{m} \in V$ /linear abhängig/,
+wenn sich das neutrale Element $e_{\oplus}$ durch eine nicht-triviale
+Linearkombination $\sum_{i=1}{m} \lambda_{i} \odot v_{i} = \mathbf{0}$
+darstellen lässt, wobei $\lambda_{1}, ..., \lambda_{m} \in \mathbb{K}$
+und $\exists i \in \mathbb{N}\_{\leq m}: \lambda_{i} \neq e_{+}$
+(mindestens ein $\lambda_{i}$ muss ungleich dem netralen Element bzgl.
+"$+$" sein) gilt.
+
+Anderenfalls heißen die Vektoren $v_{1}, ..., v_{m} \in V$ /linear
+unabhängig/.
+
+*Unabhängigkeit von Vektorenfamilien:*
+
+Ist $I$ eine (unendliche) Indexmenge und $v_i \in V$ für alle $i \in I$,
+so heißt die Familie $(v_i)\_{i \in I}$ genau dann /linear unabhängig/,
+wenn für jede endliche Teilmenge $J \subseteq I$ die Vektoren
+$(v_{i})\_{i \in J}$ lienar unabhängig sind.
+
+** Eigenschaften
+
+-  $e_{\oplus}$ und jede Menge von Vektoren, die $e_{\oplus}$ enthält
+   ist linear abhängig.
+-  jede Untermenge linear unabhängiger Vektoren ist wieder linear
+   unabhängig.
+-  im $R^n$ sind die kanonischen Einheitsvektoren immer linear
+   unabhängig

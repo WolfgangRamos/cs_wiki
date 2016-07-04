@@ -8,3 +8,17 @@
 _site
 .sass-cache
 .jekyll-metadata
+
+# org-publish derived directories
+/ads
+/comsys
+/digisys
+/lang
+/logik
+/mathe
+/nvprog
+/oar
+/oop
+/os
+/swt
+/tgi

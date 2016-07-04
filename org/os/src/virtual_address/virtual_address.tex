@@ -1,0 +1,29 @@
+\documentclass[tikz, convert={density=72,outext=.png, outfile=virtual_adress.png}]{standalone}
+
+\usetikzlibrary{backgrounds}
+
+\begin{document}
+
+\begin{tikzpicture}[background rectangle/.style={fill=white}, show background rectangle]
+
+  \edef\boxsize{1.5}
+  \edef\boxnr{13}
+  \tikzstyle{bits}=[line width=2pt]
+
+  \foreach \i in {0,...,\boxnr}
+    {
+      \pgfmathsetmacro{\x}{\i * \boxsize}
+      \draw[bits] (\x,0) -- (\x,\boxsize);
+    }
+
+  \pgfmathsetmacro{\boxend}{\boxnr * \boxsize}
+  \draw[bits] (0,0) -- (\boxend,0);
+  \draw[bits] (0,\boxsize) -- (\boxend,\boxsize);
+
+  \pgfmathsetmacro{\measurepos}{0.5 * -\boxsize}
+  \pgfmathsetmacro{\pagenr}{8 * \boxsize}
+  \draw[bits] (0,\measurepos) edge[|<->|] node[fill=white,font=\huge] {page number} (\pagenr,\measurepos);
+  \draw[bits] (\pagenr,\measurepos) edge[<->|] node[fill=white, font=\huge] {offset} (\boxend,\measurepos);
+\end{tikzpicture}
+
+\end{document}

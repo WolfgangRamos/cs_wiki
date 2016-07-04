@@ -1,0 +1,37 @@
+#+TITLE: Grapheninduktion
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Grapheninduktion
+---
+#+END_HTML
+
+* Grapheninduktion
+
+TODO: Prinzip
+
+** Aufbau eines Induktionsbeweis
+
+*Beh:* Für alle gerichteten Graphen $G=(V,E)$ gilt: ⟨Aussage⟩
+
+*Beweis (durch strukturelle Induktion):*
+
+*IB [1]:* Sei $G$ ein gerichteter Graph mit einem Knoten. Dann gilt
+⟨Beweis⟩
+
+*IV [2]:* Sei $n \in \mathbb{N}$ so gegeben, dass für alle gerichteten
+Graph $G=(V,E)$ mit $m \leq n$ Knoten gilt: ⟨Aussage⟩.
+
+*IS [3]:* Sei $G=(V,E)$ ein gerichteter Graph mit $n+1$ Knoten. Wir
+zeigen, dass ⟨Aussage⟩ für $G$ gilt. ⟨Beweis⟩
+
+[1] IB = /Induktionsbeginn/
+
+[2] IV = /Induktionsvoraussetzung/ (oder auch /Induktionshyptohese/)
+
+[3] IS = /Induktionsschluss/

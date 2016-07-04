@@ -1,0 +1,71 @@
+#+TITLE: Determinante
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Determinante
+---
+#+END_HTML
+
+* Determinante
+
+Die Determinante ist eine Abbildung
+$\det : \mathbb{R}^{n \times n} \rightarrow \mathbb{R}$ mit
+$\det A = \sum_{\pi \in S_{n}}^{} sign(\pi) \prod_{i=1}^{n} a_{i,\pi(i)}$,
+wobei $sign(\pi)$ das [[permutation][Vorzeichen der Permutation]] $\pi$
+und $S_{n}$ die Gruppe aller Permutationen der Menge
+$M_{n} = \\{1, ..., n\\}$ ist.
+
+Determinanten können nur für quadratische Matrizen bestimmt werden!
+
+Determinanten werden oft auch als Betragsstriche geschrieben, also
+$\det \left( \begin{smallmatrix} a & b \\\\ c & d\end{smallmatrix} \right) = \left | \left( \begin{smallmatrix} a & b \\\\ c & d\end{smallmatrix} \right ) \right |$.
+
+*Eigenschaften:*
+
+-  Determinante einer $1 \times 1$-Matrix $\det (a) = a$
+-  Determinante einer $2 \times 2$-Matrix
+   $\det \left( \begin{smallmatrix} a & b \\\\ c & d\end{smallmatrix} \right) = ad-bc$
+   (Produkt der Hauptdiagonalen minus Produkt der Nebendiagonalen)
+-  Besitzt $A$ zwei identische Zeilen, dann gilt $\det A = 0$.
+-  Das Vertauchen zweier Zeilen in einer quadratischen Matrix $A$ ändert
+   nur das Vorzeichen der Determinante. Durch die Addition der
+   $\lambda \in \mathbb{K}$-fachen von einer Zeile zu einer anderen
+   ändert die Determinate nicht.
+-  i.A. gilt $\det (A+B) \neq \det A + \det B$
+-  $\det(\lambda A) = \lambda^{n} \det A$
+-  Die Determinante der Tansponierten ist die Determinante der
+   ursprünglichen Matrix, d.h. $\det A^{T} = \det A$
+-  Die Determinante einer Dreiecksmatrix ist das Produkt der
+   Diagonalelemente, d.h.: Sei $A \in \mathbb{K}^{n \times n}$ untere
+   oder obere Dreiecksmatrix. Dann gilt
+   $\det A = \prod_{i=1}^{n} a_{ii}$
+-  Die Determinante einer Matrix $A$ ist genau dann ungleich Null, wenn
+   die Matrix regulär ist, d.h. für $A \in \mathbb{K}^{n \times n}$ gilt
+   $A \in GL(n, \mathbb{K}) \Longleftrightarrow \det A \neq 0$.
+-  Die Determinante des Produktes ist das Produkt der Determinanten,
+   d.h.
+   $\forall A,B \in \mathbb{K}^{n \times n}: \det (AB) = \det A \det B$.
+-  Die Determinante der Inversen einer Matrix ist die Inverse der
+   Determinanten, d.h. für $A \in GL(n, \mathbb{K})$ gilt:
+   $\det A^{-1} = (\det A)^{-1}$.
+-  [[aehnlichkeit][ähnliche Matrizen]] beitzen dieselbe Determinante
+
+* Entwicklungssatz von Laplace
+
+Sei $A \in \mathbb{K}^{n \times n}$ und $n>1$, dann gilt für
+$1 \leq i \leq n$, beliebig:
+
+$\det A = \sum_{j=1}^{n} (-1)^{i+j} a_{ij} \det A_{ij}'$,
+
+sowie für $1 \leq j \leq n$:
+
+$\det A = \sum_{i=1}^{n} (-1)^{i+j} a_{ij} \det A_{ij}'$.
+
+Wobei $A_{ij}' \in \mathbb{K}^{(n-1) \times (n-1)}$ durch Streichen der
+$i$-ten Zeile und $j$-ten Spalte in $A$ entsteht. $\det A_{ij}'$ heißt
+auch /Minor/ von $A$.

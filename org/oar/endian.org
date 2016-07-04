@@ -1,0 +1,20 @@
+#+TITLE: Endian
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Endian
+---
+#+END_HTML
+
+* Big und Little Endian
+
+-  /big endian/: least significant byte steht and der höchsten Adresse
+   (entspricht der gwohnten Darstellung von Zahlen von höchster zu
+   niedrigster Stelle von links nach rechts)
+-  /little endian/: least significant byte steht an der niedrigsten
+   Adresse

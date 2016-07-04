@@ -1,0 +1,126 @@
+#+TITLE: Hashing
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Hashing
+---
+#+END_HTML
+
+* Hashing
+
+*Ziel:* Verwaltung einer Menge $S$ von Elementen aus einem Universum $U$
+unter folgenden Operationen:
+
+-  =insert(x)=: Füge neues Element $x$ in $S$ ein
+-  =lookup(x)=: Stelle fest, ob $x$ in $S$ ist
+-  =remove(x)=: Entferne $x$ aus $S$
+
+*Idee:* Speichere Elemente aus $S$ in einer Hashtabelle mit
+$m \in \mathbb{N}$ Elementen $T[0], ... T[m-1]$ mit Hilfe einer
+/Hashfunktion/ $h: U \rightarrow \\{0, ..., m-1\\}$.
+
+** Beispiele für Hashfunktionen
+
+*Divisionsmethode:* $h(x) = x \mod m$
+
+*erweiterte Divisionsmethode:* $h(x) = (ax+b) \mod m$ mit
+$a,b \in \mathbb{Z}$ und $m \in \mathbb{N}$, wobei für $m$ i.d.R. eine
+Primzahl gewählt wird.
+
+*Multiplikationsmethode:*
+$h(x) = \lfloor m(xc \mod 1) \rfloor = \lfloor m(xc - \lfloor xc \rfloor) \rfloor$,
+wobei $c \in \mathbb{R}$ so gewählt ist, dass $0 \leq xc \mod 1 < 1$
+($xc$ ist also keine natürliche Zahl). Diese Methode ist auch für
+$x \in \mathbb{R}$ geeignet.
+
+** Universelle Hashfunktionen
+
+Eine Familie von Hashfunktionen $h_{0}(x), ..., h_{m-1}(x)$ heißt
+/universell/, wenn:
+
+-  $\forall x \in M: (h_{0}(x), ..., h_{m-1}(x)) \in S_{m}$, d.h.
+   $(h_{0}(x), ..., h_{m-1}(x))$ ist eine Permutation der Elemente
+   $\\{0, ..., m-1\\}$
+-  jede Permutation tritt mit gleicher Wahrscheinlichkeit auf
+
+** Hashkollision
+
+Sind $x,y \in U$ mit $x \neq y$ und sollen $x$ und $y$ an der gleichen
+Postion der Hashtabelle abgespeicher werden (d.h. $h(x) = h(y)$), so
+kommt es zu einer /Hashkollision/.
+
+** Konkrete Hashverfahren
+
+*** Hashing mit direkter Verkettung
+
+*Idee:* Verwende eine Feld aus [[listen][einfach verketteten Liste]] als
+Hastabelle. Speicher Elemente mit gleichem Hashwert in derselben Liste.
+Realisiere die Hashtabellen-Operationen durch Listenoperationen:
+
+-  =lookup(x)=: suche in Liste $T[h(x)]$ nach $x$
+-  =insert(x)=: füge $x$ am Anfang der Liste $T[h(x)]$ ein
+-  =remove(x)=: entferne $x$ aus der Liste $T[h(x)]$
+
+*Eigenschaften:*
+
+-  der Erwartungswert der Länge $n_j$ der Liste in $T[j]$ nach dem
+   Einfügen von $m$ Elementen ist
+   $\mathrm{E}(n_j) = \frac{n}{m} =: \alpha$ [1]
+
+*Laufzeiten:*
+
+|               | worst case         | average case             |
+|---------------+--------------------+--------------------------|
+| =lookup(x)=   | $\mathcal{O}(n)$   | $\Theta(1+\alpha)$ [4]   |
+| =insert(x)=   | $\mathcal{O}(1)$   | $\mathcal{O}(1)$         |
+| =remove(x)=   | $\mathcal{O}(n)$   | $\Theta(1+\alpha)$ [5]   |
+
+*** Hashing mit offener Addressierung
+
+*Idee:* Speichere Elemente direkt in einem Feld. Verwende eine
+alternative Position, falls $h(x)$ schon belegt ist. Prüfe unter
+Verwendung einer Familie universeller Hashfunktionen $h\_{1}(x),
+h\_{2}(x), ... $ alternative Positionen, bis man eine freie Position
+findet. Verwende eines der folgenden Verfahren zum Finden alternativer
+Positionen:
+
+1. /lineare Sondierung/: $h_{i}(x) = (h(x) + i) \mod m$. [6]
+2. /quadratische Sondierung/: $h_{i}(x) = (h(x) + i^{2}) \mod m$. Wenn
+   man $m$ Primzahl der Form $\exists n \in \mathbb{N}: m = 4n + 3$
+   wählt, liefert die Sondierungen mit $m$ Hashfunktionen
+   $h_1, ..., h_{m}$ eine Permutation der Zahlen $\\{0, ..., m-1\\}$
+
+*Eigenschaften:*
+
+-  =lookup(x)=: Die Suche nach einem Element kann nicht abbrechen, wenn
+   eine freie Position erreicht wird, da dort ein Element gestanden
+   haben könnte, dass zwischenzeitlich gelöscht wurde. Konsequenz:
+   Postionen, an denen Elemente gelöscht wurden, müssen markiert werden.
+-  =insert(x)= enstpricht einem nicht-erfolgreichen =lookup=
+-  Die erwartete Anzahl von Proben in einer Einfüge-Operation oder nicht
+   erfolgreichen Suche ist $\leq \frac{1}{1-\alpha}$, falls bisher keine
+   Elemente entfernt wurden.
+-  Die durchschnittliche Anzahl an Proben bei einer erfolgreichen Suche
+   oder einer Entfernen-Operation, sofern $x \in S$, ist höchstens
+   $\frac{1}{\alpha} \ln \frac{1}{1-\alpha}$
+
+[1] Wir gehen davon aus, dass jedes Element mit gleicher Wahrschlichkeit
+    auf eines der Arrayelemente abgebildet wird, unabhängig von der
+    Zuordnung anderer Elemente
+
+[2] Berechnung des Haswerts $h(x)$ erfolgt in $\Theta(1)$
+
+[3] Berechnung des Haswerts $h(x)$ erfolgt in $\Theta(1)$
+
+[4] Berechnung des Haswerts $h(x)$ erfolgt in $\Theta(1)$
+
+[5] Berechnung des Haswerts $h(x)$ erfolgt in $\Theta(1)$
+
+[6] Bei linearer Sondierung können sich Elementcluster in der
+    Hashtabelle bilden, wenn viele Elemente mit ähnlichem Hashwert
+    eingefügt werden.

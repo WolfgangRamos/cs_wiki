@@ -1,0 +1,30 @@
+#+TITLE: Cfl
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Cfl
+---
+#+END_HTML
+
+* Context Free Languages
+
+Eine Sprache $L$ heißt genau dann /kontextfrei/ (engl. context free
+language; CFL), wenn es eine CFG $G$ gibt, die $L$ erzeugt.
+
+Eine Sprache $L$ heißt genau dann /kontextfrei/ (engl. context free
+language; CFL), wenn es einen PDA $P$ gibt, der $L$ erkennt.
+
+** Abschlusseigenschaften
+
+CFL sind abgeschlossen bzgl. der Operationenen
+
+-  *Vereinigung:*
+-  *Konkatenation:*
+-  *Kleene Stern:*
+-  Durchschnittsbildung mit regulären Sprachen, d.h. wenn $L_0$ CFL und
+   $L_1$ RL ist, dann ist $L_0 \cap L_1$ CFL.

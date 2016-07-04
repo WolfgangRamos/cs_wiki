@@ -1,0 +1,103 @@
+#+TITLE: Vorgehensmodelle
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Vorgehensmodelle
+---
+#+END_HTML
+
+* Vorgehensmodelle
+
+Beschreiben das Vorgehen eines Teams bei der Entwicklung von Software.
+Generell unterscheidet man:
+
+-  agile Modelle (z.B. Scrum):
+
+   -  sehr kleine Inkremente
+   -  ständige Code-Verbesserung
+   -  testgetriebene Entwicklung
+   -  stärkere Nutzer-Involvierung
+
+-  schwergewichtige Modelle (z.B. V-Modell, Wasserfallmodell)
+
+   -  Unterteilung des Entwicklungsprozesse in größe Phasen
+   -  z.T. werden die Phasen sequentiell durchlaufen (z.B. beim
+      Wasserfallmodell)
+
+** Schwergewichtige Vorgehensmodelle
+
+*** Wassefallmodell
+
+Sequentielles Entwicklungsmodell (jede Phase muss beendet sein, bevor
+die nächste beginnt) Das Wasserfallmodell ist /Dokumentengetrieben/: Am
+Ende jeder Phase stehen fertige Dokumente.
+
+-  Machbarkeitsstudie: Prüfung der (technischen, personellen und
+   ökonomischen) Durchführbarkeit, Prüfung alternativer
+   Lösungsvorschläge. Erstellung des Lastenhefts.
+-  Anforderungsanalyse: funktionale und nicht-funktionale
+   Systembeschreibung. Erstellung von Pflichtenheft und
+   Anforderungsspezifikation
+-  Systementwurf: Entwurf der Softwarearchitektur
+-  Codieren & Modultest: Erstellen der Sofwarekomponenten
+-  Integrations- und Systemtest: Liefern Testergebnisse
+-  Auslieferung und Installation: Erstellen der Handbücher
+-  Wartung:
+
+*** V-Modell
+
+Das V-Modell ist eine Erweiterung des Wasserfallmodells und ergänzt
+dieses um Aspekte der Qualitätssicherung. Verifikation und Validation
+sind zentrale Bestandteile des V-Modells. Das V-Modell ist
+/Qualitätsgetrieben/.
+
+*** Rational Unified Process (RUP)
+
+Ein architekturzentriert und durch durch Anwendungsfälle gesteuerter
+Entwicklungsprozess. Der RUP ist außerdem
+
+-  objektorientiertert (Verwendung von UML-Notation)
+-  inkrementelle und iterativ (phasenübergreifende Aufgaben werden in
+   jeder Phase z.T. mehrfach durchlaufen).
+
+Die 4 Phasen des RUP sind:
+
+1. Inception: Probleme analysieren, Projektbereich eingrenzen,
+   Entwicklung erster Anwendungsfälle
+2. Elaboration: Architektonische Grundlagen schaffen, Projektplan
+   entwickeln, Risiken erkennen und beseitigen
+3. Construction: Funktionalität entwickeln, integrieren und testen
+4. Transition: Projekt beim Benutzer installieren und einführen
+
+Phasenübergreifende Aufgaben (Workflows) zur Strukturierung:
+
+1. Geschäftsprozessanalyse
+2. Anforderungsermittlung
+3. Analyse & Entwurf
+4. Implementierung
+5. Test
+6. Installation
+
+** Agile Vorgehensmodelle
+
+*** Scrum
+
+Wichtige Elemente von Scrum:
+
+-  /Sprint/: Ein Sprint ist ein Arbeitsabschnitt, in dem ein Inkrement
+   einer Produktfunktionalität implementiert wird. Das Ergebnis eines
+   Sprints ist der Abschluss der Implementierung eines Inkrements der
+   Funktionalität, wie es im /Sprint Planning/ festgelegt wurde.
+-  Rollen:
+
+   -  /pig roles/ (hohes Commitment): Product Owner, Scrum Master, Team
+   -  /chicken roles/ (geringes Commiment): Stakeholders, Managers
+
+-  /Product Backlog/: eine Aufgabenliste, die alle bekannten
+   funktionalen und nicht-funktionalen Anforderungen, sowie
+   unterstützende Aufgaben (Aufsetzen der Testumgebung) enthält.

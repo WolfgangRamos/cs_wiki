@@ -1,0 +1,134 @@
+#+TITLE: Scheduling
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Scheduling
+---
+#+END_HTML
+
+* Scheduler
+
+Als Scheduler bezeichnet man die Betriebssystemroutine(n), welche den
+zeitlichen Ablauf der Abarbeitung mehrerer Prozesse festlegt/festlegen.
+Ein Scheduler wählt dazu aus den ausführungsbereiten Prozessen (Ready
+state) im Hauptsspeicher einen (im Fall von Multicore Prozessoren evtl.
+auch mehrere gleichzeitig) aus, dem als nächstes die CPU zugeteilt
+werden soll ([[dispatcher][Dispatching]]). Scheduling ist z.B. dann
+erforderlich, wenn ein Prozess
+
+-  seinen Zustand von Running zu Blocked wechselt
+-  seinen Zustand von Running zu Ready wechselt
+-  Terminiert
+
+** Optimierungskriterien
+
+-  Maximierung
+
+   -  der CPU Auslastung
+   -  der Anzahl fertiggestellter Jobs pro Zeitintervall (Throughput)
+
+-  Minimierung
+
+   -  der Reaktionszeit (/Response time/), durch Bevorzugung von
+      Prozessen, die auf Benutzereingaben reagieren
+   -  der Zeit, die ein Thread in der ready-queue verbringt (/Waiting
+      Time/)
+   -  der Dauer zwischen Submission und Completion eines Jobs
+      (/Turnaroundtime/)
+
+-  Echtzeitausführung (Real-time) von Prozessen
+
+** Preemtive und Non-Preemptive Scheduling
+
+-  *Preemtive Scheduling Algorithmen*: entziehen Prozessen die CPU, wenn
+   bestimmte Bedingungen eintreten (z.B. Ablauf des Time Quantums)
+
+   -  Vorteile:
+
+      -  verhindert Monopolisierung der CPU durch einen Prozess
+      -  ermöglicht geringe Reaktionszeiten (Response Time)
+
+   -  Nachteile:
+
+      -  mehr Context Switches als bei Non-Preemtive Scheduling →
+         größerer Overhead durch Scheduling
+
+-  *Non-Preemtive Algorithmen*: lassen einen Prozess dem die CPU
+   zugeteilt wurde so lange laufen, bis dieser die CPU freiwillig
+   freigibt (z.B. blockiert oder terminiert)
+
+   -  Vorteil:
+
+      -  geringere Anzahl an Context Switches (minimaler Overhead durch
+         Scheduling)
+
+   -  Nachteile:
+
+      -  geringe Reaktionszeit (Response Time) können nicht garantiert
+         werden
+      -  Monopolisierung der CPU möglich durch einen Prozess möglich
+
+** Scheduling Algorithmen
+
+-  *First Come, First Served (FCFS)*: Prozessing Requests werden nach
+   Ankunftszeit abgearbeitetet
+
+   -  non-preemtive
+   -  implementierbar durch Queue
+   -  Nachteil: *Convoi Effect* (Prozesse/Threads mit kurzen CPU-Bursts
+      können durch einen einzelnen Prozess/Thread mit langem CPU-Burst
+      lange blockieren werden, was die durchschnittliche Wartezeit des
+      Systems drastisch erhöhen kann)
+
+-  *Round Robin Scheduling*: preemtive Version von First-Come First
+   Served
+
+   -  Prozessing Requests werden nach Ankunftszeit abgearbeitetet
+   -  nach Ablauf eines /Time Quantums/ wird der Running Process
+      unterbrochen und der nächste Prozess erhält den Zugriff auf die
+      CPU
+   -  terminiert ein Prozess vor Ablauf seines Time Quatums, erhält
+      direkt der nächste Prozess Zugriff auf die CPU
+   -  durchschnittliche Wartezeit bei $n$ Prozessen:
+      $t_{wait} = (n - 1) \cdot t_{quantum}$
+   -  Vorteile:
+
+      -  i.d.R geringere Response Time
+
+   -  Nachteil:
+
+      -  i.d.R größere Turnaroundtime
+      -  größerer Overhead durch mehr Context Switches
+
+-  *Shortest Job First*: Bevorzugung von Processing Requests mit
+   geringer CPU Burst Dauer
+
+   -  non-preemtive
+   -  Nachteil: Dauer des nächsten CPU-Bursts muss vorab bekannt sein
+
+-  *Shortest Remaining Time First*: Bevorzugung von Processing Requests
+   mit geringer CPU Burst Dauer; ggf. Unterbechung des aktuellen
+   Prozess, wenn ein neuer Prozess ankommt, dessen nächster CPU-Burst
+   kürzer ist als die vebleibende CPU-Burst Dauer des aktuellen
+   Prozesses.
+
+   -  preemtive Version von Shortest Job First
+   -  Nachteil: Dauer des nächsten CPU-Bursts muss vorab bekannt sein
+
+-  *Priority Scheduling*: Bevorzugung von Processing Requests mit
+   kleineren Prioritätswerten (kleiner Wert = hohe Priorität)
+
+   -  non-preemtive: Thread mit höchster Priorität erhält Zugriff auf
+      die CPU, wenn der aktuelle ausgeführt Thread die CPU frei gibt
+   -  preemtive: aktuell ausgeführter Thread wird unterbrochen, wenn ein
+      Thread kommt, der eine höhere Priorität hat
+   -  Nachteil: Fairness ist nicht sichergestellt (Threads mit
+      niedrigerer Priorität können aushungern, wenn immer Threads mit
+      höherer Priorität ausführbereit sind)
+
+

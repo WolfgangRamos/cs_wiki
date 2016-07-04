@@ -1,0 +1,43 @@
+#+TITLE: Standards
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Standards
+---
+#+END_HTML
+
+* Standards
+
+Beispiele:
+
+-  LAN:
+
+   -  Ethernet (IEEE 802.3)
+   -  Wireless LAN (IEEE 802.11)
+
+-  Funknetzwerke
+
+   -  GSM (ETSI)
+   -  DECT (ETSI)
+
+-  Internet
+
+   -  TCP (IETF)
+   -  IP (IETF)
+   -  E-Mail (IETF)
+   -  HTML (W3C)
+   -  XMT (W3C)
+
+** Standardisierungsorganisationen
+
+*W3C:* World Wide Web Consortium
+
+*IETF:* Internet Engineering Task Force
+
+Die Standardiesierung des Internetz erfolgt durch offene Standards, die
+von Freiwilligen erstellt werden.

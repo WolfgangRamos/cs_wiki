@@ -1,0 +1,34 @@
+#+TITLE: Endliche_automaten
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Endliche_automaten
+---
+#+END_HTML
+
+* Endliche Automaten
+
+Ein Automatenmodell heißt /endlich/ genau dann, wenn die Menge der
+Zustände des Automaten endlich ist. Man unterscheidet:
+
+-  [[dfa][DFA]]
+-  [[nfa][NFA]]
+-  [[gnfa][GNFA]]
+-  [[pda][PDA]]
+
+** Äquivalenz von Automaten
+
+Automaten $M_0, M_1$ sind äquivalent, falls $L(M_0) = L(M_1)$.
+
+** Verfahren zur Konstruktion äquivalenter Automaten
+
+Sei $M$ ...
+
+-  ein NFA. Dann erhält man durch /Potenzmengenkonstruktion/ einen
+   äquivalenten DFA
+-  

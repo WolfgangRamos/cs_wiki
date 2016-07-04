@@ -1,0 +1,161 @@
+#+TITLE: Paging
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Paging
+---
+#+END_HTML
+
+* Paging
+
+** Page Replacement Algorithmen
+
+Ziel: Minimierung der Häufigkeit von Page Faults.
+
+*** Bélády's Algorithmus
+
+Ersetze die page, die am weitesten in der Zukunft referenziert wird.
+
+-  nicht implementierbar, da die Abfolge der Referenzierungen zur
+   Kompolierzeit nicht bekannt ist
+-  nützlich als Benchmark für implementierbare Algorithmen
+-  stackbasiert (Bélády's Anomalie kann nicht auftreten)
+
+*** First In First Out (FIFO)
+
+Ersetze die Page, die am längsten im Hauptspeicher ist.
+
+-  /nicht stackbasiert/ (Bélády's Anomalie kann auftreten)
+-  Vorteil: einfach zu implementieren
+-  Nachteil:
+
+   -  häufig genutze Pages können ersetzt werden
+   -  selten referenzierte Pages können lange im Hauptspeicher bleiben
+
+*** Least Recently Used (LRU)
+
+Ersetze die Page, welche am längsten nicht mehr referenziert wurde.
+
+-  stackbasiert (Bélády's Anomalie kann nicht auftreten)
+-  Vorteil: bislang beste Approximation von Bélády's Algorithmus
+-  Nachteil: schwer zu implementieren
+
+   -  Möglichkeit 1: Zähler (Zähler wird imkrementiert, wenn auf eine
+      Page zugegriffen wird; Page mit dem kleinsten Wert wird ersetzt)
+   -  Möglichkeit 2: Stack (Page wird oben auf den Stack gelegt, wenn
+      sie referenziert wird; unterste Page wird ersetzt)
+
+*** 2nd Chance
+
+Ersetze die Page, die am längsten im Speicher ist (wie FIFO), aber gib
+jeder Page eine zweite Chance.
+
+-  Verwendung eine Queue und eines *R (referenced) Bits*
+-  Pages werden nach dem FIFO Prizip ersetzt (älteste Page steht an der
+   Spitze der Queue)
+-  wenn $R=1$: Page erhält eine zweite Chance (setze $R = 0$ und
+   verschiebe Page ans Ende der Queue)
+-  wenn $R=0$: ersetze Page
+
+*** Clock
+
+Ersetze die Page, die am längsten im Speicher ist (wie FIFO), aber gib
+jeder Page eine zweite Chance.
+
+-  nicht stackbasiert (Bélády's Anomalie kann auftreten)
+-  wie 2nd Chance, aber unter Verwendung einer zirkulären Liste anstelle
+   einer Queue (Pointer zeigt auf die älteste Page)
+
+   -  Version mit zwei Zeigern möglich (einer zum setzen des R Bits,
+      einer zum prüfen des R Bits)
+
+*** Aging
+
+Periodische Berechnung eines Werts für jede Page
+
+-  R Bit wird auf =1= gesetzt, wenn die Page in einer Periode
+   referenziert wurde
+-  R Bit wied am Ende jeder Periode auf =0= gesetzt
+-  R Bit wird periodisch (z.B. alle 100 msec) vorn an diesen Wert
+   angehängt
+-  Page mit dem kleinsten Wert wird ersetzt
+
+** Bélády's Anomalie
+
+Das Phänomen, dass bei nicht-stackbasierten Paging-Algorithmen bei
+Verwendung eines Hauptspeichers mit größerer Kapazität mehr Page Faults
+auftreten könen, als bei Verwendung eines Hauptspeichers mit kleinerer
+Kapazität wird als Bélády's Anomalie bezeichnet.
+
+** Distanzstrings
+
+Zur Vorhersage von Page Fault Haufigkeiten (nur sinnvoll, bei
+stackbasierten Algorithmen)
+
+1. Bestimme Distanzstring
+
+   -  $\infty$: Wenn page bisher nicht referenziert wurde (page nicht im
+      stack)
+   -  $n$: Wenn page an Position n (beginnend bei 1) im stack gefunden
+      wurde ist
+
+2. Bestimme für jeden Wert $j$ im Distanzstring dessen absolute
+   Häufigkeit: $c_j$
+3. bestimme die Anzahl der page faults $F_m$ für ein System mit
+   Speichergröße $m$ frames: $F_m = \sum_{k=m+1}^{n}{c_k + c_\infty}$
+
+** Thrashing
+
+Bezeichnet einen Zustand, in dem ein System ständig mit Paging (laden
+von Pages aus dem Sekundärspeicher, zurückschreiben von Pages in den
+Sekundärspeicher) beschäftigt ist.
+
+mögliche Gründe:
+
+-  Prozess zu groß für den Hauptspeicher (zu wenig Pages)
+
+Lösungen:
+
+-  Überwache Page Fault Raten alles Prozesse:
+
+   -  gib Prozessen mehr Frames, wenn die Rate einen bestimmten Wert
+      überschreitet
+   -  nimm Prozessen Frames weg, wenn die Rate einen bestimmten Wert
+      unterschreitet
+
+** Global vs. Local Replacement von Pages
+
+-  *Global Replacement*: es wird eine Page von irgendeinem Prozess
+   ersetzt
+-  *Local Raplacement*: es wird eine Page von dem Prozess ersetzt, der
+   eine neue Page benötigt
+
+** Paging Policies
+
+-  *Fetch Policy*: legt fest, wann Pages in den Hauptspeicher geladen
+   werden.
+
+   -  *on demand*: Pages werden erst bei Auftreten eines Page Faults in
+      den Hauptspeicher geladen
+
+      -  keine Verschwendung von Speicherplatz
+      -  Page Fault Rate beim Start von Prozessen größer als bei
+         pre-paging
+
+   -  *pre-paging*: wenn ein Page Fault auftritt wird nicht nur die
+      angefragte Page in den Hauptspeicher geladen, sondern auch einige
+      der angrenzenden Pages
+
+      -  Ausnutzung von Spatial Locality
+      -  Transfer von größeren Blöcken aus dem Sekundärspeicher ist
+         effizienter als Transfer von kleinen Blöcken
+
+-  *Placement Policy*: legt fest, wo Pages im Hauptspeicher abgelegt
+   werden
+-  *Replacement Policy*: legt fest, welche Pages im Hauptspeicher
+   ersetzt werden, wenn dieser voll ist

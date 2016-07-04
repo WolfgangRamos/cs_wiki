@@ -1,0 +1,45 @@
+#+TITLE: Bucketsort
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Bucketsort
+---
+#+END_HTML
+
+* Bucketsort
+
+Verfahren zum sortieren von natürlichen Zahlen, die nach oben begrenzt
+sind.
+
+*Gegeben:* $n$ Zahlen $x_{0},..., x_{n-1} \in \{0,..., m-1\}$, die
+zunächst in einem Feld $A[0], ... A[n-1]$ gespeichert sind.
+
+*Idee:* (Bucketsort nutzt aus , dass alle Zahlen $\leq m-1$) Verwende
+ein Feld von /Buckets/ (Eimern) $B[0],..., B[m-1]$. Jedes Bucket enhält
+eine Liste von Elementen, die zunächste leer ist. Zusätzlich enthält
+jedes Bucket einen Verweis auf das erste und letzte Element dieser
+Liste.
+
+*Bemerkung:* Enthält jede Liste einen Zeiger auf ihr letztes Element, so
+können wir in $\mathcal{O}(1)$ Zeit Elemente einfügen und
+aneinanderhängen. Also ist LZ O(n+m)
+
+#+BEGIN_EXAMPLE
+    BUCKETSORT(A, m) {
+      integer n = length(A);
+      erzeuge Feld B mit m leeren Buckets;
+
+      for i = 0 to n-1 do
+        füge A[i] am Ende der Liste B[A[i]] ein;
+      od
+
+      for j = 1 to m-1 do
+        hänge Liste in B[j] am Ende der Liste in B[0] ein;
+      od
+        
+#+END_EXAMPLE

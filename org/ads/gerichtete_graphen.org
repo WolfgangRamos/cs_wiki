@@ -1,0 +1,314 @@
+#+TITLE: Gerichtete_graphen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Gerichtete_graphen
+---
+#+END_HTML
+
+* Gerichteter Graph
+
+Ein gerichteter Graph (auch /Digraph/ für engl. /directed graph/)
+$D=(V,F)$ besteht aus einer endlichen (nichtleeren) /Knotenmenge/ $V$
+und einer /Kantenmenge/
+$E \subseteq V \times V = \\{(u,v) | u,v \in V\\}$. Zu einer Kante
+$e = (u,v) \in E$, heißt $u$ /Anfangsknoten/ und $v$ /Endknoten/.
+
+*(gerichteter) Pfad:* Ein /(gerichteter) Pfad/ (oder auch /gerichteter
+Weg/) ist eine Folge von Knoten $P = (v_{1}, ..., v_{k+1})$, so dass
+$\forall i \in \\{1,...,k\\}: (v_{i}, v_{i+1}) \in E$ gilt.
+
+*einfacher (gerichteter) Pfad:* Ein (gerichteter) Pfad
+$P = (v_{1}, ..., v_{k+1})$ heißt /einfach/ (engl. /one-way/), wenn er,
+bis auf evtl. $v_1 = v_{k+1}$, keinen Knoten doppelt enthält. D.h. es
+gilt
+$\forall i \in \\{1,..., k+1\\}, j \in \\{2,...k\\} : i \neq j \Rightarrow v_i \neq v_j$.
+
+*(gerichteter) Kreis:* Ein einfacher gerichteter Pfad
+$P = (v_1,...,v_{k+1})$ heißt /Kreis/, wenn $v_1 = v_{k+1}$ gilt und $P$
+mindestens 4 Knoten enthält, also $k \geq 3$ gilt .
+
+Ein gerichteter Graph $D$ heißt /azyklisch/ oder /kreisfrei/, wenn er
+keinen (gerichteten) Kreis enthält.
+
+* Innen- und Außengrad eines Knotens
+
+Der /Innengrad/ $d_{in}(v)$ eines Knotens $v \in V$ ist die Anzahl der
+eingehenden Kanten. Der /Außengrad/ $d_{out}$ ist die Anzahl der
+ausgehenden Kanten.
+
+*Eigenschaften:*
+
+-  Es gilt $\sum_{v \in V} d_{in}(v) = \sum_{v \in V} d_{out}(v) = |E|$
+
+* gerichteter Baum
+
+Ein gerichteter Graph $D=(V,E)$ heißt /gerichteter Baum/, falls gilt:
+
+1. es existiert genau ein Knoten $r \in V$ mit $d_{in}(r) = 0$ ($r$
+   heißt dann auch /Wurzel/ oder engl. /root/) und
+2. jeder Knoten außer $r$ hat genau eine eingehende Kante, d.h.
+   $\forall v \in V \setminus \\{r\\}: d_{in} = 1$
+3. für jeden Knoten $v \in V$ gibt es einen eindeutigen gerichteten Pfad
+   von der Wurzel $r$ zu $v$
+
+Ein Knoten $v \in V$ mit $d_{out}(v)=0$ heißt /Blatt/.
+
+*Eigenschaften:*
+
+-  $D$ ist zusammenhängend und kreisfrei
+-  $|E| = |V|-1$
+
+* gerichteter Binärbaum
+
+Ein gerichteter Baum $D=(V,E)$ heißt /(gerichteter) Binärbaum/ wenn
+gilt:
+
+1. jeder Knoten in $V$ hat höchstens zwei ausgehende Kanten, d.h.
+   $\forall v \in V: d_{out}(v) \leq 2$
+
+Ein gerichteter Binärbaum $D=(V,E)$ heißt /vollständig/ (oder
+/vollständiger Binärbaum/), wenn:
+
+1. abgesehen von der untersten Ebene mit Wert $max\\{e(v)\\}$ sind alle
+   Ebenen vollständig gefüllt.
+2. auf der untersten Ebene sind die Knoten von links nach rechts bis zu
+   einem Punkt vollständig vorhanden
+
+*Eigenschaften:*
+
+-  Es gibt keinen gerichteten Kreis in einem Binärbaum.
+
+** Vater-Relation
+
+$Vater(v)$ ist der direkte Vorgänger von $v$ ($Vater(r)$ ist nicht
+definiert).
+
+** Höhe
+
+Die /Höhe/ $h(v)$ eines Knotens $v \in V$ ist die maximale Anzahl von
+Kanten auf einem Pfad von $v$ zu einem Blatt.
+
+Die Höhe $h(D)$ eines gerichteten Baumes $D$ ist die Höhe der Wurzel
+$r$, d.h. es gilt $h(D) = max\\{e(v) | v \in V\\}$.
+
+** Ebene
+
+Jedem Knoten $v \in V$ eines Binärbaums können wir induktiv eine
+/Ebene/Stufe/ $e(v) \in \mathbb{N}$ zuordnen.
+
+1. $e(r) = 0$ für die Wurzel $r$.
+2. $e(v) = e(Vater(v)) + 1$ für $v \neq r$
+
+* Heap
+
+Ein /Heap/ (dt. Haldenbaum) ist ein vollständiger Binärbaum $T=(V,E)$
+auf dessen Knotenmenge eine Abbildung $A: V \rightarrow \mathbb{R}$
+definiert ist, die jedem Knoten einen Wert zuordnet. Sei außerdem $r$
+die Wurzel von $T$. Ein Heap hat die /Heap-Eigenschaft/, wenn
+$\forall v \in V \setminus \\{r\\}: A(Vater(v)) \geq A(v)$ (d.h.
+Vorgängern werden größere Werte zugeordnet als ihren Nachfolgern)
+
+*Darstellung:* Verwende einen vollständigen Binärbaum mit
+Durchnummerierung der Knoten.
+
+*Eigenschaften:*
+
+-  ein Heap mit $|V|=n$ Knoten hat genau die Höhe
+   $\lfloor \log_{2}(n) \rfloor$
+
+** Herstellung der Heap-Eigenschaft
+
+*Gegeben:* Teilbäume mit Wurzeln $left(i)$ und $right(i)$, die die
+Heap-Eigenschaft erfüllen, aber Knoten $i$ verletzt Heap-Eigenschaft.
+Also gilt $A[i] < A[left(i)]$ oder $A[i] < A[right(i)]$.
+
+*Gesucht:* Ein Teilbaum mit Wurzel $i$, der der Heap-Eigenschaft
+erfüllt.
+
+*Idee:* Vertausche rekursiv Elemente mit den jeweils größeren der beiden
+Kinder.
+
+#+BEGIN_EXAMPLE
+    // A ist Feldrepräsentation des Heaps; i ein Feldindex; size ist die Größe des Heaps
+
+    HEAPIFY(A, i, size) {
+      integer l = 2i + 1; // linkes Kind
+      integer r = 2i + 2; // rechtes Kind
+      integer largest = i;
+      
+      if l < size then
+        if A[i] < A[l] then
+          largest = l;
+        fi
+      fi
+      if r < size then
+        if A[largest] < A[r] then
+          largest = r;
+        fi
+      fi
+      if largest ≠ i then
+        vertausche A[i] und A[largest];
+        HEAPIFY(A, largest, size);
+      fi
+    }
+#+END_EXAMPLE
+
+*Laufzeit:* Sei $T=(V,E)$ ein Baum, der als Feld $A$ gespeichert ist und
+$i$ ein Knoten von $T$. Bezeichne mit $n_{i}$ die Anzahl der Knoten im
+Teilbaum von $T$ mit Wurzel $i$. Dann gilt, dass die Laufzeit von
+=HEAPIFY= in $min \\{ \mathcal{O}(h_{i}), \mathcal{O}(\log n_{i}) \\}$
+liegt.
+
+** Aufbau eines Heap
+
+*Idee:*
+
+-  bauen den Heap bottom-up auf
+-  starte bei Knoten
+   $i = Vater(n-1) = \lfloor \frac{n-1-1}{2} \rfloor = \lfloor \frac{n}{2} \rfloor -1$
+-  durchlaufe den Baum von unten nach oben und pro Ebene von rechts nach
+   links (d.h. vermindere $i$ um $1$) und rufe =HEAPIFY= auf.
+
+#+BEGIN_EXAMPLE
+    BUILDHEAP(A) {
+      integer n = length(A);
+      for i = (n/2) -1 downto 0 do
+        HEAPIFY(A, i, n);
+      od
+    }
+#+END_EXAMPLE
+
+*Beobachtung:* Maximum steht dann an der Wurzel.
+
+*Laufzeit:* Das Erzeugen der Heap-Eigenschaft für einen Haldenbaum mit
+$n$ Knoten ist mit =BuildHeap= in $\mathcal{O}(n)$ möglich.
+
+** Einfügen eines Elements in einen Heap
+
+*Idee:* Füge das neue Element $x$ auf der untersten Ebene ein und dann
+vertausche $x$ iterativ mit seinem Vater, bis $A(Vater(x)) \geq x$ gilt.
+
+* Suchbaum
+
+Es sei $S$ eine endliche Menge von /Schlüsseln/ (oder auch
+/Markierungen/) und $T=(V,E)$ ein gerichteter Binärbaum mit
+/Knotenmenge/ $V$ und /Kantenmenge/ $E$. Die Knoten von $T$ sind mit
+Elementen aus $S$ beschriftet (d.h. wir haben eine Abbildung
+$Schlüssel: V \rightarrow S$). Es sei $w$ die Wurzel von $T$ und $L$
+bzw. $R$ sei der linke bzw. rechte Unterbaum von $T$.
+
+$T$ heißt /Suchbaum/, wenn:
+
+1. $L$ und $R$ sind leer oder selbst Suchbäume.
+2. Schlüssel in $L$ sind kleiner oder gleich dem Schlüssel der Wurzel,
+   d.h. $\forall v \in L: Schlüssel(v) \leq Schlüssel(w)$ (doppelte
+   Schlüssel sind demnach zulässig).
+3. Schlüssel in $R$ sind echt größer als der Schlüssel der Wurzel, d.h.
+   $\forall v \in R: Schlüssel(v) > Schlüssel(w)$.
+
+TODO: Präzisieren mit Wissen aus Mathe A (insb. ist eine
+Ordnungsrelation auf der Menge der Markierungen erforderlich)
+
+** Suche in einem Suchbaum
+
+*geg:* Suche in $T$ nach einem Element $x$.
+
+*Idee:* Vergleiche $x$ mit dem Schlüssel des $w$ Wurzelelements des
+Suchbaums:
+
+1. Falls $x = Schlüssel(w)$: $x$ gefunden.
+2. Falls $x < Schlüssel(w)$: suche rekursiv weiter nach $x$ in $L$
+3. Falls $x > Schlüssel(w)$: suche rekursiv weiter nach $x$ in $R$
+
+Falls der betrachtete Knoten ein Blatt ist und nicht $x$ enthält, oder
+der Unterbaum leer ist, so ist $x$ nicht im Suchbaum enthalten.
+
+#+BEGIN_EXAMPLE
+    TODO: Algorithmus
+#+END_EXAMPLE
+
+** Mittlere Weglänge
+
+Die maximale Suchzeit in einem Suchbaum $T$ ist duch $h(T) + 1$
+beschränkt. Sei $T$ ein Suchbaum, der die Schlüsselmenge
+$\\{x_{1}, ..., x_{n}\\}$ knotenorientiert speichert und sei $b_{i}$ die
+Ebene des Knotens, der $x_{i}$ enthält in $T$. Dann ist die /mittlere
+Weglänge/ von $T$ definiert durch
+$P := \frac{1}{n} \sum_{i=1}^{n} (b_{i} + 1)$.
+
+*Eigenschaften:*
+
+-  $h(T) \geq \lceil \log_{2} (n+1) \rceil - 1$, wobei $n$ die Anzahl
+   der Knoten ist.
+-  Die mittlere Weglänge ist logarithmisch beschränkt. Es gilt
+   $P \leq \lfloor \log (n+1) \rfloor -1$.
+
+*Laufzeit:*
+
+-  maximale LZ für einen Suchbaum im schlimmsten Fall (Worst Case ist
+   der maximal entartete Baum): $\in \Omega(n)$.
+-  maximale durchschnittliche Suchzeit für einen Suchbaum im schlimmsten
+   Fall: $\in \Omega(n)$
+
+* AVL-Baum
+
+Ein Suchbaum $T=(V,E)$ heißt /AVL-Baum/ (benannte nach den Autoren
+Adelson, Veslky und Landis), falls für jeden Knoten $v \in V$ sich die
+Höhen (definiert über $\overline{Höhe}$) des linken und rechten
+Teilbaums um höchtens $1$ unterscheiden.
+
+*Ziel:* Konstruktion von Suchbäumen, die eine "nahezu" optimale
+Durchführung (d.h. in $\log$ Zeit) der Operationen "Einfügen", Löschen
+und Suchen erlauben und insgesamt eine beschränkte (im wesentlichen
+$c \log n$) Höhe haben.
+
+** $\overline{Höhe}$
+
+$\overline{Höhe}(T)$ ist die maximale Anzahl von Knoten auf einem Pfad
+von der Wurzel zu einem Blatt.
+
+** Balance
+
+/Balance/ von $v$:
+$\rho (v) = \overline{Höhe}(L_{v}) - \overline{Höhe}(R_{v}) \in \\{0,1,-1\\}$
+
+"Differenz der Höhe der Kindbäume 0, 1 oder -1"
+
+*Eigenschaften:*
+
+-  Ist $T=(V,E)$ ein AVL-Baum mit $n$ /Blättern/, so gilt für die Höhe:
+   $Höhe(T) \leq 1.4405 \cdot \log (n+1) + 1$ und
+   $\overline{Höhe}(T) \leq Höhe(T) - 1$.
+-  Ist $T$ ein AVL-Baum mit $n$ /Knoten/, so gilt
+   $\overline{Höhe}(T) \leq 1.4405 \cdot \log (n+1) + 2$
+
+** Operationen
+
+In einem AVL-Baum mit $n$ Knoten kann ein Schlüssel in Zeit
+$\mathcal{O}(\log n)$ gesucht, eingefügt oder gelöscht werden.
+
+*** Einfügen eines neuen Knotens
+
+Sei $x$ ein neuer Knoten, der in einen AVL-Baum $T$ eingefügt werden
+soll.
+
+Wie beim Suchen, durchlaufe den Baumbis zu einem Knoten $b$, der
+entweder Blatt ist, oder kein linkes Kind (bei $x \leq Schlüssel(b)$)
+oder kein rechtes Kind (bei $x > Schlüssel(b)$) hat. Dann hänge an
+diesen Knoten $b$ ein neuse Blatt $b'$ mit $Schlüssel(b') =x$ an.
+
+Auf dem Pfad von $b'$ zur Wurzel können nun nicht balancierte Knoten
+liegen (frühestens beim Vater von $b$). Falls es solch einen Knoten
+gibt,führe eine sog. /Rotation/ oder /Doppelrotation/ durch (beginne
+beim tiefst gelegenen unbalancierten Knoten).
+
+*** Löschen eines Knotens
+
+*3 Fälle:* 1. Löschen eines Blatts 2. Löschen der Wurzel 3. Löschen
+eines Knotens

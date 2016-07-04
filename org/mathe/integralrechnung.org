@@ -1,0 +1,225 @@
+#+TITLE: Integralrechnung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Integralrechnung
+---
+#+END_HTML
+
+* Integralrechnung
+
+** Integral einer Treppenfunktion
+
+Sei $I=[a,b] \subseteq \mathbb{R}$ ein Intervall. Eine Funktion
+$\phi:I \rightarrow \mathbb{R}$ heißt /Treppenfunktion/, wenn eine
+Unterteilung $a:=x_0 < x_1 < \dots < x_n := b$ existiert, so dass $\phi$
+auf jedem offenen Teilintervall $(x_{k-1},x_k)$ für
+$k \in \{1,\dots,n\}$ jeweils konstant ist. Für solche Treppenfunktionen
+definieren wir ein /Integral/:
+
+$\int_a^b \phi(x)dx := \sum_{k=1}^{n} \phi(\xi_k)(x_k - x_{k-1})$
+
+mit $\xi_k \in (x_{k-1},x_k)$ beliebig (da $\phi$ auf jedem dieser
+Intervalle konstant ist, ist die Definition des Integrals unabhängig von
+der Wahl von $\xi_k$).
+
+*Eigenschaften:*
+
+-  Die Menge der reellwertigen Treppenfunktionen über einem Intervall
+   $[a,b] \subseteq \mathbb{R}$ bildet einen
+   [[la/vektorraum][Vektorraum]] über dem [[koerper][Körper]]
+   $\mathbb{R}$. Wir bezeichnen diesen Vektorraum mit $T[a,b]$.
+-  $(\phi,\psi \in T[a,b] \wedge \forall x \in [a,b]: \phi(x) \leq \psi(x)) \Longrightarrow \int_a^b \phi(x)dx \leq \int_a^b \psi(x)dx$
+
+*** Untersumme
+
+Die Untersumme einer beschränkten Funktion
+$f:[a,b]\rightarrow\mathbb{R}$ ist:
+$\int_{*a}^b f(x) dx := \sup\{\int_a^b \phi(x)dx \mid \phi \in T[a,b] \wedge \phi \leq f\}$
+
+*** Obersumme
+
+Die Obersumme einer beschränkten Funktion $f:[a,b]\rightarrow\mathbb{R}$
+ist:
+$\int_{a}^{*b} f(x) dx := \sup\{\int_a^b \phi(x)dx \mid \phi \in T[a,b] \wedge \phi \leq f\}$
+
+** (Riemann-)Integral
+
+Eine beschränkte Funktion $f:[a,b]\rightarrow \mathbb{R}$ heißt
+/(Riemann-)integrierbar/, wenn Untersumme und Obersumme von $f$ gleich
+sind. Wir definieren dann das (Riemann-)Integral als
+
+$\int_a^b f(x)dx := \int_{*a}^b f(x) dx = \int_{a}^{*b} f(x) dx$.
+
+*Integrierbarkeitskriterium:* Eine beschränkte Funktion
+$f:[a,b] \rightarrow \mathbb{R}$ ist /genau dann/ integrierbar (über
+$[a,b]$), wenn $\forall \epsilon >0$ Treppenfunktionen
+$\phi,\psi \in T[a,b]$ existieren mit $\phi \leq f \leq \psi$ und
+
+$\int_a^b \psi(x)dx - \int_a^b \phi(x)dx \leq \epsilon$
+
+*Rechenregeln:*
+
+Seien $f:[a,b]\rightarrow\mathbb{R}$ und $g:[a,b]\rightarrow\mathbb{R}$
+auf $[a,b]$ integrierbare Funktionen. Dann gilt:
+
+1. *Monotonie*:
+   $f \leq g \Longrightarrow \int_a^b f(x)dx \leq \int_a^b g(x)dx$
+2. $\int_a^a f(x)dx = 0$
+3. $a > b \Longrightarrow \int_a^b \phi(x)dx = - \int_b^a \phi(x)dx$
+4. $a \leq b \leq c \Longrightarrow \int_a^c f(x)dx = \int_a^b f(x)dx + \int_b^c f(x)dx$
+
+*Welche Funktionen sind integrierbar?*
+
+-  Jede stetige Funktion $f:[a,b] \rightarrow \mathbb{R}$ ist auf
+   $[a,b]$ integrierbar.
+-  [[stetigkeit#stetige-funktionen_st%C3%BCckweise-stetigkeit][Stückweise
+   stetige Funktionen]] sind (auf den Intervallen, auf denen sie stetig
+   sind) integrierbar.
+-  Monotone, beschränkte Funktionen sind integrierbar.
+-  Endliche Summen integrierbarer Funktionen sind integrierbar und es
+   gilt $\int_a^b (f+g)(x)dx = \int_a^b f(x)dx + \int_a^b g(x)dx$
+-  Skalare Vielfache integrierbarer Funktionen sind integrierbar und es
+   gilt $\int_a^b \lambda f(x)dx = \lambda \int_a^b f(x)dx$
+-  Endliche Produkte integrierbarer Funktionen sind integrierbar, aber
+   im Allgemeinen gilt $\int f(x)g(x)dx \neq \int f(x)dx \int g(x)dx$
+
+*Mittelwertsatz der Integralrechnung:*
+
+Seien $f,\phi:[a,b] \rightarrow \mathbb{R}$ stetig Funktionen und
+$\phi > 0$. Dann gibt es $\xi \in [a,b]$, sodass
+$f(\xi) \int_a^b \phi(x) dx = \int_a^b f(x) \phi(x) dx$
+
+*** Stammfunktion
+
+Unter einer /Stammfunktion/ (es gibt mehrere!) von
+$f:[a,b]\rightarrow \mathbb{R}$ versteht man eine Funktionen
+$F:[a,b] \rightarrow \mathbb{R}$, die differenzierbar ist und $F' = f$
+gilt.
+
+*Eigenschaften:*
+
+Seien $F$ und $G$ Stammfunktionen von $f$ (d.h. es gilt $F'=f$ und
+$G'=f$), dann gilt:
+
+-  $F = G + c$ mit $c\in\mathbb{R}$
+-  $(F-G)' = 0$
+-  $F-G = c$ mit $c\in\mathbb{R}$
+
+*** Fundamentalsatz der Analysis
+
+Sei $f[a,b] \rightarrow \mathbb{R}$ stetig. Dann gilt
+
+1. $F(x) := \int_a^x f(y) dy$ für $x \in [a,b]$ ist Stammfunktion von
+   $f$
+2. Wenn $F:[a,b] \rightarrow \mathbb{R}$ eine Stammfunktion von $f$ ist,
+   dann gilt: $\int_a^b f(x) dx = F(b) - F(a) =: F(x)|_{a}^{b}$
+
+Mit dem Fundamentalsatz der Analysis wird ein Zusammenhang zwischen
+Ableiten und Integrieren hergestellt.
+
+*** Integrationsformeln
+
+*Partielle Integration*: Seien $f,g:[a,b]\rightarrow \mathbb{R}$ stetig
+differenzierbar, dann gilt:
+
+$\int_a^b f(x) g'(x) dx = f(x) g(x) |_{x=a}^{x=b} - \int_a^b f'(x) g(x) dx$.
+
+*Substitution:* Sei $I \subseteq \mathbb{R}$ und
+$f:I \rightarrow \mathbb{R}$ stetig und sei $\phi:[a,b] \rightarrow I$
+stetig differenzierbar und streng monoton auf $[a,b]$. Dann gilt:
+
+$\int_a^b f(\phi(x)) \phi'(x) dx = \int_{\phi(a)}^\{\phi(b)} f(x) dy$
+(Allgemeiner:
+$\int_a^b \frac{\phi'(x)}{\phi(x)} dx = \int_{\phi(a)}^{\phi(b)} \frac{1}{y} dy$
+
+* Uneigentliche Integrale
+
+*Uneigentliche Integrale auf endlichen Intervallen:*
+
+Sei $f:(a,b] \rightarrow \mathbb{R}$ stetig, dann heißt im Fall der
+rechtsseiteigen Konvergenz
+$\lim_{\epsilon \searrow \infty} \int_{a+\epsilon}^b f(x) dx = \int_a^b f(x) dx$
+
+/uneigentliches Integral/. (Analog für $f:[a,b) \rightarrow \mathbb{R}$)
+
+*Uneigentliche Integrale auf unendlichen Intervallen:*
+
+Das uneigentliche Integral $\int_a^\infty f(x)dx$ existiert, wenn
+
+1. $f$ auf $[a,\infty)$ /lokal integrierbar/ ist, d.h. $\forall b > a$
+   existiert $\int_a^b f(x) dx$ (das ist bei jeder stetigen Funktion der
+   Fall) und
+2. für jede Folge $(b_n)_{n\in\mathbb{N}$, mit $\lim b_n = \infty$,
+   existiert $\lim_{n\rightarrow \infty} \int_{a}^{b_n} f(x) dx$.
+
+Das uneiegnetliche Integral
+$\int_{-\infty}^{\infty} f(x)dx = \int_{-\infty}^{a} f(x)dx + \int_{a}^{\infty} f(x)dx$
+für ein $a$ existiert, wenn
+
+*Konvergenzkrieterien (nach Cauchy):*
+
+SEi $f:[a,\infty) \rightarrow \mathbb{R}$ lokal integrierbar. Dann
+existiert das Integral $\int_{a}^{\infty} f(x) dx$ genau dann, wenn
+$\forall \epsilon > 0: \exists C > 0: \forall a,b \geq C: | \int_{a}^{b} f(x) dx | < \epsilon$
+
+*Majorantenkriterium:*
+
+Seien $f,g:[a,\infty)$ lokal integrierbar.
+
+-  Wenn $\int_{a}^{\infty} g(x) dx$ existiert und $|f(x)| \leq g(x)$ für
+   alle $x \geq C$. Dann existiert $\int_{a}^{\infty} |f(x)|dx$
+-  Wenn $\int_{a}^{\infty} g(x) dx$ divergiert und $|f(x)| \geq g(x)$
+   für alle $x \geq C$. Dann divergiert auch
+   $\int_{a}^{\infty} |f(x)|dx$
+
+*Reihenkriterium:*
+
+-  Sei $f:[a,\infty) \rightarrow \mathbb{R}_0^+$ eine stetige und
+   monoton fallende Funktion. Dann existiert $\int_a^{\infty} f(x) dx$
+   genau dann, wenn $\sum_{n=m}^{\infty} f(n)$ für ein beliebiges
+   $m \geq a$ konvergiert.
+
+* numerische Quadratur
+
+eine Verfahren zur näherungsweisen (numerischen) Bestimmung von
+Integralen.
+
+$\int_a^b f(x) dx \approx QF_{[a,b]}(f) = (b-a) \sum_{i=1}^{m} \omega_i f(x_i)$
+mit /integrationsgewichten/ $w_i$ ($QF$ steht für /Quadraturformel/)
+
+-  /Mittelpunktsregel/: Wenn $m=1$ dann wähle $w_1 = 1$
+-  /Trapezregel/: Wenn $m=2$ dann wähle $w_1 = w_2 = \frac{1}{2}$
+-  /Simpsonregel/: Wenn $m=3$ dann wähle
+   $w_1 = w_3 = \frac{1}{6}, w_2=\frac{2}{3}$. Also gilt
+   $\int_a^b f(x) dx \approx QF_{Simpson}(f) = (b-a) \frac{1}{6} f(a) + \frac{2}{3} f(\frac{a+b}{2}) + \frac{1}{6} f(b)$
+
+Für die Integrationsgewichte gilt:
+
+-  $\sum_{i=1}{m} \omega_i = 1$
+-  $\forall i \in \{1,\dots,m\}: w_i > 0$
+
+/Zusammengesetzte Integrationsformeln/:
+
+Zerteile $[a,b]$ in $n$ TEilintervalle (z.B. äquidistant):
+$a = x_0 < x_1 < \dots < x_n = b$ mit
+$x_i - x_{i+1} := h = \frac{b-a}{n}$
+
+Führe in jedem Teilintervall $[x_{i-1}, x_i]$ eine numerische Quadratur
+mit einer der obigen Regeln durch.
+
+*Eigenschaften:*
+
+-  Sei $f:[a,b] \rightarrow \mathbb{R}$ zweimal stetig differenzierbar.
+   Dann gilt für die zusammengesetzte Mittelpunktsregel und die
+   zusammengesetzte Trapezregel:
+
+   -  $| \int_a^b f(x) dx - QF_{MRP, h}(f) | = \mathcal{O}(h^2)$
+   -  $| \int_a^b f(x) dx - QF_{TR, h}(f) | = \mathcal{O}(h^2)$
+
+

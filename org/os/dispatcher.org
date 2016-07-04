@@ -1,0 +1,32 @@
+#+TITLE: Dispatcher
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Dispatcher
+---
+#+END_HTML
+
+* Dispatcher
+
+Als Dispatcher bezeichnet man die Betriebssystemroutine, die Context
+Switches ausführt, also dem Running Process die CPU entzieht und sie dem
+als nächstes auszuführenden Prozess (vom Scheduler festgelegt) zuteilt.
+Konkret führt der Deispatcher folgene Aufgaben aus:
+
+1. Ordered List ItemSpeicherung des Kontexts des Running Process
+   (Register, Stack Pointer, Program Counter, Page Table Pointer, etc.)
+2. Wiederherstellung des Kontexts des als nächstes auszuführenden
+   Prozesses (Registerinhalte, Stack Pointer, Program Counter, Page
+   Table Pointer, etc. werden aus dem
+   [[process#prozesse_verwaltung-von-prozessen_process-control-block-pcb][Process
+   Control Block]] des Prozesses geladen).
+
+** Dispatch Latency
+
+Zeit, die der Dispatcher benötigt, um einen running Prozess zu stoppen
+und den nächsten Prozess zu starten.

@@ -1,0 +1,23 @@
+#+TITLE: TCP
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* TCP
+
+- Port-Nummer: $2^{16} = 65536$
+
+TCP zerlegt die zu sendenden Daten in *Segmente*.
+
+- Maximum segment size = 
+
+Bevor dieselbe Verbindung erneut geöffnet wird muss 2MSL (2 x maximum
+segment livetime) gewartet werden, damit die Sequenznummern nicht mit
+den Sequenznummern der vorherigen Verbindung kollidieren. Während der
+Wartezeit werden die Sequenznummern durch einen timer hochgezählt.
+
+** Congestion Control
+
+- duplicate ACKs: Erneutes versenden eines alten ACKs um den Sender
+  nach einem bestimmten timeout darpber zu informiern, dass der
+  Empfänger nichts erhält.

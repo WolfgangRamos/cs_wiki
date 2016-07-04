@@ -1,0 +1,63 @@
+#+TITLE: Zusammenhangskomponenten
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Zusammenhangskomponenten
+---
+#+END_HTML
+
+* Zusammenhangskomponentenen
+
+Sei $G=(V,E)$ ein ungerichter Graph, dann heißt
+$C(v) := \\{ u \in V | u = v \wedge \exists \text{Pfad von u nach v in G} \\}$
+für $v \in V$ /Zusammenhangskomponente/ von $v$ bzgl. $G$. Die Mengen
+$C(v)$ bilden eine disjunkte Zerlegung von $V$ in die
+Zusammenhangskomponenten von $G$.
+
+** Bestimmung der Zusammenhangskomponenenten
+
+Die Zusammenhangkomponenten lassen sich direkt mit
+[[tiefen_und_breitensuche#tiefen-und-breitensuche_tiefensuche][Tiefen-]]
+(DFS) oder
+[[tiefen_und_breitensuche#tiefen-und-breitensuche_breitensuche][Breitensuche]]
+(BFS) ermitteln.
+
+*Idee:*
+
+1. wähle einen Startknoten $r \in V$.
+2. starte DFS oder BFS in $r$.
+3. wenn =KnotenBesucht[u] = true= für alle $u \in V$ dann stoppe.
+   Ansonsten wähle Knoten $v \in V$ mit =KnotenBesucht[v] = false= und
+   gehe zu Schritt 2.
+
+*Algorithmus:*
+
+#+BEGIN_EXAMPLE
+    ZUSAMMENHANG(G) {
+      wähle einen Startknoten r aus V;
+
+      foreach v in V do
+        DFSNummer[v] = 0;
+      od
+
+      DFS(r,0); // oder BFS(r,0);
+      
+      while (DFSNummer[v] = 0 für ein v aus V) do
+        wähle einen Knoten v mit DFSNummer[v] = 0;
+        DFS(v,0);
+      od
+    }
+#+END_EXAMPLE
+
+*Laufzeit:* Seien $V_i$ die Zusammenhangskomponenten von $G =(V,E)$ und
+$(V_i, E_i)$ die Teilgraphen der Zusammenhangskomponenten. Die
+Tiefensuche für eine Komponente $i$ erfordert
+$\mathcal{O}(|V_i| + |E_i|) = \matcal{O}(|E_i|)$. Somit beträgt der
+Gesamtaufwand für alle DFS-Aufrufe
+$\sum_{i=1}^{k} \mathcal{O}(|E_i|) = \mathcal{O}(|E|) + k = \mathcal{O}(|E| + |V|)$,
+wenn $k$ die Anzahl der Zusammenhangskomponenten ist.

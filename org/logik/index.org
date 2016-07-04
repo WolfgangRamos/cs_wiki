@@ -13,4 +13,5 @@ title: Logik
 * Logik
 
 -  [[./aussagenlogik.org][Aussagenlogik]]
+-  [[./praedikatenlogik.org][Prädikatenlogik]]
 

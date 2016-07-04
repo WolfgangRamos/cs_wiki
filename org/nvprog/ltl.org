@@ -1,0 +1,352 @@
+#+TITLE: Linear Time Logic
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+STARTUP: hideblocks
+
+* Linearzeitlogik
+
+/Temporale Logik/ ist eine Erweiterung der Logik zur Erfassung
+zeitlicher Abläufe durch Aussagen über Vorher-Nachher-Beziehungen.
+
+/Linear Temporal Logic/ (LTL, dt. Linearzeitlogik) ist eine temporale
+Logik mit zeitlichen Modalitäten ("irgendwann gilt ...", "irgendwann
+gilt immer ..."). In LTL können Formeln über die Zukunft von Pfaden
+aufgestellt werden. Hier interessieren wir uns insbesondere für die
+Ausfühungspfade nebenläufiger Programme. Diese als unendlich
+angenommen, da nicht-terminierende (Hintergund-)prozesse (z.B. ein
+Serveranwendung oder ein Print-Loop) ein Bestandteil vieler
+nebenläufiger Programme sind.
+
+** Syntax
+
+$Prop$ ist eine Menge von aussagelogischen Variablen
+(*Zustandpropositionen*) $\{p_0, p_1, \dots\}$ mit $p_i \in Prop$ für
+alle $i \in \mathbb{N}$.
+
+Die Menge der LTL-Aussagen $LTL$ ist induktiv definiert:
+
+*IA:* Für alle $p \in Prop$ gilt $p \in LTL$.
+
+*IS:* Seien $\varphi, \psi \in LTL$, dann gilt auch
+
+- $\varphi \wedge \psi \in LTL$ 
+- $\varphi \vee \psi \in LTL$ 
+- $\neg\varphi \in LTL$
+- $\varphi \rightarrow \psi \in LTL$
+- $X\varphi \in LTL$: /Next-Operator/, d.h. im nächsten Schritt gilt $\varphi$
+- $\varphi U \psi \in LTL$: /Until-Operator/, d.h. es gilt $\varphi$, bis irgendwann $\psi$ gilt
+- $\varphi R \psi \in LTL$: /Release-Operator/, d.h. $\varphi$ gilt immer bis zur ersten Position, an der $\psi$ gilt 
+
+*** TODO Ist $\varphi \rightarrow \psi$ auch eine LTL-Aussage? Laut Wikipedia schon... :nvprog:
+
+Wir definieren außerdem folgende Abkürzungen/Operatoren
+
+- $F\varphi \equiv true U \varphi$: /Finally-Operator/, d.h. irgendwann gilt $\varphi$
+- $G\varphi \equiv \neg F\neg$: /Globally-Operator/, d.h. immer gilt $\varphi$
+- $F^{\infty} \equiv GF\varphi$: unendlich oft gilt $\varphi$
+- $G^{\infty} \equiv FG\varphi$: $\varphi$ gilt fast immer, d.h. bis auf endlich viele Ausnahmen
+
+** Semantik
+
+Ein *Zustand* $s$ ist eine Menge von Zustandspropositionen, d.h. es gilt
+$s \in\mathcal{P}(Prop)$.
+
+Ein *Pfad* $\pi$ ist ein Tupel von Zuständen, d.h. es gilt $\pi \in
+\mathcal{P}(Prop)^{\omega}$ mit $\omega \in \mathbb{N}$. Wir schreiben
+$s:\pi$ für einen Pfad mit Zustand $s$ auf Position 0 des Pfades und
+Restpfad $\pi$.
+
+Eine LTL-Formel ist genau dann auf einem Pfad erfüllt, wenn sie auf
+Position 0 des Pfades erfüllt ist. Die Erfüllbarkeit einer LTL-Formel
+$\varphi$ durch einen Pfad $\pi$ schreiben wir als
+$\pi\models\varphi$. Sie ist induktiv definiert:
+
+*IA:*
+
+- $s:\pi \models p \in Prop$ gdw $p \in s$
+
+*IS:*
+
+- $\pi\models \neg \varphi$ gdw $\pi\not\models\varphi$
+- $s:\pi\models X\varphi$ gdw $\pi\models\varphi$
+- $\pi\models \varphi U \psi$ gdw $\exists i \in \mathbb{N}: \pi =
+  s_1:\dots:s_i:\pi' \wedge \forall j \leq i: s_j:\dots:s_i:\pi
+  \models \varphi \wedge \pi'\models\psi$.
+
+*Eigenschaften:*
+
+- Es gilt $\varphi U \psi \equiv \psi \vee (\varphi \wedge X\varphi U \psi)$
+- $F\varphi \equiv \varphi \vee X F \varphi$
+- $G\varphi \equiv \varphi \wedge X G \varphi$
+- $\pi\models F\varphi$ gdw. $\exists i\in \mathbb{N}: \pi = s_0:\dots :s_n:\pi' \wedge \pi'\models\varphi$
+- $\pi\models G \varphi$ gdw. $\forall i \in \mathbb{N}: \pi=s_0:\dots:s_n:\pi' \wedge \pi'\models\varphi$
+
+
+*** TODO Kripkestruktur $\mathcal{K}$. 
+
+Es gilt $\mathcal{K}\models \varphi$ genau dann, wenn für alle Pfade $\pi \in \mathcal{P}(Prop)^{\omega}$
+
+Es gilt:
+
+- $s_0:\pi\models \neg P$ mit $P\in Prop$ gilt gdw. $P\not\in s_0$
+- $\neg F \varphi \equiv G \neg\varphi$
+- $\neg G \varphi \equiv F \neg \varphi$
+- $\neg X \varphi \equiv X\neg\varphi$
+
+$\neg \varphi U \psi \equiv \neg \varphi R \neg \psi$
+
+$\neg \varphi R \psi \equiv \neg \varphi U \neg \psi$
+
+$X \varphi R \psi \equiv \psi \wedge (\varphi \vee X \varphi R \psi)$
+
+- *Sicherheitseigenschaften* (Safety): "Bestimmte Situationen treten nie auf", z.B. $G\neg(cs_1 \wedge cs_2)$
+- *Lebendigkeiteigenschaften* (Liveness): "" z.B. $F supi$, $G(request \Rightarrow F response)$
+- *Fairness:* $F^{\infty} supi$
+
+* LTL in Erlang
+
+#+BEGIN_SRC erlang
+-module(ltl).
+-export([prop/1, neg/1,conj/2,disj/2,x/1,f/1,g/1,start/0,assert/1,newProp/1,releaseProp/1,status/0]).
+
+% Zuständer werden durch Veränderung von Propositionen definiert, d.h. wenn eine Proposition gesetzt oder freigegeben wird.
+% Zustand in Prozess gespeichert
+start() -> 
+  LTL = spawn(fun() -> ltl([],[],[]) end),
+  register(ltl,LTL).
+
+ltl(Phis,Asserts,Props) -> % Asserts speichert Formelnamen für eine sinnvolle Ausgabe
+  receive
+    {assert, Phi} -> 
+      case check(normalize(Phi), Props) of
+        true -> ltl(Phis,Assert,Props);
+        false -> ptong(Phi);
+        Phi1 -> ltl([Phi1|Phis],[Phi,Assert],Props)
+      end;
+    {newProp,P} -> 
+      case lists:member(P,Props) of
+        true -> ltl(Phis,Asserts,Props);
+        false ->  
+          NewProps = [P|Props],
+          Phis1 = lists:map(fun(Phi) -> check(step(Phi),NewProps) end, Phis),
+          {Phis2, Asserts2} = analyze(Phis1,Asserts),
+          ltl(Phis2,Asserts2,NewProps}
+      end;
+    {releaseProp,P} ->
+      NewProps = lists:delete(P,Props),
+      Phis1 = lists:map(fun(Phi) -> check(step(Phi),NewProps) end, Phis),
+      {Phis2, Asserts2} = analyze(Phis1,Asserts),
+      ltl(Phis2,Asserts2,NewProps}
+    status ->
+      base:printLn("Unevaluated Assertion:"),
+      lists:zipwith(fun(Phi,Assert) ->
+        base:printLn(showLTL(Assert)),
+        base:printLn("   " ++showLTL(Phi)) end,
+      Phis, Asserts),
+      ltl(Phis,Asserts,Props)
+  end.
+
+assert(Phi) -> ltl!{assert,Phi}.
+newProp(P) -> ltl!{newProp,P}.
+releaseProp -> ltl!{releaseProp,P}.
+
+    
+analyze([],[]) -> {[],[]};
+analyze([true|Phis],[_|Asserts]) -> analyze(Phis,Asserts);
+analyze([false|Phis],[A|Asserts]) -> 
+  ptong(A),
+  analyze(Phis,Asserts);
+analyze([Phi|Phis], [A|Asserts]) ->
+  {Phis1, Asserts1} = analyze(Phis,Asserts),
+  {[Phi,Phis1], [A,Asserts1]}.
+
+ptong(Phi) ->
+  base:printLn("Assertion violated: "++showLTL(Phi)),
+  base:getLn("Continue: ").
+
+% definition neuer Propositionen
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Zustände
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% smartkonstruktoren
+prop(Phi) -> {prop, Phi}.
+neg(Phi) -> {neg, Phi}.
+disj(Phi, Psi) -> {disj, Phi, Psi}.
+conj(Phi, Psi) -> {conj, Phi, Psi}.
+x(Phi) -> {x, Phi}.
+f(Phi) -> {f, Phi}.
+g(Phi) -> {g, Phi}.
+
+showLTL({prop,P}) -> io:format("~w~n", [P]);
+showLTL({neg,Phi}) -> "(neg " ++ showLTL(Phi) ++ ")";
+showLTL({disj,Phi,Psi}) -> "(" ++ showLTL(Phi) ++ " or " ++ showLTL(Psi) ++ ")";
+showLTL({conj,Phi,Psi}) -> "(" ++ showLTL(Phi) ++ " and " ++ showLTL(Psi) ++ ")";
+showLTL({x,Phi}) -> "(X " ++ showLTL(Phi) ++ ")";
+showLTL({f,Phi}) -> "(F " ++ showLTL(Phi) ++ ")";
+showLTL({g,Phi}) -> "(G " ++ showLTL(Phi) ++ ")";
+showLTL(Phi) -> base:show(Phi).
+
+% Negation ganz vor die Formel schieben
+normalize(true) -> true;
+normalize(false) -> false;
+normalize({prop,P}) -> {prop, P};
+normalize({conj, Phi, Psi}) -> conj(normalize(Phi), normalize(Psi));
+normalize({disj, Phi, Psi}) -> disj(normalize(Phi), normalize(Psi));
+normalize({x,Phi}) -> x(normalize(Phi));
+normalize({f,Phi}) -> f(normalize(Phi));
+normalize({g,Phi}) -> g(normalize(Phi));
+normalize({neg,true}) -> false;
+normalize({neg,false}) -> true;
+normalize({neg,{prop,P}}) -> neg(prop(P));
+normalize({neg,{neg,Phi}}) -> normalize(Phi);
+normalize({neg,{conj, Phi, Psi}}) -> disj(normalize(neg(Phi)), normalize(neg(Psi)));
+normalize({neg,{disj, Phi, Psi}}) -> conj(normalize(neg(Phi)), normalize(neg(Psi)));
+normalize({neg,{x,Phi}}) -> x(normalize(neg(Phi)));
+normalize({neg,{f,Phi}}) -> g(normalize(neg(Phi)));
+normalize({neg,{g,Phi}}) -> f(normalize(neg(Phi))).
+
+% prüfe ob eine Formel gilt
+check(true,_Props) -> true;
+check(false,_Props) -> false;
+check({prop,P},Props) -> lists:members(P,Props);
+check({neg, {prop, P}},Props) -> not(check(prop(P), Props));
+check({conj,Phi,Psi},Props) -> 
+  case check(Phi, Props) of
+    true -> check(Psi,Props);
+    false -> false;
+    Phi1 -> case check(Psi, Props) of
+              false -> false;
+              true -> Phi1;
+              Psi1 -> conj(Phi1, Psi1)
+            end
+  end;
+check({disj,Phi,Psi},Props) -> 
+  case check(Phi, Props) of
+    true -> true;
+    false -> check(Psi,Props);
+    Phi1 -> case check(Psi, Props) of
+              true -> true;
+              false -> Phi1;
+              Psi1 -> disj(Phi1, Psi1)
+            end
+  end;
+check({x,Phi},_Props) -> x(Phi); % gib die Formel zurück, die nicht gecheckt werden konnte
+check({f,Phi}, Props) -> check(disj(Phi, x(f(Phi))));
+check({g,Phi}, Props) -> check(conj(Phi, x(g(Phi))));
+check(Phi, _Props) -> base:putStrLn("Unexpected fomula in check: "++showLTL(Phi)).
+
+step({x,Phi}) -> Phi;
+step({conj,Phi,Psi}) -> conj(step(Phi),step(Psi));
+step({disj,Phi,Psi}) -> disj(step(Phi),step(Psi));
+step(Phi) -> base:putStrLn("Unexpected fomula in check: "++showLTL(Phi)).
+
+
+#+END_SRC erlang
+
+#+BEGIN_SRC erlang 
+  -module(critical).
+  -export([start/0]).
+
+  start() ->
+      S = spawn(fun() -> store(42) end),
+      spawn(fun() -> inc(S) end),
+      dec(S).
+
+  store(V) ->
+      receive
+          {lookup,P} -> P!V, store(V);
+          {set,V1} -> store(V1)
+      end.
+
+  inc(S) -> 
+      S!{lookup,self()},
+      receive
+          V -> S!{set,V+1}
+      end,
+      inc(S).     
+
+  decc(S) -> 
+      S!{lookup,self()},
+      receive
+          V -> S!{set,V-1}
+      end,
+      dec(S).     
+#+END_SRC erlang
+
+*** TODO neue Version des base Moduls holen
+	
+* Unentscheidbarkeit
+
+Wir wollen zeigen, dass Erlang unentscheidbar ist.
+
+#+NAME: Implementierung einer Turing Machine mit Laufzeitkeller
+#+BEGIN_SRC erlang
+  -module(tm).
+  -export([stack/1, push/2, pop/1, blankStack/1, start/0]).
+
+  stack(P) ->
+      receive
+          pop ->
+              pop;
+          X -> 
+              stack(P),
+              P!X,
+              stack(P)
+      end.
+
+  push(S, V) ->
+      S!V.
+
+  pop(S) ->
+      S!pop,
+      receive
+          X ->
+              X
+      end.
+
+  blankStack(P) ->
+      stack(P),
+      P!blank,
+      blankStack(P).
+
+  % TODO delta Funktion für konkrete Werte q, a, ... implementieren
+  delta(_, _, f, _) ->
+      pop; % falls f ∈ F
+  delta(SL, SR, q, a) ->
+      push(SL, b),
+      A = pop(SR),
+      delta(SL, SR, p, A); % falls q ∈ Q\F mit \delta(q,a) = (p,b,r)
+  delta(SL, SR, q, a) ->
+      push(SR, b),
+      A = pop(SL),
+      delta(SL, SR, p, A). % falls q ∈ Q\F mit \delta(q,a) = (p,b,l)
+
+  start() ->
+      Me = self(),
+      SL = spawn(fun() -> blankStack(Me) end),
+      SR = spawn(fun() -> blankStack(Me) end),
+      writeToStack(SR, [a,b,b]),
+      A = pop(SR),
+      delta(SL,SR,q0,A),
+      outputStack(SR).
+
+  writeToStack(_,[]) -> ok;
+  writeToStack(S,[X|Xs]) ->
+      writeToStack(S,Xs),
+      push(S,X).
+
+  outputStack(S) ->
+      A = pop(S),
+      case A of
+          blank -> [];
+          V     -> [V|outputStack(S)]
+      end.
+
+#+END_SRC
+
+

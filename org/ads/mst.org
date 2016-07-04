@@ -1,0 +1,129 @@
+#+TITLE: Mst
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Mst
+---
+#+END_HTML
+
+* Minimal spannender Baum
+
+Sei $G=(V,E)$ ein [[ungerichtete_graphen][ungerichteter Graph]], dann
+heißt ein Graph $G' = (V',E')$ /Teilgraph/ von $G$, wenn
+$V' \subseteq V$ und
+$E' \subseteq E \cap \\{ \\{u,v\\} | u,v \in V' \wedge u \neq v\\}$.
+$G'$ heißt dann auch der von $V'$ /induzierte Teilgraph von/ $G$ und
+wird als $G[V']$ bezeichnet.
+
+Sei $G = (V,E)$ ein ungerichteter, zusammenhängender Graph und
+$w: E \rightarrow \mathbb{R}$ eine
+[[kantengewichtungsfunktion][(Kanten-)Gewichtungsfunktion]]. Dann heißt
+ein Teilgraph $T=(V_T, E_T)$ von $G$ /minimal spannender Baum/ (MST) von
+$G$, wenn:
+
+1. $V_T = V$ und $E_T \subseteq E$
+2. $T$ ist zusammenhängend und kreisfrei (also ein Baum)
+3. $T$ hat minimales Gesamtgewicht $w(T) = \sum_{e \in E_T} w(e)$.
+
+** Bestimmen von minimal spannenden Bäumen
+
+*** Algorithmus von Kruskal
+
+*Idee:* Wähle iterativ Kanten mit minimalem Gewicht, ohne dass ein Kreis
+entsteht.
+
+*Algorithmus:*
+
+#+BEGIN_EXAMPLE
+    MST-Kruskal(G=(V,E), w) {  // w = Kantengewichtungsfunktion
+
+      Set E_T = {}; // leere Menge
+      integer n = |V|;
+      integer m = |E|;
+      erzeuge Feld von Sets v mit n Elementen;
+
+      for i = 1 to n do
+        erzeuge Menge v[i] = {i};
+      od
+
+      sortiere die Kanten nach den Gewichten, so dass w(e_1) <= w(e_2) <= ... <= w (e_m);
+
+      for k = 1 to m do
+        bestimme Endpunkte v,w von Kante e_k und Mengen v[i] und v[j], die v und w enthalten;
+
+        if i != j then // d.h. wenn v und w in unterschiedlichen Mengen liegen
+          ersetzte v[i] und v[j] durch eine Menge v[i] ∪ v[j];
+          E_T = E_T ∪ {{v,w}}; // nur wenn sich dadurch kein Kreis ergibt!!!
+        fi
+      od
+      return Baum T = (V,E_T);
+    }
+#+END_EXAMPLE
+
+*Eigenschaften des Algorithmus:*
+
+1. Die Mengen $v[i]$ geben zu jedem Zeitpunkt die
+   Zusammenhangskomponenten des momentan erzeugten Graphen $(V, E_T)$ an
+2. Durch die Zusammenhangskomponenten wird implizit getestet, ob durch
+   die betrachtete Kante $e_k$ ein Kreis entsteht.
+
+*Laufzeit:* $\mathcal{O}(|E| \log |E|) = \mathcal{O}(|E| \log |V|)$ (Die
+Sortierung der Kanten z.B. mit [[mergesort][Mergesort]] benötigt
+$\mathcal{O}(|E| \log |E|)$)
+
+*** Algorithmus von Jarnik-Prim
+
+*Idee:* Wähle einen Startknoten $v \in V$ und füge ihn in eine intial
+leere Knotenmenge $U$ ein. Erzeuge eine intial leere Kantenmenge $E_T$.
+Erweitere dann den minimal spannenden Baum $T = (U, E_T)$ iterativ um
+Kanten $e = \\{i,j\\}$ mit $i \in U$ und $j \in V \setminus U$ und
+minimalen Gewicht.
+
+#+BEGIN_EXAMPLE
+    JARNIK-PRIM(G=(V,E), w) {  // w = Kantengewichtungsfunktion
+
+      Set U = {1};       // 1 sei der Startknoten des Algorithmus
+      Set E_T = {};
+      integer n = |V|;
+
+      for k = 1 to n-1 do
+        bestimme Kante e={i,j} mit i in U und j in V∖U von minimalem Gewicht w(e);
+
+        E_T = E_T ∪ {e};
+        U = U ∪ {j};
+
+      od
+
+      return Baum T=(U,E_T);
+    }
+#+END_EXAMPLE
+
+*Laufzeit:* Die Laufzeit der angegeben Implementierung liegt in
+$\mathcal{O}(|V| \cdot |E|)$ (Bestimmung einer Kante minimaler Länge
+erfordert $\mathcal{O}(|E|)$ und wird $(|V| - 1)$-Mal durchgeführt).
+
+*Optimierung des Algorithmus:*
+
+Die Laufzeit lässt sich optimieren, wenn eine Relation =closest=
+verwendet wird. Diese gibt für jeden Knoten in $V$, der noch nicht Teil
+des Baumes $T$ ist an, welcher Knoten in $T$ über eine Kante mit
+minimalem Gewicht erreicht werden kann. Es gilt also:
+
+-  =closest[v] = w=, wenn $\\{w,v\\} \in E$ mit $w \in U$ und
+   $v \in V \setminus U$ existiert und keine andere Kante mit geringerem
+   Gewicht $v$ mit einem Knoten in $U$ verbindet.
+-  =closest[v] = 0=, wenn es keine Kante $\\{w,v\\} \in E$ mit $w \in U$
+   und $v \in V \setminus U$ existiert.
+
+#+BEGIN_EXAMPLE
+    JARNIK-PRIM-OPT(G=(V,E),w) {  // w = Kantengewichtungsfunktion
+      TODO
+    }
+#+END_EXAMPLE
+
+*Laufzeit der optimierten Implementierung:* $\mathcal{O}(|V|^2)$

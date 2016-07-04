@@ -1,0 +1,391 @@
+#+TITLE: Virtual_memory
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Virtual_memory
+---
+#+END_HTML
+
+* Virtual Memory
+
+*Idee:*
+
+-  jeder Prozess erhält einen eigenen virtuellen Adressraum
+-  Unterteilung des physikalischen Hauptspeichers in Speicherbereiche
+   gleicher Größe (/frames/)
+-  Unterteilung des virtuellen Adressraums jedes Prozesse in
+   Speicherbereiche derselben Größe (/pages/)
+-  Verwendung einer /Page Table/ zur Zuordnung von Pages zu Frames; vom
+   Betriebssystem wird für jeden Prozess eine eigene solche Page Table
+   verwaltet
+-  OS verwaltet /Free Page Frames Table/ (Liste freier frames) und das
+   Laden von pages
+-  /resident set/: der Teil eines Programms (also diejenigen pages), der
+   sich im Hauptspeicher befindet
+-  Ein Register (/Page Table Register/) enthält einen Pointer auf die
+   Startadresse der Page Table im physikalischen Speicher (die phy.
+   Adresse der Page Table eines Prozesses wird aus dem Process Control
+   Block in dieses Register geladen, wenn der Prozess dispatched wird)
+
+* Memory Management
+
+Die Hardwarekomponente, die den Zugriff auf den Hauptspeicher verwaltet
+wird als /Memory Management Unit/ (MMU) bezeichnet.
+
+*Aufgaben:*
+
+-  Übsetzung von virtuellen in phyiskalische Adressen
+-  Verwaltung des freien physikalischen Speicherplatzes
+-  Allozieren und Deallozieren von Speicher für Prozesse
+-  Austausch von Daten und Code zwischen Hauptspeicher und
+   Sekundärspeicher(n)
+
+*Anforderungen:*
+
+1. /Relocation/: Dynamische Zuweisung von Daten eines Prozesses zu
+   Adressen im physikalischen Speicher
+
+   -  notwendig, da Prozessen erst beim Laden konkrete physikalische
+      Speicheradressen zugewiesen werden und diese sich auch während der
+      Ausführung z.B. durch Swapping ändern können
+
+2. /Protection/: Schutz von Code und Daten im Speicher vor unerlaubtem
+   Zugriff/Manipulation
+
+   -  Schutz des Speicherbereichs eines Prozesses vor dem Zugriff
+      anderern Prozesse (external protection)
+   -  Schutz des Betriebssystems
+   -  Schutz vor Stack- oder Bufferoverflows im Speicherbereich eines
+      Prozesses (internal protection)
+
+3. /Sharing/: mehreren Prozesssen den Zugriff auf gemeinsam genutzten
+   Speicher ermöglichen
+
+   -  zum Datenaustausch zwischen Prozessen
+   -  zum Codesharing zwischen Prozessen
+
+** Übersetzung virtueller Adressen in physikalische
+
+*** Übersetzung mit Page Tables
+
+Das Betriebssystem verwaltet für jeden Prozess eine eigene Page Table,
+die die Zuordnung von Pages zu Frames im Hauptspeicher ermöglicht. Ein
+Eintrag in der Page Table (/Page Table Entry/) besteht aus:
+
+#+CAPTION: Page Table Entry
+
+[[page_table_entry.png]]
+
+-  /P (present) bit/: gibt an, ob die Page im Hauptspeicher ist
+-  /M (modified) bit/: gibt an, ob die Page seit dem letzten Laden in
+   den Hautspeicher modifiziert wurde und beim Ersetzen in den
+   Sekundärspeicher zurückgeschriebend werden muss oder einfach
+   überschrieben werden kann
+-  /R (referenced) bit/: gibt an, ob die Page kürzlich referenziert
+   wurde (verwendet für Replacement-Strategien; Bedeutung
+   systemabhängig)
+-  /C (caching) bit/: gibt an, ob Caching für die Page aktiviert ist
+-  /protection bits/: z.B.:
+
+   -  /read bit/: darf die page gelesen werden
+   -  /write bit/: darf die page geschrieben werden
+   -  /supervisor bit/: page darf nur im kernel mode gelesen und
+      geschrieben werden
+
+#+CAPTION: Übersetzung in einem One-Level Paging System
+
+[[address_translation.png]]
+#+CAPTION: Übersetzung in einem Two-Level Paging System
+
+[[address_translation_two_level.png]]
+Die virtuelle Adresse wird zur Kompilierzeit durch den Compiler
+erstellt. Sie wird unterteilt in /page number/ und /page offset/
+
+-  /page offset/ bestimmt die /page size/: Sei $o$ die Anzahl der bits
+   des page offset und $p$ die page size, dann gilt $p = 2^o$
+-  /page number/ bestimmt die Anzahl der Einträge in der Page Table: Sei
+   $n$ die Anzahl der bits der page number und $e$ die Anzahl der page
+   table entries, dann gilt $e = 2^n$
+
+#+CAPTION: virtuelle Adresse
+
+[[virtual_address.png]]
+
+-  Übersetzung erfolgt zur Laufzeit (durch die Memory Managment Unit)
+-  /page hit/: angefragtes page befindet sich in einem frame (im
+   physikalischen Speicher)
+-  /hit rate/: relative Häufigkeit von page hits
+-  /hit time/ = Zugriffszeit + Zeit zur Festellung von Hit/Miss
+-  /page miss/: angefragte page befindet sich nicht im Hauptspeicher
+   (erzeugt einen /page fault/; page muss aus dem Sekundärspeicher
+   nachgeladen werden)
+-  /Miss Rate/: relative Häufigkeit von Misses ($1 - \text{Hit Rate}$)
+-  /Miss Penalty/: Zeit um eine Page in den Hauptspeicher zu laden +
+   Zeit um das Datum zur CPU zu liefern
+
+*Nachteil:* eine Page Table liegt i.d.R. im Hauptspeicher. Daher ist zur
+Addressübersetzung ein zusätzlicher Speicherzugriff nötig (dieser
+Nachteil kann durch Verwendung eines /Translation Lokkaside Buffers/
+abgemildert werden).
+
+*** Übersetzung mit Inverted Page Table
+
+#+CAPTION: Übersetzung mit einer Inverted Page Table
+
+[[address_translation_inverted_page_table.png]]
+
+-  ein Page Table Entry für jeden Frame im Hauptspeicher (Frame Numbers
+   werden als Index für die Inverted Page Table verwendet)
+-  Berechnung der Frame Number aus der Page Number der virtuellen
+   Adresse mittels Hash-Funktion
+-  Page Table Entry besteht aus:
+
+   -  PID: PID des Prozesses, zu dem die Page gehört
+   -  Page Number: Page Number, die sich gerade in dem Frame befindet
+      (zum Abgleich mit der Page Number der virtuellen Adresse)
+   -  Chain/Next: nächste Frame Number, an der gesucht werden soll, wenn
+      die gesuchte Page nicht in diesem Frame ist
+
+*** Beschleunigung der Addressübersetzung durch Translation Lookaside
+Buffer
+
+#+CAPTION: Übersetzung mit TLB
+
+[[address_translation_tlb.png]]
+Der /Translation Lookaside Buffer/ (TLB) ist ein schneller, assozitiver
+[[../oar/caches][cache]] in der MMU, der dazu dient den Zugriff auf
+Pages zu beschleunigen. Er enthält die zuletzt verwendeten Page Tables
+Entries.
+
+Unterteilung der page number in /tlb tag/ und /tlb index/
+
+#+CAPTION: Unterteilung der page number bei Nutzung eines TLB
+
+[[tlb_address.png]]
+
+-  /TLB Hit/: angefragter Page Table Entry befindet sich im TLB
+   (Adressübersetzung ohne zusätzlichen Speicherzugriff auf die Page
+   Table möglich)
+-  /TLB Miss/: angefragter Page Table Entry befindet sich im TLB (Suche
+   wird in der Page Table fortgesetzt)
+
+#+CAPTION: Vollständiger Ablauf der Übersetzung virtueller Adressen in
+physikalische
+
+[[address_translation_flowchart.png]]
+** Page Size
+
+Vorteile einer kleinen Page Size:
+
+-  geringere interne Fragmentierung
+-  geringere Page Fault Rate (irgendwann liegen alle häufig benötigten
+   Pages im Hautpspeicher)
+
+Nachteile kleiner Page Sizes:
+
+-  Prozesse benötigen mehr Pages -> Page Tables werden größer -> Page
+   Tables verbrauchen mehr Speicherplatz
+-  Transfer von kleinen Blöcken aus dem Sekundärspeicher in den
+   Hauptspeicher ist ineffizienter als Transfer von großen
+
+** Effektive Speicherzugriffszeit
+
+Die effektive Speicherzugriffzeit $t_{\text{effective}}$ berechnet aus
+der Dauer für Zugriffe auf den Hautpspeicher ($t_{\text{Memory}}$), der
+Wahrscheinlichkeit für Page Faults ($p$) und der Dauer zum Beheben von
+Page Faults
+($t_{\text{Page Fault}} \approx 2 t_{\text{Disk Access Time}}$) als:
+
+$$t_{\text{effective}} = (1-p) t_{\text{Memory}} + p t_{\text{Page Fault}}$$
+
+** Memory Manager
+
+Aufgaben des Memory Managers:
+
+-  Verwaltung des freien Speichers im Hauptspeicher
+-  Allozierung und Deallozierung von Speicher für Prozesse
+-  Verwaltung des Austauschs zwischen Hauptspeicher und Sekundärspeicher
+
+*** Dynamic Memory Allocation
+
+Allocator verwaltet Speicherblöcke mit dynamischer Größer im Heap
+(dynamisch allozierter Speicherplatz eines Prozesses) von Prozessen.
+
+-  explizite Speicherallozierung mit =void *malloc(size_t size)=:
+
+   -  erfordert =stdlib.h=
+   -  explizit allozierter Speicher muss durch =void free(void *p)=
+      wieder freigegeben werden
+   -  fehler: git nullpointer zurück und setzt =errno=
+
+-  implizite Speicherallozierung: z.B. Objekterzeugung
+
+   -  implizit allozierter Speicher wird i.d.R. automatisch, z.B. durch
+      einen sog. /Garbage Collector/ wieder freigegeben.
+
+Funktionen zur expliziten Speicherallozierung in C#:
+
+-  =void realloc(void *p, size_t size)=: Veränderung der Größe eines
+   allozierten Speichblocks.
+-  =calloc=
+
+Verwaltung von freien Speichers erfolgt mit Hilfe einer Liste. Dabei
+gibt es vier verschiedene Methoden:
+
+-  /Implicit List/: jeder freie Block enthält eine Information über die
+   Größe des Blocks und den Allozierungszustand (Information wird in
+   einem /header field/ gespeichert, das am Beginn des Blocks steht)
+-  /Explicit List/: jeder freie Block enthält einen Pointer auf den
+   nächsten und einen auf den vorangehenden freien Block (diese Blöcke
+   müssen nicht in dieser Reihenfolge im Speicher liegen)
+
+   -  Vorteil: allozierte Blöcke müssen nicht mehr durchsucht werden
+
+-  /Segregated Free List/: separate Liste mit Adressen und Größen freier
+   Speicherblöcke
+-  /Blocks Sorted By Size/: ein sortierter Suchbaum mit Adressen freier
+   Speicherblöcke
+
+**** Implicit List
+
+*Idee:* Verwendung eines /Header Field/Header/ für jeden Speicherblock
+mit folgenden Informationen:
+
+-  Länge des Blocks (Header, Payload und (optionales) Padding)
+-  Allozierungsstatus (codiert im niederwertigesten Bit, welches
+   unbenutzt ist, wenn Blocklängen Vielfache von 2 sind)
+
+   -  =1=: alloziert
+   -  =0=: frei
+
+Der /Header/ wird in dem Wort, welches am Anfang des Speicherblocks
+steht gespeichert.
+
+*Vorteil:* einfache Freigabe von Speicherblöcken durch Veränderung des
+Allozierungsstatus
+
+*Nachteil:* Zum Finden eines passenden freien Blocks müssen alle (sowohl
+freie als auch allozierte) Speicherblöcke durchsucht werden.
+
+*Strategien zum Coalesing:* Verschmelze einen neu freigegeben Block mit
+einem vorangehenden/nachfolgenden freien Blocks. Zur Realisierung dieser
+Coalescing-Strategie werden /Boundary Tags/ benötigt. /Boundary Tags/
+realisieren eine doppelte (implizite) Verkettung von Speicherblöcken,
+indem das Header Field am Ende des Speicherblocks wiederholt wird.
+
+**** Explicit Free List
+
+*Idee:* Direkte (doppelte) Verkettung freier Speicherblöcke durch
+Verwendung von Pointern; einen auf den nächsten freien Speicherblock
+(/Forward Pointer/) und einen auf den vorangehenden (/Backward
+Pointer/).
+
+*Strategien zum Coalesing:* Wie bei implicit free lists, also werden
+/Boundary Tags/ nach wie vor zum Coalescing benötig.
+
+*Strategien zur Freigabe von Speicherblöcken:*
+
+-  /LIFO/: neu freigegeben Speicherblöcke werden vorn in der Liste der
+   freien Speicherblöcke eingehängt.
+-  /address-ordered/: Reihenfolge der Blöcke in der Liste entspricht
+   Reihenfolge der Blöcke im Speicher
+
+*Vorteil:* Allozierte Blöcke müssen (im Gegensatz zur Verwendung einer
+implicit free list) nicht durchsucht werden.
+
+*Nachteil:* Allozierung und Freigabe von Blöcken ist geringfügig
+aufwendiger als bei Verwednung einer Implicit Free List.
+
+**** Segregated List
+
+*Idee:* Einteilung freier Speicherblöcke in /size classes/. Direkte
+Verkettung der Speicherblöcke einer size class (Verwendung eines Arrays
+von /Explicit Free List/, eine für jede size class).
+
+**** Garbage Collection
+
+*Idee:* Gib Speicherblöcke im Heap, die nicht mehr referenziert werden
+(automatisiert) frei.
+
+*Finden von nicht mehr referenzierten Speicherblöcken:* Betrachte
+Speicher als einen gerichteten Graphen. Speicherblöcke im Heap sind
+Knoten und Pointer sind Kanten. Ein /root node/ ist ein Speicherblock,
+der nicht im Heap liegt und einen Pointer auf einen Speicherblock im
+Heap enthält. Ein Speicherblock ist /erreichbar/, wenn es einen Pfad von
+einem root node zu dem Block gibt. Allozierte Speicherblöcke, die nicht
+erreichbar sind /garbage/.
+
+*Strategien zur Garbage Collection:*
+
+1. /Mark and Free/: Laufe von allen root nodes zu allen erreichbaren
+   Speicherblöcken und markiere diese (setze /reachable bit/). Dann
+   durchlaufe alle Speicherblöcke im Heap und lösche diejenigen, die
+   nicht markiert sind.
+
+**** Algorithmen zum finden freier Speicherblöcke im Heap
+
+-  /First Fit/: durchsuche die Liste mit freien Speicherblöcken von
+   Anfang an und wähle den ersten freien Speicherblock mit ausreichender
+   Größe
+
+   -  schnellster Algorithmus (lineare Laufzeit)
+   -  i.d.R. starke externe Fragmentierung am Anfang des
+      Speicherbereichs
+
+-  /Next Fit/: durchsuche die Liste mit freien Speicherblöcken von der
+   Stelle der letzten Allokation aus und wähle den ersten freien
+   Speicherblock mit ausreichender Größe
+
+   -  externe Fragmentierung i.d.R. stärker als bei First Fit
+
+-  /Best Fit/: durchsuche die Liste mit freien Speicherblöcken
+   vollständig und wähle den freien Speicherblock dessen Größe am
+   nähesten an der benötigten Größe liegt
+
+   -  externe Fragmentierung i.d.R. geringer als bei den anderen
+      Algorithmen
+   -  i.d.R. langsamer als First Fit
+
+Performanzziele:
+
+-  Maximierung des /Throughput/ (Allozierungsoperationen pro
+   Zeiteinheit)
+-  Maximierung der /Peak Memory/ Utilization (
+
+*** Fragmentation
+
+-  /internal Fragmentation/
+
+   -  Gründe: Overhead zur Verwaltung der Speicherblöcke im Heap,
+      Alignment, andere allocation policies
+
+-  /external Fragmentation/
+
+*** Coalescing
+
+Fusionierung von freien Speicherblöcken mit angrenzenden freien
+Speicherblöcken wenn Speicherblöcke dealloziert werden (beim Aufruf von
+=free()=) zur Vermeidung von /False Fragmentation/.
+
+*** Bidirectional Coalescing
+
+Replikation des /Header Field/ am Ende des Speicherblocks (/Header
+Field/ und /Footer Field/ heißen auch /Boundary Tag/). Ermöglicht es die
+Liste der Speicherblöcke in beide Richtungen zu durchsuchen.
+
+*** Splitting
+
+Teilung eines freien Speicherblocks in zwei Speicherblöcke, wenn darin
+ein Speicherblock alloziert wird, der nicht den gesamten freien
+Speicherblock ausfüllt.
+
+*** Memory Leak
+
+Von einem /Memory Leak/ spricht man, wenn dynamisch allozierter Speicher
+(z.B. mit =malloc()=) nicht wieder freigegeben wird, wenn er nicht mehr
+benötigt wird und der Heap dadurch konstant größer wird.

@@ -1,0 +1,66 @@
+#+TITLE: Ring
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Ring
+---
+#+END_HTML
+
+* Ring
+
+Ein Tripel aus einer Menge $R$ und zwei Verknüpfungen auf dieser Menge
+$+: R \times R \rightarrow R$ (/Addition/) und
+$\cdot : R \times R -\rightarrow R$ (/Multiplikation/) heißt /Ring/,
+wenn
+
+1. $(R, +)$ eine [[gruppe][kommutative Gruppe]] ist,
+2. $(R, \cdot)$ eine [[gruppe][Halbgruppe]] ist und
+3. linkes und rechtes Distributivgesetz gelten:
+
+   $\forall a,b,c \in R: a \cdot (b+c) = (a \cdot b) + (a \cdot c)$
+
+   $\forall a,b,c \in R: (b+c) \cdot a = (b \cdot a) + (c \cdot a)$.
+
+Gilt außerdem
+
+4. Kommutativgesetz bzgl. "$\cdot$", d.h.
+   $\forall a,b \in R: a \cdot b = b \cdot a$,
+
+dann heißt $(R, +, \cdot)$ /kommutativer Ring/.
+
+** Eigenschaften
+
+-  wegen (1) gelten:
+
+   1. Assoziativgesetz bzgl. "$+$", d.h.
+      $\forall a,b,c \in R: (a+b)+c = a+(b+c)$ ()
+   2. es gibt ein neutrales Element $e_{+}$ bzgl. "$+$", d.h.
+      $\exists e_{+} \in R: \forall a \in R: a+e_{+} = e_{+}+a = a$
+   3. es gibt inverse Elemente bzgl. "$+$", d.h.
+      $\forall a \in R: \exists inv_{+}(a) \in R: a + inv_{+}(a) = e_{+}$
+   4. Kommutativgesetz bzgl. "$+$", d.h. $\forall a,b \in R: a+b = b+a$
+
+-  wegen (2) gilt
+
+   5. Assoziativgesetz bzgl. "$\cdot$", d.h.
+      $\forall a,b,c \in R: (a \cdot b) \cdot c = a \cdot (b \cdot c)$
+
+* spezielle Ringe
+
+** Polynomring
+
+Sei $(R,+,\cdot)$ ein [[ring][kommutativer Ring]]. Dann ist die Menge
+der [[polynome][Polynome]] über $R$ zusammen mit der den Verknüpfungen
+$+$ und $\cdot$ ein Unterring aller Abbildungen $R \rightarrow R$, der
+sog. /Polynomring/ $R[x]$.
+
+*** Eigenschaften
+
+-  besitzt $R$ ein neutrales Element $e_{\cdot}$ bzgl. "$\cdot$", dann
+   besitzt auch $R[x]$ ein neutrales Element bzgl. $\cdot$, nämlich
+   $p(x) = e_{\cdot}$.

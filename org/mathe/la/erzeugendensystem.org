@@ -1,0 +1,27 @@
+#+TITLE: Erzeugendensystem
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Erzeugendensystem
+---
+#+END_HTML
+
+* Erzeugendensystem
+
+** Vorgehen zum zeigen, dass eine Menge von Vektoren (k)ein
+Erzeugendensystem ist
+
+-  Wenn man vermutet, dass $(V, \oplus)$ kein EZS des Zielraums ist:
+   Finde einen Vektor, der sich nicht darstellen lässt
+-  wenn man vermutet, dass $(V, \oplus)$ ein EZS des Zielraums ist:
+   Versuche Einheitsvektoren des Zielraums herzustellen
+
+* Basis
+
+Ein EZS heißt Basis, wenn es aus [[lineare_abhaengigkeit][linear
+unabhängigen]] Vektoren besteht.

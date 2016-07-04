@@ -1,0 +1,37 @@
+#+TITLE: Prototyping
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Prototyping
+---
+#+END_HTML
+
+* Prototyping
+
+Ein Prototyp einer SW zeigt ausgeählte Eigenschaften des Zielprodukts im
+praktischen Einsatz.
+
+Arten von Prototypen:
+
+-  /evolutionärer Prototyp/: verwendet, um mit den Kunden inkrementell
+   und gemeinsam von einem initalen Entwurf zu einem nutzbaren System
+   kommen
+-  /explorativer Prototyp/: verwendet, um bessere Kentniss der
+   Anforderungen zu gewinnen
+-  /experimenteller Prototyp/: verwendet zur Erkundung technischer
+   Machbarkeit
+
+Taxonomie von Prototypen:
+
+-  /horizontaler Prototyp/: es werden nur spezifische Ebenen der
+   zukünftigen SW realisiert. Diese Ebenen werden i.d.R. im Prototyp
+   relativ vollständig realisiert. Explorative Protoypen sind i.d.R.
+   horizontale Prototypen.
+-  /vertikaler Prototyp/: einzelne Aspekte einer SW werden über alle
+   Ebenen hinweg realisiert. Experimentelle Prototypen sind meist
+   vertikale Prototypen)

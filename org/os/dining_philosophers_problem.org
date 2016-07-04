@@ -1,0 +1,76 @@
+#+TITLE: Dining_philosophers_problem
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Dining_philosophers_problem
+---
+#+END_HTML
+
+* Philosphenproblem
+
+Setting:
+
+-  $n$ Philosphen sitzen um einen runden Tisch
+-  zu jedem Zeitpunkt kann ein Philosoph entweder denken oder essen
+-  zum Essen braucht jeder Pholosoph zwei Gabeln/Stäbchen
+-  zwischen zwei nebeneinandersitzenden Philosphen liegt jeweils eine
+   Gabel/Stäbchen (also liegen insg. $n-1$ Gabeln/Stäbchen auf dem
+   Tisch)
+
+Strategien zur Vermeidung von [[deadlocks][Deadlocks]]:
+
+-  min. ein Philosoph nimmt seine Stäbchen in umgekehrter Reihenfolge
+   auf
+-  Vermeidung von /Hold and Wait/: Philosophen nehmen erst ein Stäbchen
+   auf und prüfen dann, ob ihr zeites Stäbchen auch frei ist. Wenn nicht
+   legen sie das erste Stäbchen wieder hien
+
+** Implementierungen
+
+Die Sticks =left= und =right= sind in den folgenden Codebeispielen
+Semaphore.
+
+*Implementierung mit Deadlocks:*
+
+#+BEGIN_EXAMPLE
+    philosopher() {
+      while(true) {
+        think();
+        
+        p(left);
+        p(right);
+        eat();
+        v(left);
+        v(right);
+#+END_EXAMPLE
+
+*Implementierung ohne Deadlocks:*
+
+#+BEGIN_EXAMPLE
+    philosopher() {
+      while(true) {
+        think();
+
+        p(left);
+        if(right == 0) {
+          v(left);
+        } else {
+          p(right);
+          eat();
+          v(left);
+          v(right);
+        }
+#+END_EXAMPLE
+
+Schlimmstenfalls passiert folgendes: Jeder bis auf der letzte Philosoph
+nimmt sein linkes Stäbchen auf, stellt dann fest, dass sein rechtes frei
+ist und wird dann suspendiert. Der letzte Philosoph nimmt sein linkes
+Stäbchen auf und muss dann feststellen, dass sein rechtes Stäbchen nicht
+frei ist und legt dieses daraufhin wieder ab (dabei kann er zwar
+unterbrochen werden, aber bei fairem Scheduling kommt es zu keinem
+Livelock).

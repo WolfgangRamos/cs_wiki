@@ -1,0 +1,192 @@
+#+TITLE: Netzwerke
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+* Netzwerke
+
+Man kann Netzwerke charakterisieren über
+
+#+CAPTION: Charakterisierung von Netzwerken
+| Kriterium               |                          |                         |                             |                           |
+|-------------------------+--------------------------+-------------------------+-----------------------------+---------------------------|
+| *Abdeckung* (Coverage)    | Local Area Network (LAN) | Wide Area Network (WAN) | Personal Area Network (PAN) | Metropolitan Area Network |
+| *Vermittlung* (Switching) | Packet Switching         | Circuit Switching       | Cell Switching              | (shared medium)           |
+| *Übertragungsmedium*      | Kupfer                   | Glasfaser               | Radiowellen                 | Infrarot                  |
+| *Netzwerktopologie*       | Bus                      | Star                    | Ring                        | Mesh                      |
+| *Mobilität*               | Stationär (fixed)        | mobil                   | drahtlos (wireless)         |                           |
+| *Betreiber* (Operator)    | privat                   | öffentlich              | (virtuell privat)           |                           |
+
+Unterschied zwischen mobilen und drahtlosen Netzwerken:
+
+- drahtlos (wireless): Gegenstelle der Verbingung ändert sich nicht
+- mobil: Gegenstelle der Verbindung kann sich ändern. Es muss eine
+  Aufenthaltsdatenbank (/location register/) geführt werden
+
+#+CAPTION: Charakterisierungen von /Ethernet/ (IEEE 802.3)
+| Kriterium               |                                 |
+|-------------------------+---------------------------------|
+| *Abdeckung* (Coverage)    | LAN                             |
+| *Vermittlung* (Switching) | Packet Switching, shared medium |
+| *Übertragungsmedium*      | Kupfer, Glasfaser               |
+| *Netzwerktopologie*       | Bus, Star                       |
+| *Mobilität*               | Stationär                       |
+| *Betreiber* (Operator)    | private                         |
+
+#+CAPTION: Charakterisierungen von /W-LAN/ (IEEE 802.11)
+| Kriterium               |                                 |
+|-------------------------+---------------------------------|
+| *Abdeckung* (Coverage)    | LAN                             |
+| *Vermittlung* (Switching) | Packet Switching, shared medium |
+| *Übertragungsmedium*      | Radiowellen                     |
+| *Netzwerktopologie*       | Star                            |
+| *Mobilität*               | drahtlos                        |
+| *Betreiber* (Operator)    | private                         |
+
+#+CAPTION: Charakterisierungen von /ISDN/
+| Kriterium               |                                     |
+|-------------------------+-------------------------------------|
+| *Abdeckung* (Coverage)    | WAN                                 |
+| *Vermittlung* (Switching) | Packet Switching, Circuit Switching |
+| *Übertragungsmedium*      | Kupfer                              |
+| *Netzwerktopologie*       | Star, Mesh                          |
+| *Mobilität*               | Stationär                           |
+| *Betreiber* (Operator)    | öffentlich, virtuell private        |
+
+** Switching
+
+Switching bezeichnet die /Art und Weise, wie die Verbindung in einem
+Netzwerk vermittelt wird/. Man unterscheidet: *Packet Switching* und
+*Circuit Switching*
+
+#+CAPTION: Übersicht über Switching Technologien
+[[./gfx/switching_technologies.png]]
+
+*** Packet Switching
+
+Beim /packet switching/ (dt. Paketvermittlung) werden Nachrichten in
+einzelne /packets/ (dt. Packete) aufgeteilt. Jedes Paket enthält die
+notwenidgen Informationen um das Paket zur Zieladresse zu transportieren
+und kann einzeln übertragen werden. Jeder Netzknoten, den das Paket
+passiert speichert das Paket so lang zwischen bis er es weiter senden
+kann (engl. /store-and-forward switching/). D.h. Bandbreite im
+Datenkanal wird nur während der Übertragung eines Pakets zwischen zwei
+Knoten beansprucht. Nach Abschluss der Übertragung steht die Bandbreite
+wieder zur Verfügung.
+
+Ein Paket aus:
+
+- /Header/: Enthält Informationen, die von den Knoten zur Übermittlung
+  des Pakets benötigt werden.
+- /Payload/ (dt. Datenteil): Enthält Informationen, die von
+  Anwendungen verarbeitet werden.
+
+Man unterscheidet zwischen
+
+- *connectionless packet switching* (auch /datagram switching/; dt.
+  verbindungslose Paketvermittlung) und
+- *virtual circuit switching* (auch /connection-oriented packet
+  switching/; dt. virtuelle verbindungsorientierte Paketvermittlung):
+
+*Vorteile:*
+
+- Bandbreiten zwischen Netzwerkknoten können unabhängig voneinander
+  gewählt werden. Es besteht keine Notwendigkeit die Bandbreiten
+  zwischen den System zu verinheitlichen.
+- Bessere Ausnutzung der Netzwerkinfrastruktur. Insbesondere, wenn
+  starke Schwangungen bei der Datenübertragung zu erwarten sind, d.h.,
+  wenn man viel und mal wenig übertragen werden muss
+
+*Nachteile:*
+
+- Quality of Service kann nicht garantiert werden:
+  - keine Obergrenze für Paket Delay
+  - Überlastung der Netzwerks möglich (Risiko des Datenverlusts)
+- Festlegung von Übertragungsraten aufwendig. Z.B. müssen Sender und
+  Empfänger ein /sliding window/ aushandeln, welches dynamisch anpassbar
+  sein muss. Es muss beispielsweise verkleinert werden, wernn sich die
+  Anzahl der eingehenden Verbindungen am Empfänger erhöht.
+
+**** Connectionless packet switching
+
+Jedes Paket enthält alle Addressinformationen und wird unabhängig von
+den anderen Paketen geroutet. D.h. Pakete können über unterschiedliche
+Netzknoten übertragen und somit mit unterschiedlicher Verzögerung
+übertragen werden. Insbesondere können Pakete daher in veränderter
+Reihenfolge ankommen. Im Zielsystem werden die Pakete entsprechend ihrer
+Laufnummern zusammengesetzt und die Nachricht extrahiert. Dadurch wird
+dem Nutzer ein virtueller Datenkanal (engl. /virtual circuit/)
+vorgegaukelt.
+
+Im Fall von connectionless packet switching besteht der Header eines
+Pakets aus:
+
+- Quelle des Paketes,
+- Ziel des Paketes,
+- Länge der Payload (dt. Datenteil),
+- Paketlaufnummer,
+- Klassifizierung des Paketes
+
+Nachteile:
+
+- größerer Header
+- Pakete können in veränderter Reihenfolge ankommen
+- größerer Aufwand beim Routen individueller Pakete (der Aufwand ist
+  ähnlich groß wie beim Verbindungsaufbau bei Verwendung von
+  connection-oriented packet switching)
+
+Bspeispiele: UDP, IP
+
+**** Virtual circuit switching
+
+Vor Übermittlung der Pakete wird ein Verbindung ausgehandelt. Dazu wird
+in die /Switching tables/ jedes Netzwerkknotens der Verbindung die
+Adresse des jeweils nächsten Knotens geschrieben und der Verbingung ein
+eindeutiger *Identifier* (ID) zugeordnet. Beim Aufbau der Verbindung
+können die Parameter der Verbindung (z.B. ???, etc.) ausgehandelt
+werden. Adressinformationen werden nur während des Verbindgsaufbaus
+benötigt, wenn die Route festgelegt wird. Die einzelnen Pakete enthalten
+dieses Informationenn nicht mehr.
+
+Im Fall von connection-oriented packet switching besteht der Header
+eines Pakets aus:
+
+- Identifier der ausgehandelten Verbindung,
+- Timestamp oder Laufnummer
+- Länge der Payload
+
+Die Datenübertragung erfolgt in 3 Phasen:
+
+1. Verbindungsaufbau (inkl. Aushandlung der Parameter der Verbindung)
+2. Datenübertragung
+3. Schließen der Verbindung
+
+Beispiele: TCP
+
+*** Circuit switching
+
+Beim /circuit switching/ (auch /line switching/; dt.
+Leitungsvermittlung) wird einer Nachrichtenverbindung zeitweilig ein
+durchgeschalteter Datenkanal mit fester Bandbreite zur exklusiven
+Nutzung zur Verfügung gestellt. Bsp: Telefonnetz.
+
+** Topologien
+
+*Bus:* Alle Knoten teilen sich eine Leitung.
+
+*Ring:* Alle Nodes sind in einem Ring zusammengeschaltet. Z.B. in
+
+*Star:* Viele Knoten laufen in einem Knoten zusammen (z.B. DHCP Server)
+
+*Mesh:* Knoten sind direkt miteinander verbunden, es gibt keine
+zentralen Knoten (z.B. das Internet)
+
+Vorteile:
+
+- höhere Ausfallsicherheit
+- mehr mögliche Zustellrouten
+- Load-Balancing ist möglich
+- Netzneutralität: zur Kontrolle eines mesh-Netzes müssten alle
+  zentralen Knoten kontrolliert werden.
+- einfache Erweiterbarkeit

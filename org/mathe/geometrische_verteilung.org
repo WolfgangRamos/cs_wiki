@@ -1,0 +1,31 @@
+#+TITLE: Geometrische_verteilung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Geometrische_verteilung
+---
+#+END_HTML
+
+* Geometrische Verteilung
+
+Die geometrische Verteilung modelliert Bernoulli-Experimente, es wird
+aber im Gegensatz zur Binomialverteilung nicht nach der Anzahl von
+Erfolg bzw. Misserfolg gefragt, sondern nach der Wahrscheinlichkeit für
+eine Wartezeit bis zum ersten Mal ein "Erfolg" eintritt.
+
+Eine [[zva][Zufallsvariable]] $X$ heißt /geometrisch-verteilt/, wenn
+$\exists n \in \mathbb{N}, p \in [0,1]: \forall k \in \{0,\dots,n\}: P(X=k) = (1-p)^k \cdot p$.
+
+Wir schreiben $X \sim Geo(p)$, um anzudeuten, dass $X$ geometrisch
+verteilt ist.
+
+*Eigenschaften:*
+
+-  Geometrisch verteilte ZVA sind [[zva][diskret]]
+-  Der Erwartungswert einer geometrisch-verteilten ZVA $X$ ist:
+   $E(X) = \frac{1-p}{p}$.

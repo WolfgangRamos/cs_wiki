@@ -1,0 +1,132 @@
+#+TITLE: Design_pattern
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Design_pattern
+---
+#+END_HTML
+
+* Entwurfsmuster
+
+Entwurfsmuster:
+
+-  sind bewährte generische Lösungen für wiederkehrende Entwurfsprobleme
+-  liefern eine gemeinsame Terminologie zur Kommunikation über
+   Programmstrukturen
+
+** Erzeugungsmuster
+
+Enturfsmuster, die dabei Helfen System unabhängig davon zu machen, wie
+seine Objekte erzeugt, zusammengesetzt und repräsentiert werden.
+
+*** Singleton
+
+Stellt sicher, dass es zur Laufzeit nur eine Instanz einer Klasse gibt
+und ermöglicht den Zugriff auf dieses Objekt. Zentrale Aspekte:
+
+-  ''private'' Konstruktor
+-  Klassenmethode ''getInstance()''
+
+Einsatzbeispiele:
+
+-  Synchronisierung des Zugriffs auf gemeinsam genutzte Ressourcen, die
+   nur einmal zur Verfügung stehen (z.B. Drucker, Netzwerkstack, Webcam)
+
+*** Abstract Factory
+
+Zweck: Konsistente Erzeugung mehrerer voneinander abhängiger Objekte
+(//Produktfamilien//).
+
+Vorteile:
+
+-  einfacher Austausch von Produktfamilien durch Austausch der konkreten
+   Fabrik
+-  Konsistenz der erzeugten Objekte (abstrakte Fabrik erzeugt nur
+   Objekte einer Produktfamilie)
+-  Code des Client unabhängig von konkreten Produkten (Client greift auf
+   Produkte nur über deren abstrakte Schnittstelle zu)
+
+Nachteile:
+
+-  Unterstützung neuer Produkte aufwendig, wenn dafür die Schnittstelle
+   der abstrakten Fabrik verändert werden muss (dann müssen in allen
+   konkreten Fabriken Änderungen vorgenommen werden)
+
+** Verhaltensmuster
+
+Entwurfsmuster für die Interaktion zwischen Objekten und Klassen.
+
+*** Strategy
+
+*** Observer
+
+Weitergabe von Änderungen an einem Objekt (Modell) an davon abhängige
+Objekte (Beobachter).
+
+*** Commando
+
+*** Memento
+
+*** Visitor
+
+** Strukturmuster
+
+Entwurfsmuster zum Zusammensetzen von Klassen und Objekten zu größeren
+Strukturen.
+
+*** Composite (Kompositum)
+
+Ermöglicht die Gleichbehandlung von Primitiven und Containern aus
+Benutzersicht (keine Unterscheidung zischen Teilen und Gamzem auf Seiten
+der Benutzer nötig).
+
+Vorteile:
+
+-  Beherschung der Komplexität (Primitive Objekte können leicht zu
+   komplexen zusammengesetzt werden)
+-  Vereinfachung der Implementierung des Clients
+-  Erweiterbar (neue Container- oder Primitivaklassen können einfach
+   eingebunden werden)
+
+Nachteile:
+
+-  Typen enthaltener Komponeneten müssen zur Luafzeit geprüft werden
+-  Kompositionen können nicht auf bestimmte Typen von Containern oder
+   Primitiva beschränkt werden
+
+*** Facade
+
+Fasseadenklasse bietet eine gemeinsame Schnittstelle für eine Menge von
+Klassen.
+
+-  Nachteile:
+-  Vorteile:
+
+   -  führt zu geringerer Kopplung
+
+*** Decorator
+
+Wird verwendet, um Klassen um Eigenschaften und Methoden zu erweitern.
+Die Besonderheit besthe darin, dass durch Dekorierer einzelne Attribute
+und Methoden einzeln hinzugefügr werden können. Damit können auf
+einfache Weise Objekte erzeugt werden, die beliebige Kombinationen
+zusätzlicher Operationen und Attribute aufweisen.
+
+-  Vorteile:
+
+   -  Vermeidung langer unübersichtlicher Vererbungshierarchien
+   -  Dekorierer können einem Objekt flexibel hinzugefügt werden und
+      sogar zur Laufzeit ausgetauscht werden
+
+-  Nachteile:
+
+   -  Vorsicht bei Verwednung von Vergleichsoperationen
+
+** Weitere Muster
+
+*** Model-View-Control (MVC)

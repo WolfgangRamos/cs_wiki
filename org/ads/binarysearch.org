@@ -1,0 +1,64 @@
+#+TITLE: Binarysearch
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Binarysearch
+---
+#+END_HTML
+
+* Binäre Suche
+
+*geg:* Feld $A$, dass $n$ austeigend sortierten Zahlen enthält.
+
+*ges:* Index eines gesuchten Elements $x$ ($x$ muss nicht im Feld
+enthalten sein)
+
+*Idee:* Vergleiche in jeder Iteration $i$ das gesuchte Element $x$ mit
+dem "mittleren" Element an Position
+$mid := \left\lfloor \frac{i+j}{2} \right\rfloor$ von $A$.
+
+-  Wenn das Feld die Länge Null hat, also $i = j$ gilt beende die Suche
+   und gib $-1$ zurück, also Indikator dafür, dass $x$ nicht gefunden
+   wurde
+-  Wenn $x = A[i]$ gilt, dann beende die Suche, und gib $mid$ zurück.
+-  Wenn $x < A[i]$ gilt setze die Suche im linken Teilfeld
+   $A[0], ... A[i-1]$ fort.
+-  Wenn $x > A[i]$ gilt setze die Suche im rechten Teilfeld
+   $A[i+1], ... A[n-1]$ fort.
+
+#+BEGIN_EXAMPLE
+    BINARY-SEARCH(A, x) {
+      integer n = length(A);
+      integer i = 0;
+      integer j = n-1;
+      integer mid;
+      boolean found = false;
+
+      while i ≤ j ∧ ¬found do
+        mid = (i+j)/2;
+
+        if x < A[mid] then
+          j = mid - 1;
+        else
+          if x > A[mid] then
+            i = mid + 1;
+          else
+            found = true;
+          fi
+        fi
+      od
+
+      if found then
+        return mid;
+      else
+        return -1;
+      fi
+    }
+#+END_EXAMPLE
+
+*Laufzeit:* $\mathcal{O}(\log_{2} n)$

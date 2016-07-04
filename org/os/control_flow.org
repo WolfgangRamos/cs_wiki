@@ -1,0 +1,25 @@
+#+TITLE: Control_flow
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Control_flow
+---
+#+END_HTML
+
+* Kontrollfluss
+
+Die Folge von Instruktionen eines Programms bezeichnet man als
+/Kontrollfluss/ (engl. /control flow/ oder /flow of control/). Die
+Reihenfolge, in der die Befehle eines Programms ausgeführt werden ist
+i.d.R. durch die Reihenfolge der Befehle innerhalb des Programms
+vorgegeben. Es gibt aber Möglichkeiten den Kontrollfluss zu Verändern:
+
+-  /Kontrollstrukturen/: Veränderung des Kontrollfluss als Reaktion auf
+   eine Veränderung des Programmzustands (z.B. Jump, Call, Return, etc.)
+-  [[interrupts][/Interrupts/]]: Veränderung des Kontrollfluss als
+   Reaktion auf ein Systemereignis (engl. /system event/)

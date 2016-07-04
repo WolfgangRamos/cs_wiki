@@ -1,0 +1,145 @@
+#+TITLE: Vektorraum
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Vektorraum
+---
+#+END_HTML
+
+* Vektorraum
+
+Sei $(V, \oplus)$ eine [[../gruppe][kommutative Gruppe]] auf der eine
+Verknüpfung $\odot: \mathbb{K} \times V \rightarrow V$
+(/Skalarmultiplikation/) mit Elementen eines [[../koerper][Körpers]]
+$(\mathbb{K}, +, \cdot)$ definiert ist. $(V, \oplus)$ heißt
+$\mathbb{K}$-Vektorraum, wenn folgende zusätzliche Bedingungen erfüllt
+sind:
+
+1. Assoziativgesetz bzgl. "$\odot$", d.h.
+   $\forall \lambda, \mu \in \mathbb{K}: \forall v \in V: (\lambda \cdot \mu) \odot v = \lambda \odot (\mu \odot v)$
+2. $\forall v \in V: e_{\cdot} \odot v = v$, wobei
+   $e_{\cdot} \in \mathbb{K}$ das neutrale Element des Körpers
+   $(\mathbb{K}, +, \cdot)$ bzgl. "$\cdot$" ist.
+3. Distributivgesetze:
+
+   $\forall v,w \in V: \forall \lambda \in \mathbb{K}: \lambda \odot (v \oplus w) = (\lambda \odot v) \oplus (\lambda \odot w)$
+
+   $\forall v \in V: \forall \lambda, \mu \in \mathbb{K}: (\lambda + \mu) \odot v = (\lambda \odot v) \oplus (\mu \odot v)$
+
+Die Elemente $v \in V$ heißen /Vektoren/. Die Elemente
+$k \in \mathbb{K}$ heißen /Skalare/. Verkürzt wird oft von "$V$ ist
+$\mathbb{K}$-Vektorraum" gesprochen anstelle von "$(V, \oplus)$ ist
+$\mathbb{K}$-Vektorraum".
+
+$\oplus$ wird auch als /Vektoraddition/ bezeichnet.
+
+** Eigenschaften
+
+-  es gilt $\forall v \in V: e_{+} \odot v = e_{\oplus}$, wobei $e_{+}$
+   das neutrale Element des Körpers $(\mathbb{K}, +, \cdot)$ bzgl. "$+$"
+   und $e_{\oplus}$ das neutrale Element der Gruppe $(V, \oplus)$ ist.
+-  es gilt
+   $\forall \lambda \in \mathbb{K}: \lambda \odot e_{\oplus} = e_{\oplus}$
+-  das neutrale Element $e_{\oplus}$ von $(V, \oplus)$ heißt auch
+   /Nullvektor/
+
+* Euklidischer (Vektor-)Raum
+
+Ein [[vektorraum][Vektorraum]] $(V,\oplus)$ über dem [[koeper][Körper]]
+der *reellen Zahlen* $(\mathbb{R},+,\cdot)$ auf dem ein
+[[skalarprodukt][Skalarprodukt]]
+$\langle \cdot , \cdot \rangle: V \times V \rightarrow \mathbb{R}$
+definiert ist, heißt /euklidischer Vektorraum/.
+
+* Unitärer Vektorraum
+
+Sei $(V,\oplus)$ ein [[vektorraum][Vektorraum]] über dem
+[[koeper][Körper]] $(\mathbb{K},+,\cdot)$, auf dem ein
+[[skalarprodukt][Skalarprodukt]]
+$\langle \cdot , \cdot \rangle: V \times V \rightarrow \mathbb{K}$
+definiert ist, dann heißt $(V,\oplus)$ /euklidischer Vektorraum/, wenn
+$\mathbb{K} = \mathbb{C}$ gilt.
+
+* Spezielle Vektorräume
+
+** Der Standardvektorraum der reellen Zahlen
+
+Der bekannteste Vektorraum ist der /Vektorraum der rellen Zahlen/
+$(\mathbb{R}^n, \oplus)$ mit $n \in \mathbb{N}$ mit
+
+-  der /Vektoraddition/ $\oplus$: TODO
+-  der /Skalarmultiplikation/
+   $\odot: \mathbb{R} \times \mathbb{R}^n \rightarrow \mathbb{R}^n$ als
+   Veknüpfung mit Elementen des Körpers der reellen Zahlen
+   $(\mathbb{R},+,\cdot)$.
+
+Dieser Raum ist so bekannt, dass in der Praxis i.d.R auf die konkrete
+Angabe der Verknüpfungen $\oplus$ und $\odot$ verzichtet und stattdessen
+nur vom "Vektorraum der reelen Zahlen" oder dem "$\mathbb{R}^n$"
+gesprochen wird.
+
+Standardskalarprodukt / -norm / -metrik im Vektorraum der reellen Zahlen
+
+*Standardskalarprodukt:* euklidisches Skalarprodukt
+$\sqrt{\sum\_{i=1}^{n} x_i^2}$
+
+*Eigenschaften:*
+
+Der Vektorraum der reellen Zahlen bildet ...
+
+-  ... mit dem [[skalarprodukt][/euklidische Skalarprodukt/]]
+   $\langle x, y \rangle := \sum\_{i=1}^{n} x_i y_i$ einen euklidischen
+   Raum. In der Praxis wird oft auf die Angabe eines konkreten
+   Skalarproduktes verzichtet. Dann ist i.d.R. das euklidische
+   Skalarprodukt gemeint.
+-  ... mit der [[norm][/euklidischen Norm/]]
+   $\|x,y\|_s := \sqrt{\sum\_{i=1}^{n} x_i^2}$ einen [[norm][normierten
+   Raum]]. In der Praxis wird oft auf die Angabe einer konkreten Norm
+   verzichtet. Konventionell wird dann meist die /Maximusnorm/
+   $\|x\|\_{\infty} := \max\{|x_i| | 1 \leq i \leq n\}$ verwendet. Da im
+   Vektorraum der reellen Zahlen aber alle Normen [[norm][äquivalent]]
+   sind kann auch eine andere Norm verwendet werden.
+-  ... mit der [[metrik][/euklidischen Metrik/]]
+   $d(x,y) := \sqrt{\sum\_{i=1}^{n} (x_i - y_i)^2}$ einen
+   [[norm][metrischen Raum]]. In der Praxis wird oft auf die Angabe
+   einer konkreten Metrik verzichtet. Konventionell wird dann meist die
+   /Maximusmetrik/ verwendet. Da im Vektorraum der reellen Zahlen aber
+   alle Metriken [[metrik][äquivalent]] sind kann auch eine andere
+   Metrik verwendet werden.
+
+** Der Standardvektorraum der komplexen Zahlen
+
+TODO
+
+* Unterraum
+
+Sei $(V,\oplus)$ Vektorraum und sei $U \subseteq V$, dann heißt
+$(U, \oplus)$ /Unterraum/ (auch /Teilraum/ oder /Untervektorraum/) von
+$(V, \oplus)$, wenn $(U,\oplus)$ selbst ein Vektorraum ist.
+
+Es gilt das Kriterium: $(U,\oplus)$ ist genau dann Unterraum von
+$(V,\oplus)$, wenn
+
+-  $U \subseteq V$,
+-  $(U,\oplus)$ bzgl. der Addition "$\oplus$" abgeschlossen ist, d.h.
+   $\forall u,v \in U: u + v \in U$,
+-  $(U,\oplus)$ bzgl. der Skalarmultiplikation "$\odot$" abgeschlossen
+   ist, d.h.
+   $\forall \lambda \in \mathbb{K}: \forall u \in U: \lambda \odot u \in U$.
+
+** Eigenschaften
+
+-  Das neutrale Element bzgl. "$\oplus$" ist Bestandteil jedes
+   Unterraums: Sei $(U,\oplus)$ Unterraum von $(V,\oplus)$, dann gilt
+   $e_{\oplus} \in U$.
+-  Für alle $v \in V$ gilt:
+   $\\{\lambda \odot v | \lambda \in \mathbb{K}\\}$ ist Unterraum von
+   $(V,\oplus)$
+-  Schnitte von Unterräumen sind selbst Unterräume: Seien
+   $(U_{1},\oplus), (U_{2},\oplus)$ Unterräume von $(V,\oplus)$, dann
+   ist auch $(U_{1} \cap U_{2}, \oplus)$ Unterraum von $(V,\oplus)$.

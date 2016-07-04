@@ -1,0 +1,251 @@
+#+TITLE: Differenzierbarkeit
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Differenzierbarkeit
+---
+#+END_HTML
+
+* Differenzenquotient
+
+Sei $D \subseteq \mathbb{K}$ offen und $f:D \rightarrow \mathbb{K}$,
+sowie $h > 0$ und $x \in D$. Dann heißt
+
+$D_h f(x) := \frac{1}{h} (f(x+h) - f(x))$
+
+/Differenzenquotient/.
+
+* Ableitung /Differenzierbarkeit
+
+Eine Funktion $f: D \rightarrow \mathbb{R}$ auf $D \subseteq \mathbb{R}$
+offen heißt an einer Stelle $x \in D$ /differenzierbar/, wenn
+$c \in \mathbb{R}$ existiert, sodass für alle Folgen
+$(a_n)\_{n \in \mathbb{N}} \subseteq \mathbb{D}$ mit
+$\lim\_{n\rightarrow\infty} a_n = x$ gilt:
+$\lim\_{n\rightarrow\infty} \frac{f(x_n) - f(x)}{x_n - x} = c$. D.h. es
+muss gelten:
+
+$\exists c \in \mathbb{R}: \forall (a_n)\_{n\in\mathbb{N}} \subseteq D: \lim\_{n\rightarrow\infty} a_n = x \rightarrow \lim\_{n\rightarrow\infty} \frac{f(x_n) - f(x)}{x_n - x} = c$
+
+*Äquivalente Definition der Differenzierbarkeit über den
+Differenzenquotienten:*
+
+Sei $D \subseteq \mathbb{R}$ offen und $f:D \rightarrow \mathbb{R}$
+heißt /differenzierbar/ in $x \in D$, wenn der Grenzwert
+
+$f'(x) := \lim_{h \rightarrow 0} D_h f(x)$
+
+existiert. $f'(x)$ wird dann /Ableitung/ von $f$ an der Stelle $x$
+genannt.
+
+*Alternatives Differenzierbarkeitskriterium:* Differenzierbar in einem
+Punkt $x \in D$ sind genau die Funktionen die sich in einer Umgebung von
+$x$ durch eine (affin) lineare Funktion approximieren lassen. D.h.:
+
+Eine Funktion $f: D \rightarrow \mathbb{R}$ ist genau dann
+differenzierbar in $x_0 \in D$, wenn eine Funktion
+$\phi: D \rightarrow \mathbb{R}$ und eine Konstante $c \in \mathbb{R}$
+existieren, mit
+
+1. $f(x_0+h) = f(x_0) + ch + \phi(h)$
+2. $\phi(h) = o(h)$
+
+für $h > 0$ und $h$ /hinreichend klein/ (d.h. es gilt:
+$\exists \epsilon > 0: \forall 0 < h \leq \epsilon: A$, wobei $A$ die
+entsprechende Aussage ist)
+
+*Eigenschaften:*
+
+-  Ist $f$ in $x$ differenzierbar, so ist sie auch in $x$ stetig. Die
+   Umkehrung gilt im allgemeinen nicht.
+-  *Satz von Rolle:* Sei $f:[a,b] \rightarrow \mathbb{R}$ im Intervall
+   $[a,b] \subset \mathbb{R}$ differenzierbar und $f(a) = f(b)$. Dann
+   besitzt die Ableitung $f'$ in $(a,b)$ (mindestens) eine Nullstelle.
+-  *Mittelwertsatz der Differentialrechnung:* Sei
+   $f:[a,b] \rightarrow \mathbb{R}$ im Intervall
+   $[a,b] \subset \mathbb{R}$ differenzierbar. Dann existiert ein
+   $x \in [a,b]$ mit $f'(x) = \frac{f(b) - f(a)}{b-a}$.
+-  Sei $f:[a,b] \rightarrow \mathbb{R}$ differenzierbar und gelte
+
+   -  $f'(x) > 0$ für alle $x\in[a,b]$, dann ist $f$ streng monoton
+      wachsend auf $[a,b]$.
+   -  $f'(x) \geq 0$ für alle $x\in[a,b]$, dann ist $f$ monoton wachsend
+      auf $[a,b]$.
+   -  $f'(x) < 0$ für alle $x\in[a,b]$, dann ist $f$ streng monoton
+      fallend auf $[a,b]$.
+   -  $f'(x) \leq 0$ für alle $x\in[a,b]$, dann ist $f$ monoton fallend
+      auf $[a,b]$.
+
+*Rechenregeln:*
+
+-  Sei $D \subseteq \mathbb{R}$ und seien
+   $f,g: D \rightarrow \mathbb{R}$ in $x\in D$ differenzierbar. Dann
+   gilt:
+
+   -  /Summenregel/:
+      $(\alpha f + \beta g)'(x) = \alpha f'(x) + \beta g'(x)$.
+   -  /Produktregel:/ $(fg)'(x)= f'(x) g(x) + f(x) g'(x)$.
+   -  /Quotientenregel:/
+      $(\frac{f}{g})'(x) = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}$, wenn
+      $g(x) \neq 0$.
+
+-  /Kettenregel:/ Sei $g: D_g \rightarrow \mathbb{R}$ in $x_g \in D_g$
+   differenzierbar und sei $f: D_f \rightarrow \mathbb{R}$ im Punkt
+   $y := g(x) \in D_f$ differenzierbar, dann ist auch
+   $f \circ g: D_g \rightarrow \mathbb{R}$ im Punkt $x_g \in D_g$
+   differenzierbar mit $(f \circ g)'(x_g) = f'(g(x_g)) g'(x_g)$
+-  /Ableitung der Umkehrfunktion:/ Sei $f: [a,b] \rightarrow [c,d]$ mit
+   $[a,b],[c,d] \subseteq \mathbb{R}$ stetig und streng monoton, sowie
+   differenzierbar in $y \in [a,b]$ mit $f'(y) \neq 0$. Dann existiert
+   die Umkehrfunktion $f^{-1}$, die auch stetig und monoton und in
+   $x = f(y)$ differenzierbar ist mit
+   $(f^{-1})'(x) = \frac{1}{f'(y)} = \frac{1}{f'(f^{-1}(x))}$
+
+*Ableitungen spezieller Funktionen:*
+
+-  /Polynome:/ Polynome $p(x) \in \mathbb{R}[x]$ sind global
+   differenzierbar mit $p'(x) = \sum_{k=1}^{n} ka_kx^{k-1}$
+-  Besitzt die Potenzreihe $p(x) = \sum_{k=1}^{\infty} a_kx^{k}$ den
+   Konvergenzradius $R_p$, so ist $p$ in einer $R_p$-Kugel um den
+   Nullpunkt differenzierbat, mit Ableitung
+   $p'(x) = \sum_{k=1}^{n} ka_kx^{k-1}$ und mit gleichem
+   Konvergenzradius.
+-  /Wurzelfunktion:/ Die Wurzelfunktion
+   $\sqrt{\cdot}: \mathbb{R}_0^+ \rightarrow \mathbb{R}_0^+$ ist global
+   differenzierbar und es gilt
+   $(\sqrt{x})' = x^{\frac{1}{2}} = \frac{1}{2} x^{-\frac{1}{2}}$.
+-  /Exponentialfunktion:/ Die Exponentialfunktion ist global
+   differenzierbar und es gilt $\exp'(x) = \exp(x)$
+-  /Allgemeine Exponentialfunktion:/ Die allgemeine Exponentialfunktion
+   ist global differenzierbar und es gilt
+   $\exp_a'(x) = \exp_a(x) \ln a$.
+-  /Logarithmusfunktion:/ Die Logarithmusfunktion
+   $\ln: \mathbb{R}^+ \rightarrow \mathbb{R}$ ist global differenzierbar
+   und es gilt $\ln'(x) = \frac{1}{x}$.
+-  /Allgemeine Logarithmusfunktion:/ Die Logarithmusfunktion
+   $\log_a: \mathbb{R}^+ \rightarrow \mathbb{R}$ ist global
+   differenzierbar und es gilt $\log_a'(x) = \frac{1}{x \ln a}$.
+-  /Sinus/ und /Cosinus/: Sinus und Cosinus sind in ganz $\mathbb{R}$
+   differenzierbar und es gilt: $\sin'(x) = \cos(x)$ und
+   $\cos'(x) = -\sin(x)$
+-  /Tangens/: Tangens ist global differenzierbar und es gilt
+   $\tan'(x) = \frac{1}{\cos^2(x)}$
+-  /Betragsfunktion:/ Die Betragsfunktion ist in $\mathbb{R}_0^+$
+   differenzierbar, wobei dann für $x=0$ die einseitige Ableitung
+   gemeint ist.
+
+** Rechts- und Linksseitige Ableitung
+
+Eine Funktion $f: D \rightarrow \mathbb{R}$ auf $D \subseteq \mathbb{R}$
+offen heißt an einer Stelle $x \in D$ /rechtsseitig differenzierbar/,
+wenn $c \in \mathbb{R}$ existiert, sodass für alle Folgen
+$(a_n)\_{n \in \mathbb{N}} \subseteq (x, x+a)$ für ein
+$a \in \mathbb{R}^+$ mit $\lim\_{n\rightarrow\infty} a_n = x$ gilt:
+$\lim\_{n\rightarrow\infty} \frac{f(x_n) - f(x)}{x_n - x} = c$. D.h. es
+muss gelten:
+
+$\exists c \in \mathbb{R}: \forall (a_n)\_{n\in\mathbb{N}} \subseteq (x, x+a): \lim\_{n\rightarrow\infty} a_n = x \rightarrow \lim\_{n\rightarrow\infty} \frac{f(x_n) - f(x)}{x_n - x} = c$
+
+Eine Funktion $f: D \rightarrow \mathbb{R}$ auf $D \subseteq \mathbb{R}$
+offen heißt an einer Stelle $x \in D$ /linksseitig differenzierbar/,
+wenn $c \in \mathbb{R}$ existiert, sodass für alle Folgen
+$(a_n)\_{n \in \mathbb{N}} \subseteq (x-a, x)$ für ein
+$a \in \mathbb{R}^+$ mit $\lim\_{n\rightarrow\infty} a_n = x$ gilt:
+$\lim\_{n\rightarrow\infty} \frac{f(x_n) - f(x)}{x_n - x} = c$. D.h. es
+muss gelten:
+
+$\exists c \in \mathbb{R}: \forall (a_n)\_{n\in\mathbb{N}} \subseteq (x-a, x): \lim\_{n\rightarrow\infty} a_n = x \rightarrow \lim\_{n\rightarrow\infty} \frac{f(x_n) - f(x)}{x_n - x} = c$
+
+*Eigenschaften:*
+
+-  eine Funktion $f$ ist genau dann an einer Stelle $x \in D$
+   differenzierbar, wenn der rechts- und linksseitge Grenzwert an dieser
+   Stele existieren /und/ übereinstimmen.
+
+** Höhere Ableitung
+
+Sei $f: D \rightarrow \mathbb{R}$ Funktion auf $D \subset \mathbb{R}$
+offen, dann heißt $f$ in $x \in D$ $n$-mal /differenzierbar/, wenn die
+$n-1$-te Ableitung von $f$ differenzierbar ist in $x$. Wir schreiben:
+
+-  $f''(x)$ oder $f^(2)(x)$ für die 2. Ableitung
+-  $f^(n)$ für die n-te Ableitung.
+
+$f$ heißt in $x \in D$ $n$-mal /stetig differenzierbar/ in $x$, wenn
+$f^(n)$ in $x$ stetig ist.
+
+Die 2. Ableitung kann als /Krümmung/ einer Funktion gedeutet werden.
+
+-  $f$ ist /konvex/ (Ausbeulung nach unten) wenn
+   $\forall x\in[a,b]: f''(x) > 0$ gilt.
+-  $f$ ist /konkav/ (Ausbeulung nach oben) wenn
+   $\forall x\in[a,b]: f''(x) < 0$ gilt.
+
+** Lokale Extremata
+
+Eine Funktion $f:D \rightarrow \mathbb{R}$ mit $D \subset\mathbb{R}$ hat
+im Punkt $x_0 \in D$ ein /lokales Maximum/, wenn eine Umgebung
+$U \subset D$ von $x_0$ existiert, so dass
+$\forall x \in U: f(x) \leq f(x_0)$ gilt.
+
+Eine Funktion $f:D \rightarrow \mathbb{R}$ mit $D \subset\mathbb{R}$ hat
+im Punkt $x_0 \in D$ ein /lokales Minimum/, wenn eine Umgebung
+$U \subset D$ von $x_0$ existiert, so dass
+$\forall x \in U: f(x) \geq f(x_0)$ gilt.
+
+Ein /lokales Extremum/ ist ein lokales Maximum oder ein lokales Minimum.
+
+*Notwendige Bedingung für lokale Extremata:*
+
+Wenn eine Funktion $f:D\rightarrow\mathbb{R}$, die in einer Umgebung
+eines Punktes $x_0 \in D$ differenzierbar ist, in $x_0$ ein lokales
+Extremum besitzt, dann gilt $f'(x_0) = 0$.
+
+*Hinreichende Bedingung für lokale Extrema:*
+
+Sei $f:(a,b) \rightarrow \mathbb{R}$ auf $(a,b) \subset \mathbb{R}$ in
+$x\in (a,b)$ 2-mal differenzierbar und gelte $f'(x) = 0$, dann gilt:
+
+1. $f$ besitzt in $x$ ein lokales Minimum, wenn $f''(x) > 0$ gilt.
+2. $f$ besitzt in $x$ ein lokales Maximum, wenn $f''(x) < 0$ gilt.
+
+* Taylor-Entwicklung
+
+*Ziel:* Approximation einer Funktion $f$ in der Umgebung eines Punktes
+$x_0$ durch ein Polynom vom Grad $n\in\mathbb{N}_{0}$.
+
+Sei $I:=(a,b)\in \mathbb{R}$ und $f:I \rightarrow \mathbb{R}$ eine
+Funktion, die $(n+1)$-mal stetig differenzierbar ist und sei
+$x_0 \in I$. Dann heißt das Polynom:
+
+$T_{n,x_0}(h) := \sum_{k=0}^{n} \frac{1}{k!} f^{(k)}(x_0) h^k$
+
+/Taylor-Polynom/.
+
+*Satz von Taylor:* Sei $x_0 \in I$, dann lässt sich $f$ in der Umgebung
+von $x_0$ darstellen als:
+
+$f(x_0 + h) = T_{n,x_0} + \frac{1}{(h+1)!} f^{(n+1)} (\xsi) h^{k+1}$
+
+für alle $h \in (a-x_0, b-x_0)$ mit geeignetem
+$xsi \in (x_0 - h, x_0 + h)$.
+
+*Eigenschaften:*
+
+-  Falls $f$ (n+1)-mal stetig differenzierbar ist, so folgt
+   $|f(x_0 + h) + T_{n,x_0}(h)| = \mathcal{O}(h^{n+1})$.
+
+* Approximative Ableitungen
+
+Approximation von $f'(x)$ durch den Differenzenquotient
+$D_h f(x) = \frac{f(x+h) - f(x)}{h}$.
+
+*zentraler Differenzenquotient 1. Ordnung*:
+$D_h^(1) f(x) = \frac{f(x+h) - f(x-h)}{2h} \approx f'(x)$. *zentraler
+Differenzenquotient 2. Ordnung*:
+$D_h^(2) f(x) = \frac{f(x+h) - 2 f(x) + f(x-h)}{h*} \approx f''(x)$.

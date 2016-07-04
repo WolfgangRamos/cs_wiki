@@ -1,0 +1,39 @@
+#+TITLE: Datenbanken
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+* Datenbanken
+
+** TODO konstante Werte
+
+** Build in Predicates
+
+Bei Datenbankanfragen darf man auch Relationen und Funktionen
+benutzen, die eine feste Beduetung haben, z.B. "$<$" auf den ganzen
+Zahlen, oder "$+$" auf Additionen.
+
+Wir erlauben das auch:
+
+Wir geben Relationssymbole/Funktionsymnole mit fester Interpretation
+von, also z.B. wenn $M_s = \Z$ können wir ein Synbol $<$" mit
+$\Sigma(<) = S\:S$ haben und wir fordern für jede Struktur
+(Datenbankzustände): $<^{\St}$ = "natürliche kleiner Relation auf
+ganzen Zahlen."
+
+Notation: 
+
+$\al \dots x_0^{Number} < x_1^{Number}), x_0, x_1^{String}/"Meier"\ar$
+
+** Active Universe
+
+Das *active universe* Bezeichnet die Menge der Werte zu allen Sorten,
+die in einem gegebenen Datenbankzustand $\St$ vorkommen.
+
+Anfragen, wie z.B. $\al \top, x_0^{s}\ar^{\St}$ würden alle möglichen
+Werte aus $s^{\St}$ liefern, auch solchen, die /nicht/ in den Relationen
+des aktuellen Datenzustands $\St$ vorkommen.
+
+Daher beschränken wir Anfragen dieser Art auf das /acitve universe/. D.h. wir
+schreiben sie um zu Anfragen der Form: $\al \top \wedge, \dots\ar$.

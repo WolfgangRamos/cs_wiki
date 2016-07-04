@@ -1,0 +1,18 @@
+#+TITLE: Funktionskomposition
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Funktionskomposition
+---
+#+END_HTML
+
+* Funktionskomposition
+
+Seine $M, N, P$ Mengen und $f: M \rightarrow N$ und $g: N \rightarrow P$
+Funktionen. Dann heißt die Funktion $g \circ f: M \rightarrow P$ mit
+$(g \circ f)(x) = g(f(x))$ die /Komposition/ von $g$ und $f$.

@@ -1,0 +1,69 @@
+#+TITLE: Symmetric_multi_processing
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Symmetric_multi_processing
+---
+#+END_HTML
+
+* Symmetric Multiprocessing (SMP)
+
+-  Kernel kann auf jedem Prozessor ausgeführt werden
+-  *Self Scheduling*: jeder Prozessor dispatched selbsständig Prozesse
+   aus dem Pool aller Prozesse
+
+** Taxonomie von Systemem
+
+(nach Flynn, 1972)
+
+-  *Single Instruction Single Data (SSID) Stream*: Ein Prozessor führt
+   eine Sequenz von Instruktionen auf einer Datenmenge aus (z.B. Simple
+   Batch Systeme).
+-  *Single Instruction Multiple Data (SIMD) Stream*: Mehrere Prozessoren
+   führen dieselbe Sequenz von Instruktionen auf verschiedenen
+   Datenmengen aus (z.B. Grafikkarten).
+-  *Multiple Instruction Single Data (MISD) Stream*: Mehrere Prozessozen
+   führen verschiedenen Teile einer Sequenz von Instruktionen auf
+   derselben Datenmenge aus (bislang nicht realisiert).
+-  *Multiple Instruction Multiple Data (MIMD) Stream*: Mehrere
+   Prozessoren führen verschiedene Sequenzen von Instruktionen auf
+   verschiedenen Datenmengen aus (z.B. Rechner mit
+   Multi-Core-Prozessoren). MIMD-Systeme können nach der Art der
+   Kommunikation zwischen den Prozessoren unterteilt werden in:
+
+   -  *Cluster*: Jeder Prozessor hat einen eigenen Speicher
+      (Kommunikation zwischen den Prozessoren erfolgt z.B. über ein
+      Netzwerk)
+   -  *Shared Memory Multiprocessor*: Prozessoren haben einen
+      gemeinsamen Speicher (Kommunikation zwischen den Prozessoren
+      erfolgt über den gemeinsamen Speicher). Shared Memory
+      Multiprocessor Systeme können weiter nach der Art des Scheduling
+      unterteilt werden in:
+
+      -  *Master-Slave Architektur*:
+
+         -  Kernel wird nur auf der Master CPU ausgeführt
+         -  Master CPU übernimmt Scheduling der Prozesse für Slave CPUs
+         -  Nachteile:
+
+            -  Performance der Master CPU entscheidet über
+               Gesamtperformance
+            -  Ausfall der Master CPU kann nicht abgefangen werden
+
+#+CAPTION: Einordnung von SMP in die Taxonbbomie von Systemen nach Flynn
+(1972)
+
+[[smp_taxonomy.png]]
+** Gang Scheduling
+
+Eine Gruppe von Threads wird beim Scheduling als eine Einheit betrachtet
+und auf einer Gruppe von CPUs gemeinsam dispatched.
+
+-  Vorteil: weniger Context Switches erforderlich → geringerer Overhead
+   durch Scheduling
+-  Nachteil: Programme müssen "Gangs" festlegen

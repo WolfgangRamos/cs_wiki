@@ -1,0 +1,77 @@
+#+TITLE: Teilbarkeitsrelation
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Teilbarkeitsrelation
+---
+#+END_HTML
+
+* Teilbarkeitsrelation
+
+Die Relation $| \subseteq \mathbb{Z}\setminus \\{0\\} \times \mathbb{Z}$
+mit $x|y :\Longleftrightarrow \exists z \in \mathbb{Z}: zx = y$ heißt
+/Teilbarkeitsrelation/. Gilt $x|y$, so sagt man "$x$ teilt $y$" oder
+"$y$ ist (natürliches) Vielfaches von $x$".
+
+** Eigenschaften
+
+-  die Teilbarkeitsrelation ist eine
+   [[ordnungsrelation][Ordnungsrelation]]. Es gilt
+
+   -  Transititivität:
+      $\forall a,b,c \in \mathbb{Z}: (a|b \wedge b|c) \Rightarrow a|c$
+   -  Reflexivität: $\forall a \in \mathbb{Z}: a|a$
+   -  Antisymmetrie:
+      $\forall a,b \in \mathbb{Z}: (a|b \wedge b|a) \Rightarrow a = b$
+
+-  ein Teiler von $a$ teilt auch Vielfache von $a$, d.h. es gilt:
+   $\forall a,d,\alpha \in \mathbb{Z}: d|a \Rightarrow d|\alpha a$
+-  ein Teiler von $a$ und $b$ teilt auch Vielfache von $a$ und $b$, d.h.
+   es gilt:
+   $\forall a,b,d,\alpha,\beta \in \mathbb{Z}: d|a \wedge d|b \Rightarrow d|(\alpha a + \beta b)$
+
+* gemeinsamer Teiler
+
+$d \in \mathbb{Z} \setminus \\{0\\}$ heißt genau dann /gemeinsamer
+Teiler/ von $a \in \mathbb{Z}$ und $b \in \mathbb{Z}$, wenn $d|a$ und
+$d|b$ gilt.
+
+* Größter gemeinsamer Teiler
+
+Ein [[teilbarkeitsrelation#gemeinsamer-teiler][gemeinsamer Teiler]]
+heißt /größter gemeinsamer Teiler/ (auch /ggT/ oder engl. /gcd/ für
+/gretests common divisor/), wenn
+$\forall e \in \mathbb{Z} \setminus \\{0\\}: (e|a \wedge e|b) \Rightarrow e|d$
+gilt.
+
+** klassischer euklidischer Algorithmus
+
+*ges:* $\gcd(a,b)$, wobei oBdA $a > b$ gilt.
+
+*Idee:* Wiederholte Subtraktion: Subtrahiere die kleiner Zahl $b$ von
+der größere Zahl $a$ und bestimme den Rest $a-b$. Suche danach weiter
+(auf dieselbe Weise nach) dem ggt von der kleineren Zahl $b$ und $a-b$
+(der Algorithmus funktioniert, da jeder Teiler von $b$ und $a-b$ teilt
+auch $a$).
+
+** neuer euklidischer Algorithmus
+
+*ges:* $\gcd(a,b)$, wobei oBdA $a > b$ gilt.
+
+*Idee:* Wiederholte [[division_mit_rest][Division mit Rest]]: Teile die
+größere Zahl $a$ durch die kleinere Zahl $b$ und bestimme den Rest $r$
+dieser Division. Danach suche weiter (auf dieselbe Weise) nach dem ggT
+von der kleineren Zahl $b$ und $r$ (der Algorithmus funktioniert, da
+$a-r$ Vielfaches von $b$ ist und somit jeder Teiler von $b$ auch $a-r$
+teilt).
+
+Der euklidische Algorithmus liefert Zahlen
+$\alpha, \beta \in \mathbb{Z}$, mit denen sich $\gcd(a,b)$ als
+Linearkombination von $a$ und $b$ darstellen lässt, d.h. es gilt
+$\alpha a + \beta b = \gcd (a,b)$. Dies kann man mit dem erweiterten
+euklidischen Algorithmus bestimmen.

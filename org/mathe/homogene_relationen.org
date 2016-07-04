@@ -1,0 +1,29 @@
+#+TITLE: Homogene_relationen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Homogene_relationen
+---
+#+END_HTML
+
+* homogene Relation
+
+Sei $M$ eine Menge... $R \subseteq M \times M$
+
+* spezielle homogene Relationen
+
+Sei $R \subseteq M \times M$ eine (homogene) Relation, dann heißt $R$
+
+| Eigenschaft                                                          | [[aequivalenzrelation][Äquivalenzrelation]]   | [[ordnungsrelation][Ordnungsrelation]]   | [[ordnungsrelation][lineare Ordnungsrelation]]   | [[quasiordnung][Quasiordnung]]   | [[striktordnung][Striktordnung]]   |
+|----------------------------------------------------------------------+-----------------------------------------------+------------------------------------------+--------------------------------------------------+----------------------------------+------------------------------------|
+| Reflexivität$\forall x \in M: x R x$                                 | ✓                                             | ✓                                        | ✓                                                | ✓                                |                                    |
+| Symmetrie$\forall x,y \in M: xRy \Rightarrow yRx$                    | ✓                                             |                                          |                                                  |                                  |                                    |
+| Transitivität$\forall x,y,z \in M: xRy \wedge yRz \Rightarrow xRz$   | ✓                                             | ✓                                        | ✓                                                | ✓                                | ✓                                  |
+| Antisymmetrie$\forall x,y \in M: xRy \wedge yRx \Rightarrow x = y$   |                                               | ✓                                        | ✓                                                |                                  |                                    |
+| Linearität$\forall x,y \in M: xRy \vee yRx$                          |                                               |                                          | ✓                                                |                                  |                                    |
+| Irreflexivität$\forall x \in M: \neg (xRx)$                          |                                               |                                          |                                                  |                                  | ✓                                  |

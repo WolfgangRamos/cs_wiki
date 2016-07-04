@@ -1,0 +1,187 @@
+#+TITLE: Uml
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Uml
+---
+#+END_HTML
+
+* Unified Modelling Language
+
+Die UML dient zur:
+
+-  Modellierung unterschiedlicher Aspekte eines Systems
+-  Kommunikation von Entwurfsentscheidungen
+
+** Stereotype
+
+Stereotype (=<<⟨Stereotyp⟩>>=) ermöglichen eine Klassifizierung von
+Elementen eines Modells zusätzlich zu den anderen
+Klassizierungsmöglichkeiten der UML.
+
+** Diagramme zur Modellierung der Struktur
+
+*** Komponentendiagramm
+
+*** Verteilungsdiagramm (Deploymentdiagram)
+
+*** Klassendiagramm
+
+-  Beziehungen zwischen Klassen
+
+   -  Dependency: eine Klasse nutzt eine andere Klasse in irgendeiner
+      Form, ohne eine Referenz auf diese Klasse zu haben
+   -  Assoziation: Modelliert eine Verbindung (Link) zwischen zwei
+      Klassen
+
+      -  Aggregation: schwache Form einer Teil-Ganzes-Beziehung zwischen
+         zwei Klassen. Teile können auch ohne Ganzes existieren
+      -  Komposition: starke Form einer Teil-Ganzes-Beziehung zwischen
+         zwei Klassen. Teile können nicht ohne Ganzes existieren
+         (/lifecycle dependency/).
+      -  Navigierbarkeit
+      -  Multiplizität: 1 (Default), n (*), x bis y (x..y)
+
+   -  Delegationsbeziehung: Stereotyp =<<delegate>>= (i.d.R. mit
+      Multiplizität 1:1)
+
+      -  Klasse A bietet alle Dienste von Klasse B an
+
+-  Klassen
+
+   -  Sichtbarkeit: nicht in UML dargestellt (evtl. über Stereotype)
+   -  abstract: Stereotyp =<<abstract>>=
+
+-  Modifikatoren für Attribute und Methoden
+
+   -  Sichtbarkeiten: public (+), protected (#), private (-)
+   -  abstract: Stereotyp =<<abstract>>=
+
+-  Interface: Stereotyp =<<interface>>=
+
+   -  Realisierung eines Interface
+
+*** Objektdiagramm
+
+** Diagramme zur Modellierung der Dynamik
+
+** Anwendungsfall
+
+Beschreibt die Nutzung eines bestimmten Teils der Funktionalität eines
+Systems durch einen /Akteur/ (eine Folge von Ereignissen zwischen Aktuer
+und System). Ein Akteur ist eine /Rolle/ in der eine Entitäten, die sich
+außerhalb des Systems befinden und einen Einfluss auf das System hat
+(z.B. ein Benutzer oder ein System), an einem Use-Case beiteiligt ist
+(d.h. dieselbe Entität kann in verschiedenen Rollen an einem Use-Case
+beteiligt sein). Jeder Anwendungsfall wird durch ein oder mehrere
+Szenarien (i.d.R. eine textuelle Beschreibung eines prototypischen
+Benutzungsablaufs) konkretisiert. Szenarien werden später durch
+Sequenzdiagramme beschrieben.
+
+Ermittlung von Anwendungsfällen: 1. Akteure identifizieren 2.
+Anwendungsfälle identifzieren 3. Anwendungsfälle strukturieren (durch
+Beziehungen zwischen Anwendungsfällen)
+
+Anwendungsfälle werden textuell, i.d.R. in tabellarischen
+Spezifikationsschabolen beschrieben. Anwendungsfalldiagramme geben
+Übersichten über Anwendungsfälle und deren Beziehungen zueinander.
+
+*** Anwendungsfalldiagramm (Use-Case Diagram)
+
+Übersicht über Anwendungsfälle. Wichtige UML-Elemente:
+
+-  /Anwendungsfall/: s.o.
+-  /Akteur/: s.o.
+-  /System/: s.o.
+-  /Assoziation/: Beziehung zwischen einem Akteur und einem
+   Anwendungsfall
+-  Beziehungen zwischen Anwendungsfällen:
+
+   -  =<<include>>=: (obligate) Benutzung eines Anwendungsfalls (der
+      benutze Anwendungsfall ist unbedingt notwendig für die
+      Funktionalität)
+   -  =<<extend>>=: optionale Benutzung eines Anwendungsfalls
+      (Erweiterung)
+   -  Vererbung: Anwendungsfälle können das Verhalten anderer
+      Anwendugsfälle erben und überschreiben und/oder spezialisieren
+
+-  /Extension Points/: geben an, wo ein erweiternder Anwendungsfall
+   einzufügen ist
+-  /Pakete/: können zur Strukturierung von Anwendungsfällen verwendet
+   werden.
+
+   -  =<<import>>=-Beziehung: Vererbung zwischen Paketen (in diesm Fall
+      erben die Anwendungsfälle eines Pakets das Verhalten der
+      Anwendungsfälle des anderen Pakets)
+
+** Zustandsdiagramme
+
+Beschreiben das /gesamte/ Verhaltensrepertoire von Objekten einer Klasse
+(beziehen sich als auf die Dynamik einer Klasse).
+
+*** Verhaltenszustandsautomat
+
+Beschreibt das Verhalten der Objekte einer Klasse. Wichtige
+UML-Elemente:
+
+-  /Zustände/
+
+   -  /Aktionen/ in Zuständen:
+
+      -  =entry /=:
+      -  =do /=:
+      -  =exit /=:
+
+-  /Transitionen/ (Zustandsübergänge)
+
+   -  /Trigger/: Ereignis, dass den Zustandsübergang auslöst
+   -  /Guard/: Bedingung die erfüllt sein muss, damit eine Transition
+      feuert
+   -  /Effect/: Ereignis, dass mit dem Zustandsübergang verbunden ist
+
+*** Protokollzustandsautomat
+
+Beschreibt wie eine Komponente (z.B. Objekte einer Klasse) genutzt
+werden darf/kann, d.h. es steht die Beschreibung der Dienste einer
+Klasse im Vordergrund (Transitionen entsprechen hier Methodenaufrufen
+oder Aktionen eines Nutzers). Wichtige UML-Elemente:
+
+** Aktivitätsdiagramme
+
+Spezifikation von Arbeitsabläufen (Workflows), die unabhängig von
+Klassen oder Klassenübergreifend sein können. Wichtige UML-Elemente:
+
+-  /initial node/
+-  /final node/
+
+   -  /flow final/:
+   -  /activity final/: Ende der im Diagramm dargestellten Aktivität
+
+-  /activity node/: Aktivität (eindeutige Bezeichnung)
+-  /decision node/: für Fallunterscheidungen
+
+   -  Guard: spezifiziert die Bedingungen einer Verzweigung
+
+-  /fork nodes/ und /merge nodes/: zur Modellierung paralleler
+   Aktivitäten
+-  /swimlanes/: zur Modellierung von Verantwortlichkeitsgrenzen
+-  Aktefakt: Objekte, die an Aktivitäten beiteiligt sind
+
+Workflows können auch mit der [[bpml][Business Process Modelling
+Language]] dargestellt werden.
+
+** Sequenzdiagramm
+
+Ein Sequenzdiagramm beschreibt ein Beispiele für eine Interaktionen
+zwischen Objekten. Ein Sequenzdiagramm beschreibt also eine konkrete
+Sequenz von Verarbeitungsschritten (Methodenaufrufen). Wichtige
+UML-Elemente
+
+-  synchrone Aufrufe
+-  asynchrone Aufrufe
+-  Erzeugungsnachrichten

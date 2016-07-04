@@ -1,0 +1,36 @@
+#+TITLE: Logarithmus
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Logarithmus
+---
+#+END_HTML
+
+* Logarithmus
+
+$\ln: \mathbb{R}^+ \rightarrow \mathbb{R}$ mit $\ln = \exp^{-1}$
+
+Unter der Logarithmusfunktion zur Basis $a \in \mathbb{R}$ mit $a>1$
+versteht man die Funktion $\log_a : \mathbb{R}^+ \rightarrow \mathbb{R}$
+mit
+
+*Eigenschaften:*
+
+-  $\ln$ ist streng monoton wachsend und stetig in $\mathbb{R}^+$
+
+*Rechenregeln:*
+
+-  $\forall x \in \mathbb{R}: \ln(\exp(x)) = x$
+-  $\forall x \in \mathbb{R}: \exp(\ln(x)) = x$
+-  Logarithmus eine Produkts:
+   $\log_{b} (x \cdot y) = (\log_{b} x) + (\log_{b} y)$
+-  Logarithmus eines Quotienten:
+   $\log_{b} \frac{x}{y} = (\log_{b} x) - (\log_{b} y)$
+-  Logarithmus mit Potenzen: $\log_{b} x^r = r \log_{b} x$
+-  Basiswechsel: $\log_{b} x = \frac{\log_{a} x}{\log_{a} b}$
+-  Ableitung des Logarithmus: $\ln'(x) = \frac{1}{x}$

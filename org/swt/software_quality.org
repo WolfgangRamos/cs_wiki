@@ -1,0 +1,56 @@
+#+TITLE: Software_quality
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Software_quality
+---
+#+END_HTML
+
+* Qualitätsanfoderungen an Software
+
+Axiom: guter Entwicklungsprozess => gute interne Qualität => gute
+externe Qualität => gute Benutzungsqualität. Ziel ist es daher die
+interne Qualität zu erhöhen, um externe Qualität zu erreichen.
+
+** interne Qualität
+
+Die Gesamtheit der Gütemerkmale von Software aus
+herstellungsorientierter Sicht.
+
+-  /Wartbarkeit/:
+-  /Modularität/:
+-  /Wiederverwendbarkeit/:
+-  /Kapselung/:
+-  /Strukturiertheit/: Der Code einer Applikation sollt strukturiert
+   sein, damit andere Entwickler sich für Änderungen bzw. Erweiterungen
+   leichter in den Code einfinden können.
+
+** externe Qualität
+
+Gesamtheit der technischen Gütemerkmale einer Software.
+
+-  /Korrektheit/: SW sollte fehlerfrei arbeiten (Nachweisbar z.B. durch
+   formale Korrektheitsbeweise)
+-  /Stabilität/: SW sollte nicht abstürzen.
+-  /Sicherheit/:
+
+   -  /Safety/: SW stellt keine Gefahr für die Umwelt dar (keine Sach-
+      oder Personenschäden)
+   -  /Security/: SW ist geschütz vor Gefahren der Umwelt (z.B.
+      Schadsoftware)
+
+-  /Verfügbarkeit/: Die Verfügbarkeit eines Produkts sollte hoch sein,
+   d.h., dass das Produkt für den Kunden immer zugänglich sein sollte.
+-  /Benutzerfreundlichkeit/: Erleichtert es Benutzern/Kunden sich in das
+   Programm einzuarbeiten.
+
+** Gebrauchsqualität
+
+Gesamtheit der Gütemerkmale einer Software aus Anwedersicht (/Inwieweit
+ist eine Anwender in seinem Kontext in der Lage seine agngestreben Ziele
+zu erreichen?/).

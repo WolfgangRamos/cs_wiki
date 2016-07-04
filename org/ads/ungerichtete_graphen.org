@@ -1,0 +1,101 @@
+#+TITLE: Ungerichtete_graphen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Ungerichtete_graphen
+---
+#+END_HTML
+
+* Ungerichter Graph
+
+Ein /ungerichteter Graph/ $G=(V,E)$ ist ein Paar aus einer endlichen
+(nichtleeren) /Knotenmenge/ $V$ und einer /Kantenmenge/
+$E \subseteq \\{ \\{u,v\\} | u,v \in V \wedge u \neq v \\}$. Sei
+$e = \\{u,v\\} \in E$ eine Kante, dann sag man auch "$e$ verbindet
+Knoten $u \in V$ und $v \in V$" oder "$u$ und $v$ sind inzident zu $e$"
+oder auch "$u$ und $v$ sind adjazent".
+
+*Pfad:* Ein /Pfad/ (oder auch /Weg/) ist eine Folge von Knoten
+$P = (v_{1}, ..., v_{k+1})$, so dass
+$\forall i \in \{1,...,k\}: \\{v_{i}, v_{i+1}\\} \in E$ gilt.
+
+*einfacher Pfad:* Ein Pfad $P = (v_{1}, ..., v_{k+1})$ heißt /einfach/
+(engl. /one-way/), wenn er keinen Knoten doppelt enthält, also
+$\forall i,j \in \\{1,..., k+1\\}: i \neq j \Rightarrow v_i \neq v_j$.
+Einzig die Knotenwiederholung $v_1 = v_{k+1}$ ist zulässig.
+
+*einfacher Kreis:* Ein einfacher Pfad $P = (v_1,...,v_{k+1})$ heißt
+/einfacher Kreis/, wenn $v_1 = v_{k+1}$ gilt und $P$ mindestens 4 Knoten
+enthält, also $k \geq 3$ gilt .
+
+*Kreis:* Ein Pfad $P = (v_{1}, ..., v_{k+1})$ heißt /Kreis/, wenn
+$v_1 = v_{k+1}$ gilt und keine Kante in $P$ doppelt vorkommt, also
+$\forall i, j \in \\{1,...,k\\}: i \neq j \Rightarrow \\{v_i, v_{i+1}\\} \neq \\{v_j, v_{j+1}\\}$.
+
+Ein Graph $G$ heißt /zusammenhängend/, wenn je zwei Knoten $u,v \in V$
+durch einen Pfad in $G$ verbunden sind, also für alle $u,v \in V$ mit
+$u \neq v$ ein Pfad von $u$ nach $v$ in $G$ existiert.
+
+Ein Graph $G$ heißt /kreisfrei/, wenn $G$ keinen Kreis enthält.
+
+* Baum
+
+Ein ungerichteter Graph, der zusammenhängend und kreisfrei ist, heißt
+/Baum/.
+
+*Eigenschaften:*
+
+-  In einem Baum $T = (V,E)$ gilt $|E| = |V|-1$.
+
+* Grad eine Knotens
+
+Der Grad $d(v)$ eines Knotens $v \in V$ ist die Anzahl der zu $v$
+inzidenten Kanten. Also gilt
+$d(v) = | \\{ \\{x,y\\} | v \in \\{x,y\\} \\}|$.
+
+Ein Knoten $v \in V$ mit $d(v) = 1$ heißt /Blatt/.
+
+Ein Knoten $v \in V$ mit $d(v) = 0$ heißt /isolierter Knoten/.
+
+*Eigenschaften:*
+
+-  $\sum_{v \in V} d(v) = |E|$
+-  Die Anzahl der Knoten mit ungeraden Grad in einem Graphen $G=(V,E)$
+   ist gerade.
+
+* Darstellung von ungerichteten Graphen
+
+Sei $G = (V,E)$ ungerichteter Graph, mit $V = \\{v_0, .., v_{n-1}\\}$.
+
+** Adjazenzmatrix
+
+*Idee:* Verwendung einer $n \times n$ /Adjazenzmatrix/ $A$ mit:
+
+$$A[i,j] = \begin{cases}
+1 & \text{falls } \\{v_i, v_j\\} \in E \\
+0 & \text{sonst}
+\end{cases}$$
+
+*Eigenschaften:*
+
+-  Platzbedarf: $\mathcal{O}(|V|^2)$.
+-  Test ob eine Kante $\\{v_i, v_j\\}$ in $E$ enthalten ist, ist in
+   $\mathcal{O}(1)$ möglich.
+
+** Adjazenzlisten
+
+*Idee:* Für jeden Knoten v wird
+$Adj(v) = \\{u \in V | \\{v, u\\} \in E\\}$ als Liste gespeichert.
+
+TODO: Bild
+
+*Eigenschaften:*
+
+-  Platzbedarf: $\mathcal{O}(|V| + |E|)$
+-  Test ob eine Kante $\\{v_i, v_j\\}$ in $E$ enthalten ist, ist in
+   $\mathcal{O}(|V|)$ möglich.

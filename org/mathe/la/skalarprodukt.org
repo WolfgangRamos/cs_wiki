@@ -1,0 +1,70 @@
+#+TITLE: Skalarprodukt
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Skalarprodukt
+---
+#+END_HTML
+
+* Skalarprodukt
+
+Sei $(V,\oplus)$ [[vektorraum][Vektorraum]] über dem [[koeper][Körper]]
+$(\mathbb{K},+,\cdot)$, dann heißt eine Abbildung
+$a: V \times V \rightarrow \mathbb{K}$ /Bilinearform/, wenn gilt:
+
+1. $\forall u,v,w \in V: a(u \oplus v,w) = a(u,w) + a(v,w)$,
+2. $\forall u,v,w \in V: a(u,v \oplus w) = a(u,v) + a(u,w)$ und
+3. $\forall \lambda \in \mathbb{K}: \forall v,w \in V: a(\lambda \odot v, w) = a(v, \lambda \odot w) = \lambda \cdot a(v,w)$
+
+Gilt außerdem
+
+4. $\forall v,w \in V: a(v,w) = a(w,v)$.
+
+dann heißt $a$ /symmetrische Bilinearform/.
+
+Eine Bilinearform $a: V \times V \rightarrow \mathbb{R}$ heißt
+/Skalarprodukt/ (oder auch /positiv definite Bilinearform/), wenn
+außerdem gilt:
+
+5. $\forall v\in V \setminus \\{e_{\oplus\}\\}: a(v,v) > e_{+}$.
+
+Statt $a(v,w)$ wird für ein Skalaprodukt im Allgemeinen die Schreibweise
+$\langle v,w \rangle$ verwendet.
+
+* Skalarproduktraum
+
+Ein Vektorraum, auf dem ein Skalarprodukt definiert ist heißt
+/Skalarproduktraum/ oder auch /Prähilbertraum/, manchmal auch lediglich
+/euklidischer Raum/.
+
+** Skalarprodukte über dem Standardvektorraum der reellen Zahlen
+
+*** Euklidisches Skalarprodukt:
+
+Seien $v,w \in \mathbb{R}^{n}$ ([[vektorraum][Standardvektorraum der
+reellen Zahlen]]), dann heißt
+$\langle v,w \rangle = v^{T}w = \sum_{i = 1}^{n} v_{i} w_{i}$ das
+/euklidische Skalarprodukt/ (oder auch /Standardskalarprodukt/) von $v$
+und $w$ (Erinnerung: Ein Paar Vektorraum $(V,\oplus)$ über dem
+[[koeper][Körper]] der *reellen Zahlen* $(\mathbb{R},+,\cdot)$ auf dem
+ein Skalarprodukt definiert ist heißt [[vektorraum][/Euklidischer
+(Vektor-)Raum/]]).
+
+Der Vektorraum der reellen Zahlen bildet mit dem /euklidische
+Skalaprodukt/ einen [[vektorraum][euklidischen Raum]]. In der Praxis
+wird oft auf die Angabe eines konkreten Skalarproduktes verzichtet. Dann
+ist i.d.R. das euklidische Skalarprodukt gemeint.
+
+*Eigenschaften:*
+
+-  $\langle v,w \rangle = \|v\| \|w\| \cdot \cos \alpha$, wobei
+   $\alpha := \angle vw$ (der Winkel zwischen $v$ und $w$ ist).
+
+** Skalarprodukte über dem Standardvektorraum der komplexen Zahlen
+
+TODO

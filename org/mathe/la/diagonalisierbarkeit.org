@@ -1,0 +1,23 @@
+#+TITLE: Diagonalisierbarkeit
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Diagonalisierbarkeit
+---
+#+END_HTML
+
+* Diagonalisierbarkeit
+
+$A \in \mathhbb{K}^{n \times n}$ heißt /diagonalisierbar/, wenn $A$
+[[aehnlich][ähnlich]] zu einer Diagonalmatrix ist.
+
+** Eigenschaften
+
+-  $A \in \mathbb{K}^{n \times n}$ ist diagonalisierbar, wenn eine eine
+   Basis des $\mathbb{K}^{n}$ existiert, die aus aus den Eigenvektoren
+   von $A$. Dann ist

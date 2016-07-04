@@ -1,0 +1,320 @@
+#+TITLE: Process
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Process
+---
+#+END_HTML
+
+* Prozesse
+
+Ein Prozess ist eine Instanz eines Programms, welche sich in Ausführung
+befindet. Prozessen haben:
+
+-  einen [[control_flow][Kontrollfluss]], d.h. eine Folge von
+   Instruktionen, die abgearbeitet werden, wobei die Reihenfolge der
+   Abarbeitung i.d.R. durch die Reihenfolge der Instruktionen im
+   Programm vorgegeben ist (s.a.
+   [[os/prozesse#schlüsselabstraktionendurchdasprozesskonzept][Schlüsselabstraktionen
+   des Prozesskonzepts]])
+-  einen aktuellen Zustand
+-  allozierte Ressourcen (Speicher, Geräte, CPU, Register, Dateien)
+
+Zweck von Prozessen:
+
+-  Ausführung eines Chronjobs
+-  Bereitstellen eines Dienstes (z.B. Drucker)
+-  Ausnutzung von Nebenläufigkeit
+
+** Schlüsselabstraktionen
+
+-  *private (virtual) address space*: jeder Prozess hat scheinbar
+   exklusiven Zugriff auf den gesamten Hauptspeicher (realisiert durch
+   [[virtual_memory][Virtual Memory]])
+-  *logical control flow*: jeder Porzess hat scheinbar exklusiven
+   Zugriff auf die CPU und bemerkt nicht, wenn sein Ausführung bzw. sein
+   Kontrollfluss (vom Kernel) unterbrochen wird.
+
+** Adressraum eines Prozesses
+
+#+CAPTION: Adressraum eines Prozesses
+
+[[process_address_space.png]]
+** Verwaltung von Prozessen
+
+-  OS verwaltete alle vorhandenen Prozesse in einer /Process Table/
+-  Einträge in der Process Table sind die /Process Control Blocks/
+
+*** Kernel
+
+Das Programm, das die Prozesse auf einem System verwaltet heißt
+/Kernel/. Der Kernel selbst ist /kein/ Prozess, d.h. es finden /keine
+context/ switches zwischen Prozessen und dem Kernel statt! Die
+Ausführung von Kernelcode wird stattdessen dem aktuell ausgeführten
+Prozess zugerechnet.
+
+*** Process Image
+
+Die physikalische Manifestation eines Prozesses bezeichnet man als
+/process image/. Ein Process Image umfasst:
+
+-  auszuführendes Programm
+-  benötigte Daten (Stack, Heap)
+-  Kontext (Registerinhalte, etc.)
+
+   -  wird im Process Control Block (Attribute eines Prozesse, die zur
+      Verwaltung des Prozesses durch das OS benötigt werden) gespeichert
+
+*** Process Control Block (PCB)
+
+-  vom Betriebssystem wird für jeden Prozess ein PCB erstellt
+-  ein PCB enthält alle Informationen, die das OS zur Verwaltung eines
+   Prozesses benötigt
+-  die PCBs ermöglichen das Verwalten mehrerer Prozesse und bilden auch
+   die Grundlage für logical control flow
+
+Inhalte des PCB:
+
+-  Identifikationsinformationen (PID, Parent PID, UID)
+-  Zustandinformationen
+
+   -  Stack Pointers (jeder Prozess verwendet ein oder mehrere Stacks)
+   -  Conditon Codes (Flags der zuletzt ausgeführten arithmetischen
+      Operation, z.B. Sign, Carry, etc.)
+   -  Programm Counter (Pointer auf die als nächstes auszuführende
+      Instruktion)
+
+-  Kontrollinformationen (zur Verwaltung des logical control flow)
+
+   -  Zustand (state)
+   -  Priorität
+   -  Identität des Events, auf dass ein Prozess wartet (wenn er
+      blockiert ist)
+   -  Memory Management (z.B. Pointer auf die Page Table des Prozesses
+      [*Page Table Pointer*])
+   -  Ressourcen (Dateien, Geräte), die von dem Prozess genutzt werden
+
+-  u.a.
+
+*** Erzeugung von Prozessen
+
+Prozesse werden beim Systemstart oder durch Ausführung eines der
+folgenden Befehls (durch den Benutzer oder durch andere Prozessen)
+erzeugt:
+
+-  =int fork(void)=: erzeugt einen Child Prozess
+
+   -  Child ist nach Erzeugung zunächst eine exakte Kopie des
+      Elternprozesses (gleicher Zustand, gleicher /program counter/,
+      gleiche allozierte Ressourcen)
+   -  Rückgabewert an Child: =0=
+   -  Rückgabewert an Parent: PID des Childs
+
+-  =int execl(char *path, char *arg0, char *arg1, ..., 0)=: führt ein
+   Programm in einem eigenen Prozess aus
+
+   -  =*path=: Pfad der ausführbaren Datei
+   -  =*arg0=: Name des Prozesses
+   -  =*arg1, ...=: Argumente für die ausführbare Datei
+   -  =0=: Markierung des Endes der Argumente
+   -  Rückgabewert: -1: bei Fehler, sonst keine Rückgabe
+
+-  =execve(char* filename, char *argv[], char *envp[])=: führt eine
+   Programm im aktuellen Prozess aus
+
+   -  =*filename=: Pfad der ausführbaren Datei
+   -  =argv[]=: Kommandozeilenparameter, mit denn das Programm
+      aufgerufen wird
+   -  =envp[]=: Liste von Umgebungsvariablen für die Ausführung
+
+*** Terminierung von Prozessen
+
+Prozesse können /voluntary/ oder /involuntary/ beendet werden. Von einem
+voluntary exit spricht man, wenn der Prozess sich selbst beendet (mit
+einem /normal exit/ oder einem /error exit/). Von involuntary spricht
+man, wenn der Prozess beendet (/killed/) wird. Voluntary exits werden
+durch Aufrufn von =void exit(int status)= herbeigeführt. =status= gibt
+dabei den /exit status/ des Prozesses an, der vom Parent des Prozesses
+ausgelesen werden kann. Zusätzlich kann mit =atexit()= eine Funktion
+registriert werden, die bei Terminierung des Prozesses aufgerufen werden
+soll.
+
+*** Reaping
+
+Als /reaping/ bezeichnet man: 1. das Einsammeln des Rückgabewerts eines
+Child-Prozesse durch seinen Elternprozess oder den =init=-Prozess und 2.
+das Entfernen des Prozesses (Freigabe der Ressourcen des Prozesses,
+Entfernen aus der Process Table, etc.) durch den Kernel
+
+Mit =int wait(int *child_status)= oder =waitpid(pid, &status, options)=
+kann ein Porzess gereaped werden.
+
+Mit =int wait(int *child_status)= kann ein Parent Prozess /einen/ seiner
+Child Prozesse reapen. Der Aufruf:
+
+-  blockiert den Parent bis /ein/ Child terminiert wurde und reaped dann
+   dieses Child
+-  speichert Pointer auf den exit status des Childs in =child_status=,
+   wenn der exit status nicht =NULL= war
+-  Rückgabewert ist die PID des Childs
+
+Mit =waitpid(pid, &status, options)= kann ein ein bestimmter Prozess
+gereped werden. Der Aufruf:
+
+-  blockiert den Prozess bis der Prozess terminiert wurde und reaped
+   diesen dann.
+-  speichert Pointer auf den exit status des Prozesses in =status=, wenn
+   der exit status nicht =NULL= war
+-  Rückgabewert ist die PID des Prozesses
+
+*** Zombie
+
+Ein /Zombie/ ist ein Prozess, der beendet ist (also sich nicht mehr in
+Ausführung befindet), aber noch Ressourcen beansprucht (z.B. Einträge in
+/memory tables/ noch vorhanden, Eintrag in /process table/ noch
+vorhanden). Das Entstehen eines Zombies kann durch Reaping vermieden
+werden.
+
+*** Orphan
+
+Ein Prozess, dessen Parent terminiert wurde. Solche Prozesse werden vom
+=init= Prozess adoptiert.
+
+** Nebenläufigkeit
+
+Prozesse heißen nebenläufig (engl. /concurrent/), wenn ihre control
+flows sich überlappen, d.h. wenn Context Switches zwischen den Prozessen
+stattfinden, bevor jeder einzelne terminiert. Prozesse, deren
+Kontrollflüsse sich nicht überlappen heißen /sequentiell/.
+
+** I/O Bound vs. CPU Bound Prozesse
+
+-  Prozesse, die viele I/O-Operationen ausführen heißen *I/O Bound*
+-  Prozesse, die wenig I/O-Operationen ausführen heißen *CPU Bound*
+-  *CPU Burst*: Phase in der ein Prozess die CPU beansprucht
+-  *I/O Burst*/*I/O Waits*: Phase in der ein Prozess auf die
+   I/O-Operationen ausführt
+
+** Process Trace
+
+Als Process Trace bezeichnet man die Abfolge von Instruktionen, die von
+einem Process bislang ausgeführt wurden
+
+** Dispatcher
+
+Zuständig für Context Switches
+
+** Prozesszustände
+
+Zustände von Prozessen und die möglichen Zustandsübergänge werden in den
+folgenden Prozesszustandsmodellen beschrieben.
+
+*** Two-State Process Model
+
+-  *Running*: CPU ist dem Prozess zugeteilt
+-  *Not Running*: CPU ist dem Prozess nicht zugeteilt
+
+#+CAPTION: Zustände und Zustandsübergänge im Two-State Proces Model
+
+[[two_state_process_model.png]]
+#+CAPTION: Queues im Two-State Process Model
+
+[[two_state_process_model_queue.png]]
+*** Three-State Process Model
+
+-  *Ready*: ausführbereit, aber temporär gestoppt, um einen anderen
+   Prozess auszuführen
+-  *Running*: CPU ist dem Prozess zugeteilt
+-  *Blocked*: blockiert (nicht ausführbereit, da z.B. auf eine Ressource
+   oder ein Event gewartet werden muss)
+
+*** Five-State Process Model
+
+-  *New*: Prozess wurde neu erzeugt und ist noch nicht ausführbereit
+-  *Ready*: ausführbereit
+-  *Running*: CPU ist dem Prozess zugeteilt
+-  *Blocked*: blockiert (nicht ausführbereit, da z.B. auf eine Ressource
+   oder ein Event gewartet werden muss)
+-  *Exit*: Process wurde terminiert
+
+#+CAPTION: Zustände und Zustandsübergänge im Five-State Process Model
+
+[[five_state_process_model.png]]
+*** Six-State Process Model
+
+-  *New*: Prozess wurde neu erzeugt und ist noch nicht ausführbereit
+-  *Ready*: ausführbereit
+-  *Running*: CPU ist dem Prozess zugeteilt
+-  *Blocked*: blockiert (nicht ausführbereit, da z.B. auf eine Ressource
+   oder ein Event gewartet werden muss)
+-  *Suspend*: Prozess ist in den Sekundärspeicher ausgelagert
+-  *Exit*: Process wurde terminiert
+
+#+CAPTION: Zustände und Zustandsübergänge im Six-State Process Model
+
+[[six_state_process_model.png]]
+*** Seven-State Process Model
+
+-  *New*: Prozess wurde neu erzeugt und ist noch nicht ausführbereit
+-  *Ready*: ausführbereit
+-  *Ready/Suspend*: ausführbereiter und den Sekundärspeicher ausgelagert
+-  *Running*: CPU ist dem Prozess zugeteilt
+-  *Blocked*: blockiert (nicht ausführbereit, da z.B. auf eine Ressource
+   oder ein Event gewartet werden muss)
+-  *Blocked/Suspend*: blockiert (nicht ausführbereit) und in den
+   Sekundärspeicher ausgelagert
+-  *Exit*: Process wurde terminiert
+
+#+CAPTION: Zustände und Zustandsübergänge im Seven-State Process Model
+
+[[seven_state_process_model.png]]
+** Verwaltung von Prozessen und deren Ressourcen
+
+Das Betriebssystem verwaltet alle Prozesse und Systemressourcen
+(Speicher, Devices, Dateien), die von Prozessen verwendet werden. Dazu
+verwendet es folgende Strukturen:
+
+-  *Memory tables*:
+
+   -  Allozierung von Speicherblöcken im Hauptspeicher für Prozesse
+   -  Allozierung von Speicherblöcken im Sekundärspeicher für Prozesse
+   -  Informationen zum Schutz (Protection) von Speicherbereichen im
+      Hautpspeicher und im Virtual Memory aller Prozesse
+   -  alle Informationen zur Verwaltung von Virtual Memory
+
+-  *I/O tables*:
+
+   -  Zustände von I/O-Geräten (verfügbar oder vergeben)
+   -  Status von I/O-Operationen
+   -  Adresse des Ziels oder der Quelle der I/O-Operation im
+      Hauptspeicher
+
+-  *File Tables*:
+
+   -  Adresse von Dateien im Sekundärspeicher
+   -  Attribute von Dateien (z.B. UID, GID)
+   -  aktueller Zustand von Dateien
+
+-  *Process Tables*
+
+#+CAPTION: Strukturen, die das Betriebssystems zur Verwaltung von
+Prozessen und (deren) Ressourcen verwendet
+
+[[process_control_structures.png]]
+** Privilegierungsstufen von Prozessen
+
+Prozesse können in verschiedenen Privilegierungsstufen (engl.
+\_execution modes-) ausgeführt werden:
+
+-  /kernel mode/: Prozess darf
+
+   -  alle Instruktionen des Prozessors ausführen
+   -  alle Registerinhalte verändern
+   -  alle Speicherinhalte verändern
+
+-  /user Mode/: Prozess darf weniger als im kernel mode

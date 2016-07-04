@@ -1,0 +1,41 @@
+#+TITLE: Modellierung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* Modellierung von Erreichbarkeit
+
+Sei $G = (V,E)$ ein gerichteter Graph mit $V \subseteq \mathhb{N}$, dann sind für jeder Menge $S \subseteq V$ und Knoten $t$ äquivalent:
+
+- $t$ ist von $S$ aus in $G$ erreichbar
+- Es gilt $\{X_s \mid s \in S\} \cup \{X_i \rightarrow X_j \mid \langle i,j \rangle \in E\} |\models X_t$
+
+Sind $S$ und $E$ endlich, so ist zusätzlich äquivalent
+
+** TODO 
+
+* TODO Modellierung von Unvermeidbarkeit
+
+Sei $G = (V,E)$ ein gerichteter Graph mit $V \subseteq \mathhb{N}$, dann sind für jeder Menge $S \subseteq V$ und Knoten $t$ äquivalent:
+
+* TODO Modellierung von Spielen
+
+Ein Spiel wird zwischen zwei Spielern $\bigcirc, \Box$ auf einem /Spielbrett/ ausgetragen.
+
+Ein Spielbrett besteht aus einem Graph $G=(V,E)$ und einer Knotenmenge
+$V_{\bigcirc} \subseteq V$, die Spieler $\bigcirc$ gehören und einer
+Zielmenge $T \subseteq V$, auf denen $\bigcirc$ gewonnen hat. Die
+Knoten, die nicht $\bigcirc$ gehören gehören $\Box$, also $V_{\Box} :=
+V\setminus \{V_{\bigcirc}\}$.
+
+Man sagt, ein Knoten $s \in V$ ist ein *Gewinnknoten* (für $\bigcirc$),
+wenn $\bigcirc$ eine Strategie besitzt, die von $s$ ausgehend zum
+Gewinn führt. Mit anderen Worten, egal wie $\Box$ zieht, $\bigcirc$
+kann jeweils so ziehen, dass irgendwann ein Knoten in $T$ erreicht wird.
+
+Es sind äquivalent:
+
+- $X_s$ ist ein Gewinnknoten für Spieler $\bigcirc$
+- $\{X_t\mid t\in T\} \cup \{X_j \rightarrow X_i \mid i \in V_{\bigcirc} \wedge \langle i, j \rangle \in E\} \cup \{\bigwedge_{\langle i,j \rangle \in E} X_j \rightarrow X_i \mid i \in V_{\Box}\} |\models X_s$
+
+Feststellung von Erfüllbarkeit durch SAT-Solver oder Resolution

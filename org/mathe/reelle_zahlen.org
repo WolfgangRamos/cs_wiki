@@ -1,0 +1,35 @@
+#+TITLE: Reelle_zahlen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Reelle_zahlen
+---
+#+END_HTML
+
+* Reelle Zahlen
+
+** Konstruktion nach Cantor
+
+Die reellen Zahlen sind Äquivalenzklassen von [[folgen][Cauchy Folgen]].
+Es kann mit Repräsentanten gerechnet werden.
+
+$\mathbb{R} := \{ [X] | X = (x_n)_{n \in \mathbb{N}} \text{ ist Cauchy Folge} \wedge \forall i \in \mathbb{N}: x_i \in \mathbb{Q} \}$
+
+** Dichtheit
+
+*Dichtheit der rationalen Zahlen in den reellen Zahlen:* Zwischen je
+zwei rationalen Zahlen $a,b \in \mathbb{Q}$ mit $a \neq b$ liegt eine
+irrationale Zahl, d.h. es gilt:
+$\forall x \in \mathbb{Q}: \forall \epsilon \in \mathbb{R}_{>0}: \exists y \in \mathbb{R}\setminus\mathbb{Q}: d(x,y) < \epsilon$
+
+*Dichtheit der irrationalen Zahlen in den reellen Zahlen:* Zwischen je
+zwei irrationalen Zahlen $x,y \in \mathbb{R}\setminus\mathbb{Q}$ mit
+$x \neq y$ liegt eine rationale Zahl, d.h. es gilt:
+$\forall x \in \mathbb{R}\setminus\mathbb{Q}: \forall \epsilon \in \mathbb{R}_{>0}: \exists y \in \mathbb{Q}: d(x,y) < \epsilon$
+
+** Abstand

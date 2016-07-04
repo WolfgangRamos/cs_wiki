@@ -1,0 +1,18 @@
+#+TITLE: Domino
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* Dominoproblem
+
+Eine Instanz ist gegeben durch /Typen/. Ein Typ ist ein Vierertupel von natürlichen Zahlen
+
+*positive Instanzen:* Man kann mit den vorgegeben Steinen (/Typen/) den ersten
+ Quadranten auslegen, sodass benachbarte Kante dieselbe Farbe habenund
+ unten links der erste Stein liegt.
+
+** TODO Modellierung aus Serie 5 übernehmen
+
+*Modellierung:* Wir verwenden Variablen der Form
+
+$X_{i,j}^k$: "An der Position $(i,j)$ liegt der Stein $k$

@@ -1,0 +1,457 @@
+#+TITLE: Kommunikationssysteme
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* Kommunikationssysteme
+
+** Begriffe
+
+*Server:* Ein Server ist eine Software, die bestimmte Dienste anbietet.
+
+*triple play:* Dienste, die in Deutschland über die Telefonsteckdose
+angeboten werden: Telefonie, Internetzugang, Fernsehen
+
+*ISO*: International Organization for Standardization
+
+*OSI*: Open System Interconnection
+
+*ISDN*: Integrated Services Digital Network
+
+*GSM*: Global System for Mobile Communication
+
+*PSTN*: Public Switched Telephone Network
+
+*TCP*: Tranmission Control Protocol
+
+*UDP:* User Datagram Protocol
+
+*Netzwerkarchitektur:* Ein System aus Schichten und Protokollen heißt
+/Netzwerkarchitektur/. Das OSI-Referenzmodell ist eine
+Netzwerkarchitektur.
+
+*Protocol stack:* Die Liste von Protokollen (ein Protokoll pro
+Schicht!), die von /einem/ System genutzt wird nennt man /protocl
+stack/.
+
+*MAC*: Media Access Control
+
+*ICT*: Information and Communication Technology
+
+*Routing*: Als /Routing/ bezeichnet man das Finden einer optimalen Route
+zum Transport von Paketen zwischen End-Systemen. Routing funktioniert
+über die Erstelleung und kontinuierliche Aktualisierung von Routing
+Tabellen mit Next-Hop Einträgen in Transit- und Endsystemen.
+
+*ISP:* Internet Service Provider
+
+*** TODO würde man auch bei circuit switched Netzwerken von /Routing/ sprechen? :comsys:
+
+*Network Adress Translateion* (NAT): Network Adresstranslation findet
+statt, wenn Pakete über Netzwerkgrenzen hinaus transportiert werden.
+Z.B., wenn Pakete aus einem privaten Netzwerk (10.*.*.*) in ein
+öffentliches Netzwerk transportiert werden. Systeme, die NAT
+ausführen, werden im Allgmeinen als /Router/ bezeichnet.
+
+*Forwarding:* Forwarding bezeichnet das Weiterleiten von Paketen in
+ Transitsystemen mit Hilfe von Routing-Tabellen.
+
+*** TODO Was ist longest prefix match
+
+
+* Dienst
+
+Ein Dienst ist eine genau beschriebene Leistung, die ein Protokoll, eine
+Anwedung oder sonstiges erbrigt und für anderer anbietet. Der Begriff
+/Dienst/ wird daher oft unscharf verwendet:
+
+Jede Netzwerkanwendung (Client-Server Systeme) kann als /Dienst/
+(Service) bezeichnet werden. Z.B.:
+
+- Domain Name Service (DNS): Auflösung von Domain Namen zu IP Adressen
+  (engl. /name resolution/)
+- File Transfer (FTP, SFTP):
+- File Sharing: Z.B. Peer-to-peer Dienste (charakteristisch: jeder
+  kann die Rolle des Client und des Server einnehmen)
+- Network File System: Einbinden von Remote-Verzeichnissen in den
+  lokalen Verzeichnisbaum
+- Terminal Emulation: Z.B. ssh
+- E-Mail
+- Voice over IP
+- Webanwendungen
+
+Jeder "Subdienst", den ein Protokoll erbringt kann als /Dienst/
+bezeichnet werden. Z.B. Dienste, die IP, TCP, UDP und HTTP bieten:
+
+- in order packet delivery
+- packet routing
+- /marshalling/unmarshalling/: packet coding/decoding
+
+** Quality of Service
+
+Als /Quality of Service/ bezeichnet man Zusicherungen, z.B. für
+
+- *delay*: Dauer vom Senden des ersten bits bis zum Empfangen des letzten bits eine Pakets
+   - $L_P$: Latenz des Packets
+   - $L_A$: Latenz des Acknowledge
+- *delay jitter*: Variation des Delays
+- *reliability* (Zuverlässigkeit):
+   - packet loss rate
+   - bit error rate
+- *availability* (Verfügbarbeit): prozentuale Up-time im Zeitintervall; $\frac{MTBF}{MTBF + MTRR}$
+
+Dienste ohne zugesicherte Quality of Service werden als /best effort/ bezeichnet.
+
+*** Kennwerte
+
+*Bandbreite* = Frequenzspektrum des Übertragungskanals. Z.B. für WLAN: 
+
+Trägerfrequenz: 2,4 GHz = 2400 MHz
+
+Bandbreite eines Kanals: 20 - 40 MHz
+
+#+CAPTION: Bsp. für Kanäle bei einer Trägerfrequenz von 2,4 GHz und einer Bandbreite von 20 - 40 MHz
+|         | Bandbreite      |
+|---------+-----------------|
+| Kanal 1 | 2400 - 2440 MHz |
+| Kanal 2 | 2440 - 2480 MHz |
+| ...     | ...             |
+
+*Datenrate* (data rate) $R$ = Anzahl bits, die pro Zeiteinheit über das
+Medium gesendet werden könnten, gemessen in bit/s. Die Datenrate hängt
+von der Hardware des Senders ab.
+
+*throughput* $TP$ = erfolgrei übertragene bits (Datenrate + Overhead z.B
+durch Transportprotokoll) gemessen in bit/s. In einem idealen Netzwerk
+(fehlerfrei, circuit switched) könnte $TP=R$ realisiert werden.
+
+*propagation delay* (Übertragungsverzögerung) $D$: Die
+Übertragungsverzögerung eines Mediums berechnet sich als $D =
+\frac{d}{v}$ mit Signalgeschwindigkeit $v$ in dem betreffenden Medium
+und $d$ Distanz zwischen Sender und Empfänger.
+
+*time for sending a packet* (Paketsendezeit): Die Zeit, die das Senden
+von $N$ bit benötigt berechnet sich als $T_S = \frac{N}{R}$.
+Auslastung
+
+$BD$ = Datenrate-Verzögerung Produkt (so viele bits können zu jedem
+Zeitpunkt "auf der Leitung liegen")
+
+großes $BD$:
+
+* Protokolle
+
+Ein Protokoll ist die Umsetzung eines Standards in
+ausführbarer/anwendbarer Form (Protokolle können in Hard- oder Software
+implementiert werden). Zwischen einem Standard und einem Protokoll gibt
+es keine klare Trennung. Protokolle können zum Standard werden. Ein
+Standard kann in mehrerer Protokollen umgesetzt werden.
+
+Ein Protokoll besteht aus Regeln für:
+
+- Nachrichtencodierung (message encoding rules)
+- Nachrichten... (message sematic rules)
+- Nachrichtenaustausch (message exchange rules)
+
+Man unterscheidet (grob): /transportorientierte/ Protokolle und
+/anwedungoreintierte/ Protokolle
+
+Netzwerkservices werden i.d.R. durch das Zusammenspiel mehrerer
+Protokolle erbracht. Man spricht von einem /protokoll stack/. Der
+protocol stack für den E-Mail Dienst ist z.B:
+
+#+CAPTION: Protocol Stack für den E-Mail Dienst
+| SMTP            |
+| TCP             |
+| IP              |
+| Ethernet        |
+| Manchester Code |
+
+Timeline Diagramme sind eine informelle Art Protokolle darzustellen. In
+einem Timeline Diagram kann nur /ein/ konkreter Ablauf dargestellt
+werden (z.B. eine erfolgreicher Handshake). Bsp für ein Timelinediagramm
+eines TCP Handshake:
+
+#+CAPTION: Beispiel eines TCP Handshakes
+[[./gfx/tcp_handshake.png]]
+
+
+
+
+* ISO/OSI Referenzmodell
+
+Das ISO/OSI Referenzmodell ist ein weltweit akzeptiertes Referenzmodell
+für Kommunikationssysteme. Es stellt eine gemeinsame Basis für die
+Entwicklung von Standards dar.
+
+Prinzipien des OSI Referenzmodells
+
+- /abstrakte Spezifikation/: Spezifikation der Funktionalität, nicht
+  der Implementierung
+- /hierarchischer Aufbau/: Aufteilung eines komplexen Systems in
+  *Schichten*
+
+Eine Schicht:
+
+- ist eine abstrakte Einteilungsebene
+- enthält abstrakte Metadaten über ihre *Instanzen* (eine Instanz ist
+  z.B. ein Protokoll), die ein bestimmtes Verhalten erwarten lassen.
+  Z.B. enthält die Transportschicht (4) die Instanzen (Protokolle) TCP
+  und UDP
+- erbringt (mittels ihrer Instanzen) Dienste für die darüberliegende
+  Schicht. Z.B. erbringt die Transportschicht (4) über das TCP
+  Protokoll den Dienst Pakete vollständig und in der richtigen
+  Reihenfolge zu übermitteln. Das Protokoll SMTP aus Schicht ? kann
+  diesen Dienst nutzen.
+- eine Schicht nutzt /ausschließlich/ die Dienste der
+  darunterliegenden Schicht
+
+Die Festlegung der Schichten im OSI Referenzmodell folgt folgenden
+Regeln:
+
+1.  Erzeuge keine unnötigen Schichten (um die Aufgabe Schichten zu
+    Beschreiben und miteinander in Beziehung zu stellen nicht unnötig
+    kompliziert zu machen).
+2.  Wähle Schichtgrenzen so, dass die Beschreibung von Diensten der
+    Schichten und die Beschreibung der Interaktionen zwischen den
+    Schichten kurz ist
+3.  Wähle Schichtgrenzen an den Stellen, wo Funktionen deutlich
+    unterschiedlich hinsichtlich der verwendeten Technologien oder der
+    Prozesse sind.
+4.  Bündele ähnliche FUnktionen in einer Schicht
+5.  Wähle Schichtgrenzen aufgrund von (bewährten) Erfahrungswerten
+6.  Wähle Schichten so, dass eine Schicht unabhängig von anderen
+    Schichten grundlegend verändert werden kann, ohne dass sich die
+    Services, die diese Schicht bereitstellt oder nutzt verändern.
+7.  Wähle Schichtengrenzen an Stellen, an denen in Zukunft ein
+    standardisierte Interface nützlich seien könnte
+8.  Wähle Schichtgrenzen an den Stellen, an denen die Verarbeitung von
+    Daten andere Abstraktionen erfordert
+9.  Die Protokolle/Funktionalität einer Schicht soll unabhängig von
+    anderen Schichten veränderbar sein.
+10. Jede Schicht soll nur mit ihren direkt angrenzenden Schichten
+    kommunizieren (die darüber und die darunter)
+
+Die Instanz einer Schicht ($N$) auf einem System kommuniziert mit der
+gleichen Instanz in der gleichen Schicht (/peer/) auf einem anderen
+System. Dabei nutzt sie ausschließlich Dienste der direkt
+darunterliegenden Schicht ($N-1$). Z.B. kommuniziert kann die TCP
+Instanz auf einem System mit der TCP Instanz auf einem anderen System
+unter Nutzung der Dienste der Network Layer. Die Kommunikation zwischen
+Instanzen kann /connectionless/ oder /connection-oriented/ erfolgen.
+
+Die Informationen (/Protocol-data-unit/), die einer $N$-Entität über
+seine SAP von einer $N+1$-Entität übergeben wird zur /Service-data-unit/
+der $N$-Entität. Dieser wird ein "Header"
+(/Protocol-control-information/) hinzugefügt. Zusammen bilden sie die
+Protocol-data-unit der $N$-Entität.
+
+#+CAPTION: Sukzessive Verschachtelung von protocol-data-units in den Schichten OSI Modells
+[[./gfx/padding_in_layers.png]]
+
+#+CAPTION: OSI Layer Data Units
+[[./gfx/osi_layer_data_units.png]]
+
+Dabei ist es möglich,
+
+- dass aus einer $N$-Protocol-data unit in der Schicht $N-1$ genau
+  eine $N-1$-Protocol-data-unit gebildet wird (/Neighter segmenting
+  nor blocking/)
+- dass mehrere $N$-Protocol-data units in der Schicht $N-1$ zu einer
+  $N-1$-Protocol-data-unit zusammengefasst werden
+  (/Blocking/Deblocking/)
+- dass eine $N$-Protocol-data unit in der Schicht $N-1$ auf mehrere
+  $N-1$-Protocol-data-units aufgeteilt werden
+  (/Segmenting/Reassambling/)
+- dass mehrere $N$-Protocol-data units in der Schicht $N-1$ zu einer
+  $N-1$-Protocol-data-unit zusammengefasst werden, wobei aus einer der
+  Header und aus der andreren die Payload gebildet wird
+  (/Concatenation/Separation/)
+
+#+CAPTION: Verarbeitung von Data Units in Schichten
+[[./gfx/osi_processing_of_data_units.png]]
+
+7 Schichten: (Merksatz: /"Please do not throw salami pizza away"/)
+
+#+CAPTION: Schichten des IOS/OSI Referenzmodells
+| Nr | Schicht            | bereitgestellter Dienst                                                                   | Funktionen                                                                                  | Protokolle (Entitäten)          |
+|----+--------------------+-------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------|
+|  7 | *Application Layer*  | anwendungsspezifische Dienste                                                             |                                                                                             |                                 |
+|  6 | *Presentation Layer* | Repräsentation der Information, die Applikations-Entitäten austauschen                    |                                                                                             | Serialisierung/(Un-marshalling) |
+|  5 | *Session Layer*      | Organisation und Synchronisation des (Daten-)Austauschs zwischen kooperierenden Entitäten |                                                                                             |                                 |
+|  4 | *Transport Layer*    | zuverlässige Datenübertragung zwischen Endsystemen (end-to-end-transport)                 |                                                                                             | TCP                             |
+|  3 | *Network Layer*      | Routing und Forwarding von packets zwischen Endsystemen über Transitsysteme               |                                                                                             | IPv4, IPv6                      |
+|  2 | *Data Link Layer*    | zuverlässige oder unzuverlässige Übertragung von /frames/ zwischen benachbarten Systemen    | Fehlererkennung und -behandlung, Addressierung, Routing zwischen LANs, Media Access Control | Mac-Adressen                    |
+|  1 | *Physical Layer*     | unzuverlässige Übertragung von bits auf dem Übertragungsmedium                            | Erzeugung von Einsen und Nullen auf dem Übertragungsmedium, Multiplexing                    | Ethernet, WLAN                  |
+
+Schicht 5-7 sind /anwendungsorientiert/, Schicht 1-4 sind
+/transportorientiert/ und haben die Funktion Daten fehlerfrei zu
+übertragen.
+
+- ($N$)-/service access point/ (SAP): Schnittstelle einer /gesamten/
+  Schicht $N$ nach "oben", d.h. zur Schicht $N+1$ (z.B. Port 80 als
+  SAP zwischen TCP und HTTP).
+- ($N$)-/address/: Die zu nutzenden SAPs einer Verbindung werden über
+  die Adresse identifierzt (z.B. IP Adresse mit Port)
+- ($N$)-/connection endpoint identifier/: An einer SAP können einzelne
+  Verbindung (z.B. ein TCP/IP Socket) durch connection endpoint
+  identifier unterschieden werden
+
+*Vorteile:*
+
+- Abstraktion
+- modularer Aufbau, einfacher Austausch von Protokollen
+- 
+
+** Netzwerkschicht
+
+Der Netzwerkschicht liegt ein Netzwerkmodell zugrunde, das zwischen End-
+und Transitsystemen unterscheidet:
+
+*Endsystem (host):* Datenquelle oder -ziel, hosted Anwendungen
+
+*Transitsystem:*
+
+- Aufgabe: Weiterleitung von Daten von Quelle zum Ziel
+- keine Verarbeitung der Daten, aber ggf. Reformattierung, Filterung,
+  Umcodierung
+- z.B. Router, Switches, Reapeater, Hubs, Firewalls, Gateways, etc.
+
+#+CAPTION: Nutzung von Schichten in End- und Transitsystemen
+[[./gfx/network_layer.png]]
+
+zentrale Funktionen:
+
+- Addressierung in Netzwerken (Festlegung, wie Addressierung in
+  Netzwerken erfolgt)
+
+   - z.B. IPv4:
+
+      - Eine Adresse besteht aus 32 bit
+      - Eine Adresse unterteilt sich in ein /network prefix/ mit
+        variabler Länge (geschrieben z.B. als 200.13.67.91/17, wobei
+        die 17 anzeigt, dass das network prefix aus 17 bits besteht)
+        gefolgt von einem *host address part**
+
+- packet forwarding
+
+   - Weiterleitung von Paketen gemäß der aktuellen Routing Table des Systems
+
+- Festlegung von routes (das erfolgt über die Aktualisierung von
+  Routing Tables)
+- Erkennung und Elimination von /circulating packages/ (z.B. Pakete,
+  die unter Transitsystemen "im Kreis" geschickt werden)
+- Paket fragementierung und Reassembly
+
+optionale Funktionen:
+
+- Stauen und Verwerfen von Paketen
+- Festlegung von Grenzen für /delay/ und /delay jitter/
+- Transition zwischen Heterogenen Netzwerken, z.B. Transition von
+  Paketen aus einem Ethernet Netzwerk in ein W-LAN Netzwerk und
+  umgekehrt.
+   
+** Transportschicht
+
+Funktionen:
+
+- Fehlererkennung und -behandlung in Endsystemen
+- End-zu-End Flusskontrolle (z.B. Festlegung des /sliding window/)
+- Segmentierung und Reassembly von Paketen
+- Ordnen empfangener Pakete anhand der Sequenznummer
+
+Im Internet wird der Service der Transprotschicht über die Socket API
+umgesetzt:
+
+#+CAPTION: Funktionen der Socket API
+[[./gfx/socket_api.png]]
+
+** Session Layer
+
+???
+
+** Presentation Layer
+
+z.B. können Java-Anwendungen Daten im XML-Format austauschen
+
+Funktionen:
+
+- Serialisierung ?
+- Marshalling/Unmarshalling = Paket Codierung/Decodierung
+- Nachrichtenencodierung: Übersetzung von Anwendungsdaten (z.B.
+  Objekte in einer Java-Anwendung) in das Austauschformat (z.B. XML)
+- Übersetzung vom Zeichensatz der Anwendung in den Zeichensatz des
+  Transfers
+
+** Application Layer
+
+Wird von den Anwendungsprogrammen angesprochen.
+
+
+*** TODO Nachteile:
+
+- höhere Betriebskosten (da i.d.R. mehr Knoten als nötig betrieben werden müssen)
+- 
+
+* Internetarchitektur
+
+Die Netzwerkarchitektur des Internets wird auch als TCP/IP bezeichnet.
+Das hat historische Gründe: "Historically, IP was the connectionless
+datagram service in the original Transmission Control Program
+introduced by Vint Cerf and Bob Kahn in 1974; the other being the
+connection-oriented Transmission Control Protocol (TCP). The Internet
+protocol suite is therefore often referred to as TCP/IP" Quelle:
+[[https://en.wikipedia.org/wiki/Internet_Protocol][Wikipedia]].
+
+zentrale Prinzipien:
+
+- End-to-End (Übertragung):
+  - Transitsysteme garantieren keine erfolgreiche Übermittlung von Paketen
+  - End-Systeme kümmern sich ggf. um die Fehlerbehandlung
+- Trennung von routing und transmission control: 
+  - End-systeme routen nicht 
+  - Transitsysteme berechnen forwarding tables
+- *Overlay Principle:* Nutzung bestehender physischer Infrastrukturen (Kupfer, Glasfaser,
+  etc.)
+
+Netzwerktopologie der Internetkernarchitektur: Mesh
+
+Switching-Tehnologie der Internetkernarchitektur: packet switching
+
+** End-zu-End Prinzip
+
+- Endsysteme kümmern sich um Fehlerbehandlung (z.B. mittels TCP),
+  nicht das Netz
+- Trennung von Routing und End-Condtrol (???)
+- Endsysteme kümmern sich nicht um das routing. Endsysteme kennen nur
+  die Adressen der Router, mit denen sie direkt verbunden sind
+
+Vorteile: 
+
+- Fehlerbehandlung ist bei unterschiedlichen Services unterschiedlich
+  wichtig. Bei Datenübertragung sind fehlende Pakete fatal. Bei Voice
+  over IP ist ein fehlendes Paket weniger schlimm, als der Overhead,
+  der durch Fehlerkorrektur (wie bei TCP) entstehen würde.
+- Routing von Paketen kann schneller erfolgen
+
+Nachteile:
+
+- Fehlerbehebung zwischen Endknoten ist aufwendiger, als das Beheben
+  von Fehlern zwischen adjazenten Netzknoten
+
+** Overlay
+
+??
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,90 @@
+#+TITLE: Concurrency
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Concurrency
+---
+#+END_HTML
+
+* Nebenläufigkeit
+
+Prozesse deren [[control_flow][Kontrollflüsse]] sich überlappen ohne
+zeitgleich ausgeführt zu werden (d.h. es finden /context switches/
+zwischen den Prozessen statt, bevor jeder einzelne terminiert) heißen
+/nebenläufig/ (engl. /concurrent/). Man spricht auch von /interleaving
+control flows/. Prozesse, deren Kontrollflüsse sich nicht auf diese
+Weise überlappen heißen /sequentiell/.
+
+Prozesse deren Kontrollflüsse zeitgleich (z.B. auf verschiedenen Kernen
+einer CPU) ausgeführt werden heißen /parallel/. Man spricht auch von
+/overlapping control flows/.
+
+** Prozesssynchronisation
+
+Die Koordination der Abarbeitung mehrerer Prozesse/Threads, die auf
+geteilten Daten operieren bezeichnet man als /Prozesssynchronisation/.
+Um Prozesse/Threads miteiander synchronisieren zu können, müssen die
+Prozesse/Threads miteinander kommunizieren (Daten austauschen) können.
+
+** Race Conditions
+
+/Race Conditions/ treten in Situationen auf, in der mehrere
+Prozesse/Threads auf gemeinsame Daten lesend oder schreibend zugreifen,
+sodass das Resultat der Zugriffe von ihrer Ausführungsreihenfolge
+abhängt. Man unterscheidet:
+
+-  /Write-Write Race Conditions/: alle Prozesse greifen schreibend auf
+   gemeinsame Daten zu
+-  /Read-Write Race Condtions/: min. ein Prozess greift lesend und min.
+   ein Prozess greift schreibend auf gemeinsame Daten zu
+
+** Deadlocks
+
+Siehe [[deadlocks][Deadlocks]].
+
+** Starvation
+
+Starvation bezeichnet den Zustand, dass ein ausführbereiter Prozess
+(ready state) nie Zugriff auf die CPU erhält (dispatched wird), also nie
+zur Ausführung gebracht wird (Running state).
+
+** Livelock
+
+Ein Zustand, in dem zwei oder mehr Prozesse keine Fortschritte mehr
+machen können, aber im Gegensatz zum Dealock noch zwischen Zuständen hin
+und herwechseln (also nicht dauerhaft blockiert sind), denen sie aber
+nicht mehr entkommen können.
+
+** Mutual Exclusion
+
+Mutual Exclusion (dt. wechselseitiger Ausschluss) bezeichnet den
+wechselseitigen Ausschluss von Prozessen beim Zugriff auf eine Ressource
+(z.B. eine Critical Section). D.h., dass kein anderer Prozess Zugriff
+auf die Ressource erhalten kann, so lang /ein/ anderer Prozess die
+Ressource verwendet. Mutual Exclusion kann z.B. mit
+[[semaphores#binaere_semaphoren][Binären Semaphoren]] (auch /Mutex/
+genannt) realisiert werden.
+
+** Methoden zur Behandlung von Race Condtions
+
+Race Conditions können aufgelöst werden durch Verwendung von:
+
+-  hardwaregestützten [[atomic_operations][atomaren Operationen]]
+   (Nachteil: Lösungen von Race Conditions durch hardwaregestützte
+   atomare Operationen kommen i.d.R. nicht ohne Busy Wait aus)
+-  [[semaphores][Semaphoren]]
+-  [[monitors][Monitore]]
+-  [[message_passing][Message Passing]]
+
+** Bekannte Problemstellungen
+
+-  [[critical_section][Critical Section]]
+-  [[producer_consumer_problem][Producer/Consumer Problem]]
+-  [[readers_writers_problem][Readers/Writers Problem]]
+-  [[dining_philosophers_problem][Philosophenproblem]] (engl. /Dining
+   Philosophers Problem/)

@@ -1,0 +1,154 @@
+#+TITLE: Koerper
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Koerper
+---
+#+END_HTML
+
+* Körper
+
+$(K,+,\cdot)$ heißt genau dann /Körper/, wenn
+
+1. $(K,+,\cdot)$ [[ring][kommutativer Ring]] und
+2. $(K\setminus\\{e_{+}\\}, \cdot)$ eine [[gruppe][Gruppe]] ist, wobei
+   $e_{+}$ das neutrale Element der Gruppe $(K,+)$ ist.
+
+*Eigenschaften:*
+
+-  wegen (1) gilt
+
+   1. $(K,+)$ ist [[gruppe][kommutative/abelsche Gruppe]], d.h. es gilt:
+
+      -  Assoziativgesetz bzgl. "$+$", d.h.
+         $\forall a,b,c \in K: (a+b)+c = a+(b+c)$
+      -  es gibt ein neutrales Element $e_{+}$ bzgl. "$+$", d.h.
+         $\exists e_{+} \in K: \forall a \in K: a+e_{+} = e_{+}+a = a$
+      -  es gibt inverse Elemente bzgl. "$+$", d.h.
+         $\forall a \in K: \exists inv_{+}(a) \in K: a + inv_{+}(a) = e_{+}$
+      -  Kommutativgesetz bzgl. "$+$", d.h.
+         $\forall a,b \in K: a+b = b+a$
+
+   2. $(K, \cdot)$ ist [[gruppe][Halbgruppe]], d.h. es gilt
+
+      -  Assoziativgesetz bzgl. "$\cdot$", also
+         $\forall a,b,c \in K: (a \cdot b) \cdot c = a \cdot (b \cdot c)$
+
+   3. Kommutativgesetz bzgl. "$\cdot$", d.h.
+      $\forall a,b \in K: a \cdot b = b \cot a$
+   4. linkes und rechtes Distributivgesetz, d.h. es gilt
+
+      $\forall a,b,c \in K: a \cdot (b+c) = (a \cdot b) + (a \cdot c)$
+
+      $\forall a,b,c \in K: (b+c) \cdot a = (b \cdot a) + (c \cdot a)$
+
+-  wegen (2) gilt
+
+   5. es gibt ein neutrales Element $e_{\cdot}$ bzgl. "$\cdot$", d.h.
+      $\exists e_{\cdot} \in K\setminus \\{e_{+}\\}: \forall x \in K\setminus \\{e_{+}\\}: e_{\cdot} \cdot x = x$
+   6. es existieren Inverse bzgl. "$\cdot$", d.h.
+      $\forall x \in K\setminus \\{e_{+}\\}: \exists inv_{\cdot}(x) \in K\setminus \\{e_{+}\\}: x \cdot inv_{\cdot}(x) = e_{\cdot}$
+
+-  $\forall x,y \in K: x \cdot y = e_{+} \Rightarrow x = e_{+} \wedge y = e_{+}$
+
+* angeordnete Körper
+
+Ein Körper $(K,+,\cdot)$ heißt /angeordnet/, wenn es einen
+/Positivbereich/ $P \subset K$ und einen /Negativbereich/
+$-P := \\{ x \in K | inv_{+}(x) \in P\\}$ mit folgenden Eigenschaften
+gibt:
+
+1. $P$, $-P$ und $\\{0\\}$ bilden eine [[zerlegung][Zerlegung]] von $K$,
+2. Summen und Produkte positiver Elemente sind wieder positiv, d.h. es
+   gilt $\forall x,y \in P: x + y \in P \wedge x \cdot y \in P$.
+
+Die Elemente aus $P$ heißen /positiv/, die aus $-P$ /negativ/.
+
+*Eigenschaften:*
+
+-  in einem angeordenten Körper $(K,+,\cdot)$ lassen sich folgende
+   [[ordnungsrelation][Ordnungsrelationenen]] definieren:
+
+   -  $< \subseteq K \times K$ mit
+      $x < y :\Longleftrightarrow y-x \in P$
+   -  $\leq \subseteq K \times K$ mit
+      $x \leq y :\Longleftrightarrow (y-x \in P) \vee (x = y)$
+   -  $> \subseteq K \times K$ mit
+      $x > y :\Longleftrightarrow y < x \Longleftrightarrow x-y \in P$
+   -  $\geq \subseteq K \times K$ mit
+      $x \geq y :\Longleftrightarrow y \leq x \Longleftrightarrow (x-y \in P) \vee (y=x)$
+
+-  Es gibt (bis auf Isomorphie) genau einen angeordneten vollständigen
+   Körper, nämlich den sog. /Körper der reelen Zahlen/
+   $(\mathbb{R}, +, \cdot)$.
+-  Der Körper der komplexen Zahlen $(\mathbb{C}, +, \cdot)$ ist /nicht/
+   angeordnet.
+-  Der Körper der rationalen Zahlen $(\mathbb{Q}, +, \cdot)$ ist
+   angeordnet.
+
+* vollständiger Körper
+
+Ein Körper heißt /vollständig/, wenn in ihm jede
+[[folgen][Cauchy-Folgen]] konvergiert.
+
+Das ist äquivalent zu der Aussage: Ein angeordneter Körper heißt
+/vollständig/, wenn in ihm jede nach obenen
+[[extreme_elemente][beschränkte Menge]] ein
+[[extreme_elemente][Supremum]] besitzt.
+
+*Eigenschaften:*
+
+-  Es gibt (bis auf Isomorphie) genau einen angeordneten /und/
+   vollständigen Körper, nämlich den /Körper der reelen Zahlen/
+   $(\mathbb{R}, +, \cdot)$.
+-  Der Körper der komplexen Zahlen $(\mathbb{C}, +, \cdot)$ ist
+   vollständig.
+-  Der Körper der rationalen Zahlen $(\mathbb{Q}, +,\cdot)$ ist /nicht/
+   vollständig.
+
+* Der Körper der rationalen Zahlen
+
+Der Körper der rationalen Zahlen $(\mathbb{Q},+,\cdot)$ mit den
+bekannten Verknüpfungen Addition und Multiplikation ist der kleinste
+angeordnete Körper (d.h. die rationalen Zahlen sind in jedem
+angeordneten Körper enthalten)
+
+*Eigenschaften:*
+
+-  $(\mathbb{Q}, +, \cdot)$ ist angeordnet, aber /nicht/ vollständig.
+
+* Der Körper der reellen Zahlen
+
+Es gibt (bis auf Isomorphie) genau einen angeordneten /und/
+vollständigen Körper, nämlich den sog. /Körper der reelen Zahlen/
+$(\mathbb{R}, +, \cdot)$ mit den geläufigen Verknüpfungen Addition und
+Multiplikation.
+
+*Eigenschaften:*
+
+-  Zu jeder reellen Zahl größer Null gibt es einen Bruch, der echt
+   kleiner ist, d.h. zu jedem $x \in \matbb{R}$ mit $x > 0$, gibt es ein
+   $n \in \mathbb{N}$ mit $0 < \frac{1}{n} < x$
+
+* Der Körper der komplexen Zahlen
+
+$(\mathbb{C}, +, \cdot)$ mit der
+
+-  [[komplexe_zahlen][/komplexe Addition/]]
+   $(x_1 , y_1) + (x_2, y_2) := (x_1 + x_2 , y_1 + y_2)$ und der
+-  [[komplexe_zahlen][/komplexen Multiplikation/]]
+   $(x_1 , y_1) \cdot (x_2, y_2) := (x_1 x_2 − y_1 y_2 , x_1 y_2 + x_2 y_1)$
+
+ist ein Körper.
+
+*Eigenschaften:*
+
+-  neutrales Element: $(1,0) = 1 + 0i$
+-  inverses Element zu $(a,b) \in \mathbb{C}$ ist
+   $(\frac{a}{(|(a,b)|)^2}, - \frac{b}{(|(a,b)|)^2})$
+-  $(\mathbb{C}, +, \cdot)$ ist vollständig aber /nicht/ angeordnet

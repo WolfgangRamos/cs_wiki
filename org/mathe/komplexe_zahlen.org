@@ -1,0 +1,44 @@
+#+TITLE: Komplexe_zahlen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Komplexe_zahlen
+---
+#+END_HTML
+
+* Komplexe Zahlen
+
+$(\mathbb{C}, +, \cdot)$ ist ein [[koerper][Körper]]
+
+** Rechnen mit komplexen Zahlen
+
+Sein $x,y \in \mathbb{C}$ mit $x := a + bi$ und $y := c + di$ mit
+$a,b,c,d \in \mathbb{R}$:
+
+*komplexe Konjukation*: $\bar{z} = a - bi$
+
+Eigenschaften:
+
+-  $\bar{x+y} = \bar{x} + \bar{y}$
+-  $\bar{x \dot y} = \bar{x} \cdot \bar{y}$
+-  $|x|^2 = x \cdot \bar{x}$
+
+*Addition:* $x+y = (a+bi) + (c+di) = (a+c) + (b+d)i$
+
+*Multiplikation:* $(a+bi) \cdot (c+di) = (ac-bd) + (ad+bc)i$ (die
+Darstellung $x = a + bi$ ermöglich die Berechnung des Produkts durch
+"Ausmultiplizieren")
+
+*Division:* $\frac{x}{y} = \frac{x\cdot \bar{y}}{y \cdot \bar{y}}$
+
+*Betrag:* $|(a,b)| := \sqrt{a^2 + b^2}$
+
+Eigenschaften:
+
+-  $|xy| = |x| \cdot |y|$
+-  /Dreiecksungleichung/: $|x + y| \leq |x| + |y|$

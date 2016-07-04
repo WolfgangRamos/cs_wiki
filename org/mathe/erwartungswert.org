@@ -1,0 +1,31 @@
+#+TITLE: Erwartungswert
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Erwartungswert
+---
+#+END_HTML
+
+* Erwartungswert
+
+Sei $[\Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum und $X$ eine
+hierauf [[zva][diskret verteilt ZVA]] mit Trägermenge
+$T \subseteq \mathbb{R}$und sei $g:T \rightarrow \mathbb{R}$ eine
+Funktion. Dann heißt der gewichtete Mittelwert
+
+$E(g(X)) := \sum_{x \in T} g(x) \cdot P(X=x)$
+
+/Erwartungswert/ von $g(X)$, sofern diese Summe absolut konvergiert.
+
+** Erwartungswert der geometrischen Verteilung:** Sei $X \sim Geo(p)$,
+dann gilt $E(X) = \frac{1-p}{p}$.
+
+*Eigenschafte:*
+
+-  Seien $X,Y$ diskrete ZVA über demselben Wahrscheinlichkeitsraum und
+   seien $a,b \in \mathbb{R}$. Dannn gilt: $E(aX+bY) = aE(X) + bE(Y)$.

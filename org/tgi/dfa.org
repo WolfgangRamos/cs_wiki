@@ -1,0 +1,65 @@
+#+TITLE: Dfa
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Dfa
+---
+#+END_HTML
+
+* Endliche deterministische Automaten
+
+Ein endlicher /deterministischer Automat/ (DFA oder DEA) ist ein Tupel
+$M=(Q, \Sigma, \delta, q_{0}, F)$ aus:
+
+-  einer endlichen Menge $Q$ von Zuständen (/Zustandsmenge/)
+-  einem Alphabet $\Sigma$
+-  einer Transitionsfunktion $\delta: Q \times A \rightarrow Q$
+-  einem /Anfangszustand/ $q_{0} \in Q$
+-  einer Menge $F$ von /Endzuständen/
+
+Ein Wort wird /akzeptiert/, wenn der Zustand, der nach dem Lesen des
+Wortes eingenommen wird, ein /Endzustand/ (auch /akzeptierender
+Zustand/) ist.
+
+Dieses Automatenmodell heißt /deterministisch/, da es zu jedem Wort $w$
+genau eine Möglichkeit gibt das Wort zu lesen.
+
+*Eigenschaften:*
+
+-  Eine Sprache ist genau dann regulär, wenn sie von einem DFA erkannt
+   wird.
+
+** Berechnung
+
+Sei $M = (Q,\Sigma,\delta,q_0,F)$ ein DFA und $w = w_0\dots{}w_{n-1}$
+ein Wort mit $w_{i} \in \Sigma$. Eine /Berechnung/ von $M$ auf $w$ ist
+eine Folge $r:=(r_{0},r_{1},...,r_{n})$ von Zuständen $r_{i} \in Q$ mit
+folgenden Eigenschaften:
+
+1. $r_0 = q_0$
+2. $\forall i < n: \delta(r_i , w_i) = r_{i+1}$
+
+$M$ /akzeptiert/ (engl. /accept/) $w$ (man sagt auch die Berechnung ist
+/akzeptierend/, falls gilt:
+
+3. $r_n \in F$
+
+Die Menge der von $M$ akzeptierten Wörter bildet eine /formale Sprache/
+$L(M) := \{ w \in \Sigma^* | M \text{ akzeptiert } w \}$. $L(M)$ wird
+auch die von $M$ /erkannte Sprache/ genannt (engl. /recognize/).
+(*Merke:* ein Automat kann viele Wörter /akzeptieren/, aber nur eine
+Sprache /erkennen/.)
+
+Dieses Automatenmodell heißt /deterministisch/, da es zu jedem Wort $w$
+*genau eine* Möglichkeiten gibt das Wort zu lesen. Insbesondere ist die
+Berechnung von $M$ zu einem Wort $w \in \Sigma^+$ eindeutig.
+
+** Graphische Darstellung
+
+-  zu jedem Zustand und jedem Symbol gibt es /genau/ eine ausgehende
+   Kante, die mit diesem Symbol beschriftet ist.

@@ -1,0 +1,38 @@
+#+TITLE: Exponentialfunktion
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Exponentialfunktion
+---
+#+END_HTML
+
+* Exponentielafunktion
+
+Die [[reihe][Potenzreihe]] $e^z := \sum_{k=0}^{\infty} \frac{1}{k!} z^k$
+für $z \in \mathbb{R}$ oder $z \in \mathbb{C}$ heißt
+/Exponentialfunktion/. Statt $e^z$ schreibt man auch $\exp(z)$.
+
+Unter der Exponentialfunktion zur Basis $a \in \mathbb{R}$ versteht man
+die Funktion $\exp_a : \mathbb{R} \rightarrow \mathbb{R}^+$ mit
+
+$\exp_a(x) := a^x = e^{x \ln a} = \exp(x \ln a)$
+
+*Eigenschaften:*
+
+-  Die Exponentialfunktion konvergiert für alle $x \in \mathbb{R}$, d.h.
+   der Konvergenzradius von $\exp$ ist $R(\exp) = \infty$.
+-  Sei $z,w \in \mathbb{C}$ mit $z := x + iy$ und $x,y\in \mathbb{R}$,
+   dann gilt:
+
+   -  $\Re(\exp(z)) = \Re(\exp(x+iy)) = \exp(x) \cos(y)$
+   -  $\exp(x) = e^x > 0$
+   -  $|e^{iy}| = 1$ für alle $y \in \mathbb{R}$
+   -  $|e^z| = e^x$ für alle $z := x+iy \in \mathbb{C}$
+   -  $\exp(z + w) = \exp(z) \cdot \exp(w)$.
+
+-  Die Exponentialfunktion ist stetig und streng monoton wachsend.

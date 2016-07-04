@@ -1,0 +1,29 @@
+#+TITLE: DHCP
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* DHCP
+
+*Dynamic Host Configuration Protocol* (DHCP) ermöglicht die
+Zuweisung von Netzwerkkonfigurationen an Clients durch Server. Der Vorläufer von DHCP war BOOTP.
+
+Server UDP-Port: 67
+
+Client UDP-Port: 68
+
+DHCPD ist ein IP /und/ MAC-Broadcast
+
+DNS ist i.d.R auch Teil des =DHCPOffer=
+
+*Vorteile:*
+
+- Vermeidung manueller Konfiguration von Geräten für ein Netzwerk
+  (z.B. manuelle Vergabe der IP-Adresse, etc.)
+- Unterstützung mobiler Geräte
+- IP-Adressen müssen nicht individuell statisch vergeben werden,
+  sondern werden /on-demand/ an anfragende Geräten vergeben. IP-Adressen
+  sind somit prinzipiell weder an Geräte noch an Personen gebunden.
+
+#+CAPTION: DHCP-Header
+[[./gfx/dhcp_header.png]]

@@ -1,0 +1,92 @@
+#+TITLE: Priorityqueue
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Priorityqueue
+---
+#+END_HTML
+
+* Priorityqueue
+
+Eine /Priorityqueue/ (dt. Prioritätswarteschlange) ist eine dynamische
+Datenstruktur, die eine Menge S verwaltet und folgende Operationen
+unterstützt:
+
+-  =insert(S,x)=: füge Element =x= in =S= ein ($\mathbb{O}(1)$;
+   vorausgesetzt, dass ein Feld in konstanter Laufzeit um ein Element
+   vergößert werden kann)
+-  =maximum(S)=: gib das größte Element in =S= zurück
+   ($\mathbb{O}(\log n)$)
+-  =extractMax(S)=: gib das größte Elemente zurück und lösche es in =S=
+   ($\mathbb{O}(\log n)$)
+
+*Idee:* Verwende einen [[heap][Heap]] für die Priorityqueue.
+
+Implementierung von =insert=:
+
+Füge das neue Element =x= auf der untersten Ebene ein und dann
+vertausche =x= iterativ mit seinem Vater, bis der Wert des Vaterknotens
+$\leq x$ ist.
+
+#+BEGIN_EXAMPLE
+    insert(S, x) {
+      integer n = length(S);
+      integer i;
+
+      erzeuge Feld A mit n+1 Elementen;
+
+      for i = 0 to n - 1 do
+        A[i] = S[i];
+      od
+      A[n] = x;
+
+      bool stop = false;
+      while n > 0 and not(stop) do
+        if A[n] > A[(n-1)/2] then
+          tmp = A[n];
+          A[n] = A[(n-1)/2];
+          S[(n-1)/2] = tmp;
+          n = (n-1)/2;
+        else
+          stop = true;
+        fi
+      od
+
+      S = A;
+    }
+#+END_EXAMPLE
+
+Implementierung von =maximum(S)=:
+
+#+BEGIN_EXAMPLE
+    maximum(S) {
+      return S[0];
+    }
+#+END_EXAMPLE
+
+Implementierung von =extractMax(S)=:
+
+#+BEGIN_EXAMPLE
+    extractMax(S){
+      integer n = length(S);
+
+      erzeuge Feld A mit n-1 Elementen;
+      
+      A[0] = S[n-1];
+      integer max = S[0];
+      for i 1 to n-2 do
+        A[i] = S[i];
+      od
+      HEAPIFY(A,0,n-1);
+      S=A;
+      return max;
+    }
+#+END_EXAMPLE
+
+Ersetze Wurzel durch letztes Element des Heaps. Dann stelle mit
+=HEAPIFY= die Heap-Eigenschaft wieder her.

@@ -1,0 +1,292 @@
+#+TITLE: Erlang
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Erlang
+---
+#+END_HTML
+
+* Erlang
+
+-  Kommentare: =%=
+-  Variablen groß schreiben
+-  Atome klein schreiben
+
+#+BEGIN_EXAMPLE
+    -module().
+    -export([fac/1, lookup/2]).
+
+    fac(0) -> 1;
+    fac(N) when N > 0 -> N * fac(N-1).
+
+    % lookup :: a -> [(a,b)] -> Maybe b
+    lookup(_,[]) ->
+
+    map(_,[]) -> [];
+    map(Fun,[X,Xs]) -> [Fun(X)|map(Fun,Xs)].
+
+    map2(Fun, Xs) ->
+      case Xs of
+        [] -> [];
+        [Y|Ys] -> [Fun(Y)|map2(Fun, Ys)]; ???
+      end.
+#+END_EXAMPLE
+
+-  Kompilieren mit =c(Modulname)=
+
+** Nebenläufigkeit
+
+Jeder Prozess hat eine Mailbox. Diese ist eine Queue (FIFO). Die
+Reihenfolge der Pattern im =receive= Aufruf hat keinen Einfluss auf die
+Reihenfolge der Verarbeitung der Nachrichten.
+
+Jeder Prozess hat eine /Pit/. Die /Pit/ des laufenden Prozesses erhält
+man mit =self()=.
+
+Nachricht senden: =self()!hallo=
+
+Nachricht empfangen: `receive 42 -> bla; X -> X
+
+Variable freigeben (free) =f(X)=
+
+#+BEGIN_EXAMPLE
+    -module(database).
+    -export([start/0]).
+
+    start() -> spawn(fun() -> database([]) end).
+
+    database(KVs) ->
+      receive
+        {allocate,Key,P} ->
+          case fac:lookup(Key,KVs) of
+            nothing -> P!free,
+                       receive
+                         {value,V,P} -> database([{Key,V}|KVs])
+                       end;
+            {just,_} -> P!allocated;
+          end;
+        {lookup,Key,P} -> P!fac:lookup(Key,KVs),
+                          database(KVs)
+      end.
+#+END_EXAMPLE
+
+=spawn(Funktion)= geniert einen Prozess und gitb den Pit des Prozesse
+zurück
+
+#+BEGIN_EXAMPLE
+    -module(phil).
+    -export([start/0]).
+    %-import([]).
+
+    newStick() -> spawn(fun() -> stickDown() end).
+
+    stickDown() ->
+      receive
+        {take,P} -> P!took, stickUp()
+      end.
+
+    stickUp() ->
+      receive
+        put -> stickDown()
+      end.
+
+    take(S) -> S!take{take,self()},
+               receive
+                 took -> ok
+               end.
+
+    put(S) -> S!put.
+
+    start() ->
+      S1 = newStick(),
+      S2 = newStick(),
+      S3 = newStick(),
+      S4 = newStick(),
+      S5 = newStick(),
+      spawn(fun() -> phil(1, S1, S2) end),
+      spawn(fun() -> phil(2, S2, S3) end),
+      spawn(fun() -> phil(3, S3, S4) end),
+      spawn(fun() -> phil(4, S4, S5) end),
+      fun() -> phil(5, S1, S2).
+      
+    phil(N,SL,SR) ->
+      base:printLn(base:show(N)++" thinks"),
+      take(SL),
+      take(SR),
+      base:printLn(Base:show(N)++" eats"),
+      put(SL),
+      put(SR),
+      phil(N,SL,SR).
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+
+    new_mvar() -> spawn(fun() -> empty() end).
+
+    empty() ->
+      receive
+        {put,V,P} -> P!put, % schreiber blockieren
+                     full(V)
+      end.
+
+    full(V) ->
+      receive
+        {take,P} -> P!{took,V},
+                    empty()
+      end.
+
+    take_mvar(MVar) ->
+      MVar!{take, self()},
+      receive
+        {took,V} -> V
+      end.
+
+    put_mvar(MVar,V) ->
+      MVar!{put,V,self()},
+      receive
+        put -> ok
+      end.
+
+    clear_mvar(MVar) ->
+#+END_EXAMPLE
+
+Knoten auf Server starten: =erl -name <Knotenname>= oder
+=erl -sname <Knotenname>=
+
+Prozesse auf dem Server registrieren: =register(<Name>, <pit>).=
+
+Danach können Nachrichten an den registierten Service geschickt werden:
+={<Name>, <Knoten>}!<Nachricht>=. Für Antworten kann der Sender seine
+Pit mitschicken.
+
+chatServer:
+
+#+BEGIN_EXAMPLE
+    -module(chatServer).
+    -export([start/0]).
+    -import(base,[lookup/2]).
+
+    start() -> register(chat, self()), server_loop([]).
+
+    server_loop(Clients) ->
+      receive
+        {login,Name,P} -> case lookup(Name,Clients) of
+          nothing -> P!{welcome, map(fun({X,_}) -> X end, Clients), self()},
+                     ...
+                     server_loop([{Name,P}|Clients]);
+          {just,_} -> P!name_occupied.
+                     server_loop([{Name,P}|Clients])
+                     end;
+        {logout,P} -> NewClients = lists:keydelete(P,2,Clients),
+                      case lists:keyfind(P,2,Cleints) of
+                        false -> server_loop(Clients);
+                        {Name,_} -> NewClients = lists:keydelete(P,2,Clients),
+                                    broadcast(NewClients,{logout,Name}),
+                                    server_loop(NewClients).
+                      end.
+        {message,Msg,P} ->
+                      case lists:keyfind(P,2,Clients) of
+                        false -> server_loop(Clients);
+                        {Name,_} -> broadcast(Clients,{message,Name}),
+                                    server_loop(Clients).
+                      end.
+
+        Msg -> println("Not implemented yet:"++show(Msg)),
+               server_loop(Clients)
+      end.
+
+    broadcast(Clients) ->
+                  
+#+END_EXAMPLE
+
+chatClient:
+
+#+BEGIN_EXAMPLE
+    -module(chatClient).
+    -export([joinChat/2]).
+
+    joinChat(Name, ServerNode) ->
+      {chat,ServerNode}!{login,Name,self()},
+      receive
+        {welcome,Names,Server} -> println(Names),
+                                  Me = self(),
+                                  Client spawn(fun() -> user_input(Server, Name, Me) end),
+                                  client_loop();
+        name_occupied -> printLn("Name bereits vergeben")
+      after 2000 -> printLn("Keine Verbindung")
+      end.
+
+    user_input(Server, Name, Me) ->
+      Str = getLn(Name++"> "),
+      case Str of
+        "bye" -> Server!{logout,Me},
+        _ -> Server!{message, Str, Me}
+      end,
+      user_input(Server, Name, Me).
+
+    client_loop() ->
+      receive
+        {loogout, Name} -> printLn(Name++" hat den Chat verlassen."),
+                           client_loop();
+        {message, Msg, Name} -> printLn(Name++"
+#+END_EXAMPLE
+
+Verknüpfung von Prozessen mit =spawn_link(<FUN>)= oder =link(<PID>)=
+
+Verhindern, mit einem verlinkten Prozess zu sterben:
+=process_flag(trap_exit, true)=. Dann erhalten wir eine Message, wenn
+der verlinkte Prozess stirbt.
+
+** Generic Server
+
+Modul =gen_server=.
+
+Chat unter Verwendung von Genserver
+
+#+BEGIN_EXAMPLE
+    -module(genChat).
+    -behaviour(gen_server). % Behaviour-Klasse, geladen wie Modul ähnlich wie abstraktes Interface, welche zu implementieren ist
+    -export([start/0]).
+    -export([login/0, msg/2, logout/1, who/1]).
+    -export([init/0, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
+
+    start() -> base:printLn("Server started"),
+    gen_server:start_link({local,chat},genChat,[],[]). % Code für Server im Modul genChat
+
+    init() -> {ok,[]}.
+
+    % asynchronous interface
+    handle_cast({message, Text, P}, Clients) -> % Clients sind automatisch bekannt
+        ... COde
+        {noreply,Clients}; % sagt dem Server, dass er den Clients nicht antworten muss
+        {noreply, <Neuer Zustand>}
+    handle_cast(...)
+
+    % synchronous interface
+    handle_call({login, Name})
+        ...
+        {reply, <Message>, <neuer Zustand>} 
+
+    terminate(shutdown, _) -> ok.
+
+    code_change(_OldVsn, _Extra) -> {ok, State}.
+
+    % client interface
+
+    login(Node, Name) -> gen_server:call({chat_Nod}, {login, Name}).
+
+    msg(Pid, Msg) -> gen_server:cast(Pid, {message, Msg, self()}).
+#+END_EXAMPLE
+
+Chat Client mit gen\_server
+
+```` -module(genChatClient).
+
+lokales Dictionary mit Key-Value-Paaren:
+
+=put(42, hallo)= und =get(42)=

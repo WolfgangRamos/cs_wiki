@@ -1,0 +1,18 @@
+#+TITLE: Ordnungsrelation
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Ordnungsrelation
+---
+#+END_HTML
+
+* Ordnungsrelation
+
+-  Reflexivität
+-  Transitivität
+-  Antisymmetrie

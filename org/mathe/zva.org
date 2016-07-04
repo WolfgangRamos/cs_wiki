@@ -1,0 +1,53 @@
+#+TITLE: Zva
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Zva
+---
+#+END_HTML
+
+* Zufallsvariablen
+
+Sei $(\Omega, \mathcal{A}, P)$ ein Wahrscheinlichkeitsraum und sei
+$(\mathbb{R}, \mathcal{B})$ ein Messraum. Dann heißt eine Funktion
+$X:\Omega \rightarrow \mathbb{R}$ eine /Zufallsvariable/, wenn
+$\forall B \in \mathcal{B}: X^{-1}(B) \in \mathcal{A}$
+
+Sei $X: \Omega \rightarrow \mathbb{R}$ eine Zufallsvariable. Dann ist
+$P^X: \mathcal{B} \rightarrow [0,1]$ mit $P^X := P \circ X^{-1}$ ein
+Wahrscheinlichkeitsmaß. Also ist $(\mathbb{R}, \mathcal{B}, P^X)$ ein
+Wahrscheinlichkeitsraum.
+
+*Rationale:*
+
+Es gilt $X^{-1}: \mathcal{R} \rightarrow \Omega$. Also gilt
+$X^{-1}(x) \in \Omega$ für $x \in \mathbb{R}$.
+
+Da $(\mathbb{R}, \mathcal{B})$ Messraum ist, gilt
+$\mathcal{B} \subset \mathcal{P}(\mathbb{R})$. D.h.
+$B \in \mathcal{B} \Longrightarrow B \subset \mathbb{R}$. Dann gilt
+$X^{-1}(B) \in \mathcal{A} \Longrightarrow X^{-1}(B) \subset \Omega$.
+
+*Konventionen:* Wir schreiben $P(X=4)$ für $P^X({4})$.
+
+*Eigenschaften:*
+
+-  Wenn $\mathcal{A} = \mathcal{P}(\Omega)$ gilt, dann ist die Bedingung
+   $\forall B \in \mathcal{B}: X^{-1}(B) \in \mathcal{A}$ immer erfüllt.
+
+* Diskrete/Endliche Zufallsvariablen
+
+Eine ZV $X:\Omega \rightarrow \mathbb{R}$ auf einem
+Wahrscheinlichkeitsraum $(\Omega, \mathcal{A}, P)$ heißt /diskret/, wenn
+ein abzählbare /Trägermenge/
+$T = \\{t_i \mid i \in \\{1,\dots,n\\}\\} \subseteq \mathbb{R}$
+existiert, sodass
+
+$P^X(T) = 1$
+
+Falls $T$ endlich ist, so heißt $X$ /endlich/.

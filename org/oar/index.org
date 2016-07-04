@@ -1,0 +1,42 @@
+#+TITLE: Index
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Index
+---
+#+END_HTML
+
+* Organisation und Architektur von Rechnern
+
+-  [[../digisys/stellwertsystem.org][B-adische Zahlendarstellung]]
+-  [[../digisys/b_komplement_darstellung.org][Zweierkomplementdarstellung]]
+-  [[../lang/c.org][C]]
+
+   -  abstrakte Datentypen (struct)
+   -  Bitoperationen
+
+-  [[../digisys/groesseneinheiten.org][little Endian / big Endian]]
+-  [[./ia32_assembler.org][IA31 Assembler]]
+
+   -  [[./ia32_assembler.org][Register]]
+   -  [[./ia32_assembler.org][Stack]]
+
+-  [[./speicherhierarchie.org][Speicherhierarchie]]
+-  [[./caches.org][Caches]]
+
+   -  Adressierung in Caches (Lookups)
+   -  Cache Sets, Tag Bits, Set Index Bits, Block Offset Bits
+   -  assoziative Caches
+   -  direct mapped Caches
+   -  Anzahl Lese- und Schreibzugriffe
+   -  Cache Misses und Miss-Rate
+
+-  [[../os/locality_of_reference.org][Lokalität]]
+-  [[../os/interrupts.org][Interrupts]]
+-  [[../os/virtual_memory.org][Virtual Memory]]
+-  [[../os/process.org][Prozesse]]

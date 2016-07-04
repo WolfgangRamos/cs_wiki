@@ -1,0 +1,274 @@
+#+TITLE: C
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: C
+---
+#+END_HTML
+
+* C
+
+*Standards*:
+
+-  /Kernighan & Ritchie/ (auch /K&R-C/)
+-  /ANSI C/ (auch /C89/; alle Compiler entsprechen heute diesem
+   Standard)
+
+   -  Auslagerung von Funktionen in Bibliotheken (/header/-Dateien)
+   -  Deklaration der Typen von Parametern direkt beim Paramternamen
+
+-  /C-99/
+
+   -  Aufnahme von Rückgabetypen in die Funktionsdeklaration
+
+** elementare Datentypen
+
+| Datentyp        | Länge in bytes   |                                                           |
+|-----------------+------------------+-----------------------------------------------------------|
+| =char=          | 1                | Kodierung eines alphanumerischen Zeichens in ASCII Code   |
+| =short=         | 2                |                                                           |
+| =int=           | 4                |                                                           |
+| =long=          | 4                |                                                           |
+| =long long=     | 8                |                                                           |
+| =float=         | 4                |                                                           |
+| =double=        | 8                |                                                           |
+| =long double=   | 10/12            |                                                           |
+| pointer         | 4                |                                                           |
+
+Diese Datentypen können mit folgenden /Typmodifikatoren/ kombiniert
+werden:
+
+-  =unsigned=:
+
+*Wichtig:* In C erfolgt /keine/ default-Belegung von Variablen mit
+Werten!
+
+Konstanten (z.B. Zahlen =10=) sind standardmäßig von einem signed
+Datentyp. Zahlen von einem unsigned Datentyp erhält man durch das Suffix
+=U=, also z.B. =10U=.
+
+Konstanten für maximale und minimale Werte mit =#include<limits.h>=: *
+=INT_MIN= * =INT_MAX= * =UINT_MIN= * =UINT_MAX= * =LONG_MIN= *
+=LONG_MAX= * =ULONG_MIN= * =ULONG_MAX=
+
+** Casting
+
+Als /casting/ bezeichnet man die Umwandlung von einem Datentyp A in
+einen Datentyp B. Casting kann explizit (durch Cast Operatoren) oder
+implizit (z.B. durch Zuweisung und für Parameter von Fuktionsaufrufen)
+erfolgen. Je nach Länge von A und B haben casts unterschiedliche Folgen:
+
+-  sind A und B gleich lang, so erfolgt lediglich eine Neuinterpretation
+   der Bitfolge
+-  ist B ein signed Datentyp und länger als A, so erfolgt sign extension
+   (Verlängerung der Bitfolge durch Wiederholung des MSB)
+-  ist B ein unsigned Datentyp und länger als A, so wird die Bitfolge
+   durch Nullen verlängert
+-  ist B kürzer als A, so wird die Bitfolge verkürzt
+
+#+BEGIN_EXAMPLE
+    unsigned int y = 0;
+
+    // explicit cast with cast operator
+    int x = (int) y;
+
+    // implicit cast
+    int x = y;
+#+END_EXAMPLE
+
+*Achtung:* Wenn in einem Ausdruck unsigned und signed Datentypen
+vorkommen werden implizit alle signed Datentypen zu unsigned gecastet:
+
+/sign extension/: Wiederholung des msb zur Verlängerung einer Bitfolge
+
+** gemischte Datentypen
+
+*Alignment:*
+
+Das Ablegen von Daten an bestimmten Speicheradressen bezeichnet man als
+/aligment/. Wenn dafür die Länge des Datentyps im Speicher vergößert
+werden muss, bezeichnet man den zusätzlich verwendeten Speicher als
+/padding/. Alignment wird z.B. durchgeführt * innerhalb von =struct=s
+(d.h. für die Datenfelder einer =struct=), * =union=s, * Arrays von
+=struct=s.
+
+Es gilt die Faustregel: Datenypten, die $k$ Byte lang sind werden so im
+Speicher abgelegt, dass ihre Adresse ein Vielfaches von $k$ ist.
+
+| Datentyp        | Alignmentanforderung (Linux IA32)   |
+|-----------------+-------------------------------------|
+| =char=          | Vielfache von 1                     |
+| =short=         | Vielfache von 2                     |
+| =int=           | Vielfache von 4                     |
+| =long long=     | Vielfache von 4                     |
+| =double=        | Vielfache von 4                     |
+| =long double=   | Vielfache von 4                     |
+
+*Vorteil:* ermöglich Adressrechnung durch shifts
+
+*** Strukturen
+
+-  innerhalb einer =struct= muss die Aligmentanforderung jedes Datentyps
+   erfüllt sein
+-  die Alignmentanforderung einer =struct= selbst wird durch die größten
+   Aligmentanforderung der enthaltenen Felder festgelegt (wenn also eine
+   =struct= nur =char= Typen enthält wird sie auf Vielfache von 1
+   aligned, wenn eine struct jedoch mindestens einen =int= Typ enthält
+   wird sie auf Vielfache von 4 aligned)
+
+#+BEGIN_EXAMPLE
+    struct a {
+      ...
+    };
+#+END_EXAMPLE
+
+*** Union
+
+#+BEGIN_EXAMPLE
+    union u {
+      ...
+    }
+#+END_EXAMPLE
+
+-  die Länge eines Union wird durch die größte Länge eines verwendeten
+   Datentyps festgelegt
+
+** Operationen
+
+*** Bit-Operationen
+
+-  =x | y=: bit-weises "oder" ($\vee$)
+-  =x ^ y=: bit-weises "x-or"
+-  =x & y=: bit-weises "und" ($\wedge$)
+-  =x << y=: left-shift (=x= wird um =y= bits nach links geschoben)
+-  =x >> y=: right-shift (=x= wird um =y= bits nach rechts geschoben)
+-  =~x=: Einerkomplement von =x= (jede =1= wird zu einer =0= u.u.)
+-  Alle binären Operatoren können mit der Zuweisungs-kurzschreibweise
+   kombiniert (z.B. =x <<= 2= für =x = x << 2= oder =x |= y= für
+   =x = x | y=)
+
+Bei unsigned Datentypen wird i.d.R. ein logical right shift ausgeführt.
+Bei signed Datentypen wird i.d.R. ein arithmetischer right-shift
+ausgeführt. Undefiniertes Verhalten, wenn Shifts um negative Werte oder
+um mehr Stellen, als der Datentyp bietet, ausgeführt werden.
+
+*** Logische Operationen
+
+-  =a && b= (short circuited)
+-  =a || b= (short circuited)
+-  =!x=: =0=, wenn $x \neq 0$, =1=, wenn $x=0$
+
+*** Arithmetische Operationen
+
+-  =x % y=: [[../mathe/modulorelation.md][Modulooperation]]
+-  =x++=: post-increment (=x= wird zunächst ausgewertet und dann
+   inkrementiert)
+-  =++x=: pre-increment (=x= wird zunächst inkrementiert und dann
+   ausgewertet)
+-  =x--=: post-decrement (=x= wird zunächst ausgewertet und dann
+   dekrementiert)
+-  =--x=: pre-decrement (=x= wird zunächst dekrementiert und dann
+   ausgewertet)
+
+** Main Methode
+
+-  /exit code/: Rückgabewert der Main Methode
+
+   -  =0=: programm ended without error
+   -  =1=: programm ended with error
+
+#+BEGIN_EXAMPLE
+    int main(int argc, char* argv[]) {
+
+      return 0; // exit code
+    }
+#+END_EXAMPLE
+
+oder
+
+#+BEGIN_EXAMPLE
+    int main(int argc, char** argv) {
+
+      return 0; // exit code
+    }
+#+END_EXAMPLE
+
+** Arrays
+
+-  Konvention: Elemente werden /zusammenhängend/ und /entsprechend ihrer
+   Reihenfolge/ im Array im Speicher abgelegt. Das ermöglicht den
+   einfachen Zugriff auf Elemente des Arrays über eine Base-Adresse,
+   einen Index und eine Skalierungsfaktor (s.
+   [[../oar/ia_32_assembler][indexed Adressierungsmodus]]
+-  zweidimensionale /nested arrays/ folgen der /row-major ordering/
+   Konvention, d.h. die Zeilen eines Arrays =a= werden zusammenhängend
+   im Speicher abgelegt, wenn man der Konvention folgt =a[i]= als =i=-te
+   Zeile von =a= zu interpretieren.
+
+*** multi-level-array
+
+Deklaration: =int *a[3]= (ein Array von Intergerpointern =int*=)
+
+*Vorteil:* Spalten können unterschiedlich lang sein
+
+*Nachteil:* Zwei Speicherzugriffe zum Auslesen eines Elements nötig
+
+*** nested-array
+
+Deklaration: =int a[3][3]= (ein Array mit $3 \times 3 $ Elementen)
+
+*Vorteil:* Nur ein Speicherzugriff nötig, um ein Element auszulesen
+
+*Nachteil:* Spalten müssen gleichlang sein
+
+**** eindimensionale nested Arrays
+
+#+BEGIN_EXAMPLE
+    ⟨typ⟩ ⟨name⟩[⟨size⟩];
+#+END_EXAMPLE
+
+Bsp: =int a[10];=
+
+-  =a= ist ein Pointer vom Typ =int*=
+-  =*a= liefert den Wert des ersten Elements in =a=. =*a= ist äquivalent
+   zu =a[0]=.
+-  =a + i= ist ein Pointer auf das =i=-te Element in =a=
+-  =*(a + k)= liefert den Wert des =k=-te Elements in =a=. =*(a + k)=
+   ist äquivalent zu =a[k]=.
+-  =&(a[j])= ist ein Pointer auf das =j=-te Element in =a=
+-  Größe: =⟨size⟩ * ⟨typgröße⟩= Bytes
+
+**** zweidimensionale nested Arrays
+
+#+BEGIN_EXAMPLE
+    ⟨typ⟩ ⟨name⟩[⟨size⟩][⟨size⟩];
+#+END_EXAMPLE
+
+Bsp: =int a[10][10];=
+
+-  =a= ist ein Array von Integerarrays, d.h. =a= ist ein Pointer vom Typ
+   =(int*)*= oder kurz =int**=
+-  =*a= liefert die Adresse des ersten Integerarrays in =a= (d.h. die
+   Adresse von dessen ersten Wert). =*a= ist äquivalent zu =a[0]=
+-  =a[i]= ist ein Pointer auf das =i=-te Integerarray in =a=. Da Arrays
+   zusammenhängend im Speicher abgelegt werden, kann man sagen, dass die
+   Spalten einer Matrix zusammenhängen im Speicher abgelegt werden
+   (/row-major ordering/-Konvention), wenn man der Konvention folgt =i=
+   als Zeilenindex zu interpretieren.
+-  =a[i][j]= liefert den Wert des =j=-ten Elements im =i=-ten
+   Integerarray in =a=.
+-  Größe: =⟨zeilen⟩ * ⟨spalten⟩ * ⟨typgröße⟩= Bytes
+
+** Prozesse in C
+
+[[../os/process][s. Prozesse]]
+
+** GCC Flags
+
+-  =-S=: erzeuge =.s= files mit assembler code
+-  Optimierungsstufen: =-01=, =-02=, =-03=

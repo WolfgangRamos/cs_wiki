@@ -1,0 +1,21 @@
+#+TITLE: Readers_writers_problem
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Readers_writers_problem
+---
+#+END_HTML
+
+* Readers/Writers Problem
+
+Setting:
+
+-  eine Datei darf von beliebig viele Reader gleichzeitig gelesen werden
+-  zu jedem Zeitpunkt darf nur ein Writer in die Datei schreiben
+-  wenn eine Writer in die Datei schreibt darf gleichzeitig kein Reader
+   die Datei lesen

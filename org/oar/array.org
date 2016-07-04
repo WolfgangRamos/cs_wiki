@@ -1,0 +1,34 @@
+#+TITLE: Array
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Array
+---
+#+END_HTML
+
+* Array
+
+-  Konvention: Elemente werden /zusammenhängend/ und /entsprechend ihrer
+   Reihenfolge/ im Array im Speicher abgelegt. Diese Konvention
+   ermöglicht den einfachen Zugriff auf Elemente des Arrays über
+-  zweidimensionale Arrays folgen der /row-major ordering/ Konvention,
+   d.h. die Zeilen eines Arrays =a= werden zusammenhängend im Speicher
+   abgelegt, wenn man der Konvention folgt =a[i]= als =i=-te Zeile von
+   =a= zu interpretieren.
+
+** multi-level-array
+
+=int *a[3]=
+
+-  Spalten können unterschiedlich lang sein
+
+** nested-array
+
+=int a[3][3]=
+
+-  Spalten müssen gleichlang sein

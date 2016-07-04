@@ -1,0 +1,152 @@
+#+TITLE: Norm
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Norm
+---
+#+END_HTML
+
+* Norm / normierter Raum
+
+Sei $(V, \oplus)$ Vektorraum über dem Körper $(\mathbb{K}, +, \cdot)$.
+Eine Abbildung $\| \cdot \|: V \rightarrow \mathbb{R}_{0}^{+}$ heißt
+/Norm/, wenn gilt:
+
+1. /Definitheit/:
+   $\forall v \in V: \| v \| = 0 \Longleftrightarrow v = e_{\oplus}$
+2. /Linearität///Homogenität/:
+   $\forall \lambda \in \mathbb{K}, v \in V: \| \lambda \odot v \| = | \lambda | \cdot \| v \|$
+3. /Dreiecksungleichung/:
+   $\forall v,w \in V: \| v \oplus w \| \leq \| v \| + \| w \|$
+
+Das Paar aus Vektorraum und Norm heißt /normierter Raum/.
+
+*Eigenschaften:*
+
+-  Aus jeder Norm $\| \cdot \|$ lässt sich mit $d(x,y) := \|(x-y)\|$
+   eine Metrik $d$ definieren (der Umkehrschluss gilt im Allgemeinen
+   nicht).
+-  Im $\mathbb{K}^n$ sind alle Normen äquivalent zur Maximumsnorm, d.h.
+   für jede Norm $\|\cdot\|$ existieren $m,M \geq 0$, sodass
+   $\forall x \in \mathbb{K}^n: m\|x\|_{\infty} \leq \|x\| \leq M \|x\|_{\infty}$.
+
+   -  Daher sind die Begriffe /abgeschlossene Menge/ und /offene Menge/
+      unabhängig von der zugrundegelegten Norm (d.h. alle Normen führen
+      zu denselben abgeschlossenen bzw. offenen Menge)
+   -  Bei der Betrachtungn von /Grenzprozessen/ (z.B. Stetigkeit,
+      Differenzierbarkeit) im $\mathbb{K}^n$ ist es egal, welche Norm
+      man zugrunde legt. Wir können daher die Kurzschreibweise
+      $x_k \rightarrow x$ verwenden um die Konvergenz einer Folge
+      $(x_k)_{k \in \mathbb{N}} \subset \mathbb{R}^n$, also
+      $\lim_{k \rightaarow \infty} \|x_k - x\| = 0$ anzudeuten.
+
+-  Sei $S_1 := \{x \in \mathbb{K}^n | \|x\|_{\infty}\}$ /Einheitssphäre/
+   bzgl. $\|\cdot\|_{\infty}$ im $\mathbb{K}^n$ und $\|\cdot\|$ eine
+   beliebig Norm auf $\mathbb{K}^n$. Dann gilt:
+   $m := \inf\{\|x\| | x \in S_1 \} > 0$.
+-  Normen auf einem Vektorraum heißen /Vektornormen/.
+
+** Aquivalenz
+
+Zwei Normen $\|\cdot\|_A$ und $\|\cdot\|_B$ heißen äquivalent, wenn es
+$m, M \in \mathbb{K}$ gibt, sodass
+$\forall v \in V: m\|v\|_A \leq \|v\|_B \leq M\|v\|_A$ gilt.
+
+** Induzierte Norm
+
+In einem [[vektorraum][euklidischen]] oder [[vektorraum][unitären Raum]]
+(d.h. einem Vektorraum über dem Körper der reellen
+$(\mathbb{R},+,\cdot)$ oder dem Körper der komplexen Zahlen
+$(\mathbb{C},+,\cdot)$) wird durch ein [[skalarprodukt][Skalarprodukt]]
+eine Norm induziert.
+
+** Beschränktheit
+
+Eine Teilmenge $A$ eines Vektorraums, auf dem eine Norm $\|\cdot\|$
+definiert ist, heißt /beschränkt/, wenn gilt
+
+$\exists M \in \mathbb{R}\_{>0}: \forall a \in A: \|a\| \leq M$
+
+* Normen auf dem Vektorraum der reellen Zahlen
+
+Sei $x \in \mathbb{R}^n$, dann heißt
+
+-  $\|x\|_2 := \sqrt{\sum\_{i=1}^{n} x_i^2}$ /euklidische Norm/ (diese
+   wird durch das [[skalarprodukt][euklidische Skalarprodukt]]
+   $\langle x,y \rangle = \sum\_{i=1}^n x_i y_i$ auf dem Vektorraum der
+   reellen Zahlen induziert durch
+   $\|v\| := \sqrt{\langle v,v \rangle} = \sqrt{\sum\_{i=1}^{n} x_i^2}$).
+-  $\|x\|\_{\infty} := \max\{|x_i| | 1 \leq i \leq n\}$ /Maximumsnorm/
+-  $\|x\|_1 := \sum\_{i=1}^{n} |x_i|$ $l_1$/-Norm/
+
+*Eigenschaften:*
+
+-  Im $\mathbb{R}^n$ sind alle Normen äquivalent zur Maximumsnorm, d.h.
+   für jede Norm $\|\cdot\|$ existieren $m,M \geq 0$, sodass
+   $\forall x \in \mathbb{K}^n: m\|x\|_{\infty} \leq \|x\| \leq M \|x\|_{\infty}$.
+
+* Matrixnormen
+
+Normen auf dem Vektorraum $\matbb{K}^{n\times n}$ heißen /Matrixnormen/.
+
+*Beispiele für Matrixnormen:* Sei $A \in \matbb{K}^{n\times n}$, dann
+heißt
+
+-  $\|A\|_{F} := (\sum_{i,j=1}^{n} |a_{ij}^2|)^{\frac{1}{2}}$
+   /Frobeniusnorm/. Sie ist verträglich mit der euklidischen Norm (d.h.
+   es gilt
+   $\forall x \in \mathbb{K}^n, A \in \mathbb{K}^{n \times n}: \|Ax\|_{2} \leq \|A\|_{F} \|x\|_{2}$).
+   Sie wird aber nicht durch die euklische Norm erzeugt. Da
+   $\|I\|_{F} = \sqrt{n}$ gilt ist die Frobeniusnorm keine natürlich
+   Matrixnorm.
+
+** Verträglichkeit
+
+Eine Matrixnorm $\|\cdot\|_{M}$ heißt /verträglich/ mit einer Vektornorm
+$\|\cdot\|_{V}$, wenn
+$\forall x \in \mathbb{K}^{n}: \|Ax\|_{V} \leq \|A\|_{M} \|x\|_{V}$
+gilt.
+
+** Submultiplikativität
+
+Eine Matrixnorm $\|\cdot\|_{M}$ heißt /submultiplikativ/, wenn
+$\forall A,B \in \mathbb{K}^{n \times n}: \|AB\|_{M} \leq \|A\|_{M} \cdot \|B\|_{M}$
+gilt.
+
+** erzeugte Matrixnormen
+
+Sei $\|\cdot\|_{V}$ eine Vektornorm auf $\mathbb{K}^n$. Dann wird für
+$A \in \mathbb{K}^{n \times n}$ die Norm
+
+$\|A\|_{M} := \sup_{x \in \mathbb{K}^n \setminus \{0\}} \frac{\|Ax\|_{V}}{\|x_{V}\|} = \sup_{x \in \mathbb{K}^n \wedge \|x\|_{V} = 1} \|Ax\|_{V}$
+
+die von $\|\cdot\|_{V}$ /erzeugte (natürliche) Matrixnorm/ genannt.
+
+Die durch eine Vektornorm erzeugte Matrixnorm ist mit dieser verträglich
+und submultiplikativ. Da außerdem $\|I\|_{M} = 1$ gilt heißt die Norm
+/natürlich/.
+
+Die in dieser Definition verwendeten Indices $V$ und $M$ für Vektor-
+bzw. Maxtrixnorm werden oft weggelassen. Es muss dann aus dem Kontext
+erschlossen werden, welche Norm gemeint ist.
+
+*Beispiele für (erzeugte) Maxtrixnormen:* Sei
+$A \in \matbbb{K}^{n\times n}$, dann heißt
+
+-  $\| A \|_{\infty} := \max_{1\leq i \leq n} \sum_{j=1}{n} |a_{ij}|$
+   /Zeilensummennorm/. Sie wird von der Maximumsnorm erzeugt.
+-  $\|A\|_{1} := \max{j=1\dots n} \sum_{i=1}{m} \|a_{ij}\}$
+   /Spaltensummennorm/. Sie wird von der $l_1$-Norm erzeugt.
+-  $\|A\|_{2} := \dots$ /Spektralnorm/. Sie wird von der euklidischen
+   Norm erzeugt.
+
+*Eigenschaften:*
+
+-  Ist $A$ eine symmetrische, reelle Matrix, dann gilt
+   $\|A\|_{2} = \max_{1 \leq i \leq n\} |\lambda_{i}|$ mit $\lambda_i$
+   ist Eigenwert von $A$.

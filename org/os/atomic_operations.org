@@ -1,0 +1,57 @@
+#+TITLE: Atomic_operations
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Atomic_operations
+---
+#+END_HTML
+
+* Atomare Operationen
+
+Eine Sequenz von Instruktionen, während deren Abarbeitung nicht von
+Interrupts unterbrochen werden kann (es kann also kein Scheduling
+währenddessen erfolgen) heißt atomare Operation (engl. /atomic
+operation/). Klassische atomare Operationen, die durch Hardware
+unterstützt werden sind /Test & Set/ (bzw. /Test & Compare/) und /Swap/.
+
+#+BEGIN_EXAMPLE
+    \\ Swap
+    void swap(var1, var2) {
+       tmp = var1; 
+       var1 = var2; 
+       var2 = tmp;
+    }
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+    \\ Test & Set / Test & Compare
+    void testAndCompare(int *word, int testval, int newval) {
+       int oldval;
+       oldval = *word;
+       if(oldval == testval) {
+
+          *word = newval;
+       }
+       return oldval;
+    }
+#+END_EXAMPLE
+
+Eine Zuweisung der Form =x = ⟨expression⟩= kann als atomar angenommen
+werden, wenn sie die /At-Most-Once Property/ erfüllt.
+
+** At-Most-Once Property
+
+Eine Zuweisung der Form =x = ⟨expression⟩= erfüllt die /At-Most-Once
+Property/, wenn:
+
+-  =⟨expression⟩= keine /Critical Reference/ enthält, oder
+-  =⟨expression⟩= höchstens eine /Critical Reference/ enthält und =x=
+   nicht von einem anderen Prozess gelesen wird.
+
+Eine *Critical Reference* ist eine Referenz auf eine Variable, die von
+einem anderen Prozess/Thread verändert wird.

@@ -1,0 +1,46 @@
+#+TITLE: Listen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Listen
+---
+#+END_HTML
+
+* Listen
+
+** Einfach verkette Listen
+
+Eine /einfach verkette Liste/ (oder kurz: Liste) besteht aus einer Folge
+von Knoten. Jeder Knoten enthält hierbei:
+
+1. ein Datenelement
+2. einen Zeiger auf das nächste Element der Liste, wobei der Zeiger für
+   das letzte Element der Liste auf das =null=-Element zeigt.
+
+Zusätzlich enthält eine Liste eine Variable =head=, die auf den ersten
+Knoten der Liste zeigt, und eine Variable =tail=, die auf den letzten
+zeigt. Zeigen sowohl =head= als auch =tail= auf das =null=-Element, so
+haben wir eine leere Liste.
+
+*Implementierung:* TODO
+
+*Laufzeiten:*
+
+| Operation                                  | Laufzeit           |
+|--------------------------------------------+--------------------|
+| einen Knoten vorn an die Liste anfügen     | $\mathcal{O}(1)$   |
+| den ersten Knoten löschen                  | $\mathcal{O}(1)$   |
+| einen Knoten hinten an die Liste anfügen   | $\mathcal{O}(1)$   |
+| den letzten Knoten löschen                 | $\mathcal{O}(n)$   |
+| zwei Listen aneinanderhängen               | $\mathcal{O}(1)$   |
+
+** zweifach verkette Listen
+
+*Implementierung:*
+
+*Laufzeiten:*

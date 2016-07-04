@@ -1,0 +1,73 @@
+#+TITLE: Deadlocks
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Deadlocks
+---
+#+END_HTML
+
+* Deadlocks
+
+Zwei oder mehr Prozesse befinden sich im Zustand des /Deadlocks/, wenn
+jeder Prozess blockiert ist und auf eine Event wartet, dass nur von
+einem der anderen Prozesse ausgelöst werden kann (/zirkuläres Warten/),
+wie z.B. die Freigabe einer allozierten Ressource.
+
+** Bedingungen für Deadlocks
+
+Zu einem Deadlock kommt es, wenn die folgenden vier Bedingungen erfüllt
+sind:
+
+1. *Mutual Exclusion*: Ressourcen können von nur /einem/ Prozess
+   zugleich verwendet werden 2 *Hold and Wait*: Prozesse können
+   Ressourcen halten, während sie auf weitere Ressourcen warten
+2. *No Preemtion*: Ressourcen können Prozessen nicht weggenommen werden
+3. *Circular Wait*: Zwei oder mehr Prozesse von denen jeder eine
+   Ressource hält und auf eine Ressource wartet, die ein anderer dieser
+   Prozesse hält.
+
+Bedingung 1 - 3 basieren auf Betriebssystem-Policies (Maßnahmen zur
+Vermeidung dieser Bedingung werden als /Deadlock Prevention/
+bezeichnet). Bedingung 4 ergibt sich zur Laufzeit (Maßnahmen zur
+dynamischen Lösung von Deadlocks zur Laufzeit werden als /Deadlock
+Avoidance/ bezeichnet). Deadlocks werden vermieden, wenn es gelingt
+mindestens eine der Bedingungen außer Kraft zu setzen (s.
+[[deadlock_handling][Deadlock Handling]])
+
+** Process-Resource Trajectories Graph
+
+-  Ausführungstrajektorien können nur von links-unten nach rechts-oben
+   verlaufen
+-  durch Mutual Exclusion entstehen im Graph /unmögliche Bereiche/ (z.B.
+   können nicht A und B gleichzeitig eine durch einen Semaphor
+   geschützte Ressource benutzen)
+-  Deadlocks entstehen, wenn die Ausführungstrajektorie in eine
+   "Sackgasse" zwischen unmöglichen Bereichen läuft, d.h. wenn die
+   Ausführungstrajektorie weder nach rechts noch nach oben fortgesetzt
+   werden kann.
+
+** Resource Allocation Graph
+
+-  Menge von Knoten $V=P \cup R$ mit
+
+   -  Menge von Prozessen $P$
+   -  Menge von Ressourcen $R$
+
+-  Menge von Kanten $E = E_{R} \cup E_{A}$ mit
+
+   -  "Request"-Kanten $E_{R} = \{(p,r) | p \in P \wedge r \in R\}$
+   -  "Allozierungs"-Kanten $E_{A} = \{(r,p) | r \in R \wedge p \in P\}$
+
+-  ein Deadlock impliziert einen Kreis im Ressource Allocation Graph
+-  ein Kreis im Ressource Allocation Graph implizieren aber nicht
+   unbedingt Deadlocks (ein Prozess könnte seine Ressourcen wieder
+   freigeben)
+
+#+CAPTION: Beispiele für Ressource Allocation Graphen
+
+[[resource_allocation_graph.png]]

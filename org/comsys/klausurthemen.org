@@ -1,0 +1,90 @@
+#+TITLE: Klausurthemen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* Klausurthemen ComSys
+
+(ca. 2. Termin 2011 - 1. Termin 2014)
+
+- Netzwerke
+  - /paket-/ und /circuit-switched/ Netzwerke
+	- Vor- und Nachteile der verschiedenen Netzwerke
+  - Topologien (BUS, Star, Mesh, Ring; internet core Netzwerk ist mesh)
+	- Einschätzung der Topologien bzgl. QoS Paramtern
+- ISO/OSI-Referenzmodell
+  - Bereiche
+  - Schichten (Namen, Funktion/Dienst und Beispielprotokolle)
+  - Gründe für Einteilung in Schichten (vs. monolithischer Ansatz)
+  - Nachteile der Einteilung in Schichten (z.B. Overhaed durch Header)
+- Internetarchitektur
+  - Transit- und Endsysteme (Welche Schichten des ISO/OSI-RM müssen in
+    einem Transitsystem abgedeckt sein?)
+  - Prinzipien der Internetarchitektur (...)
+- Quality of Service
+  - Parameter (bandwidth, throughput, delay, jitter, reliability)
+  - Jitter-Buffer in VOIP-Anwendung (auch Größe berechnen)
+- IPv4
+  - Welchen Dienst erbringt IPv4
+  - Arten der Nachrichtenübertragung (broadcast, unicast, multicast,
+    anycast)
+  - Aufbau einer IPv4 Adresse (Adressgröße, etc.)
+  - Aufbau eines IPv4 Header (...)
+  - Hierarchische Adressierung in IPv4 (Networkprefix, host)
+  - private und öffentliche Adressen (warum werden sie unterschieden)
+  - classful und classless adressing (Vor- und Nachteile)
+  - (Port-)NAT (auch NAT-Tabelle erstellen können)
+  - adress scopes (/link-local/, /unique-local/, /global/)
+  - Unterschiede zwischen IPv4 und IPv6 Header
+  - IPv6-in-IPv4-Tunnel
+  - Prinzip von /Traceroute/ mit ICMP
+- IPv6
+  - Grund für die Umstellung auf IPv6
+  - Unterschiede zu IPv4 (Was hat sich bei Adressierung und Protokoll verändert?)
+  - Aufbau einer IPv6-Adresse (Adressgröße, unicast, anycast, ...)
+  - Bestandteile eines IPv4 Headers (type, next hdr, header length,
+    checksum, source address, dest addresse, flow label, ...)
+  - adress scopes
+  - Bestandteile einer IPv6 Adresse
+  - adress autoconfiguration (auf Basis der MAC-Adresse)
+- DNS
+  - Was leistet DNS
+- SMTP
+  - Beschreibung des Ablaufs beim Versenden einer Email per SMTP
+- Transport(-schicht)
+  - TCP und UDP (Vorteile von UDP gegenüber TCP und umgekehrt,
+    Unterschiede, 2 Einsatzbereiche nennen können) 
+  - Abgrenzung von Verbindungsorientierten und verbindungslosen Protokollen
+  - Zuordnung von Protokollen zur Familie der verbindungsorientierten oder verbindungslosen Protokolle
+	- verbindungsorientiert: HTTP1.1, TCP
+	- verbindungslos: HTTP1.0, UDP
+  - 3 Phasen des Kommunikationsverlaufs bei verbindungsorientierte
+    Kommunikation (Verbingungsaufbau, Datenübertragung, Schließen der
+    Verbindung)
+  - Zuordnung von Protokollen zur Famile der zuverlässigen oder unzuverlässigen (Transport-)Protokolle
+	- zuverlässig: TCP
+	- unzuverlässig: IP, UDP
+  - TCP-(Three-Way-)Handshake
+	- Welche Parameter werden beim Aufbau einer TCP-Verbindung ausgetauscht (sliding window größe?, ...)
+  - Sliding Window Verfahren (Begrenzung der Window Größe)
+  - Congestion Control (Slow Start, Congestion Avoidance)
+  - Routing und Forwarding
+	- Aktionen eines Routers beim Forwarding eines Pakets nennen und beschreiben
+  - Hierarchische Routing über Autonome Systeme (/stub AS/, /multihomed AS/, /transit AS/)
+  - /link-state-routing/ und /distance-vector-routing/
+  - Routing-Tabellen erstellen
+  - OSPF Protokoll (Funktionsweise erkären)
+- Ethernet (LAN und WLAN)
+  - deterministische und probabilistische MAC-Verfahren zur Vermeidung von Kollisionen bei Nutzung eines gemeinsamen Mediums
+	- probabilistisch: Collision Detection mit /CSMA/CD/ und /CSMA/CA/ (Funktionsweise erläutern können)
+	- deterministisch: Token Ring
+  - Detektieren von Übertragungsfehlern mit /Cyclic Redundancy Check/ (inkl. Anwendung von CRC)
+  - WLAN
+	- hidden terminal problem
+- MAC-Verfahren
+- Email
+  - Multipurpose Internet Mail Extension (MIME)
+	- 2 MIME Parameter nennen
+	- content types
+  - Unterschied zwischen POP3 und IMAP
+

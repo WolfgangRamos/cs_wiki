@@ -1,0 +1,47 @@
+#+TITLE: B_komplement_darstellung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: B_komplement_darstellung
+---
+#+END_HTML
+
+* $B$-Komplement Darstellung
+
+Sei $n \in \mathbb{N}$ mit [[stellwertsystem][$B$-adischer Darstellung]]
+$n = (b_{N-1} b_{N-2} ... b_{1} b_{0})\_{B}$, wobei $B$ die Basis und
+$N \in \mathbb{N}$ die Anzahl der Ziffern ist. Dann ist die
+$B$-Komplementdarstellung von $n$ definiert als:
+
+$$(n)_{BK} = \begin{cases}
+(n)\_{B} & \text{falls } n \in [0, B^{N-1}-1] \\
+(n)\_{B} - B^n & \text{falls } n \in [B^{N-1}, B^{N}-1] \\
+\end{cases}$$
+
+** Eigenschaften
+
+* Zweierkomplement Darstellung
+
+Sei $n \in \mathbb{N}$ mit [[stellwertsystem][$2$-adischer Darstellung]]
+$n = (b_{N-1} b_{N-2} ... b_{1} b_{0})\_{2}$, wobei $N \in \mathbb{N}$
+die Anzahl der Ziffern ist.
+
+...
+
+** Eigenschaften
+
+-  Darstellbarer Wertebereich: $[-2^{N-1}, 2^{N-1}-1]$
+-  Es gilt
+   $(n)\_{2K} = (-b_{N-1} 2^{N-1} + \sum_{i=0}^{N-2} b_{i} 2^i)\_{10}$
+
+** Umwandlung von Zahlen in 2K
+
+$(n)_{2K} \mapsto (-n)_{2K}$:
+
+1. Ziffern kippen
+2. $+1$ addieren

@@ -1,0 +1,41 @@
+#+TITLE: Bauminduktion
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Bauminduktion
+---
+#+END_HTML
+
+* Bauminduktion
+
+TODO: Prinzip
+
+Sei $M$ eine Menge von Markierungen und sei $\mathcal{B}(M)$ die Menge
+der knotenmarkierten Binärbäume mit Markierungen aus $M$. Sei $\diamond$
+der leere Baum.
+
+** Aufbau eines Induktionsbeweis
+
+*Beh:* $\forall b \in \mathcal{B}(M): \text{⟨Aussage⟩}$
+
+*Beweis (durch vollständige Induktion):* Im Folgenden verwenden wir
+$A(b)$ mit $b \in \mathcal{B}(M)$ als Abkürzung für ⟨Aussage⟩.
+
+*IB [1]:* Es gilt $A(\diamond)$, wegen ⟨Beweis⟩ / Wir zeigen, dass
+$A(\diamond)$ gilt. ⟨Beweis⟩
+
+*IV [2]:* Seien $l,r \in \mathcal{B}(M)$ so gegeben, dass $A(l)$ und
+$A(r)$ gelten und sei $a \in M$.
+
+*IS [3]:* Wir zeigen, dass $A(baum(l,a,r))$ gilt. ⟨Beweis⟩
+
+[1] IB = /Induktionsbeginn/
+
+[2] IV = /Induktionsvoraussetzung/ (oder auch /Induktionshyptohese/)
+
+[3] IS = /Induktionsschluss/

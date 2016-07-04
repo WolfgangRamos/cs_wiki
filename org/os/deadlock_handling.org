@@ -1,0 +1,122 @@
+#+TITLE: Deadlock_handling
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Deadlock_handling
+---
+#+END_HTML
+
+* Deadlock Handling
+
+Maßnahmen zur Vermeidung der Bedingungen von Deadlocks oder zur Behebung
+von Deadlocks werden als /Deadlock Handling/ bezeichnet. Man
+unterscheidet:
+
+-  *Deadlock Prevention*: Maßnahmen zur Vermeidung von Deadlocks durch
+   geeigente OS-Polcies
+-  *Deadlock Avoidance*: Maßnahmen zur dynamischen Vermeidung von
+   Deadlocks zur Laufzeit
+
+#+CAPTION: Taxonomie der Maßnahmen des Deadlock Handlings
+
+[[deadlock_handling.png]]
+** Deadlock Avoidance
+
+Man unterscheidet zwei Strategien zur dynamischen Vermeidung von
+Deadlocks:
+
+-  *Process Initiation Denial*: ein Prozess wird nur gestartet, wenn die
+   Ressourcen-Claims aller Prozesse und des neuen Prozesses im aktuellen
+   Zustand gleichzeitig erfüllbar sind (konservative Deadlock Avoidance
+   Strategie)
+-  *Resource Allocation Denial*: eine weitere Ressourcenallokation eines
+   Prozesses wird unterbunden, wenn diese zu einem Deadlock führen kann
+   (z.B. Banker's Algorithmus)
+
+Deadlock Avoidance besteht aus der Vermeidung von *Systemzuständen*, die
+unsafe sind. Ein Systemzustand wird durch die aktuellen
+Ressourcenallokationen aller Prozesse charakterisiert. Ein Zustand wird
+repräsentiert durch:
+
+-  einem Vektor $R$ der insgesamt verfügbaren Ressourcen des Systems
+-  einer Matrix $C$ der Ressourcen-Claims aller Prozesse
+-  einer Matrix $A$ der aktuellen Ressourcenallokationen aller Prozesse
+-  (einem Vektor $V$ der aktuell verfügbaren Ressourcen des Systems)
+
+Bei Zuständen unterscheidet man:
+
+-  *Safe State*: Es exisiert eine Folge von Ressourcenallokationen an
+   Prozesse, so dass alle Prozesse terminieren können (also ihre
+   Ressourcen-Claims erfüllt werden können).
+-  *Unsafe State*: Es existiert keine Folge von Ressourcenallokationen
+   an Prozesse, so dass alle Prozesse terminieren können (die
+   Ressourcen-Claims aller Prozesse können also nicht erfüllt werden).
+
+*** Banker's Algorithmus
+
+Der Banker's Algorithmus wird zur Vermeidung von Deadlocks zur Laufzeit
+(Deadlock Avoidance) verwendet. Er ist ein Beispiel einer Resource
+Allocation Denial Strategie.
+
+**** Funktionsweise
+
+Wenn ein Prozess ein Ressource-Request macht, wird zunächst geprüft, ob
+die Erfüllung des Requests zu einem safe state führt. Wenn ja wird die
+Allozierung durchgeführt. Wenn nein, dann wird der Prozess blockiert,
+bis sich ein Zustand ergibt, in dem der Request erfüllt werden kann,
+ohne dass das System daduch in einen unsafe state gerät.
+
+**** Algorithmus zur Prüfung ob ein Zustand safe oder unsafe ist
+
+1. Prüfe, ob die Ressourcen-Claims eines Prozesses im aktuellen Zustand
+   erfüllt werden können.
+2. Wird ein solcher Prozess gefunden, dann nimm an, dass der Prozess
+   alle allozierten Ressourcen zurückgegeben hat (d.h. terminiert wurde)
+   und nimm diesen Zustand als aktuellen Zustand an
+3. Entferne diesen Prozess aus der List der zu prüfenden Prozesse und
+   beginne von vorn (Schritt 1) mit der Prüfung der verbleibenden
+   Prozesse
+4. Wenn alle Prozesse auf diese Weise aus der Liste zu prüfende Prozesse
+   entfernt werden können ist der Zustand safe.
+
+**** Bedingungen des Banker's Algorithmus
+
+-  max. Ressourcen-Claims müssen vorab bekannt sein
+-  Prozesse müssen in endlicher Zeit terminieren und bei Terminierung
+   ihre Ressourcen vollständig zurückgeben (Anzahl der verfügbaren
+   Ressourcen darf sich nicht ändern)
+-  Prozesse müssen unabhängig voneinander ausführbar sein (keine
+   Berücksichtigung von Synchronisationsanfroderungen)
+-  Allozierungen dürfen Claims nicht übersteigen (so lang die aktuelle
+   Allozierung eines Prozesses dessen Claims nicht übersteigen, kann der
+   Prozess weitere Ressource-Requests machen)
+-  Ressource-Requests der Prozesse müssen verzögert werden können
+
+**** Grenzen des Banker's Algorithmus
+
+Ein Erfolg des Banker's Algorithmus bedeutet nicht, dass Deadlocks
+ausgeschlossen werden können, sondern lediglich, dass es eine Folge von
+Zuständen gibt, bei der es zu keinem Deadlock kommt. Zur Laufzeit kann
+sich duch ungünstige Abfolge von Allokationen dennoch ein Deadlock
+ergeben. Das liegt u.a. an folgenden Problemen des Banker's Algorithmus:
+
+-  dynamische Erzeugung neuer Prozesse wird nicht berücksichtigt
+-  keine Berücksichtung von Synchronistaionsanforderungen zwischen
+   Prozessen
+-  keine Berücksichtung von Veränderungen der Ressourcenzahlen
+
+** Deadlock Detection
+
+** Deadlock Recovery
+
+Maßnahmen zur Deadlock Recovery sind z.B.:
+
+-  Preemtion (nicht immer möglich)
+-  Rollback: Zurücksetzen eines Prozesses in einen vorherigen Zustand,
+   in dem kein Deadlock vorlag
+-  Killing Processes

@@ -1,0 +1,31 @@
+#+TITLE: Time_management
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Time_management
+---
+#+END_HTML
+
+* Zeitplanung
+
+Vorgehen
+
+-  Aufteilung des Projekts in Einzelaufgaben
+-  Aufgaben sollen so weit wie möglich nebenläufig organisiert werden
+-  Festlegen von /Milestones/: Kennzeichen den Abschluss eines
+   Teilprojekts, zu dem i.d.R. bestimmte Produkte erwartet werden.
+
+** Pert Charts
+
+Zeigen Abhängigkeiten zwischen Aktivitäten und /kritische Pfade/.
+Kritische Pfade sind Pfade, auf denen Verzögerungen zu Verzögerungen des
+gesamten Projekts führen.
+
+** Gantt Charts
+
+Balkendiagramme zur Abbildung von Aktivitäten auf Kalenderzeiten.

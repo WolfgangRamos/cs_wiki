@@ -1,0 +1,40 @@
+#+TITLE: Message_passing
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Message_passing
+---
+#+END_HTML
+
+* Message Passing
+
+Message Passing ermöglich sowohl Prozesssynchronisation als auch
+Kommunikation zwischen Prozessen über die Operationen:
+
+-  =send(⟨destination⟩, ⟨message⟩)=
+-  =receive(⟨destination⟩, ⟨message⟩)=
+
+Sender und Empfänger können:
+
+-  direkt miteinander Daten austauschen (/direct addressing/)
+
+   -  nur 1-zu-1 Kommunikation möglich
+
+-  indirekt über eine /Mailbox/Pipe/ Daten austauschen (/indirect
+   adressing/)
+
+   -  ermglicht n-zu-m Kommunikation
+
+Man unterscheidet verschiedene Semantiken:
+
+-  *blocking send & blocking receive (Rendezvous)*: Sender und Empfänger
+   werden blockiert
+-  *non-blocking send & blocking receive*: Sender wird blockiert;
+   Empfänger wird blockiert, bis die Nachricht empfangen wurde
+-  *non-blocking send & non-blocking receive*: weder Sender noch
+   Empfänger werden blockiert

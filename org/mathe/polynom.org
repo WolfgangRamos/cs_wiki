@@ -1,0 +1,86 @@
+#+TITLE: Polynom
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Polynom
+---
+#+END_HTML
+
+* Polynom
+
+Sei $(R,+,\cdot)$ ein [[ring][kommutativer Ring]] und sei
+$n \in \mathbb{N}\_{0}$ fest aber beliebig (die Anzahl der $a_i$ muss
+jedoch endlich sein) und gelte
+$\forall i \in \mathbb{N}\_{\leq n}: a_i \in R$, dann versteht man unter
+einem /Polynom/ auf $R$ eine Abbildung $p: R \rightarrow R$ mit
+$p(x) := \sum\_{i=0}^{n} a_i \cdot x^i$.
+
+Die $a_i \in R$ heißen /Koeffizienten/ und $x \in R$ heißt /Argument/
+des Polynoms.
+
+Wenn $p = e_{+}$ gilt, wobei $e_{+}$ das neutrale Element der Gruppe
+$(R,+)$ ist, heißt $p$ auch /Nullpolynom/.
+
+* Grad eines Polynoms
+
+Sei $(R,+,\cdot)$ ein [[ring][kommutativer Ring]] und sei $e_{+}$ das
+neutrale Element der Gruppe $(R,+)$ und $p$ Polynom auf $R$, dann heißt
+$\deg : ? \rightarrow \mathbb{Z}\_{>-1}$ gegeben durch
+
+$$\deg(p) := \begin{cases}
+-1 & \text{falls } p = e_{+}\\\\ 
+n & \text{falls } p = (\sum_{i=0}^{n} a_i \cdot x^i) \wedge a_n \neq e_{+}\\\\
+\end{cases}$$
+
+/Grad/ des Polynoms $p$.
+
+* Polynomarithmetik
+
+Sei $(R,+,\cdot)$ kommutativer Ring und seien $p,q$ Polynome auf $R$,
+dann ist:
+
+-  eine /Polynomadditon/ $p +_p q: R \rightarrow R$ definiert durch
+   $(p +_p q)(x) := p(x) + q(x)$.
+-  eine /Polynommultiplikation/ $p \cdot_p q: R \rightarrow R$ definiert
+   durch $(p \cdot_p q)(x) := p(x) \cdot q(x)$.
+
+*Eigenschaften:*
+
+-  $\deg(p +_p q) \leq \max\\{\deg(p), deg(q)\\}$
+-  $\deg(p \cdot_p q) \leq \deg(p) + deg(q)$
+
+* Polynomring
+
+Sei $(R,+,\cdot)$ ein [[ring][kommutativer Ring]]. Dann bildet die Menge
+der Polynome zusammen mit der Polynomaddition "$+_p$" und der
+Polynommultiplikation "$\cdot_p$" einen [[ring][Ring]] den sog.
+/Polynomring/ $(R[x], +_p, \cdot_p)$, kurz $R[x]$. Der Polynomring ist
+einen Unterring aller Allbildungen $R \rightarrow R$.
+
+Besitzt der Ring $(R,+,\cdot)$ eine neutrales Element bzgl. der
+Mulitplikation $e_{\cdot}$, dann besitzt auch der Polynomring $R[x]$ ein
+neutrales Element bzgl der Polynommultiplikation $\cdot_p$, nämlich
+$p(x) = e_{\cdot}$.
+
+* Polynomdivision
+
+TODO (benötigt Körper)
+
+* Komplexe Polynome
+
+* Polynome lösen
+
+*Polynome 2. Grades:* löse Polynome der Form $ax^2 + bx + c$ mit der
+Mitternachtsformel: $x_{1,2} = \frac{-b \pm \sqrt{b^{2} - 4ac}}{2a}$
+
+*Polynome 3. Grades:*
+
+1. rate eine Nullstelle $\lambda$
+2. Teile $p(x)$ durch $(x - \lambda)$. Das liefert ein Restpolynom 2.
+   Grades.
+3. löse Restpolynom mit Mitternachtsformel

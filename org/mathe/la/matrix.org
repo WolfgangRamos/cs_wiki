@@ -1,0 +1,185 @@
+#+TITLE: Matrix
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Matrix
+---
+#+END_HTML
+
+* Matrix
+
+Der Raum der Matrizen $\mathbb{K}^{n \times m}$ bildet zusammen mit der
+/Matrizenaddition/ $A + B$ und der /Skalarmultiplikation/ $\lambda A$
+einen $\mathbb{K}$-Vektorraum.
+
+** Matrixaddition und Skalarmultiplikation
+
+Sei $A = (a_{ij}), B := (b_{ij}) \in \mathbb{K}^{m \times n}$ und
+$\lambda \in \mathbb{K}$. Dann gilt:
+
+-  *Matrizenaddition:*
+   $A + B = (a_{ij} + bij) \in \mathbb{K}^{m \times n}$
+-  *Skalarmultiplikation:* $\lambda A = (\lambda a_{ij})$
+
+** Standardabbildung einer Matrix
+
+Die /Standardabbildung/ einer Matrix
+$A = (a_{ij}) \in \mathbb{K}^{m \times n}$ von $\mathbb{K}^n$ nach
+$\mathbb{K}^m$ ist für $x \in \mathbb{K}^m$ gegeben durch die
+Maxtrix-Vektor-Multiplikation $A \mathbf{x}$
+
+Die Standardabbildung einer Matrix ist eine lineare Abbildung.
+
+** Matrixmultiplikation
+
+$\cdot : \mathbb{K}^{m \times n} \times \mathbb{K}^{n \times r} \rigtharrow \mathbb{K}^{m \times r}$
+
+Sei $B \in \mathbb{K}^{n \times r}, A := \mathbb{K}^{m \times n}$
+
+*Eigenschaften:*
+
+-  entspricht Kompositon linearer Abbildungen
+-  Kommutativgesetz gilt im Allgemeinen nicht, d.h. $AB \neq BA$
+
+** quadratische Matrizen
+
+Sei $A: \mathbb{K}^{n} \rightarrow \mathbb{K}^{n}$ eine lineare
+Abbildung und sei $A \in \mathbb{K}^{n \times n}$ die quadratische
+Abbildungsmatrix.
+
+*Eigenschaften:*
+
+-  Die Menge der regulären Matrizen $GL(n,\mathbb{K})$ bildet zusammen
+   mit der Matrixmultiplikation eine (nicht kommutative)
+   [[gruppe][Gruppe]].
+-  Sei $A \in \mathbb{K}^{n \times n}$, dann gelten folgende
+   Äquivalenzen:
+
+   $rang(A) = n \Longleftrightarrow A \text{ ist surjektiv} \Longleftrightarrow A \text{ ist injektiv} \Longleftrightarrow \dim(\ker(A)) = 0 \Longleftrightarrow A \text{ ist bijektiv} \Longleftrightarrow A \text{ ist regulär}$
+
+** General Linear Group
+
+Die Menge der Matrizen $A \in \mathbb{K}^{n \times n}$ die ein
+multiplikatives Inverse beitzen, heißt $GL(n, \mathbb{K})$ (GL = genaral
+linear group) bildet eine Gruppe, d.h. es gilt
+
+$$GL(n, \mathbb{K}) = \{ A \in \mathbb{K}^{n \times n} | \exists A^{-1} \in \mathbb{K}^{n \times n}: AA^{-1} = I_{n} \}$$
+
+-  $I_{n}$ (Einheitsmatrix) ist das neutrale Element in
+   $\mathbb{K}^{n \times n}$ bzgl. der Matrixmultiplikation.
+
+Invertiere Matrizen heißen /regulär/, nicht invertierbare heißen
+/singulär/.
+
+*Eigenschaften:*
+
+-  Sein $A, B$ invertierbar, dann gilt: $(AB)^{-1} = B^{-1}A^{-1}$
+
+** Quadratische Matrizen:
+
+Sei $A \in \mathbb{K}^{n \times n}$, dann sind folgende Aussagen
+äquivalten:
+
+(i). $A$ ist injektiv (ii). $A$ ist surjektiv (iii). $A$ ist bijektiv
+(iv). $A$ ist regulär (v). $\dim (\ker A) = 0$ (vi). $rang(A) = n$
+
+** Dreiecksmatrix
+
+Sei $A \in \mathbb{K}^{n \times n}$ eine quadratische Matrix. Dann gilt:
+
+-  wenn
+   $\forall i,j \in \mathbb{N}\_{\leq n}: i > j \Rightarrow a_{ij} = 0$
+   gilt ist $A$ /obere Dreiecksmatrix/
+-  wenn
+   $\forall i,j \in \mathbb{N}\_{\leq n}: i < j \Rightarrow a_{ij} = 0$
+   gilt ist $A$ /untere Dreiecksmatrix/
+
+*Eigenschaften:*
+
+-  eine untere/obere Dreiecksmatrix ist genau dann regulär, wenn alle
+   Diagonaleinträge $a_{ii} \neq 0$ sind.
+
+** Transponierte Matrizen
+
+Sei $A \in \mathbb{K}^{m \times n}$ mit $A = (a_{ij})$ eine Matrix. Dann
+ist $A^{T} \in mathbb{K}^{n \times m}$ mit $A^{T} = (a_{ji})$.
+
+*** Eigenschaften
+
+-  $(A^{T})^{T} = A$
+-  die Transponierte der Summe ist die Summe der Transponierten, d.h.
+   $(A+B)^{T} = A^{T} + B^{T}$
+-  $(\lambda A)^{T} = \lambda A^{T}$
+-  $(AB)^{T} = B^{T} A^{T}$
+-  Die Inverse der Transponierten ist die Transponierte der Inversen:
+   Sei $A \in GL(n, \mathbb{K})$ gilt, dass auch
+   $A^{T} \in GL(n, \mathbb{K})$ und $(A^{T})^{-1} = (A^{-1})^{T}$
+
+** Symmterische Matrizen
+
+Eine quadratische Matrix $A \in \mathbb{R}^{n \times n}$ heißt
+symmetrisch, wenn $A^{T} = A$ gilt.
+
+*Eigenschaften:*
+
+-  Alle Eigenwerte symmerischer reeler Matrizen sind reell.
+
+** Definite Marizen
+
+Sei $A \in \mathbb{R}^{n \times n}$ eine symmetrische Matrix und
+$x \in \mathbb{R}^n \setminus \{0\}$, dann heißt $A$
+
+-  /positiv definit/, wenn $\langle Ax,x\rangle = x^T Ax > 0$
+-  /positiv semi-definit/, wenn $\langle Ax,x\rangle = x^T Ax \geq 0$
+-  /negativ definit/, wenn $\langle Ax,x\rangle = x^T Ax < 0$
+-  /negativ semi-definit/, wenn $\langle Ax,x\rangle = x^T Ax \leq 0$
+
+Ist $A$ weder positiv noch negativ semi-definit, dann heißt $A$
+/indefinit/.
+
+*Eigenschaften:*
+
+-  $A \in \mathbb{R}^{n \times n}$ ist genau dann positiv definit, wenn
+   ein $\mu > 0$ existiert, sodass
+   $\forall x \in \mathbb{R}^n \setminus \{0\}: \langle Ax, x \rangle \geq \mu \|x\|_2^2$
+-  $A \in \mathbb{R}^{n \times n}$ ist genau dann negativ definit, wenn
+   ein $\mu > 0$ existiert, sodass
+   $\forall x \in \mathbb{R}^n \setminus \{0\}: \langle Ax, x \rangle \leq -\mu \|x\|_2^2$
+-  Eine symmetrische Matrix $A \in \mathbb{R}^{n \times n}$ ist genau
+   dann positiv definit, wenn $\lambda > 0$ für alle Eigenwerte
+   $\lambda$ von $A$ gilt.
+-  Eine symmetrische Matrix $A \in \mathbb{R}^{n \times n}$ ist genau
+   dann positiv semi-definit, wenn $\lambda \geq 0$ für alle Eigenwerte
+   $\lambda$ von $A$ gilt.
+-  Eine symmetrische Matrix $A \in \mathbb{R}^{n \times n}$ ist genau
+   dann negativ definit, wenn $\lambda < 0$ für alle Eigenwerte
+   $\lambda$ von $A$ gilt.
+-  Eine symmetrische Matrix $A \in \mathbb{R}^{n \times n}$ ist genau
+   dann negativ semi-definit, wenn $\lambda \leq 0$ für alle Eigenwerte
+   $\lambda$ von $A$ gilt.
+
+** Rang einer Matrix
+
+Seien $a_1, ... a_n$ die Spaltenvektoren und $a^1, ... a^n$ die
+Zeilenvektoren einer Matrix $A$. Dann gilt:
+
+-  Spaltenrang A = $dim span(a_1, ..., a_n)$ und
+-  Zeilenrang A = $dim span(a^1, ..., a^n)$ und
+
+*Eigenschaften:* TODO
+
+-  Es gilt Spaltenrang A = Zeilenrang A.
+-  eine [[lineare_abbildung][lineare Abbildung]] ist genau dann
+   injektiv, wenn die Abbildungsmatrix $A^{m \times n}$ vollen
+   Spaltenrang hat, also $rang(A) = n$ gilt.
+-  eine [[lineare_abbildung][lineare Abbildung]] ist genau dann
+   surjektiv, wenn die Abbildungsmatrix $A^{m \times n}$ vollen
+   Zeilenrang hat, also $rang(A) = m$ gilt.
+-  eine [[lineare_abbildung][lineare Abbildung]] ist genau dann
+   bijektiv, wenn die Abbildungsmatrix $A^{m \times m}$ quadratisch ist
+   und vollen Rang hat, also $rang(A) = m$ gilt.

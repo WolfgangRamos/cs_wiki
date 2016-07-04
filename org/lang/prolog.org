@@ -1,0 +1,394 @@
+#+TITLE: Prolog
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Prolog
+---
+#+END_HTML
+
+* Prolog
+
+Prolog ist eine dynamisch getypte Sprache. Prolog (dt. Programmieren in
+Logik). Stadardisiert (ISO-)
+
+Ein Prolog Programm ist eine Menge von /Fakten/ und /Regeln/ (auch
+/Klauseln/ genannt) für Prädikate, wobei Prädikate Aussagen über Objekte
+sind. Eine Aussage besteht aus einer Beschreibung der Eigenschaft (z.B.
+"ist Primzahl") und beteiligten /Objekten/ (z.B. "3"). Aussage werden in
+der /Standardpräfixschreibweise/ angegeben, z.B.
+=name(objekt1, ..., objektn)= (Leerzeichen vor der öffnenden Klammer
+sind nicht zulässig).
+
+** Kommentare
+
+=%=
+
+** Atome
+
+Atome sind unzerlegbare Prolog-Objekte. Atome beginnen mit einem
+Kleinbuchstaben (danach sind weitere Kleinbuchstaben, Großbuchstaben,
+Ziffern und einige Sonderzeichen zulässig).
+
+** Vergleich von Atomen
+
+-  Gleichheit: =⟨atom⟩ == ⟨atom⟩=
+-  Ungleichheit: =⟨atom⟩ \= ⟨atom⟩=
+
+** Frei Variablen
+
+/Frei Variablen/ (auch /Logikvariablen/) sind Variablen, deren Werte
+nach dem Schlussfolgerungsprinzip auf Basis der definierten Fakten
+bestimmt werden. Freie Variablen beginnen mit einem Großbuchstaben und
+können in Termen verwendet werden.
+
+** Fakten
+
+Fakten sind Aussagen, die beweisbar sind, also zu "wahr" ausgewertet
+werden. Sie werden mit =.= und einem Whitespace (Leereichen oder
+Zeilenvorschub) abgeschlossen. Fakten haben die Form:
+=⟨Prädikat⟩(⟨Term⟩).=
+
+** Regeln
+
+Regeln sich Schlussfolgerungen der Form: "Wenn Aussage A wahr ist, dann
+ist auch Aussage B wahr". Regeln werden ebenfalls mit =.= und einem
+Whitespace (Leereichen oder Zeilenvorschub) abgeschlossen. =:-=
+enspricht $\Longleftarrow$. =,= entspricht $\wedge$. =;= entspricht
+$\vee$. Regeln haben die Form: =⟨Term⟩ :- ⟨Term⟩, ..., ⟨Term⟩.=
+
+** Anonyme Variable
+
+=_= ist die /anonyme (freie) Variablen/. Sie wird nicht gebunden und
+bezeichnet bei mehrfacher Verwendung nicht denselben Wert. ALso steht
+=[_,_,_]= für alle 3-elementigen Listen, deren Elemente identisch sind
+oder nicht.
+
+* Anfragen
+
+In Anfragen können freie Variablen verwendet werden. Das Ergebnis von
+Anfragen sind diejenigen /Objekte/, für die die Anfrage wahr wird. Die
+Ausgabe einer Anfrage wird durch =false= oder =no= abgeschlossen.
+
+* Strukturen
+
+Strukturen bestehen aus einem /Funktor/ und /Komponenten/ (beliebe
+Prolog-Objekte).
+
+* Objekte
+
+Objekte werden auch /Terme/ genannt. Terme bestehen aus:
+
+-  Konstanten (Zahlen oder Atome)
+-  Strukturen
+
+* Listen
+
+-  leere List: =[]=
+-  =.= ist der Funktor zur Konstruktion einer Liste aus einem Element
+   und einer Restliste, z.B. =.(x,xs)=
+
+Kurzschreibweisen für Listen: * =[1,2,3]= * =[x|xs]=
+
+-  Texte (Strings) sind Listen von ASCII-Werten (es gibt keinen Datentyp
+   für Character)
+
+*** Vordefinierte Prädikate für Listen
+
+Aus =library(lists)=: * =member()=:
+
+** Operatoren
+
+Strukturen können in Operatorschreibweise geschrieben werden:
+
+-  für Strukturen mit einer Komponente können Präfixoperatoren oder
+   Postfixoperatoren definiert werden
+-  für STrukturen mit 2 Komponenten können Infixoperatoren definiert
+   werden
+
+** Direktive
+
+Begint mit =:-=. wird beim einlesen der Prolog Programms beachtetet.
+Werden z.B. verwenden um die Bindungsstärke von Operatoren festzulegen.
+
+** Beweisen von Aussagen in Prolog
+
+-  /Fakten/: sind per Definition beweisbar. Fakten werden z.T. auch als
+   "leere Regeln" betrachtet.
+-  /(einfaches) Resolutionsprinzip/: Reduziere den Beweis einer /Regel/
+   =L :- L1, ..., Ln= auf die Beweise von =L1=, ..., =Ln=
+-  /Anfragen/: Anfragen sind beweisbar, wenn sie auf die "leere Anfrage"
+   bzw. ein Faktum reduziert werden können
+
+** Termersetzung
+
+Eine /Substitution/ ist eine Abbildung (strukturerhaltende Abbildung,
+Homomorphismus) $\sigma: Terme \rigtharrow Terme$ mit:
+
+-  für aller Terme $f(t_1, ..., t_n)$ gilt
+   $\sigma(f(t_1, ..., t_n)) = f(\sigma(t_1), ..., \sigma(t_n))$
+-  endlciher Variablenmenge: $\{X | X \neq \sigma(X), X ist Variable$}
+
+$\sigma$ ist eindeutig darstellbar:
+$\{X \rightarrow \sigma(X) | \text{X ist Variable mit } X \neq \sigma(X)\}$
+
+Ein Term ist eine Variable oder eine Struktur, die wieder Terme enthält.
+
+** Unifikator
+
+Eine Substitution $\sigma$ heißt /Unifikator für Terme/ $t_1$ und $t_2$,
+falls $\sigma(t_1) = \sigma(t_2)$. Man sagt dann auch $t_1$ und $t_2$
+sind /unifizierbar/.
+
+$\sigma$ heißt allgemeinster Unifikator (engl. most general unifier;
+MGU) für $t_1, t_2$, falls * $\sigma$ Unifikator für $t_1$ und $t_2$ ist
+und * für alle anderen Unifikatoren $\sigma'$ existiert $\rho$ mit
+$\sigma' = \rho \circ \sigma$, d.h.
+$\forall t: \sigma'(t) = \rho(\sigma(t))$.
+
+*** Eigenschaften
+
+-  es existieren immer MGUs für unifizierbare Terme (Robinson, 1965).
+
+*** Verfahren zum Finden von MGUs
+
+*Def:* Seien $t,t'$ Terme. Dann heißt $ds(t,t')$ /Unstimmigkeitsmenge/;
+engl. /diasagreement set/):
+
+-  falls $ t=t'$ gilt $ds(t,t') = \emptyset$
+-  Falls $t$ oder $t'$ Variablen und $t \neq t'$ dann gilt
+   $ds(t,t') = \{t,t'\}$.
+-  Falls $t = f(t_1, ..., t_n)$ und $t' = g(s_1, ..., s_m)$ für
+   $n,m \geq 0$.
+
+   -  Falls $f \neq g$ oder $n \neq m$ gilt $ds(t,t') = \{t,t'\}$.
+   -  Falls $f = g$ und $n = m$ und $t_i = s_i$ für alle $i <k$ und
+      $t_k \neq s_k$, dann gilt $ds(t,t') = ds(t_k,s_k)$.
+
+*Unifikationsalgorithmus:*
+
+Eingabe: Terme $t_0, t_1$ Ausgabe: eine MGU $\sigma$ für $t_0,t_1$,
+falls diese unifizierbar sind, sonst "fail".
+
+1. $k = 0$, $\sigma_0 = \{\}$
+2. Falls $\sigma_k (t_0) = \sigma_k (t_1)$, dann ist $\sigma_k$ MGU
+3. Falls $ds(\sigma_n(t_0), \sigma_n (t_1) ) = \{x,t\}$ und $x$
+   Variable, die nicht in $t$ vorkommt, dann gilt
+   $\sigma_{n+1} = \{x \rightarrow t\} \circ \sigma_n$. Setze $k := k+1$
+   und gehe nach 2., sonst gib "fail" aus.
+
+Laufzeit: im Worst Case exponentiell (in der Praxis ist der Aufwand i.R.
+aber linear)
+
+* Allgemeines Resolutionsprinzip
+
+Das /allgemeine Resolutionsprinzip/ vereinigt Resolution und
+Unifikation. Es wird auch als /SLD-Resolution/ (engl. /lineare
+resolution with selection function for definite clauses/).
+
+Selektionsregel $L:- L_1, ...,L_n$ wählt $A_i$ aus.
+
+Selektionsregel/Selektionsfunktion leget fest, welches Literal zuerst
+bewiesen wird.
+
+*Auswahlstrategien:* * /FIRST/: immer das linke Literal * /LAST/: immer
+das letzte Literal
+
+* Anfragen
+
+$?- G = A1, ... An-1$
+
+Gleichheit in Prolog: Faktum ==(X,X)=, === ist auch Infix-Operator;
+
+=?- t1 = t2= gilt, wenn =t1= und =t2= unifizierbar sind.
+
+** Auswertungsstrategie von Prolog
+
+Zum Finden einer Lösung verwendet Prolog folgende
+/Backtracking/-Strategie: 1. Die Klauseln werden der Reihenfolge nach
+verwendet, in der sie im Programm definiert sind (Konsequenz: Klauseln,
+die zu einem schnellen Terminieren des Programms führen sollten zuerst
+definiert werden). 2. In einem ersten Resolutionsschritt wird die erste
+passende Klausel für das linke Literal (Prolog verwendet
+Selektionsfunktion /FIRST/) gewählt. Wird keine Lösung gefunden, dann
+wird der letzt Schritt rückgängig gemacht und die nächste passende
+Klausel angewendet. 3. Bei der Anwendung einer Klausel werden durch die
+Unifikation die Variablen durch Terme ersetzt. Variablen werden dann an
+Terme gebunden.
+
+* Negation
+
+Prolog definiert Negation als /Negation als Fehlschlag/ (engl. /neation
+as finite failure/; NAF). =\+ p= ist beweisbar, falls der Beweis von =p=
+fehlschlägt.
+
+Beim Beweisen von =\+ p= darf =p= keine Variablen enthalten. NAFs
+sollten daher in Ausdrücken "am weitesten rechts stehen", damit die
+Variablen vorher gebunden werden. Diese Einschränkung kann durch
+Verwendung der Erweiterungen =when= (/Verzögerung/) aufgehoben werden.
+Dann wird die REsoldution von NAF-Ausdrücken verzögert, bis alle
+möglichen Variablen gebunden sind.
+
+=when(⟨Bedingung⟩, ⟨Ausdruck⟩)=
+
+z.B. =when(ground(P=S), \+ P=S), ⟨Ausdruck⟩=
+
+* Erweiterungen der Prolog Syntax
+
+** when
+
+** cut-Operator
+
+Mit dem cut-Operator =!= kann der Suchraum eingeschränkt werden.
+
+=p :- q ,!,r.=:
+
+1. Falls =q= nicht beweisbar, wähle nächste Regel für =p=.
+2. Fals =q= beweisbar, dann ist =p= nur beweisbar, falls =r= beweisbar
+   ist (keine andere Regel für =p=, keine Alternative für =q= darf
+   gewählt werden.)
+
+Modellierung von if-then-else mit cut-Operator:
+
+#+BEGIN_EXAMPLE
+    % if q then r else s
+    p :- q, ! , r.
+    p :- s.
+
+    % Kurzschreibweise:
+    p :- q -> r; s.
+#+END_EXAMPLE
+
+Modellierung von NAF:
+
+#+BEGIN_EXAMPLE
+    p :- q, !, fail.
+    p.
+#+END_EXAMPLE
+
+=fail=: vordefiniertes Prädikator für die nicht-beweisbare Aussage
+
+* Arithmetik
+
+arithmetische Ausdrücke: * Zahlen, * Variablen, * Operatoren * Prädikat
+=is(X,Y)= oder infix =X is Y=: ist beweisbar, wenn: * =Y= ein
+Variablenfreier arithmetischer Ausdruck ist (diese Beschränkung kann
+durch Verwendung von /Constraint Logic Programming/ aufgehoben werden) *
+es gilt X=Z, falls Z der Wert ist, zu dem Y ausgewertet wird
+
+arithmetische Vergleiche: * =X =:= Y=: =X= und =Y= werden ausgewertet
+und diese Ergebnisse werden dann verglichen. * =X =\= Y=: ungleich *
+=>== * ==<=: kleiner gleich
+
+** Constraint Logic Programming
+
+Ermöglicht Lösung von linearen Gleichungen (nicht lineare Gleichungen
+ist z.B. $xy = 5$; lineare Gleichungen sind) und Inequations ($\leq$,
+$<$, $>$ ,$\geq$, nicht aber $\neq$), wie z.B. $5 = x + 2$, durch
+Bereitstellung von Implementierungen des Gaußschen Eliminationsverfahren
+und des Simplexalgorithmus (zum Lösen von Ungleichungen)
+
+mit Modul: =use_module(library(clpr))= ist folgende
+Contraint-Schreibweise möglich: ={5 = X + 2}=. Prolog kann dann Lösungen
+für X mit Hilfe des Gaußschen Eliminationsverfahren finden.
+
+Struktur einer Constraint Struktur für arithmetische Ausdrücke:
+
+-  Struktur: Terme, reelle Zahlen und arithmetische Funktionen
+-  Constraints: Gleichungen und Ungleichungen mit arithmetischen
+   Ausdrücken
+-  implementierte Algorithmen: Gaußsches Eliminationsverfahren,
+   Simplexvefahren und Termunifikation
+
+CLP ist Erweiterung der Logikprogrammierung. Verwendung von /Constraint
+Strukturen/ anstelle von Termen.
+
+** Constraint-Programming über endlichen Bereichen
+
+CLP(FD) (/finite domain/); hinzuladen mit
+=:- use_module(library(clpfd))=
+
+-  Struktur (wofür stehen Variablen): endliche Mengen dargestellt duch
+   endlische Mengen ganzer Zahlen
+-  Constraints (was darf man hinschreiben): Gleichungen und
+   Ungleichungen, Elementbeziehungen (z.B. $\in$), logische Verküpfungen
+   zwischen Constraints
+-  Lösungsalgorithmen:
+
+   -  Konsistenzprüfung (geprüft wird, ob eine Auswahl von Constraints
+      lösbar ist; keine direkt Lösungsberechnung)
+   -  konkrete Lösungen (Aufzählung möglicher Werte)
+
+*Schema der CLP(FD) Programmierung:*
+
+1. definiere Wertebereiche für Variablen,
+2. beschreibe constraints (führt zu Reduktion des Wertebereichs)
+3. Austesten konkreter Lösungen durch Belegung der Variablen mit Werten
+   aus den eingeschränkten Wertebereichen
+
+*elementare Constraints:*
+
+-  =X #= Y=: Gleichheit
+-  =X #\= Y=: Ungleichheit
+-  =X #> Y=:
+-  =X #>= Y=:
+-  =X #< Y=:
+-  =X #<= Y=:
+
+Festlegungn von WErtebereichen:
+
+-  domain
+-  ins
+
+Einsetzen konkreter Werte
+
+-  labeling
+
+** kombinatorische Constraints
+
+-  =all_different(⟨Liste⟩)=: alle Variablen der Liste müssen
+   unterschiedlich belegt sein.
+-  =sum(⟨Variablenliste⟩, ⟨Relation⟩, ⟨Value⟩)=: Constraint für die
+   Summe arithmetischer Variablen, z.B. =sum([A,B,C], #=, 10)=
+-  =serialized=
+
+* Metaprogrammierung
+
+** Metaprädikat
+
+-  =findall(⟨Variable/Format⟩, ⟨Term⟩, ⟨Ergebnisliste⟩)=: liefert /eine/
+   Liste der möglichen Belegungen von =⟨Variable/Format⟩= in =⟨Term⟩=
+-  =bagof(⟨Variable⟩, ⟨Term⟩, ⟨Ergebnisliste⟩)=: liefert für jede
+   Belegung der freien Variablen in =⟨Term⟩= eine Liste der möglichen
+   Belegungen von =⟨Variable⟩= in =⟨Term⟩=. Das Ergebnis ist eine
+   Multimenge.
+-  =setof(⟨Variable⟩, ⟨Term⟩, ⟨Ergebnisliste⟩)=: wie =bagof= aber mit
+   Deduplizierung. Das Ergebnis ist eine Menge.
+
+** Dynamsche Regeln
+
+/Dynamische Regeln/ erlaube eine Veränderung der Wissensbasis
+(Gesamtheit der Fakten und Regeln) zur Interpretationszeit.
+
+Prädikate, die in einem Prolog-Programm definiert wurden, heißen
+/statisch Prädikate/ (=static=). Um ein =static= Prädikat =p=
+veränderbar zu machen, muss es als danamisch deklariert werden, mit der
+Direktive =:- dynamic ⟨p⟩/⟨Stelligkeit von p⟩.=
+
+-  =assert(⟨Regel⟩)=: füge der Wissensbasis eine neue Regel hinzu, z.B.
+   =assert(p(c)).=
+-  =asserta(⟨Regel⟩)=: füge eine dynamische Regel am Anfang der
+   Wissensbasis hinzu
+-  =assertb(⟨Regel⟩)=: füge eine dynamische Regel am Ende der
+   Wissensbasis hinzu
+-  =retract(⟨Regel⟩)=: entferne eine dynamische Regel
+
+-  =clause(⟨P⟩,⟨Q⟩)= ist beweisbar, wenn die Regel =P :- Q= in der
+   Wissenbasis ist (benutzerdefinierte Prädikat); für Fakten:
+   =clause(⟨P⟩, true)=
+
+

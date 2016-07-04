@@ -1,0 +1,75 @@
+#+TITLE: Configuration_management
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Configuration_management
+---
+#+END_HTML
+
+* Konfigurationsmanagement
+
+Konfiguration bezeichnet die Zusammenstellung von Einheiten zu einem
+System.
+
+** Konfigurationsmanagementsysteme
+
+Konfigurationsmanagementsysteme umfassen i.d.R. folgende
+Managementfunktionen:
+
+-  Versionsmanagement
+-  Build Support
+-  Aufgabenmanangement
+
+** Versionsmanagement
+
+-  Version: Eine Instanz einer Komponente
+-  Revision: eine überarbeitete Version einer Instanz (Zustand einer
+   Komponente zu einem bestimmten Zeitpunkt)
+-  Variante: alternative Ausprägung einer Komponente
+
+Protoytpischer Aufbau von Versionsnummern:
+⟨Release-Nr⟩.⟨Revisonsnnummer⟩.⟨Variantennummer⟩.⟨Revisionsnummer der
+Variante⟩
+
+*** Lost Updates
+
+Entstehen, wenn zwei oder mehr Entwickler auf dieselbe Datei schreibend
+
+*** Pessimistisches Sperrverfahren
+
+-  Checkout-Operation
+
+   -  erzeugt lokale Kopie der Datei zur Bearbeitung
+   -  sperrt (locked) eine Datei im Repository
+
+-  andere Entwickler können nicht auf die Datei zugreifen, solang diese
+   gesperrt ist
+-  Checkin-Operation
+
+   -  Überträgt eine lokale Überarbeitung in das Repository
+   -  entsperrt dei Datei wieder
+
+-  z.B. RCS
+
+*** Optimistisches Sperrverfahren
+
+CVS, SVN und GIT verwenden ein optimistisches Sperrverfahren:
+
+-  mehrere Entwickler können gleichzeitig an ihrer lokalen Arbeitskopie
+   der gleichen Datei arbeiten (Dateien werden nicht gesperrt)
+-  Merge-Konflikte können beim Zurückschreiben der Dateinen in das
+   Repository entstehen und müssen dann gelöst werden (geschieht z.T.
+   automatisiert)
+
+** Systembau (Build Tools)
+
+Zusammensetzen von Komponenten zu einem System.
+
+** Lastenheft
+
+** Pflichtenheft

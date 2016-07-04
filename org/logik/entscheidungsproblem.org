@@ -1,0 +1,80 @@
+#+TITLE: Entscheidungsproblem
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* Entscheidungsprobleme
+
+Ein *Entscheidungsproblem* ist gegeben durch:
+
+- eine Menge von Instanzen $\mathcal{I}$,
+- eine Menge von positiven Instanzen $\mathcal{P} \subseteq \mathcal{I}$
+- eine Menge von negativen Instanzen $\mathcal{I} \setminus \mathcal{P}$
+
+* Entscheidbarkeit
+
+Ein Algorithmus *entscheidet* ein Problem mit $\mathcal{I}$ und $\mathcal{P}$, falls gilt
+
+- für positive Instanzen liefert er "ja"
+- für negative Instanzen liefert er "nein"
+
+*Wichtig*: Nicht alle Probleme sind entscheidbar!
+
+Ein Algorithmus ist ein *negatives Semienschtscheidungsverfahren* für
+$\mathcal{I}$ und $\mathcal{P}$, falls gilt
+
+- für positive Instanzen terminiert er nicht
+- für negative Instanzen liefert er "nein"
+
+Analog gilt: Ein Algorithmus ist ein *positives Semienschtscheidungsverfahren* für
+$\mathcal{I}$ und $\mathcal{P}$, falls gilt
+
+- für negative Instanzen terminiert er nicht
+- für positive Instanzen liefert er "ja"
+
+** Aufzählen von Mengen
+
+Um zu zeigen, dass Probleme mit unendlicher Menge positiver Instanzen
+$\mathcal{P}$ entscheidbar sind, kann man z.B. einen Algorithmus
+angeben, der die Elemente von $\mathcal{P}$ aufzählt.
+
+Ein Algorithmus $A(i:\mathbb{N}):M \cup \{null\}$ *zählt* die Menge $N \subseteq M$ auf, falls gilt:
+
+- $A$ terminiert für jede Eingabe $e\in \mathbb{N}$
+- $N = \{A(i) \mid A(i) \neq null \wedge i \in \mathbb{N}\}$
+
+Eine Menge $M$ ist genau dann aufzählbar, wenn sie positiv
+semientscheidbar ist.
+
+#+NAME: Algorithmus, der $\mathbb{N}$ aufzählt
+#+BEGIN_EXAMPLE
+$A(i:\mathbb{N}):\mathbb{N} \cup \{null\}$
+return $i$
+#+END_EXAMPLE
+
+*Idee:* Test für jedes $n \in \mathbb{N}$ jeweils, ob $\{\varphi_0,
+\dots, \varphi_{n-1}$ erfüllbar ist. Falls das für ein $n$ nicht
+möglich ist, dann ist auch die unendliche Formelmenge $\{varphi_0,
+\varphi_1, \dots \}$ nicht erfüllbar.
+
+#+NAME: Algorithmus, der das Erfüllbarkeitsproblem für aufzählbare Formelmengen negativ-semientscheidet
+#+BEGIN_EXAMPLE
+$A(B:\mathbb{N} \rightarrow F_{AL}\cup \{null\}):\{ja, nein\}$
+-------------------------
+Setze $\varphi = \top$;
+Setze $i = 0$;
+Setze $f = erfuellbar$;
+
+Solange $f == erfuellbar$
+  Setze $\psi = B(i)$;
+  Falls $\psi \neq null$
+    Setze $\varphi = \varphi \wedge \psi$;
+  $f = SATSOLVE(\varphi)$;
+  Setze $i = i+1$;
+
+return $nein$;
+#+END_EXAMPLE
+
+Der Algorithmus zeigt, dass das Entscheidbarkeitsproblem für
+aufzählbare Formelmengen negativ semientscheidbar ist. Es ist jedoch
+nicht entscheidbar.

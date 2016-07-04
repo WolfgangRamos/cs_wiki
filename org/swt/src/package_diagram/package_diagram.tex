@@ -1,0 +1,32 @@
+\documentclass[tikz, convert={density=72,outext=.png, outfile=package_diagram.png}]{standalone}
+
+\usepackage{tikz-uml}
+
+\usetikzlibrary{backgrounds,positioning}
+
+\begin{document}
+
+\begin{tikzpicture}[background rectangle/.style={fill=white}, show background rectangle]
+  \umlemptypackage[x=0, y=0]{Paket1}
+  \begin{umlpackage}[x=7, y=0]{Paket2}
+    \begin{umlpackage}[x=0,y=0]{Paket3}
+      \umlemptyclass[x=0, y=0]{Klasse1}
+      \umlclass[x=0, y=3,template={T}]{Klasse2}{
+        + x : int \\
+        \umlstatic{-- i : boolean} \\
+        \# r : T
+      }{
+        + setX(x : int) : void \\
+        \umlvirt{\# getR() : T} 
+      }
+      \umlinherit[name=inherit]{Klasse1}{Klasse2}
+%      \draw (inherit-1) node[above]{Inheritance};
+    \end{umlpackage} 
+  \end{umlpackage}
+  \umldep[name=dep]{Paket1}{Paket2}
+  \draw (dep-1) node[below]{Dependency};
+  \umlpoint{inherit-1} 
+  \umlpoint{dep-middle} 
+\end{tikzpicture}
+
+\end{document}

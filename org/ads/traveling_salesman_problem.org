@@ -1,0 +1,118 @@
+#+TITLE: Traveling_salesman_problem
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+HTML_MATHJAX: align: left indent: 5em tagside: left
+#+BEGIN_HTML
+---
+layout: page
+title: Traveling_salesman_problem
+---
+#+END_HTML
+
+* Traveling Salesman Problem (TSP)
+
+*geg*: Knotenmenge $V=\\{1,...,n\\}$ und Distanzen
+$d(i,j) \in \mathbb{Z} \cup \\{\infty\\}$ für alle
+$i,j \in \\{1,...,n\\}$, sowie ein Startknoten $s \in V$. Es gilt die
+Dreiecksungleichung $\forall i,j,k \in V: d(i,k) \leq d(i,j) + d(j,k)$
+
+*ges*: Eine Rundreise, die jeden Knoten genau einmal besucht und zum
+Startknoten zurück läuft. Eine Lösung ist also eine
+[[../mathe/permutation][Permutation]] $\pi \in S_{n}$ von
+$\\{1,...,n\\}$. Der Wert (d.h. die Länge) einer Lösung $\pi$ ist:
+$\sum_{i=1}^{n} d(\pi(i),\pi(i+1))$, wobei $\pi(n+1) = \pi(1)$.
+
+Wir erzeugen aus den Knoten in $V$ und den Distanzen einen vollständigen
+ungerichteten Graph $K_{n} = (V,E)$.
+
+** Eulerkreis
+
+Sei $G=(V,E)$ ein Multigraph (d.h., mit evtl. parallelen Kanten), dann
+heißt ein Pfad, der jede Kante von $G$ genau einmal enthält /Eulerkreis/
+(ein Eulerkreis ist kein einfacher Kreis, da Knotenwiederholungen
+zulässig sind!)
+
+Ein Multigraph, der einen Eulerkreis besitzt, heißt /Eulersch/.
+
+*Satz von Euler:* Es sei $G$ ein zusammenhängender Multigraph, dann sind
+äquivalent:
+
+-  $G$ ist eulersch
+-  jeder Knoten von $G$ hat gerade Grad
+-  die Kantenmenge von $G$ kann in Kreise zerlegt werden
+
+** Matching
+
+Ein /Matching/ in einem Graphen $G=(V,E)$ ist eine Menge
+$E' \subseteq E$ von Kanten, von denen keine zwei Kanten einen Endpunkt
+gemeinsam haben. Bei Gewichten $d(i,j)$ auf Kanten sei
+$d(E') = \sum_{(i,j) \in E'}$ das Gewicht von $E'$.
+
+Ein Matching heißt /perfekt/, falls jeder Knoten $v \in V$ dabei
+überdeckt wird, also $2|E'| = |V|$ gilt.
+
+*Laufzeit:* Ein perfektes Matching in $G$ (sofern es existiert) mit min.
+Gewicht kann in Zeit $\mathcal{O}(|V|^3)$ berechnet werden.
+
+** Bestimmen von Rundreisen
+
+Die /MST-Heuristik/ wird auch "Algorithmus $\Delta\text{TSP}\_{1}$"
+genannt. Der Algorithmus von Christofides wird auch "Alogrithmus
+$\Delta\text{TSP}\_{2}$" genannt.
+
+*** MST-Heurisitk
+
+1. finde einen min. spannenenden Baum $T$ in $K_n$ (z.B. mit dem
+   Algorithmus von
+   [[mst#minimal-spannender-baum_bestimmen-von-minimal-spannenden-bäumen_algorithmus-von-kruskal][Jarnik-Prim]]
+   oder
+   [[mst#minimal-spannender-baum_bestimmen-von-minimal-spannenden-bäumen_algorithmus-von_kruskal][Kruskal]])
+2. konstruiere einen Multigraph $G$ aus $T$ durch Verdoppeln aller
+   Kanten
+3. bestimme einen beliebigen Eulerschen Kreis $K$ in $G$ (im Folgenden
+   wird $K$ auch /Tour/ genannt). Beginne dabei bei Knoten $s$.
+4. bestimme aus $K$ ein Rundreise $R$ durch sog. /Abkürzungen/ (engl.
+   /shortcuts/). D.h beginne bei Knoten $s$. Wenn ein Knoten wiederholt
+   besucht werden soll, überspringe diesen Knoten stattdessen und gehe
+   zum nächsten unbesuchten Knoten.
+
+*Eigenschaften:*
+
+-  $d(T) \leq opt(I)$, wobei $d(T)$ das Gesamtgewicht aller Kanten von
+   $T$ und $opt(I)$ die Länge der optimalen Rundreise ist [1]
+-  $d(K) \leq 2 \cdot d(T) \leq 2 \cdot opt(I)$, wobei $d(K)$ die Länge
+   des eulerschen Kreises $K$ ist.
+-  $d(R) \leq d(K)$, wobei $d(R)$ die Länge der Rundreise ist [2]. Also
+   hat der Algortihmus eine multiplikative Güte von 2, d.h.
+   $d(R) \leq 2 \cdot opt(I)$.
+
+*** Algorithmus von Christofides
+
+1. finde einen min. spannenenden Baum $T$ in $K_n$ (z.B. mit dem
+   Algorithmus von
+   [[mst#minimal-spannender-baum_bestimmen-von-minimal-spannenden-bäumen_algorithmus-von-kruskal][Jarnik-Prim]]
+   oder
+   [[mst#minimal-spannender-baum_bestimmen-von-minimal-spannenden-bäumen_algorithmus-von_kruskal][Kruskal]])
+2. bestimme die Menge $X$ der Knoten, die in $T$ ungeraden Grad haben.
+3. erzeuge einen vollständigen Graphen $H$ auf $X$ mit Gewicht $d(i,j)$
+   für $i,j \in X \wedge i \neq j$
+4. bestimme ein perfektes Matching $K$ mit min. Gewicht in $H$
+5. konstruiere einen Multigraph $G$ aus $T$ durch Hinzufügen der Kanten
+   aus $K$ entsteht
+6. bestimme einen beliebigen Eulerschen Kreis $C$ in $G$ (im Folgenden
+   wird $C$ auch /Tour/ genannt). Beginne dabei bei Knoten $s$.
+7. Bestimme eine Rundreise $R$ durch Abkürzungen.
+
+*Eigenschaften:*
+
+-  $d(C) \leq d(T) + d(K) \leq opt(I) + d(K)$, wobei ...
+-  Der Algorithmus von Cristofides hat multiplikative Güte 1,5, d.h. es
+   gilt $d(R) \leq 1.5 \cdot opt(I)$.
+
+[1] Begründung: lässt man bei der optimalen Rundreise eine Kante weg, so
+    ergibt sich ein spannender Baum von $G$. Dessen Gesamtgewicht ist
+    größer oder gleich $d(T)$, da $T$ minimal ist.
+
+[2] Begründung: Dreiecksungleichung
