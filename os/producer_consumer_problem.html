@@ -1,0 +1,92 @@
+---
+layout: page
+title: Producer_consumer_problem
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Producer/Consumer Problem</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Setting:
+</p>
+
+<ul class="org-ul">
+<li><i>ein</i> Produzent schreiben Daten in einen Puffer
+</li>
+<li><i>ein</i> Konsument liest Daten aus diesem Puffer
+</li>
+<li>zu jeder Zeit darf entweder der Konsument aus dem Puffer lesen oder
+der Produzent in den Puffer schreiben
+</li>
+<li>der Produzent darf keine Daten in den Puffer Schreiben, wenn dieser
+voll ist
+</li>
+<li>der Konsument darf keine Daten aus dem Puffer lesen, wenn dieser leer
+ist
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Lösungen mit Semaphoren</h3>
+<div class="outline-text-3" id="text-1-1">
+<pre class="example">
+//Lösung für Puffer mit endelicher Größe
+int buffer[n];
+int in = 0;       // index of item to be produced
+int out = 0;      // index of item to be consumed
+sem spaces = n;   // counting semaphore for number of spaces in the buffer
+sem items = 0;    // counting semaphore for number of items in the buffer
+
+void producer() { // executed by ONE thread
+  while(true) {
+    int data = produce();
+    sem_wait(spaces);
+    buffer[in] = data;
+    in = (in + 1) % n;
+    sem_signal(items);
+  }
+}
+
+void consumer() { // executed by ONE thread
+  while(true) {
+     sem_wait(items);
+     int data = buffer[out];
+     out = (out + 1) % n;
+     sem_signal(spaces);
+     consume(data);
+  }
+}
+</pre>
+
+<pre class="example">
+// Lösung für Puffer mit unendlicher Größe
+int in = 0;       // index of item to be produced
+int out = 0;      // index of item to be consumed
+sem xbuffer = 1;  // exclusive access to buffer
+sem spaces = n;   // counting semaphore for number of spaces in the buffer
+sem items = 0;    // counting semaphore for number of items in the buffer
+
+void producer() { // executed by ONE thread
+  while(true) {
+    data = produce();
+    sem_wait(xbuffer);
+    buffer.add(data);
+    in = (in + 1) % n;
+    sem_signal(items);
+  }
+}
+
+void consumer() { // executed by ONE thread
+  while(true) {
+    sem_wait(items);
+    int data = buffer[out];
+    out = (out + 1) % n;
+    sem_signal(spaces);
+    consume(data);
+  }
+}
+</pre>
+</div>
+</div>
+</div>

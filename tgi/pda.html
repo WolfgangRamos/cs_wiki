@@ -1,0 +1,144 @@
+---
+layout: page
+title: Pda
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Push Down Automata</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Ein nicht-deterministischer <i>Push Down Automaton</i> (PDA, dt.
+<i>Kellerautomaten</i>) ist ein 6-Tupel \(P=(Q,\Sigma,\Gamma,\delta,q_0,F)\)
+mit:
+</p>
+
+<ul class="org-ul">
+<li>einer endlichen <i>Zustandsmenge</i> \(Q\),
+</li>
+<li>einem endlichen Menge \(\Sigma\) (<i>Eingabealphabet</i>)
+</li>
+<li>einem endlichen Menge \(\Gamma\) (<i>Stackalphabet</i>)
+</li>
+<li>einer <i>Transitionsfunktion</i>
+   \(\delta: Q \times \Sigma_{\epsilon} \times \Gamma_{\epsilon} \rightarrow \mathcal{P}(Q \times \Gamma_{\epsilon})\)
+</li>
+<li>einem <i>Startzustand</i> \(q_0\)
+</li>
+<li>einer endlichen Menge von <i>Endzuständen</i>
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>DPDAs (deterministic push down automaton) und PDAs sind <i>nicht</i>
+äquivalent, d.h. sie erkennen nicht dieselbe Menge von Sprachen! Es
+gibt Sprachen, die nur von einem PDA erkannt werden können.
+</li>
+</ul>
+
+<p>
+<b>Wie ein PDA das Ende des Stack erkennen kann:</b> Verwende ein
+<i>Kellerbodensymbol</i>, welches als erstes auf den Stack gepusht wird.
+</p>
+
+<p>
+<b>Wie ein PDA das Ende eines Eingabeworts erkennen kann:</b> Gemäß
+Definition muss ein PDA \(P\) ein Wort \(w\) <i>vollständig</i> lesen. Ist dies
+nicht der Fall, gibt es keine Berechnung von \(P\) auf \(w\).
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Berechnung</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Sei \(P = (Q,\Sigma,\Gamma,\delta,q_0,F)\) ein PDA und
+\(w = (w_0,\dots{},w_{n-1})\) ein Wort mit \(w_{i} \in \Sigma_{\epsilon}\)
+für alle \(i \in \{0,\dots,n-1\}\). Eine <i>Berechnung</i> ist:
+</p>
+
+<ol class="org-ol">
+<li>eine Folge von Zuständen \(r:=(r_0,r_1,\dots,r_n)\) mit \(r_i \in Q\) für
+alle \(i \in \{0,\dots,n\}\) und
+</li>
+<li>eine Folge von Stackinhalten (<i>Stackwörtern</i>)
+\(s:=(s_0,s_1,\dots,s_n)\) mit \(s_i \in \Gamma^*\) für alle
+\(i \in \{0,\dots,n\}\)
+</li>
+</ol>
+
+<p>
+mit folgenden Eigenschaften:
+</p>
+
+<ol class="org-ol">
+<li>\(r_0 = q_0\) und \(s_0 = \epsilon\)
+</li>
+<li>\(\forall i \in \{0,\dots,n-1\}: (r_{i+1},b) \in \delta(r_i,w_i,a)\),
+mit \(s_i = at\) und \(s_{i+1} = bt\) mit \(a,b \in \Gamma_{\epsilon}\) und
+\(t \in \Gamma^*\).
+</li>
+</ol>
+
+<p>
+\(P\) <i>akzeptiert</i> (engl. <i>accept</i>) \(w\) (man sagt auch die Berechnung ist
+<i>akzeptierend</i>), falls gilt:
+</p>
+
+<ol class="org-ol">
+<li>\(r_n \in F\)
+</li>
+</ol>
+
+<p>
+Die Menge der von \(P\) akzeptierten Wörter bildet eine
+<i><i>kontextfreie Sprache</i></i>
+\(L(P) := \{ w \in \Sigma* | P \text{ akzeptiert } w \}\). \(L(P)\) wird
+auch die von \(P\) <i>erkannte Sprache</i> genannt (engl. <i>recognize</i>).
+(<b>Merke:</b> ein PDA kann viele verschiedene Wörter <i>akzeptieren</i>, aber nur
+eine Sprache <i>erkennen</i>.)
+</p>
+
+<p>
+<b>Terminologie:</b> Wir schreiben \((q,u) \vdash_{n}^{w} (q',v)\) wenn der PDA
+ausgehend vom Zustand \(q\) und Kellerinhalt \(u\) durch Lesen von
+\(w\in\Sigma^*\) in \(n\) Schritten zum Zustand \(q'\) und Kellerinhalt \(v\)
+gelangen kann.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Push-Pop-Normalform</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Ein PDA \(P=(Q,\Sigma,\Gamma,\delta,q_0,F)\) ist in <i>Push-Pop-Normalform</i>,
+wenn gilt:
+</p>
+
+<ol class="org-ol">
+<li>Es gibt <i>genau einen</i> akzeptierenden Zustand, d.h. \(F=\{q_{accept}\}\)
+</li>
+<li>Akzeptiert wird immer nur mit leerem Keller, d.h.
+\((q_{start},\epsilon) \vdash_{*} (q_{acc}, v \Rightarrow v=\epsilon\).
+</li>
+<li>In einem Schritt wird entweder push oder pop ausgeführt (aber nicht
+beides gleichzeitig), d.h.
+\(\delta: Q \times \Sigma_{\epsilon} \times \Gamma \rightarrow \mathcal{P}(Q \times \{\epsilon\}) \cup Q \times \Sigma_{\epsilon} \times \{\epsilon\} \rightarrow \mathcal{P}(Q \times \Gamma)\)
+</li>
+</ol>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Zu jedem PDA gibt es einen äquivalenten PDA in Push-Pop-Normalform.
+</li>
+</ul>
+</div>
+</div>
+</div>

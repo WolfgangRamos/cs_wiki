@@ -1,0 +1,107 @@
+---
+layout: page
+title: Symmetric_multi_processing
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Symmetric Multiprocessing (SMP)</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Kernel kann auf jedem Prozessor ausgeführt werden
+</li>
+<li><b>Self Scheduling</b>: jeder Prozessor dispatched selbsständig Prozesse
+aus dem Pool aller Prozesse
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Taxonomie von Systemem</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+(nach Flynn, 1972)
+</p>
+
+<ul class="org-ul">
+<li><b>Single Instruction Single Data (SSID) Stream</b>: Ein Prozessor führt
+eine Sequenz von Instruktionen auf einer Datenmenge aus (z.B. Simple
+Batch Systeme).
+</li>
+<li><b>Single Instruction Multiple Data (SIMD) Stream</b>: Mehrere Prozessoren
+führen dieselbe Sequenz von Instruktionen auf verschiedenen
+Datenmengen aus (z.B. Grafikkarten).
+</li>
+<li><b>Multiple Instruction Single Data (MISD) Stream</b>: Mehrere Prozessozen
+führen verschiedenen Teile einer Sequenz von Instruktionen auf
+derselben Datenmenge aus (bislang nicht realisiert).
+</li>
+<li><b>Multiple Instruction Multiple Data (MIMD) Stream</b>: Mehrere
+Prozessoren führen verschiedene Sequenzen von Instruktionen auf
+verschiedenen Datenmengen aus (z.B. Rechner mit
+Multi-Core-Prozessoren). MIMD-Systeme können nach der Art der
+Kommunikation zwischen den Prozessoren unterteilt werden in:
+
+<ul class="org-ul">
+<li><b>Cluster</b>: Jeder Prozessor hat einen eigenen Speicher
+(Kommunikation zwischen den Prozessoren erfolgt z.B. über ein
+Netzwerk)
+</li>
+<li><b>Shared Memory Multiprocessor</b>: Prozessoren haben einen
+gemeinsamen Speicher (Kommunikation zwischen den Prozessoren
+erfolgt über den gemeinsamen Speicher). Shared Memory
+Multiprocessor Systeme können weiter nach der Art des Scheduling
+unterteilt werden in:
+
+<ul class="org-ul">
+<li><b>Master-Slave Architektur</b>:
+
+<ul class="org-ul">
+<li>Kernel wird nur auf der Master CPU ausgeführt
+</li>
+<li>Master CPU übernimmt Scheduling der Prozesse für Slave CPUs
+</li>
+<li>Nachteile:
+
+<ul class="org-ul">
+<li>Performance der Master CPU entscheidet über
+Gesamtperformance
+</li>
+<li>Ausfall der Master CPU kann nicht abgefangen werden
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+(1972)
+</p>
+
+<p>
+<i>smp_taxonomy.png</i>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Gang Scheduling</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Eine Gruppe von Threads wird beim Scheduling als eine Einheit betrachtet
+und auf einer Gruppe von CPUs gemeinsam dispatched.
+</p>
+
+<ul class="org-ul">
+<li>Vorteil: weniger Context Switches erforderlich → geringerer Overhead
+durch Scheduling
+</li>
+<li>Nachteil: Programme müssen "Gangs" festlegen
+</li>
+</ul>
+</div>
+</div>
+</div>

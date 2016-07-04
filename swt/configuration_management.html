@@ -1,0 +1,132 @@
+---
+layout: page
+title: Configuration_management
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Konfigurationsmanagement</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Konfiguration bezeichnet die Zusammenstellung von Einheiten zu einem
+System.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Konfigurationsmanagementsysteme</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Konfigurationsmanagementsysteme umfassen i.d.R. folgende
+Managementfunktionen:
+</p>
+
+<ul class="org-ul">
+<li>Versionsmanagement
+</li>
+<li>Build Support
+</li>
+<li>Aufgabenmanangement
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Versionsmanagement</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Version: Eine Instanz einer Komponente
+</li>
+<li>Revision: eine überarbeitete Version einer Instanz (Zustand einer
+Komponente zu einem bestimmten Zeitpunkt)
+</li>
+<li>Variante: alternative Ausprägung einer Komponente
+</li>
+</ul>
+
+<p>
+Protoytpischer Aufbau von Versionsnummern:
+⟨Release-Nr⟩.⟨Revisonsnnummer⟩.⟨Variantennummer⟩.⟨Revisionsnummer der
+Variante⟩
+</p>
+</div>
+
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Lost Updates</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+Entstehen, wenn zwei oder mehr Entwickler auf dieselbe Datei schreibend
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Pessimistisches Sperrverfahren</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<ul class="org-ul">
+<li>Checkout-Operation
+
+<ul class="org-ul">
+<li>erzeugt lokale Kopie der Datei zur Bearbeitung
+</li>
+<li>sperrt (locked) eine Datei im Repository
+</li>
+</ul>
+</li>
+
+<li>andere Entwickler können nicht auf die Datei zugreifen, solang diese
+gesperrt ist
+</li>
+<li>Checkin-Operation
+
+<ul class="org-ul">
+<li>Überträgt eine lokale Überarbeitung in das Repository
+</li>
+<li>entsperrt dei Datei wieder
+</li>
+</ul>
+</li>
+
+<li>z.B. RCS
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> Optimistisches Sperrverfahren</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<p>
+CVS, SVN und GIT verwenden ein optimistisches Sperrverfahren:
+</p>
+
+<ul class="org-ul">
+<li>mehrere Entwickler können gleichzeitig an ihrer lokalen Arbeitskopie
+der gleichen Datei arbeiten (Dateien werden nicht gesperrt)
+</li>
+<li>Merge-Konflikte können beim Zurückschreiben der Dateinen in das
+Repository entstehen und müssen dann gelöst werden (geschieht z.T.
+automatisiert)
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Systembau (Build Tools)</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Zusammensetzen von Komponenten zu einem System.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Lastenheft</h3>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Pflichtenheft</h3>
+</div>
+</div>

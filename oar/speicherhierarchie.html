@@ -1,0 +1,77 @@
+---
+layout: page
+title: Speicherhierarchie
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Speicherhierarchie</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+TODO Bild:
+</p>
+
+<p>
+<b>Idee:</b> Schaffung eines Speichers, der zugleich groß und schnell ist
+durch Verwendung kleiner schneller Speicher (teuer) als caches für
+Inhalte aus langsameren aber größeren Speichern (günstiger). Das Prinzip
+der <a href="../os/locality_of_reference"><i>Lokalität</i></a> bildet die Basis für
+die Funktionstüchtigkeit solcher Speicherhierarchien.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Verschiede Arten von Speicher</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>flüchtig (Daten nur bei Stromfluss erhalten):
+
+<ul class="org-ul">
+<li><i>SRAM</i>: static random access memory (z.B. L1 Cache)
+</li>
+<li><i>DRAM</i>: dynamic random access memory (z.B.
+Hauptspeicher/Arbeitsspeicher)
+</li>
+</ul>
+</li>
+
+<li>nicht-flüchtig:
+
+<ul class="org-ul">
+<li><i>ROM</i>: read only memory
+</li>
+<li><i>PROM</i>: programmable ROM
+</li>
+<li><i>EPROM</i>: eraseable PROM
+</li>
+<li><i>EEPROM</i>: elecrically erasable PROM (z.B. SSDs)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Harddisks</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>surface
+</li>
+<li>track
+</li>
+<li>sector
+</li>
+<li>gap
+</li>
+
+<li>Seek time: Dauer bis der Lesekopf den Track erreicht hat
+</li>
+<li>Rotational Latency: Dauer zwischen Ende des seek und dem Moment, an
+dem der Zielsektor den Lesekopf erreicht
+</li>
+<li>transfer time: Dauer zum Lesen des Zielsektors
+</li>
+</ul>
+</div>
+</div>
+</div>

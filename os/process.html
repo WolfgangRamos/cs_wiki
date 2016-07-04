@@ -1,0 +1,576 @@
+---
+layout: page
+title: Process
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Prozesse</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Ein Prozess ist eine Instanz eines Programms, welche sich in Ausführung
+befindet. Prozessen haben:
+</p>
+
+<ul class="org-ul">
+<li>einen <i>Kontrollfluss</i>, d.h. eine Folge von
+Instruktionen, die abgearbeitet werden, wobei die Reihenfolge der
+Abarbeitung i.d.R. durch die Reihenfolge der Instruktionen im
+Programm vorgegeben ist (s.a.
+<i>Schlüsselabstraktionen
+des Prozesskonzepts</i>)
+</li>
+<li>einen aktuellen Zustand
+</li>
+<li>allozierte Ressourcen (Speicher, Geräte, CPU, Register, Dateien)
+</li>
+</ul>
+
+<p>
+Zweck von Prozessen:
+</p>
+
+<ul class="org-ul">
+<li>Ausführung eines Chronjobs
+</li>
+<li>Bereitstellen eines Dienstes (z.B. Drucker)
+</li>
+<li>Ausnutzung von Nebenläufigkeit
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Schlüsselabstraktionen</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li><b>private (virtual) address space</b>: jeder Prozess hat scheinbar
+exklusiven Zugriff auf den gesamten Hauptspeicher (realisiert durch
+<i>Virtual Memory</i>)
+</li>
+<li><b>logical control flow</b>: jeder Porzess hat scheinbar exklusiven
+Zugriff auf die CPU und bemerkt nicht, wenn sein Ausführung bzw. sein
+Kontrollfluss (vom Kernel) unterbrochen wird.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Adressraum eines Prozesses</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<i>process_address_space.png</i>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Verwaltung von Prozessen</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>OS verwaltete alle vorhandenen Prozesse in einer <i>Process Table</i>
+</li>
+<li>Einträge in der Process Table sind die <i>Process Control Blocks</i>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> Kernel</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+Das Programm, das die Prozesse auf einem System verwaltet heißt
+<i>Kernel</i>. Der Kernel selbst ist <i>kein</i> Prozess, d.h. es finden <i>keine
+context</i> switches zwischen Prozessen und dem Kernel statt! Die
+Ausführung von Kernelcode wird stattdessen dem aktuell ausgeführten
+Prozess zugerechnet.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> Process Image</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+Die physikalische Manifestation eines Prozesses bezeichnet man als
+<i>process image</i>. Ein Process Image umfasst:
+</p>
+
+<ul class="org-ul">
+<li>auszuführendes Programm
+</li>
+<li>benötigte Daten (Stack, Heap)
+</li>
+<li>Kontext (Registerinhalte, etc.)
+
+<ul class="org-ul">
+<li>wird im Process Control Block (Attribute eines Prozesse, die zur
+Verwaltung des Prozesses durch das OS benötigt werden) gespeichert
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-3" class="outline-4">
+<h4 id="sec-1-3-3"><span class="section-number-4">1.3.3</span> Process Control Block (PCB)</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<ul class="org-ul">
+<li>vom Betriebssystem wird für jeden Prozess ein PCB erstellt
+</li>
+<li>ein PCB enthält alle Informationen, die das OS zur Verwaltung eines
+Prozesses benötigt
+</li>
+<li>die PCBs ermöglichen das Verwalten mehrerer Prozesse und bilden auch
+die Grundlage für logical control flow
+</li>
+</ul>
+
+<p>
+Inhalte des PCB:
+</p>
+
+<ul class="org-ul">
+<li>Identifikationsinformationen (PID, Parent PID, UID)
+</li>
+<li>Zustandinformationen
+
+<ul class="org-ul">
+<li>Stack Pointers (jeder Prozess verwendet ein oder mehrere Stacks)
+</li>
+<li>Conditon Codes (Flags der zuletzt ausgeführten arithmetischen
+Operation, z.B. Sign, Carry, etc.)
+</li>
+<li>Programm Counter (Pointer auf die als nächstes auszuführende
+Instruktion)
+</li>
+</ul>
+</li>
+
+<li>Kontrollinformationen (zur Verwaltung des logical control flow)
+
+<ul class="org-ul">
+<li>Zustand (state)
+</li>
+<li>Priorität
+</li>
+<li>Identität des Events, auf dass ein Prozess wartet (wenn er
+blockiert ist)
+</li>
+<li>Memory Management (z.B. Pointer auf die Page Table des Prozesses
+[*Page Table Pointer*])
+</li>
+<li>Ressourcen (Dateien, Geräte), die von dem Prozess genutzt werden
+</li>
+</ul>
+</li>
+
+<li>u.a.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-4" class="outline-4">
+<h4 id="sec-1-3-4"><span class="section-number-4">1.3.4</span> Erzeugung von Prozessen</h4>
+<div class="outline-text-4" id="text-1-3-4">
+<p>
+Prozesse werden beim Systemstart oder durch Ausführung eines der
+folgenden Befehls (durch den Benutzer oder durch andere Prozessen)
+erzeugt:
+</p>
+
+<ul class="org-ul">
+<li><code>int fork(void)</code>: erzeugt einen Child Prozess
+
+<ul class="org-ul">
+<li>Child ist nach Erzeugung zunächst eine exakte Kopie des
+Elternprozesses (gleicher Zustand, gleicher <i>program counter</i>,
+gleiche allozierte Ressourcen)
+</li>
+<li>Rückgabewert an Child: <code>0</code>
+</li>
+<li>Rückgabewert an Parent: PID des Childs
+</li>
+</ul>
+</li>
+
+<li><code>int execl(char *path, char *arg0, char *arg1, ..., 0)</code>: führt ein
+Programm in einem eigenen Prozess aus
+
+<ul class="org-ul">
+<li><code>*path</code>: Pfad der ausführbaren Datei
+</li>
+<li><code>*arg0</code>: Name des Prozesses
+</li>
+<li><code>*arg1, ...</code>: Argumente für die ausführbare Datei
+</li>
+<li><code>0</code>: Markierung des Endes der Argumente
+</li>
+<li>Rückgabewert: -1: bei Fehler, sonst keine Rückgabe
+</li>
+</ul>
+</li>
+
+<li><code>execve(char* filename, char *argv[], char *envp[])</code>: führt eine
+Programm im aktuellen Prozess aus
+
+<ul class="org-ul">
+<li><code>*filename</code>: Pfad der ausführbaren Datei
+</li>
+<li><code>argv[]</code>: Kommandozeilenparameter, mit denn das Programm
+aufgerufen wird
+</li>
+<li><code>envp[]</code>: Liste von Umgebungsvariablen für die Ausführung
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-5" class="outline-4">
+<h4 id="sec-1-3-5"><span class="section-number-4">1.3.5</span> Terminierung von Prozessen</h4>
+<div class="outline-text-4" id="text-1-3-5">
+<p>
+Prozesse können <i>voluntary</i> oder <i>involuntary</i> beendet werden. Von einem
+voluntary exit spricht man, wenn der Prozess sich selbst beendet (mit
+einem <i>normal exit</i> oder einem <i>error exit</i>). Von involuntary spricht
+man, wenn der Prozess beendet (<i>killed</i>) wird. Voluntary exits werden
+durch Aufrufn von <code>void exit(int status)</code> herbeigeführt. <code>status</code> gibt
+dabei den <i>exit status</i> des Prozesses an, der vom Parent des Prozesses
+ausgelesen werden kann. Zusätzlich kann mit <code>atexit()</code> eine Funktion
+registriert werden, die bei Terminierung des Prozesses aufgerufen werden
+soll.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-6" class="outline-4">
+<h4 id="sec-1-3-6"><span class="section-number-4">1.3.6</span> Reaping</h4>
+<div class="outline-text-4" id="text-1-3-6">
+<p>
+Als <i>reaping</i> bezeichnet man: 1. das Einsammeln des Rückgabewerts eines
+Child-Prozesse durch seinen Elternprozess oder den <code>init</code>-Prozess und 2.
+das Entfernen des Prozesses (Freigabe der Ressourcen des Prozesses,
+Entfernen aus der Process Table, etc.) durch den Kernel
+</p>
+
+<p>
+Mit <code>int wait(int *child_status)</code> oder <code>waitpid(pid, &amp;status, options)</code>
+kann ein Porzess gereaped werden.
+</p>
+
+<p>
+Mit <code>int wait(int *child_status)</code> kann ein Parent Prozess <i>einen</i> seiner
+Child Prozesse reapen. Der Aufruf:
+</p>
+
+<ul class="org-ul">
+<li>blockiert den Parent bis <i>ein</i> Child terminiert wurde und reaped dann
+dieses Child
+</li>
+<li>speichert Pointer auf den exit status des Childs in <code>child_status</code>,
+wenn der exit status nicht <code>NULL</code> war
+</li>
+<li>Rückgabewert ist die PID des Childs
+</li>
+</ul>
+
+<p>
+Mit <code>waitpid(pid, &amp;status, options)</code> kann ein ein bestimmter Prozess
+gereped werden. Der Aufruf:
+</p>
+
+<ul class="org-ul">
+<li>blockiert den Prozess bis der Prozess terminiert wurde und reaped
+diesen dann.
+</li>
+<li>speichert Pointer auf den exit status des Prozesses in <code>status</code>, wenn
+der exit status nicht <code>NULL</code> war
+</li>
+<li>Rückgabewert ist die PID des Prozesses
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-7" class="outline-4">
+<h4 id="sec-1-3-7"><span class="section-number-4">1.3.7</span> Zombie</h4>
+<div class="outline-text-4" id="text-1-3-7">
+<p>
+Ein <i>Zombie</i> ist ein Prozess, der beendet ist (also sich nicht mehr in
+Ausführung befindet), aber noch Ressourcen beansprucht (z.B. Einträge in
+<i>memory tables</i> noch vorhanden, Eintrag in <i>process table</i> noch
+vorhanden). Das Entstehen eines Zombies kann durch Reaping vermieden
+werden.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-8" class="outline-4">
+<h4 id="sec-1-3-8"><span class="section-number-4">1.3.8</span> Orphan</h4>
+<div class="outline-text-4" id="text-1-3-8">
+<p>
+Ein Prozess, dessen Parent terminiert wurde. Solche Prozesse werden vom
+<code>init</code> Prozess adoptiert.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Nebenläufigkeit</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Prozesse heißen nebenläufig (engl. <i>concurrent</i>), wenn ihre control
+flows sich überlappen, d.h. wenn Context Switches zwischen den Prozessen
+stattfinden, bevor jeder einzelne terminiert. Prozesse, deren
+Kontrollflüsse sich nicht überlappen heißen <i>sequentiell</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> I/O Bound vs. CPU Bound Prozesse</h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li>Prozesse, die viele I/O-Operationen ausführen heißen <b>I/O Bound</b>
+</li>
+<li>Prozesse, die wenig I/O-Operationen ausführen heißen <b>CPU Bound</b>
+</li>
+<li><b>CPU Burst</b>: Phase in der ein Prozess die CPU beansprucht
+</li>
+<li><b>I/O Burst*/*I/O Waits</b>: Phase in der ein Prozess auf die
+I/O-Operationen ausführt
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Process Trace</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Als Process Trace bezeichnet man die Abfolge von Instruktionen, die von
+einem Process bislang ausgeführt wurden
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Dispatcher</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Zuständig für Context Switches
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> Prozesszustände</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+Zustände von Prozessen und die möglichen Zustandsübergänge werden in den
+folgenden Prozesszustandsmodellen beschrieben.
+</p>
+</div>
+
+<div id="outline-container-sec-1-8-1" class="outline-4">
+<h4 id="sec-1-8-1"><span class="section-number-4">1.8.1</span> Two-State Process Model</h4>
+<div class="outline-text-4" id="text-1-8-1">
+<ul class="org-ul">
+<li><b>Running</b>: CPU ist dem Prozess zugeteilt
+</li>
+<li><b>Not Running</b>: CPU ist dem Prozess nicht zugeteilt
+</li>
+</ul>
+
+<p>
+<i>two_state_process_model.png</i>
+</p>
+<p>
+<i>two_state_process_model_queue.png</i>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-8-2" class="outline-4">
+<h4 id="sec-1-8-2"><span class="section-number-4">1.8.2</span> Three-State Process Model</h4>
+<div class="outline-text-4" id="text-1-8-2">
+<ul class="org-ul">
+<li><b>Ready</b>: ausführbereit, aber temporär gestoppt, um einen anderen
+Prozess auszuführen
+</li>
+<li><b>Running</b>: CPU ist dem Prozess zugeteilt
+</li>
+<li><b>Blocked</b>: blockiert (nicht ausführbereit, da z.B. auf eine Ressource
+oder ein Event gewartet werden muss)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8-3" class="outline-4">
+<h4 id="sec-1-8-3"><span class="section-number-4">1.8.3</span> Five-State Process Model</h4>
+<div class="outline-text-4" id="text-1-8-3">
+<ul class="org-ul">
+<li><b>New</b>: Prozess wurde neu erzeugt und ist noch nicht ausführbereit
+</li>
+<li><b>Ready</b>: ausführbereit
+</li>
+<li><b>Running</b>: CPU ist dem Prozess zugeteilt
+</li>
+<li><b>Blocked</b>: blockiert (nicht ausführbereit, da z.B. auf eine Ressource
+oder ein Event gewartet werden muss)
+</li>
+<li><b>Exit</b>: Process wurde terminiert
+</li>
+</ul>
+
+<p>
+<i>five_state_process_model.png</i>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-8-4" class="outline-4">
+<h4 id="sec-1-8-4"><span class="section-number-4">1.8.4</span> Six-State Process Model</h4>
+<div class="outline-text-4" id="text-1-8-4">
+<ul class="org-ul">
+<li><b>New</b>: Prozess wurde neu erzeugt und ist noch nicht ausführbereit
+</li>
+<li><b>Ready</b>: ausführbereit
+</li>
+<li><b>Running</b>: CPU ist dem Prozess zugeteilt
+</li>
+<li><b>Blocked</b>: blockiert (nicht ausführbereit, da z.B. auf eine Ressource
+oder ein Event gewartet werden muss)
+</li>
+<li><b>Suspend</b>: Prozess ist in den Sekundärspeicher ausgelagert
+</li>
+<li><b>Exit</b>: Process wurde terminiert
+</li>
+</ul>
+
+<p>
+<i>six_state_process_model.png</i>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-8-5" class="outline-4">
+<h4 id="sec-1-8-5"><span class="section-number-4">1.8.5</span> Seven-State Process Model</h4>
+<div class="outline-text-4" id="text-1-8-5">
+<ul class="org-ul">
+<li><b>New</b>: Prozess wurde neu erzeugt und ist noch nicht ausführbereit
+</li>
+<li><b>Ready</b>: ausführbereit
+</li>
+<li><b>Ready/Suspend</b>: ausführbereiter und den Sekundärspeicher ausgelagert
+</li>
+<li><b>Running</b>: CPU ist dem Prozess zugeteilt
+</li>
+<li><b>Blocked</b>: blockiert (nicht ausführbereit, da z.B. auf eine Ressource
+oder ein Event gewartet werden muss)
+</li>
+<li><b>Blocked/Suspend</b>: blockiert (nicht ausführbereit) und in den
+Sekundärspeicher ausgelagert
+</li>
+<li><b>Exit</b>: Process wurde terminiert
+</li>
+</ul>
+
+<p>
+<i>seven_state_process_model.png</i>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> Verwaltung von Prozessen und deren Ressourcen</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+Das Betriebssystem verwaltet alle Prozesse und Systemressourcen
+(Speicher, Devices, Dateien), die von Prozessen verwendet werden. Dazu
+verwendet es folgende Strukturen:
+</p>
+
+<ul class="org-ul">
+<li><b>Memory tables</b>:
+
+<ul class="org-ul">
+<li>Allozierung von Speicherblöcken im Hauptspeicher für Prozesse
+</li>
+<li>Allozierung von Speicherblöcken im Sekundärspeicher für Prozesse
+</li>
+<li>Informationen zum Schutz (Protection) von Speicherbereichen im
+Hautpspeicher und im Virtual Memory aller Prozesse
+</li>
+<li>alle Informationen zur Verwaltung von Virtual Memory
+</li>
+</ul>
+</li>
+
+<li><b>I/O tables</b>:
+
+<ul class="org-ul">
+<li>Zustände von I/O-Geräten (verfügbar oder vergeben)
+</li>
+<li>Status von I/O-Operationen
+</li>
+<li>Adresse des Ziels oder der Quelle der I/O-Operation im
+Hauptspeicher
+</li>
+</ul>
+</li>
+
+<li><b>File Tables</b>:
+
+<ul class="org-ul">
+<li>Adresse von Dateien im Sekundärspeicher
+</li>
+<li>Attribute von Dateien (z.B. UID, GID)
+</li>
+<li>aktueller Zustand von Dateien
+</li>
+</ul>
+</li>
+
+<li><b>Process Tables</b>
+</li>
+</ul>
+
+<p>
+Prozessen und (deren) Ressourcen verwendet
+</p>
+
+<p>
+<i>process_control_structures.png</i>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-10" class="outline-3">
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> Privilegierungsstufen von Prozessen</h3>
+<div class="outline-text-3" id="text-1-10">
+<p>
+Prozesse können in verschiedenen Privilegierungsstufen (engl.
+\<sub>execution</sub> modes-) ausgeführt werden:
+</p>
+
+<ul class="org-ul">
+<li><i>kernel mode</i>: Prozess darf
+
+<ul class="org-ul">
+<li>alle Instruktionen des Prozessors ausführen
+</li>
+<li>alle Registerinhalte verändern
+</li>
+<li>alle Speicherinhalte verändern
+</li>
+</ul>
+</li>
+
+<li><i>user Mode</i>: Prozess darf weniger als im kernel mode
+</li>
+</ul>
+</div>
+</div>
+</div>

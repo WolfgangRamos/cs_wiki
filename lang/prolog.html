@@ -1,0 +1,691 @@
+---
+layout: page
+title: Prolog
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Prolog</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Prolog ist eine dynamisch getypte Sprache. Prolog (dt. Programmieren in
+Logik). Stadardisiert (ISO-)
+</p>
+
+<p>
+Ein Prolog Programm ist eine Menge von <i>Fakten</i> und <i>Regeln</i> (auch
+<i>Klauseln</i> genannt) für Prädikate, wobei Prädikate Aussagen über Objekte
+sind. Eine Aussage besteht aus einer Beschreibung der Eigenschaft (z.B.
+"ist Primzahl") und beteiligten <i>Objekten</i> (z.B. "3"). Aussage werden in
+der <i>Standardpräfixschreibweise</i> angegeben, z.B.
+<code>name(objekt1, ..., objektn)</code> (Leerzeichen vor der öffnenden Klammer
+sind nicht zulässig).
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Kommentare</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<code>%</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Atome</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Atome sind unzerlegbare Prolog-Objekte. Atome beginnen mit einem
+Kleinbuchstaben (danach sind weitere Kleinbuchstaben, Großbuchstaben,
+Ziffern und einige Sonderzeichen zulässig).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Vergleich von Atomen</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>Gleichheit: <code>⟨atom⟩ =</code> ⟨atom⟩=
+</li>
+<li>Ungleichheit: <code>⟨atom⟩ \</code> ⟨atom⟩=
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Frei Variablen</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+<i>Frei Variablen</i> (auch <i>Logikvariablen</i>) sind Variablen, deren Werte
+nach dem Schlussfolgerungsprinzip auf Basis der definierten Fakten
+bestimmt werden. Freie Variablen beginnen mit einem Großbuchstaben und
+können in Termen verwendet werden.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Fakten</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Fakten sind Aussagen, die beweisbar sind, also zu "wahr" ausgewertet
+werden. Sie werden mit <code>.</code> und einem Whitespace (Leereichen oder
+Zeilenvorschub) abgeschlossen. Fakten haben die Form:
+<code>⟨Prädikat⟩(⟨Term⟩).</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Regeln</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Regeln sich Schlussfolgerungen der Form: "Wenn Aussage A wahr ist, dann
+ist auch Aussage B wahr". Regeln werden ebenfalls mit <code>.</code> und einem
+Whitespace (Leereichen oder Zeilenvorschub) abgeschlossen. <code>:-</code>
+enspricht \(\Longleftarrow\). =,= entspricht \(\wedge\). <code>;</code> entspricht
+\(\vee\). Regeln haben die Form: <code>⟨Term⟩ :- ⟨Term⟩, ..., ⟨Term⟩.</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Anonyme Variable</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+<code>_</code> ist die <i>anonyme (freie) Variablen</i>. Sie wird nicht gebunden und
+bezeichnet bei mehrfacher Verwendung nicht denselben Wert. ALso steht
+<code>[_,_,_]</code> für alle 3-elementigen Listen, deren Elemente identisch sind
+oder nicht.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Anfragen</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+In Anfragen können freie Variablen verwendet werden. Das Ergebnis von
+Anfragen sind diejenigen <i>Objekte</i>, für die die Anfrage wahr wird. Die
+Ausgabe einer Anfrage wird durch <code>false</code> oder <code>no</code> abgeschlossen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Strukturen</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Strukturen bestehen aus einem <i>Funktor</i> und <i>Komponenten</i> (beliebe
+Prolog-Objekte).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Objekte</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Objekte werden auch <i>Terme</i> genannt. Terme bestehen aus:
+</p>
+
+<ul class="org-ul">
+<li>Konstanten (Zahlen oder Atome)
+</li>
+<li>Strukturen
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Listen</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>leere List: <code>[]</code>
+</li>
+<li><code>.</code> ist der Funktor zur Konstruktion einer Liste aus einem Element
+und einer Restliste, z.B. <code>.(x,xs)</code>
+</li>
+</ul>
+
+<p>
+Kurzschreibweisen für Listen: * <code>[1,2,3]</code> * <code>[x|xs]</code>
+</p>
+
+<ul class="org-ul">
+<li>Texte (Strings) sind Listen von ASCII-Werten (es gibt keinen Datentyp
+für Character)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-5-0-1" class="outline-4">
+<h4 id="sec-5-0-1"><span class="section-number-4">5.0.1</span> Vordefinierte Prädikate für Listen</h4>
+<div class="outline-text-4" id="text-5-0-1">
+<p>
+Aus <code>library(lists)</code>: * <code>member()</code>:
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Operatoren</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Strukturen können in Operatorschreibweise geschrieben werden:
+</p>
+
+<ul class="org-ul">
+<li>für Strukturen mit einer Komponente können Präfixoperatoren oder
+Postfixoperatoren definiert werden
+</li>
+<li>für STrukturen mit 2 Komponenten können Infixoperatoren definiert
+werden
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Direktive</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Begint mit <code>:-</code>. wird beim einlesen der Prolog Programms beachtetet.
+Werden z.B. verwenden um die Bindungsstärke von Operatoren festzulegen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Beweisen von Aussagen in Prolog</h3>
+<div class="outline-text-3" id="text-5-3">
+<ul class="org-ul">
+<li><i>Fakten</i>: sind per Definition beweisbar. Fakten werden z.T. auch als
+"leere Regeln" betrachtet.
+</li>
+<li><i>(einfaches) Resolutionsprinzip</i>: Reduziere den Beweis einer <i>Regel</i>
+   <code>L :- L1, ..., Ln</code> auf die Beweise von <code>L1</code>, &#x2026;, <code>Ln</code>
+</li>
+<li><i>Anfragen</i>: Anfragen sind beweisbar, wenn sie auf die "leere Anfrage"
+bzw. ein Faktum reduziert werden können
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Termersetzung</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+Eine <i>Substitution</i> ist eine Abbildung (strukturerhaltende Abbildung,
+Homomorphismus) \(\sigma: Terme \rigtharrow Terme\) mit:
+</p>
+
+<ul class="org-ul">
+<li>für aller Terme \(f(t_1, ..., t_n)\) gilt
+\(\sigma(f(t_1, ..., t_n)) = f(\sigma(t_1), ..., \sigma(t_n))\)
+</li>
+<li>endlciher Variablenmenge: $\{X | X &ne; &sigma;(X), X ist Variable$}
+</li>
+</ul>
+
+<p>
+\(\sigma\) ist eindeutig darstellbar:
+\(\{X \rightarrow \sigma(X) | \text{X ist Variable mit } X \neq \sigma(X)\}\)
+</p>
+
+<p>
+Ein Term ist eine Variable oder eine Struktur, die wieder Terme enthält.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> Unifikator</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+Eine Substitution \(\sigma\) heißt <i>Unifikator für Terme</i> \(t_1\) und \(t_2\),
+falls \(\sigma(t_1) = \sigma(t_2)\). Man sagt dann auch \(t_1\) und \(t_2\)
+sind <i>unifizierbar</i>.
+</p>
+
+<p>
+\(\sigma\) heißt allgemeinster Unifikator (engl. most general unifier;
+MGU) für \(t_1, t_2\), falls * \(\sigma\) Unifikator für \(t_1\) und \(t_2\) ist
+und * für alle anderen Unifikatoren \(\sigma'\) existiert \(\rho\) mit
+\(\sigma' = \rho \circ \sigma\), d.h.
+\(\forall t: \sigma'(t) = \rho(\sigma(t))\).
+</p>
+</div>
+
+<div id="outline-container-sec-5-5-1" class="outline-4">
+<h4 id="sec-5-5-1"><span class="section-number-4">5.5.1</span> Eigenschaften</h4>
+<div class="outline-text-4" id="text-5-5-1">
+<ul class="org-ul">
+<li>es existieren immer MGUs für unifizierbare Terme (Robinson, 1965).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-5-2" class="outline-4">
+<h4 id="sec-5-5-2"><span class="section-number-4">5.5.2</span> Verfahren zum Finden von MGUs</h4>
+<div class="outline-text-4" id="text-5-5-2">
+<p>
+<b>Def:</b> Seien \(t,t'\) Terme. Dann heißt \(ds(t,t')\) <i>Unstimmigkeitsmenge</i>;
+engl. <i>diasagreement set</i>):
+</p>
+
+<ul class="org-ul">
+<li>falls $ t=t'$ gilt \(ds(t,t') = \emptyset\)
+</li>
+<li>Falls \(t\) oder \(t'\) Variablen und \(t \neq t'\) dann gilt
+\(ds(t,t') = \{t,t'\}\).
+</li>
+<li>Falls \(t = f(t_1, ..., t_n)\) und \(t' = g(s_1, ..., s_m)\) für
+\(n,m \geq 0\).
+
+<ul class="org-ul">
+<li>Falls \(f \neq g\) oder \(n \neq m\) gilt \(ds(t,t') = \{t,t'\}\).
+</li>
+<li>Falls \(f = g\) und \(n = m\) und \(t_i = s_i\) für alle \(i <k\) und
+\(t_k \neq s_k\), dann gilt \(ds(t,t') = ds(t_k,s_k)\).
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<b>Unifikationsalgorithmus:</b>
+</p>
+
+<p>
+Eingabe: Terme \(t_0, t_1\) Ausgabe: eine MGU \(\sigma\) für \(t_0,t_1\),
+falls diese unifizierbar sind, sonst "fail".
+</p>
+
+<ol class="org-ol">
+<li>\(k = 0\), \(\sigma_0 = \{\}\)
+</li>
+<li>Falls \(\sigma_k (t_0) = \sigma_k (t_1)\), dann ist \(\sigma_k\) MGU
+</li>
+<li>Falls \(ds(\sigma_n(t_0), \sigma_n (t_1) ) = \{x,t\}\) und \(x\)
+Variable, die nicht in \(t\) vorkommt, dann gilt
+\(\sigma_{n+1} = \{x \rightarrow t\} \circ \sigma_n\). Setze \(k := k+1\)
+und gehe nach 2., sonst gib "fail" aus.
+</li>
+</ol>
+
+<p>
+Laufzeit: im Worst Case exponentiell (in der Praxis ist der Aufwand i.R.
+aber linear)
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Allgemeines Resolutionsprinzip</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Das <i>allgemeine Resolutionsprinzip</i> vereinigt Resolution und
+Unifikation. Es wird auch als <i>SLD-Resolution</i> (engl. <i>lineare
+resolution with selection function for definite clauses</i>).
+</p>
+
+<p>
+Selektionsregel \(L:- L_1, ...,L_n\) wählt \(A_i\) aus.
+</p>
+
+<p>
+Selektionsregel/Selektionsfunktion leget fest, welches Literal zuerst
+bewiesen wird.
+</p>
+
+<p>
+<b>Auswahlstrategien:</b> * <i>FIRST</i>: immer das linke Literal * <i>LAST</i>: immer
+das letzte Literal
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Anfragen</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+\(?- G = A1, ... An-1\)
+</p>
+
+<p>
+Gleichheit in Prolog: Faktum <code>=(X,X)</code>, <code>=</code> ist auch Infix-Operator;
+</p>
+
+<p>
+<code>?- t1 = t2</code> gilt, wenn <code>t1</code> und <code>t2</code> unifizierbar sind.
+</p>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Auswertungsstrategie von Prolog</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Zum Finden einer Lösung verwendet Prolog folgende
+<i>Backtracking</i>-Strategie: 1. Die Klauseln werden der Reihenfolge nach
+verwendet, in der sie im Programm definiert sind (Konsequenz: Klauseln,
+die zu einem schnellen Terminieren des Programms führen sollten zuerst
+definiert werden). 2. In einem ersten Resolutionsschritt wird die erste
+passende Klausel für das linke Literal (Prolog verwendet
+Selektionsfunktion <i>FIRST</i>) gewählt. Wird keine Lösung gefunden, dann
+wird der letzt Schritt rückgängig gemacht und die nächste passende
+Klausel angewendet. 3. Bei der Anwendung einer Klausel werden durch die
+Unifikation die Variablen durch Terme ersetzt. Variablen werden dann an
+Terme gebunden.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Negation</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Prolog definiert Negation als <i>Negation als Fehlschlag</i> (engl. <i>neation
+as finite failure</i>; NAF). <code>\+ p</code> ist beweisbar, falls der Beweis von <code>p</code>
+fehlschlägt.
+</p>
+
+<p>
+Beim Beweisen von <code>\+ p</code> darf <code>p</code> keine Variablen enthalten. NAFs
+sollten daher in Ausdrücken "am weitesten rechts stehen", damit die
+Variablen vorher gebunden werden. Diese Einschränkung kann durch
+Verwendung der Erweiterungen <code>when</code> (<i>Verzögerung</i>) aufgehoben werden.
+Dann wird die REsoldution von NAF-Ausdrücken verzögert, bis alle
+möglichen Variablen gebunden sind.
+</p>
+
+<p>
+<code>when(⟨Bedingung⟩, ⟨Ausdruck⟩)</code>
+</p>
+
+<p>
+z.B. <code>when(ground(P=S), \+ P=S), ⟨Ausdruck⟩</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Erweiterungen der Prolog Syntax</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> when</h3>
+</div>
+
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="section-number-3">9.2</span> cut-Operator</h3>
+<div class="outline-text-3" id="text-9-2">
+<p>
+Mit dem cut-Operator <code>!</code> kann der Suchraum eingeschränkt werden.
+</p>
+
+<p>
+<code>p :- q ,!,r.</code>:
+</p>
+
+<ol class="org-ol">
+<li>Falls <code>q</code> nicht beweisbar, wähle nächste Regel für <code>p</code>.
+</li>
+<li>Fals <code>q</code> beweisbar, dann ist <code>p</code> nur beweisbar, falls <code>r</code> beweisbar
+ist (keine andere Regel für <code>p</code>, keine Alternative für <code>q</code> darf
+gewählt werden.)
+</li>
+</ol>
+
+<p>
+Modellierung von if-then-else mit cut-Operator:
+</p>
+
+<pre class="example">
+% if q then r else s
+p :- q, ! , r.
+p :- s.
+
+% Kurzschreibweise:
+p :- q -&gt; r; s.
+</pre>
+
+<p>
+Modellierung von NAF:
+</p>
+
+<pre class="example">
+p :- q, !, fail.
+p.
+</pre>
+
+<p>
+<code>fail</code>: vordefiniertes Prädikator für die nicht-beweisbare Aussage
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Arithmetik</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+arithmetische Ausdrücke: * Zahlen, * Variablen, * Operatoren * Prädikat
+<code>is(X,Y)</code> oder infix <code>X is Y</code>: ist beweisbar, wenn: * <code>Y</code> ein
+Variablenfreier arithmetischer Ausdruck ist (diese Beschränkung kann
+durch Verwendung von <i>Constraint Logic Programming</i> aufgehoben werden) *
+es gilt X=Z, falls Z der Wert ist, zu dem Y ausgewertet wird
+</p>
+
+<p>
+arithmetische Vergleiche: * <code>X =:</code> Y=: <code>X</code> und <code>Y</code> werden ausgewertet
+und diese Ergebnisse werden dann verglichen. * <code>X =\</code> Y=: ungleich *
+<code>&gt;=</code> * <code>=&lt;</code>: kleiner gleich
+</p>
+</div>
+
+<div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Constraint Logic Programming</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+Ermöglicht Lösung von linearen Gleichungen (nicht lineare Gleichungen
+ist z.B. \(xy = 5\); lineare Gleichungen sind) und Inequations (\(\leq\),
+\(<\), \(>\) ,\(\geq\), nicht aber \(\neq\)), wie z.B. \(5 = x + 2\), durch
+Bereitstellung von Implementierungen des Gaußschen Eliminationsverfahren
+und des Simplexalgorithmus (zum Lösen von Ungleichungen)
+</p>
+
+<p>
+mit Modul: <code>use_module(library(clpr))</code> ist folgende
+Contraint-Schreibweise möglich: <code>{5 = X + 2}</code>. Prolog kann dann Lösungen
+für X mit Hilfe des Gaußschen Eliminationsverfahren finden.
+</p>
+
+<p>
+Struktur einer Constraint Struktur für arithmetische Ausdrücke:
+</p>
+
+<ul class="org-ul">
+<li>Struktur: Terme, reelle Zahlen und arithmetische Funktionen
+</li>
+<li>Constraints: Gleichungen und Ungleichungen mit arithmetischen
+Ausdrücken
+</li>
+<li>implementierte Algorithmen: Gaußsches Eliminationsverfahren,
+Simplexvefahren und Termunifikation
+</li>
+</ul>
+
+<p>
+CLP ist Erweiterung der Logikprogrammierung. Verwendung von <i>Constraint
+Strukturen</i> anstelle von Termen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> Constraint-Programming über endlichen Bereichen</h3>
+<div class="outline-text-3" id="text-10-2">
+<p>
+CLP(FD) (<i>finite domain</i>); hinzuladen mit
+<code>:- use_module(library(clpfd))</code>
+</p>
+
+<ul class="org-ul">
+<li>Struktur (wofür stehen Variablen): endliche Mengen dargestellt duch
+endlische Mengen ganzer Zahlen
+</li>
+<li>Constraints (was darf man hinschreiben): Gleichungen und
+Ungleichungen, Elementbeziehungen (z.B. \(\in\)), logische Verküpfungen
+zwischen Constraints
+</li>
+<li>Lösungsalgorithmen:
+
+<ul class="org-ul">
+<li>Konsistenzprüfung (geprüft wird, ob eine Auswahl von Constraints
+lösbar ist; keine direkt Lösungsberechnung)
+</li>
+<li>konkrete Lösungen (Aufzählung möglicher Werte)
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<b>Schema der CLP(FD) Programmierung:</b>
+</p>
+
+<ol class="org-ol">
+<li>definiere Wertebereiche für Variablen,
+</li>
+<li>beschreibe constraints (führt zu Reduktion des Wertebereichs)
+</li>
+<li>Austesten konkreter Lösungen durch Belegung der Variablen mit Werten
+aus den eingeschränkten Wertebereichen
+</li>
+</ol>
+
+<p>
+<b>elementare Constraints:</b>
+</p>
+
+<ul class="org-ul">
+<li><code>X #</code> Y=: Gleichheit
+</li>
+<li><code>X #\</code> Y=: Ungleichheit
+</li>
+<li><code>X #&gt; Y</code>:
+</li>
+<li><code>X #&gt;</code> Y=:
+</li>
+<li><code>X #&lt; Y</code>:
+</li>
+<li><code>X #&lt;</code> Y=:
+</li>
+</ul>
+
+<p>
+Festlegungn von WErtebereichen:
+</p>
+
+<ul class="org-ul">
+<li>domain
+</li>
+<li>ins
+</li>
+</ul>
+
+<p>
+Einsetzen konkreter Werte
+</p>
+
+<ul class="org-ul">
+<li>labeling
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-10-3" class="outline-3">
+<h3 id="sec-10-3"><span class="section-number-3">10.3</span> kombinatorische Constraints</h3>
+<div class="outline-text-3" id="text-10-3">
+<ul class="org-ul">
+<li><code>all_different(⟨Liste⟩)</code>: alle Variablen der Liste müssen
+unterschiedlich belegt sein.
+</li>
+<li><code>sum(⟨Variablenliste⟩, ⟨Relation⟩, ⟨Value⟩)</code>: Constraint für die
+Summe arithmetischer Variablen, z.B. <code>sum([A,B,C], #</code>, 10)=
+</li>
+<li><code>serialized</code>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Metaprogrammierung</h2>
+<div class="outline-text-2" id="text-11">
+</div><div id="outline-container-sec-11-1" class="outline-3">
+<h3 id="sec-11-1"><span class="section-number-3">11.1</span> Metaprädikat</h3>
+<div class="outline-text-3" id="text-11-1">
+<ul class="org-ul">
+<li><code>findall(⟨Variable/Format⟩, ⟨Term⟩, ⟨Ergebnisliste⟩)</code>: liefert <i>eine</i>
+   Liste der möglichen Belegungen von <code>⟨Variable/Format⟩</code> in <code>⟨Term⟩</code>
+</li>
+<li><code>bagof(⟨Variable⟩, ⟨Term⟩, ⟨Ergebnisliste⟩)</code>: liefert für jede
+Belegung der freien Variablen in <code>⟨Term⟩</code> eine Liste der möglichen
+Belegungen von <code>⟨Variable⟩</code> in <code>⟨Term⟩</code>. Das Ergebnis ist eine
+Multimenge.
+</li>
+<li><code>setof(⟨Variable⟩, ⟨Term⟩, ⟨Ergebnisliste⟩)</code>: wie <code>bagof</code> aber mit
+Deduplizierung. Das Ergebnis ist eine Menge.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-11-2" class="outline-3">
+<h3 id="sec-11-2"><span class="section-number-3">11.2</span> Dynamsche Regeln</h3>
+<div class="outline-text-3" id="text-11-2">
+<p>
+<i>Dynamische Regeln</i> erlaube eine Veränderung der Wissensbasis
+(Gesamtheit der Fakten und Regeln) zur Interpretationszeit.
+</p>
+
+<p>
+Prädikate, die in einem Prolog-Programm definiert wurden, heißen
+<i>statisch Prädikate</i> (<code>static</code>). Um ein <code>static</code> Prädikat <code>p</code>
+veränderbar zu machen, muss es als danamisch deklariert werden, mit der
+Direktive <code>:- dynamic ⟨p⟩/⟨Stelligkeit von p⟩.</code>
+</p>
+
+<ul class="org-ul">
+<li><code>assert(⟨Regel⟩)</code>: füge der Wissensbasis eine neue Regel hinzu, z.B.
+<code>assert(p(c)).</code>
+</li>
+<li><code>asserta(⟨Regel⟩)</code>: füge eine dynamische Regel am Anfang der
+Wissensbasis hinzu
+</li>
+<li><code>assertb(⟨Regel⟩)</code>: füge eine dynamische Regel am Ende der
+Wissensbasis hinzu
+</li>
+<li><code>retract(⟨Regel⟩)</code>: entferne eine dynamische Regel
+</li>
+
+<li><code>clause(⟨P⟩,⟨Q⟩)</code> ist beweisbar, wenn die Regel <code>P :- Q</code> in der
+Wissenbasis ist (benutzerdefinierte Prädikat); für Fakten:
+<code>clause(⟨P⟩, true)</code>
+</li>
+</ul>
+</div>
+</div>
+</div>

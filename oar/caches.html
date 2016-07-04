@@ -1,0 +1,159 @@
+---
+layout: page
+title: Caches
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Caches</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Als <i>cache</i> bezeichnet man einen kleinen schnellen Speicher, der als
+Zwischenspeicher für Speicherinhalte eines größeren langsameren
+Speichers verwendet wird. Caches verwenden i.d.R. SRAM
+</p>
+
+<ul class="org-ul">
+<li><i>cache hit</i>:
+</li>
+<li><i>cache miss</i>:
+
+<ul class="org-ul">
+<li><i>conflict miss</i>: (nicht in direct mapped caches) Lines Beschränken
+den Ort, wo Inhalte von Adressen gespeichert werden können. Wenn
+im Cache noch Platz wäre, aber cache misses auftreten, da mehrere
+Inhalte im selben cache block gespeichert werden spricht man von
+<i>conflict misses</i>
+</li>
+<li><i>capacity miss</i>:
+</li>
+</ul>
+</li>
+
+<li><i>cold cache</i>: ein leere cache
+</li>
+
+<li><i>lines</i>: die Assoziativität des caches
+</li>
+<li><i>set</i>: die Speicherblöcke (über alle lines hinweg), die parallel
+durchsucht werden
+</li>
+<li><i>block</i>: ein Speicherblock von \(b\) bytes
+</li>
+</ul>
+
+<p>
+<i>direct mapped cache</i>: 1-fach assoziativer Speicher (1 line)
+</p>
+
+<ul class="org-ul">
+<li><i>miss rate</i>: relative Häufigkeit von cache misses: Sei \(z\) die Anzahl
+der Zugriffe und \(m\) die Anzahl der cache misses, dann ist die miss
+rate \(\frac{m}{z}\)).
+</li>
+<li><i>hit rate</i>: relative Häufigkeit von cache hits: Sei \(z\) die Anzahl
+der Zugriffe und \(h\) die Anzahl der cache hits, dann ist die miss
+rate \(\frac{h}{z}\)).
+</li>
+<li><i>hit time</i>: Zeit, die benötigt wird, um zu prüfen, ob sich ein Ziel
+im cache befindet und um dieses an den Prozessor zu senden
+</li>
+<li><i>miss penalty</i>: Zeit, die ein miss zusätzlich zur hit time benötigt.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Ablauf eines cache miss</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>nachladen des Inhalts in einen passenden cache block (es wird immer
+ein gesamter cacke block nachgeladen) und wiederholen der
+(fehlererzeugenden) Instruktion
+</li>
+<li>Verwendung von (Re-)Placmentplocies (z.B. <i>least recently used</i>,
+etc.)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Addressierung von Caches</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Zur Addressierung von Speicherbereichen in einem Cache werden Adresse in
+<i>Cache-Block</i>, <i>Cache-Set-Index</i> und <i>Cache-Tag</i> unterteilt:
+</p>
+
+<pre class="example">
++-----------+-----------------+--------------------+
+| Cache-Tag | Cache-Set-Index | Cache-Block-Offset |
++-----------+-----------------+--------------------+
+</pre>
+
+<p>
+Seien:
+</p>
+
+<ul class="org-ul">
+<li>\(a\) die Länge einer Adresse in bits
+</li>
+<li>\(B\) die Blockgröße in Bytes,
+</li>
+<li>\(S\) die Anzahl von Sets pro Line
+</li>
+<li>\(L\) die Assoziatitvität des chaches (die Anzahl der lines)
+</li>
+</ul>
+
+<p>
+Dann gilt:
+</p>
+
+<ul class="org-ul">
+<li>Bits für Cache-Block-Offset: \(b := \log_{2} B\)
+</li>
+<li>Bits für Cache-Set-Index \(s := \log_{2} S\)
+</li>
+<li>Bits für Cache-Tag: \(t := a - s - b\)
+</li>
+<li>Kapazität des Caches: \(C := LSB\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Strategien zum Schreiben in caches</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<b>write back &amp; write allocate:</b> (populärste Strategie):
+</p>
+
+<ul class="org-ul">
+<li>bei einem cache hit: schreibe in den cache und markiere den block
+(setzten des <i>dirty bits</i>), damit dieser in den Speicher
+zurückgeschrieben wird, wenn der Block aus den cache entfernt wird
+(<i>write back</i>)
+</li>
+<li>bei einem cache miss: laden den Block zunächst in den cache (<i>write
+allocate</i>), dann schreibe in den gecachten block und markiere diesen
+für write back
+</li>
+</ul>
+
+<p>
+<b>write through &amp; no write allocate:</b>
+</p>
+
+<ul class="org-ul">
+<li>bei einem cache hit: schreibe direkt in den zugrundeliegenden
+Speicher (write through)
+</li>
+<li>bei einem cache miss: lade den block nicht in den cache sondern
+schreibe direkt in den zugrundeliegenden Speicher (no write allocate)
+</li>
+</ul>
+</div>
+</div>
+</div>

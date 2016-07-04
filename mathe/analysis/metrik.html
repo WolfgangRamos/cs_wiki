@@ -1,0 +1,284 @@
+---
+layout: page
+title: Metrik
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Metrik/metrischer Raum</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sei \(X\) eine Menge, dann heißt eine Abbildung
+\(d: X \times X \rightarrow \mathbb{R}_{0}^{+}\) <i>Metrik</i> auf \(X\), wenn
+gilt:
+</p>
+
+<ol class="org-ol">
+<li><i>Bestimmtheit</i>: \(d(x,y) = 0 \Longleftrightarrow x = y\).
+</li>
+<li><i>Symmetrie</i>: \(\forall x,y \in X: d(x,y) = d(y,x)\)
+</li>
+<li><i>Dreiecksungleichung</i>:
+\(\forall x,y,z \in X: d(x,z) \leq d(x,y) + d(y,z)\)
+</li>
+</ol>
+
+<p>
+Das Paar \((X,d)\) heißt dann <i>metrischer Raum</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Induzierte Metrik</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+In einem <i>normierten Raum</i> (d.h. einem Vektorraum auf dem eine
+Norm \(\|\cdot\|\) definiert ist wird durch \(d(x,y) := \|(x-y)\|\) eine
+Metrik \(d\) induziert. \(d\) heißt dann die von \(\|\cdot\|\) induzierte
+Metrik.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Spezielle Metriken</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Metriken auf dem Vektorraum der reellen Zahlen</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Seien \(x,y \in \mathbb{R}^n\), dann heißt
+</p>
+
+<ul class="org-ul">
+<li>\(d_{2}(x,y) := \|x-y\|_2 = \sqrt{\sum\_{i=1}^{n} (x_i - y_i)^2}\)
+   <i>Euklidische Metrik</i>. Sie wird durch die <i>euklidische Norm</i>
+   induziert.
+</li>
+<li>\(d_{\infty}(x,y) := \|x-y\|\_{\infty} = \max\{|x_i - y_i| | 1 \leq i \leq n\}\)
+   <i>Maximum-Metrik</i>. Sie wird durch die <i>Maximumsnorm</i>
+   induziert.
+</li>
+<li>\(d_{1}(x,y) := \|x-y\|_1 = \sum\_{i=1}^{n} |x_i - y_i|\) heißt
+\(l_i\)-/Metrik/. Sie wird durch die <i>\(l_1\)-Norm</i> induziert.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Metriken auf dem Vektorraum der komplexen Zahlen</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>Betragsfunktion
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Metriken auf dem Vektorraum der Binärzahlen</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Sei \(\mathcal{B} = \\{0,1\\}\) die Menge der binären Ziffern und sei
+\(b \in \mathcal{B}^n\) die Binärdarstellung einer Zahl \(b \in \mathbb{N}\)
+mit \(n \in \mathbb{N}\) Ziffern.
+</p>
+
+<ul class="org-ul">
+<li><i>Hamming-Abstand</i>: Die Abbildung
+\(d: \mathcal{B}^n \times \mathcal{B}^n \rightarrow \mathbb{R}\) mit
+\(d(a,b) := \sum_{i=1}{n} |a_i - b_i|\) heißt <i>Hamming-Abstand</i>. Der
+Hamming-Abstand ist die Anzahl der verschiedenen Ziffern in \(a\) und
+\(b\).
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Epsilon-Kugel</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Sei \((X, d)\) metrischer Raum und \(x \in X\) und
+\(\epsilon \in \mathbb{R}\_{>0}\). Dann heißt die Menge
+\(B_{\epsilon}(x) := \\{y \in X \mid d(x,y) < \epsilon \\}\) (offene)
+\(\epsilon\)-/Kugel/ um \(x\) mit Abstand \(\epsilon\) bzgl. der Metrik \(d\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Umgebung</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+In einem metrischen Raum \((X, d)\) heißt \(U \subseteq X\) <i>Umgebung</i> von
+\(x \in X\), wenn ein \(\epsilon \in \mathbb{R}\_{>0}\) existiert mit
+\(B_{\epsilon}(x) \subseteq U\), d.h. wenn es eine (offene)
+\(\epsilon\)-Kugel um \(x\) gibt, die in \(U\) liegt.
+</p>
+
+<p>
+Wenn also \(B_{\epsilon}\) (offene) \(\epsilon\)-Kugel um \(x\) ist, dann ist
+also insbesondere \(B_{\epsilon}\) und jede Obermenge davon Umgebung von
+\(x\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Innerer Punkt</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Sei \((X,d)\) metrischer Raum und \(M \subseteq X\) eine Teilmenge. Dann
+heißt ein \(x \in M\) <i>innerer Punkt</i> von \(M\), wenn eine Umgebung \(U\) von
+\(x\) existiert, sodass \(U \subseteq M\).
+</p>
+
+<p>
+Ein \(x \in M\) ist also genau dann innerer Punkt, wenn
+\(\exists \epsilon > 0: \forall y \in X: d(x,y) < \epsilon \Rightarrow y \in M\)
+gilt.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Wenn \(U\) Umgebung von \(x\) ist, dann ist \(x\) innerer Punkt von \(U\) und
+jeder Obermenge von \(U\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Offene Mengen</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Eine Teilmenge \(M\) eines metrischen Raumes \((X,d)\) heißt <i>offen</i>, wenn
+sie nur innere Punkte besitzt. Offene Mengen sind Verallgemeinerungen
+offener Intervalle.
+</p>
+
+<p>
+Eine Menge \(M \subseteq X\) ist also genau dann offen, wenn
+\(\forall x \in M: \exists \epsilon > 0: \forall y \in X: d(x,y) < \epsilon \Rightarrow y \in M\)
+gilt.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Beliebige (auch unendlich viele) Vereinigungen offener Mengen sind
+wieder offen.
+</li>
+<li>Endliche Durchschnitte offener Mengen sind wieder offen.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Abgeschlossene Mengen</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Eine Teilmenge \(M\) eines metrischen Raumes \((X,d)\) heißt genau dann
+<i>abgeschlossen</i>, wenn ihr Komplement \(X \setminus M\) offen ist.
+Abgeschlossene Mengen sind Verallgemeinerungen abgeschlossener
+Intervalle.
+</p>
+
+<p>
+Eine Menge \(M \subseteq X\) ist also genau dann abgeschlossen, wenn
+\(\forall x \in X \setminus M: \exists \epsilon > 0: \forall y \in X: d(x,y) < \epsilon \Rightarrow y \in X \setminus M\)
+gilt.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Endliche Vereinigungen abgeschlossener Mengen sind wieder
+abgeschlossen.
+</li>
+<li>Beliebige (auch unendliche) Durchschnitte abgeschlossener Mengen sind
+wieder abgeschlossen.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Randpunkt</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+Sei \((X,d)\) metrischer Raum. Ein Punkt \(x \in X\) heißt <i>Randpunkt</i> einer
+Menge \(M \subseteq X\), wenn für jede Umgebung \(U\) von \(x\) gilt:
+</p>
+
+<ol class="org-ol">
+<li>\(U \cap M \neq \emptyset\) und
+</li>
+<li>\(U \cap (X \setminus M) \neq \emptyset\)
+</li>
+</ol>
+
+<p>
+Die Menge der Randpunkte wird mit \(\partial M\) bezeichnet.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Abschluss</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+Sei \((X,d)\) metrischer Raum. Der <i>Abschluss</i> \(\bar{M}\) einer
+\(M \subseteq X\) ist die kleinste abgeschlossene Menge, die \(M\) enthält.
+ALso gilt \(\bar{M} \subseteq A\) für alle \(A \subseteq X\), die
+abgeschlossen sind und \(M\) enthalten (\(M \subseteq A\)).
+</p>
+
+<p>
+\(M\) heißt dann <i>dicht</i> in \(\bar{M}\).
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Sei \((X,d)\) metrischer Raum und \(M \subseteq X\) mit Rand
+\(\partial M\), dann gilt \(\bar{M} = M \cup \partial M\).
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Äquivalenz</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+In einer Menge \(X\) heißen zwei Metriken \(d_1, d_2\) äquivalent, wenn sie
+die gleichen offenene Mengen generieren.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Zwei Metriken \(d_1, d_2\) auf \(X\) sind äquivalent, wenn es
+\(c_1, c_2 \in \mathbb{R}\_{>0}\) gibt, sodass
+\(\forall x,y \in X: c_{1}d_{1}(x,y) \leq d_{2}(x,y) \leq c_{2}d_{1}(x,y)\)
+gilt.
+</li>
+</ul>
+</div>
+</div>
+</div>

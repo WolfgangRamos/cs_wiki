@@ -1,0 +1,159 @@
+<p>
+Kommunikation und Sychronisation über einen Tupelraum (eine
+Multimenge).
+</p>
+
+<p>
+Konzeptionell sind Werte im Tupelraum <i>Atome</i>, d.h. sie sind nicht
+veränderbar.
+</p>
+
+<p>
+Operationen:
+</p>
+
+<ul class="org-ul">
+<li><code>out(&lt;Tupel&gt;)</code>: legt Tupel in den Tupelraum
+</li>
+<li><code>in(&lt;Tupel&gt;)</code>: holt Tupel aus dem Tupelraum
+<ul class="org-ul">
+<li>Pattern matching in Tupel möglich (wenn mehrere Tupel auf das
+Pattern passen, dann wird irgendeines davon genommen; welches ist
+nicht spezifiziert)
+</li>
+<li>blockiert, wenn kein passendes Tupel gefunden wird
+</li>
+</ul>
+</li>
+<li><code>rd(&lt;Tupel&gt;)</code>: liest ein Tupel aus dem Tupelraum, ohne es daraus zu
+entfernen
+</li>
+</ul>
+
+<p>
+Modifikationen: Modellierung des Tupelraums als Key-Value-Store
+(effizienter, da effizient nach einem Key gesucht werden kann)
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-erlang">-module(linda).
+-export([start/0, in/2, out/2, rd/2]).
+
+start() -&gt;
+	S = spawn(fun() -&gt; space([], []) end),
+	register(linda, S),
+	S.
+
+space(Ts, Reqs) -&gt;
+	receive
+		{out, T} -&gt;
+			{Reqs1, KeepT} = findMatchingReq(T,Reqs),
+			case KeepT of
+				true -&gt;
+					space([T|Ts], Reqs1);
+				false -&gt;
+					space(Ts, Reqs1)
+			end;
+		{InRd, F, P} -&gt;
+			case findMatchingTuple(F, Ts, InRd) of
+				nothing -&gt;
+					space(Ts,[{F,P,InRd}|Reqs]);
+				{just, {Match, Ts1}} -&gt;
+					P!{tupleMatch, Match},
+					space(Ts1, Reqs)
+			end
+	end.
+
+findMatchingTuple(_,[],_) -&gt;
+	nothing;
+findMatchingTuple(F, [T|Ts], InRd) -&gt;
+	case catch F(T) of
+		{'EXIT', _} -&gt;
+			case findMatchingTuple(F, Ts, InRd) of
+				nothing -&gt;
+					nothing;
+				{just, {M1, Ts1}} -&gt;
+					{just, {M1, [T|Ts1]}}
+			end;
+		Match -&gt;
+			case InRd of
+				in -&gt;
+					{just, {Match, Ts}};
+				rd -&gt;
+					{just, {Match, [T|Ts]}}
+			end
+	end.
+
+out(Space, T) -&gt;
+	Space!{out,T}.
+
+in_rd(Space, F) when is_function(F) -&gt;
+	Space!{in,F,self()},
+	receive
+		{tupleMatch, Match} -&gt;
+			Match
+	end;
+in_rd(Space, V) -&gt;
+	in_rd(Space,fun(X) -&gt; V=X end).
+
+in(Space, X) -&gt;
+	in_rd(Space, X).
+
+rd(Space,F) -&gt;
+	Space!{rd,F,self()},
+	receive
+		{tupleMatch, Match} -&gt;
+			Match
+	end.
+
+findMatchingReq(_,[]) -&gt;    
+	{[], true};
+findMatchingReq(T,[Req|Reqs]) -&gt;
+	{F,P,InRd} = Req,
+	case catch F(T) of
+		{'EXIT', _} -&gt;
+			{Reqs1, KeepT} = findMatchingReq(T,Reqs),
+			{[Req|Reqs1], KeepT};
+		Match -&gt; 
+			P!{tupleMatch, Match},
+			case InRd of
+				in -&gt;
+					{Reqs,false};
+				rd -&gt;
+					findMatchingReq(T,Reqs)
+			end
+	end.
+</pre>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-erlang">-module(philLinda).
+-export([start/0]).
+
+start() -&gt;
+	TS = linda:start(),
+	linda:out(TS,{stick,1}),
+	linda:out(TS,{stick,2}),
+	linda:out(TS,{stick,3}),
+	linda:out(TS,{stick,4}),
+	linda:out(TS,{stick,5}),
+	spawn(fun() -&gt; phil(1, TS, {stick, 1}, {stick,2}) end),
+	spawn(fun() -&gt; phil(2, TS, {stick, 2}, {stick,3}) end),
+	spawn(fun() -&gt; phil(3, TS, {stick, 3}, {stick,4}) end),
+	spawn(fun() -&gt; phil(4, TS, {stick, 4}, {stick,5}) end),
+	base:getLn(),
+	phil(5, TS, {stick, 5}, {stick,1}).
+
+phil(N,TS,SL,SR) -&gt;
+	base:printLn(base:show(N)++" thinks"),
+	linda:in(TS,SL),
+	linda:in(TS,SR),
+	base:printLn(base:show(N)++" eats"),
+	linda:out(SL),
+	linda:out(SR),
+	phil(N,TS,SL,SR).
+</pre>
+</div>

@@ -1,0 +1,95 @@
+---
+layout: page
+title: Newton_verfahren
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Newton Verfahren</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>Ziel:</b> Approximation von Nullstellen einer Funktion \(f\).
+</p>
+
+<p>
+Sei \(f:\mathbb{R} \rightarrow \mathbb{R}\)
+</p>
+
+<p>
+Startwert \(x_0 \in \mathbb{R}\)
+</p>
+
+<p>
+Iteriere \(n = 0,1,2,\dots\)
+</p>
+
+<p>
+\(x_{n+1} = x_n - \frac{x_n}{f'(x_n)}\), sofern \(|f'(x_n)| > \epsilon\)
+</p>
+
+<p>
+Abbruchkriterium: Beende Iteration, falls
+</p>
+
+<ul class="org-ul">
+<li>absoluter Fehler klein ist \(|f(x_n)| < \epsilon_{absolut}\) und
+</li>
+<li>realtiver Fehler klein ist \(|f(x_n)| \leq \epsilon_{rel} |f(x_0)|\)
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Sei \(f:\mathbb{R} \rightarrow \mathbb{R}\) zweimal stetig
+differenzierbar mit Nullstelle \(x* \in I = [a,b]\). Ferner gelte
+\(\forall x \in I:f'(x) \neq 0\). Dann ist das Newton Verfahren zur
+Bestimmung von \(x*\) quadratisch konvergent.
+</li>
+<li>Das Newton-Verfahren ist i.a. nicht global konvergent
+</li>
+<li>Falls Startwert hinreichend nah an der Nullstelle liegt und
+\(\min_{x\in I}|f'(x)| > 0\) und \(f''\) exisitert und stetig ist. Dann
+konvergiert das Newton-Verfahren <i>schnell</i>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Konvergenzordnung</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Ein (rekusives) Verfahren zur Berechnung von \(x^* \in \mathbb{R}\) heißt
+konvergenz von der Ordnung \(\alpha \geq 1\), wenn ein \(c > 0\) existiert,
+sodass \(|x_n - x^*| \leq c |x_{n-1} - x^*|^{\alpha}\).
+</p>
+
+<p>
+\(\alpha\) heißt <i>Konvergenzordnung</i>. Bei \(\alpha = 1\) spricht man von
+linearer Konvergenz(-ordnung)$. Bei \(\alpha = 2\) spricht man von
+quadratischer Konvergenz(-ordnung)$.
+</p>
+
+<p>
+\(c\) heißt <i>Konvergenzrate</i>
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Ein rekursiv defininiertes Verfahren mit linearer Konvergenzordnung
+(\(\alpha = 1\)) und Konvergenzrate \(c<1\) ist immer konvergent (für
+beliebige Startwerte).
+</li>
+<li>Ein rekursiv definiertes Verfahren mit Konvergenzordnung
+(\(\alpha > 1\)) konvergiert, falls der Startwert \(x_0\) hinreichend nah
+an \(x*\) liegt, konkret, wenn
+\(|x_0 - x^*| < c^{\frac{\alpha}{1-\alpha}}\) gilt.
+</li>
+</ul>
+</div>
+</div>
+</div>

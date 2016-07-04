@@ -1,0 +1,123 @@
+---
+layout: page
+title: Critical_section
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Critical Section</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Ein Codeabschnitt in dem auf gemeinsamen Ressourcen (Speicher, Geräte,
+etc.) zugegriffen wird und der zur Vermeidung von Race Conditions nur
+von einem Prozess/Thread zeitgleich abgearbeitet werden darf (Mutual
+Exclusion muss sichergestellt werden).
+</p>
+
+<p>
+Kritieren für die Implementierung von Critical Sections:
+</p>
+
+<ul class="org-ul">
+<li><i>Saftey Properties</i> (nothing bad happens):
+
+<ul class="org-ul">
+<li><b>Mutual Exclusion</b>: Zu jedem Zeitpunkt darf nur ein Prozess/Thread
+sich in seiner Critical Section befinden
+</li>
+<li><b>Absence of Deadlock/Livelock</b>: Wenn zwei oder mehr Prozesse
+versuchen ihre Critical Section auszuführen ist sichergestellt,
+dass einer es auch schafft
+</li>
+<li><b>Absence Unecessary Delay</b>: ein Prozess, der seine Critical
+Section ausführen möchte wird nicht von anderen Prozessen
+blockiert, die nicht gerade ihre Critical Section ausführen
+</li>
+</ul>
+</li>
+
+<li><i>Liveness Properties</i> (something good eventually happens):
+
+<ul class="org-ul">
+<li><b>Fairness/Eventual Entry</b>: Jeder Prozess, der seine Critical
+Section ausführen möchte kann dies nach endlicher Zeit tun und
+verhungert (Starvation) nicht.
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Implementierungen</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Alternating Token</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<ul class="org-ul">
+<li>ein Token wird zwischen zwei oder mehr Prozessen hin- und hergereicht
+</li>
+<li>Token wird beim Verlassen der Critical Section von einem Prozess an
+den nächsten weitergegeben
+</li>
+<li>Vorteile:
+
+<ul class="org-ul">
+<li>Mutual Exclusion ist sichergestellt
+</li>
+<li>Eventual Entry ist sichergestellt
+</li>
+</ul>
+</li>
+
+<li>Nachteile:
+
+<ul class="org-ul">
+<li>Unnecessary Delay möglich (wenn ein Prozess einer darauf warten
+muss, dass der andere den Token weitergibt, obwohl die Critical
+Section schon wieder frei ist)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Dekker's Algorithmus</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<ul class="org-ul">
+<li>Nachteil: Busy Wait
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Peterson's Algorithmus</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<pre class="example">
+//Peterson's Algorithmus
+bool interested[] = {false, false};
+int turn = 0;
+
+void enterCriticalSection() {
+  interested[self] = true;
+  turn = rival;   // gewollte race condition
+  while(interested[rival] &amp; turn == rival) {
+    // busy wait //
+  }
+}
+
+void exitCriticalSection() {
+  interested[self] = false;
+}
+</pre>
+
+<ul class="org-ul">
+<li>Nachteil: Busy Wait
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>

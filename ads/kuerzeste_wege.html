@@ -1,0 +1,207 @@
+---
+layout: page
+title: Kuerzeste_wege
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Kürzeste Wege zwischen Wurzel und Knoten</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>Voraussetzung:</b> Sei \(V = \{1,...,n\}\) eine Knotenmenge und sei
+\(D = (V,E)\) ein <i><b>gerichteter</b> und gewichteter
+Graph</i> mit Kantengewichtungsfunktion \(w: E \rightarrow \mathbb{R}\).
+Wichtig ist, dass \(G\) keine Kreise negativer Länge enthält, d.h. es gilt
+\(ZL \geq 0\) (denn nur dann existieren kürzeste Wege ohne
+Knotenwiederholungen).
+</p>
+
+<p>
+Wir verwenden für die Algorithmen eine \(n \times n\) <i>Entfernungsmatrix</i>
+\(A\), die wir wie folgt mit Werten füllen:
+</p>
+
+\begin{equation}
+a_{ij} = 
+\begin{cases}
+w((i,j)) & \text{falls } (i,j) \in E \\
+0        & \text{falls } i = j \\
+\infty   & \text{sonst}
+\end{cases}
+\end{equation}
+
+<p>
+<b>ges:</b> für alle \(v \in V\) die kürzeste Weglänge von der Wurzel \(1\) zu
+\(v\) (im Englischen spricht man auch von einem <i>single source shortest
+path problem</i>)
+</p>
+
+<p>
+<b>Idee:</b> Verwende die <i>Bellman-Gleichungen</i> zur Berechnung des kürzesten
+Wegs \(u_j\) von der Wurzel \(1\) zu einem Knoten \(j\). Diese lauten:
+</p>
+
+<p>
+$$u_1 := 0$$ $$u_j := \min \{u_k, a_{kj}\}$$
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Algorithmus von Bellman-Ford</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<b>Idee:</b> berechne iterativ die kürzeste Weglänge von \(1\) zu einem Knoten
+\(j\) mit höchstens \(m\) Kanten und speichere die Länge dieses Weges in
+einem zweidimensionalen Feld \(u\) an Position \(u[j,m]\).
+</p>
+
+<pre class="example">
+BELLMAN-FORD(D=(V,E), V, A) {  // A = Entfernungsmatrix; V = {1,...,n}
+  integer n = |V|;
+
+  // initialisierung
+  for j = 1 to n do
+    u[j][1] = A[1][j];
+  od
+
+  for k = 2 to n-1 do
+    for j = 1 to n do
+      u[j,k] = min{ u[j,k-1], min{ (u[h,k-1] + A[h][j]) | h ≠ j } };
+    od
+  od
+}
+</pre>
+
+<p>
+<b>Laufzeit:</b> \(\mathcal{O}(|V|^3)\)
+</p>
+
+<p>
+Um die konkreten Wege zu berechnen müssen zusätzlich die Kanten
+abgespeichert werden. Diese erzeugen dann einen gerichteten Baum mit
+Wurzel \(1\), in dem Jeder Pfad von \(1\) zu einem Knoten \(v\) einem
+kürzesten Weg in \(G\) entspricht.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Algorithmus von Dijkstra</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<b>Zusätzliche Voraussetzung:</b> Es gibt keine negativen Kantengewichte,
+d.h. \(\forall e \in E: w(e) \geq 0\)
+</p>
+
+<p>
+<b>Idee:</b> Verwende zwei Mengen \(P\), \(Q\), wobei \(V = P \cup Q\) gilt. Die
+Knoten in \(P\) sind bereits permanent beschriftet mit \(u_j\) (Länge des
+kürzesten Wegs von \(1\) nach \(j\)), die Knoten in \(Q\) sind erst vorläufig
+beschriftet mit einem \(v_j \geq u_j\). Solange \(P \neq V\):
+</p>
+
+<ol class="org-ol">
+<li>wähle einen Knoten \(k \in Q\) mit minimaler vorläufiger Beschriftung
+\(v[k]\).
+</li>
+<li>verschiebe \(k\) von \(Q\) nach \(P\)
+</li>
+<li>übernimm die vorläufige Beschriftung als permanente Beschriftung,
+d.h. setzte \(u[k] = v[k]\)
+</li>
+<li>aktualisiere die vorläufigen Beschriftungen aller Knoten in \(Q\)
+</li>
+</ol>
+
+<pre class="example">
+DIJKSTRA (D=(V,E), V, A) {  // A = Entfernungsmatrix; V = {1,...,n}
+  integer n = |V|;
+  Set P = {1};  // Startknoten: 1
+  Set Q = {2,...,n};
+  u[1] = 0;
+
+  for j = 2 to n do
+    v[j] = A[1][j];
+  od
+
+  while P ≠ V do
+    wähle k ∈ Q mit minimalem v[k] = min {v[j] | j ∈ Q}; // Kante mit geringstem Gewicht
+    P = P ∪ {k};
+    Q = Q \ {k};
+    u[k] = v[k];
+
+    foreach j ∈ Q do
+      v[j] = min {v[j], u[k] + A[k][j]};
+    od
+  od
+
+  return Distanzen u[i] , ..., u[n];
+}
+</pre>
+
+<p>
+<b>Laufzeit:</b> \(\mathcal{O}(|V|^2)\)
+</p>
+
+<ul class="org-ul">
+<li>Heap, Priority Queue: Laufzeit: \(\mathcal{O}( (|V| + |E|) \log |V|)\)
+</li>
+<li>Fibonacci-Heap: Laufzeit: \(\mathcal{O}( (|V| \log |V| + |E|))\)
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Kürzeste Wege zwischen beliebigen Knoten</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<b>Voraussetzung:</b> Sei \(V = \{1,...,n\}\) eine Knotenmenge und sei
+\(D = (V,E)\) ein gerichteter und gewichteter Graph mit
+Kantengewichtungsfunktion \(w: E \rightarrow \mathbb{R}\). Wichtig ist,
+dass es in \(G\) keine Kreise negativer Länge, d.h. es gilt \(ZL \geq 0\)
+(denn nur dann existieren kürzeste Wege ohne Knotenwiederholungen).
+</p>
+
+<p>
+<b>ges:</b> für alle \(i,j \in V\) die kürzeste Weglänge von \(i\) nach zu \(j\)
+(im Englischen spricht man auch von einem <i>all pair shortest path
+problem</i>)
+</p>
+
+<p>
+<b>Idee:</b> berechne \(u[i,j,m]\) = kürzeste Weglänge von \(i\) nach \(j\) mit
+Zwischenknoten aus \(\{1,...,m-1\}\).
+</p>
+
+<p>
+<b>Algorithmus von Floyd-Warshall:</b>
+</p>
+
+<ul class="org-ul">
+<li>verwende Matrix \(U^{(1)} = A\)
+</li>
+<li>berechne \(U^{(m+1)} = (u[i,j,m+1])_{ij}\) aus \(U^{(m)}\) durch
+Verwendung der \(m\)-ten Zeile und \(m\)-ten Spalte. Vergleiche dazu
+\(u[i,j,m]\) mit dem Wert \(u[i,m,m] + u[u,j,m]\) und speicherer
+kleinsten Wert in \((U^{(m+1)})\_{ij}\) ab.
+</li>
+</ul>
+
+<p>
+Sei \(Z = \{ i \in V | i \text{liegt auf Kreis neg. Länge} \}\). Dann
+gilt
+</p>
+
+<ol class="org-ol">
+<li>$Z = \{ i &isin; V | u[i,i,n+1] &lt; 0 \text{im Floyd-War Alg.}\}
+</li>
+<li>\(Z\) kann in \(\mathcal{O}(n^3)\) Zeit berechnet werden.
+</li>
+</ol>
+
+<p>
+<b>Laufzeit:</b> \(\mathcal{O}(|V|^3)\)
+</p>
+</div>
+</div>

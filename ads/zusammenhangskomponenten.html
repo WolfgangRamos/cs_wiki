@@ -1,0 +1,76 @@
+---
+layout: page
+title: Zusammenhangskomponenten
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Zusammenhangskomponentenen</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sei \(G=(V,E)\) ein ungerichter Graph, dann heißt
+\(C(v) := \\{ u \in V | u = v \wedge \exists \text{Pfad von u nach v in G} \\}\)
+für \(v \in V\) <i>Zusammenhangskomponente</i> von \(v\) bzgl. \(G\). Die Mengen
+\(C(v)\) bilden eine disjunkte Zerlegung von \(V\) in die
+Zusammenhangskomponenten von \(G\).
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Bestimmung der Zusammenhangskomponenenten</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Die Zusammenhangkomponenten lassen sich direkt mit
+<i>Tiefen-</i>
+(DFS) oder
+<i>Breitensuche</i>
+(BFS) ermitteln.
+</p>
+
+<p>
+<b>Idee:</b>
+</p>
+
+<ol class="org-ol">
+<li>wähle einen Startknoten \(r \in V\).
+</li>
+<li>starte DFS oder BFS in \(r\).
+</li>
+<li>wenn <code>KnotenBesucht[u] = true</code> für alle \(u \in V\) dann stoppe.
+Ansonsten wähle Knoten \(v \in V\) mit <code>KnotenBesucht[v] = false</code> und
+gehe zu Schritt 2.
+</li>
+</ol>
+
+<p>
+<b>Algorithmus:</b>
+</p>
+
+<pre class="example">
+ZUSAMMENHANG(G) {
+  wähle einen Startknoten r aus V;
+
+  foreach v in V do
+    DFSNummer[v] = 0;
+  od
+
+  DFS(r,0); // oder BFS(r,0);
+
+  while (DFSNummer[v] = 0 für ein v aus V) do
+    wähle einen Knoten v mit DFSNummer[v] = 0;
+    DFS(v,0);
+  od
+}
+</pre>
+
+<p>
+<b>Laufzeit:</b> Seien \(V_i\) die Zusammenhangskomponenten von \(G =(V,E)\) und
+\((V_i, E_i)\) die Teilgraphen der Zusammenhangskomponenten. Die
+Tiefensuche für eine Komponente \(i\) erfordert
+\(\mathcal{O}(|V_i| + |E_i|) = \matcal{O}(|E_i|)\). Somit beträgt der
+Gesamtaufwand für alle DFS-Aufrufe
+\(\sum_{i=1}^{k} \mathcal{O}(|E_i|) = \mathcal{O}(|E|) + k = \mathcal{O}(|E| + |V|)\),
+wenn \(k\) die Anzahl der Zusammenhangskomponenten ist.
+</p>
+</div>
+</div>
+</div>

@@ -1,0 +1,57 @@
+---
+layout: page
+title: Locality_of_reference
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Locality of Reference</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Das Phänomen, dass Zugriffe auf Daten und Code eines Programmes sich
+nach bestimmten Mustern häufen heißt <i>Lokalität</i> (engl. <i>locality of
+reference</i>). Man unterscheidet:
+</p>
+
+<ul class="org-ul">
+<li><i>temporal locality</i>: auf Speicherstellen, auf die kürzlich
+zugegriffen wurde, wird wahrscheinlich bald wieder zugegriffen.
+</li>
+<li><i>spatial locality</i>: auf Speicherstellen, die nah an den letzten
+Zugriffspunkten liegen wird wahrscheinlich bald (wieder) zugegriffen
+</li>
+</ul>
+
+<p>
+Lokalität basiert auf:
+</p>
+
+<ul class="org-ul">
+<li>sequentieller Ausführung von Programmen (spatial locality)
+</li>
+<li>Code von Schleifen (temporal locality)
+</li>
+<li>wiederholte Verwendung von Variablen in Schleifen (temporal locality)
+</li>
+<li>Rekursion (temporal locality)
+</li>
+<li>Schleifen über Arrays (spatial locality)
+</li>
+</ul>
+
+<p>
+Im Memory Management wird Lokalität als Basis für Optimierungstrategien
+verwendet. Z.B.:
+</p>
+
+<ul class="org-ul">
+<li>Bevorzugte Auslagerung von lange nicht mehr benötigten
+Speicherinhalten in untere Ebenen der
+<a href="../oar/speicherhierarchie">Speicherhierarchie</a>
+</li>
+<li>Laden von größeren Zusammenhängenden Speicherblöcken in höhere Ebenen
+der Speicherhierarchie (Ausnutzung von Spatial Locality, s.a.
+<i>pre-paging</i>
+</li>
+</ul>
+</div>
+</div>

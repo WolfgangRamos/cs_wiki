@@ -1,0 +1,518 @@
+---
+layout: page
+title: Gerichtete_graphen
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Gerichteter Graph</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Ein gerichteter Graph (auch <i>Digraph</i> für engl. <i>directed graph</i>)
+\(D=(V,F)\) besteht aus einer endlichen (nichtleeren) <i>Knotenmenge</i> \(V\)
+und einer <i>Kantenmenge</i>
+\(E \subseteq V \times V = \\{(u,v) | u,v \in V\\}\). Zu einer Kante
+\(e = (u,v) \in E\), heißt \(u\) <i>Anfangsknoten</i> und \(v\) <i>Endknoten</i>.
+</p>
+
+<p>
+<b>(gerichteter) Pfad:</b> Ein <i>(gerichteter) Pfad</i> (oder auch <i>gerichteter
+Weg</i>) ist eine Folge von Knoten \(P = (v_{1}, ..., v_{k+1})\), so dass
+\(\forall i \in \\{1,...,k\\}: (v_{i}, v_{i+1}) \in E\) gilt.
+</p>
+
+<p>
+<b>einfacher (gerichteter) Pfad:</b> Ein (gerichteter) Pfad
+\(P = (v_{1}, ..., v_{k+1})\) heißt <i>einfach</i> (engl. <i>one-way</i>), wenn er,
+bis auf evtl. \(v_1 = v_{k+1}\), keinen Knoten doppelt enthält. D.h. es
+gilt
+\(\forall i \in \\{1,..., k+1\\}, j \in \\{2,...k\\} : i \neq j \Rightarrow v_i \neq v_j\).
+</p>
+
+<p>
+<b>(gerichteter) Kreis:</b> Ein einfacher gerichteter Pfad
+\(P = (v_1,...,v_{k+1})\) heißt <i>Kreis</i>, wenn \(v_1 = v_{k+1}\) gilt und \(P\)
+mindestens 4 Knoten enthält, also \(k \geq 3\) gilt .
+</p>
+
+<p>
+Ein gerichteter Graph \(D\) heißt <i>azyklisch</i> oder <i>kreisfrei</i>, wenn er
+keinen (gerichteten) Kreis enthält.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Innen- und Außengrad eines Knotens</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Der <i>Innengrad</i> \(d_{in}(v)\) eines Knotens \(v \in V\) ist die Anzahl der
+eingehenden Kanten. Der <i>Außengrad</i> \(d_{out}\) ist die Anzahl der
+ausgehenden Kanten.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Es gilt \(\sum_{v \in V} d_{in}(v) = \sum_{v \in V} d_{out}(v) = |E|\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> gerichteter Baum</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Ein gerichteter Graph \(D=(V,E)\) heißt <i>gerichteter Baum</i>, falls gilt:
+</p>
+
+<ol class="org-ol">
+<li>es existiert genau ein Knoten \(r \in V\) mit \(d_{in}(r) = 0\) (\(r\)
+   heißt dann auch <i>Wurzel</i> oder engl. <i>root</i>) und
+</li>
+<li>jeder Knoten außer \(r\) hat genau eine eingehende Kante, d.h.
+\(\forall v \in V \setminus \\{r\\}: d_{in} = 1\)
+</li>
+<li>für jeden Knoten \(v \in V\) gibt es einen eindeutigen gerichteten Pfad
+von der Wurzel \(r\) zu \(v\)
+</li>
+</ol>
+
+<p>
+Ein Knoten \(v \in V\) mit \(d_{out}(v)=0\) heißt <i>Blatt</i>.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>\(D\) ist zusammenhängend und kreisfrei
+</li>
+<li>\(|E| = |V|-1\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> gerichteter Binärbaum</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Ein gerichteter Baum \(D=(V,E)\) heißt <i>(gerichteter) Binärbaum</i> wenn
+gilt:
+</p>
+
+<ol class="org-ol">
+<li>jeder Knoten in \(V\) hat höchstens zwei ausgehende Kanten, d.h.
+\(\forall v \in V: d_{out}(v) \leq 2\)
+</li>
+</ol>
+
+<p>
+Ein gerichteter Binärbaum \(D=(V,E)\) heißt <i>vollständig</i> (oder
+<i>vollständiger Binärbaum</i>), wenn:
+</p>
+
+<ol class="org-ol">
+<li>abgesehen von der untersten Ebene mit Wert \(max\\{e(v)\\}\) sind alle
+Ebenen vollständig gefüllt.
+</li>
+<li>auf der untersten Ebene sind die Knoten von links nach rechts bis zu
+einem Punkt vollständig vorhanden
+</li>
+</ol>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Es gibt keinen gerichteten Kreis in einem Binärbaum.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Vater-Relation</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+\(Vater(v)\) ist der direkte Vorgänger von \(v\) (\(Vater(r)\) ist nicht
+definiert).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Höhe</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Die <i>Höhe</i> \(h(v)\) eines Knotens \(v \in V\) ist die maximale Anzahl von
+Kanten auf einem Pfad von \(v\) zu einem Blatt.
+</p>
+
+<p>
+Die Höhe \(h(D)\) eines gerichteten Baumes \(D\) ist die Höhe der Wurzel
+\(r\), d.h. es gilt \(h(D) = max\\{e(v) | v \in V\\}\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Ebene</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Jedem Knoten \(v \in V\) eines Binärbaums können wir induktiv eine
+<i>Ebene/Stufe</i> \(e(v) \in \mathbb{N}\) zuordnen.
+</p>
+
+<ol class="org-ol">
+<li>\(e(r) = 0\) für die Wurzel \(r\).
+</li>
+<li>\(e(v) = e(Vater(v)) + 1\) für \(v \neq r\)
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Heap</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Ein <i>Heap</i> (dt. Haldenbaum) ist ein vollständiger Binärbaum \(T=(V,E)\)
+auf dessen Knotenmenge eine Abbildung \(A: V \rightarrow \mathbb{R}\)
+definiert ist, die jedem Knoten einen Wert zuordnet. Sei außerdem \(r\)
+die Wurzel von \(T\). Ein Heap hat die <i>Heap-Eigenschaft</i>, wenn
+\(\forall v \in V \setminus \\{r\\}: A(Vater(v)) \geq A(v)\) (d.h.
+Vorgängern werden größere Werte zugeordnet als ihren Nachfolgern)
+</p>
+
+<p>
+<b>Darstellung:</b> Verwende einen vollständigen Binärbaum mit
+Durchnummerierung der Knoten.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>ein Heap mit \(|V|=n\) Knoten hat genau die Höhe
+\(\lfloor \log_{2}(n) \rfloor\)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Herstellung der Heap-Eigenschaft</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+<b>Gegeben:</b> Teilbäume mit Wurzeln \(left(i)\) und \(right(i)\), die die
+Heap-Eigenschaft erfüllen, aber Knoten \(i\) verletzt Heap-Eigenschaft.
+Also gilt \(A[i] < A[left(i)]\) oder \(A[i] < A[right(i)]\).
+</p>
+
+<p>
+<b>Gesucht:</b> Ein Teilbaum mit Wurzel \(i\), der der Heap-Eigenschaft
+erfüllt.
+</p>
+
+<p>
+<b>Idee:</b> Vertausche rekursiv Elemente mit den jeweils größeren der beiden
+Kinder.
+</p>
+
+<pre class="example">
+// A ist Feldrepräsentation des Heaps; i ein Feldindex; size ist die Größe des Heaps
+
+HEAPIFY(A, i, size) {
+  integer l = 2i + 1; // linkes Kind
+  integer r = 2i + 2; // rechtes Kind
+  integer largest = i;
+
+  if l &lt; size then
+    if A[i] &lt; A[l] then
+      largest = l;
+    fi
+  fi
+  if r &lt; size then
+    if A[largest] &lt; A[r] then
+      largest = r;
+    fi
+  fi
+  if largest ≠ i then
+    vertausche A[i] und A[largest];
+    HEAPIFY(A, largest, size);
+  fi
+}
+</pre>
+
+<p>
+<b>Laufzeit:</b> Sei \(T=(V,E)\) ein Baum, der als Feld \(A\) gespeichert ist und
+\(i\) ein Knoten von \(T\). Bezeichne mit \(n_{i}\) die Anzahl der Knoten im
+Teilbaum von \(T\) mit Wurzel \(i\). Dann gilt, dass die Laufzeit von
+<code>HEAPIFY</code> in \(min \\{ \mathcal{O}(h_{i}), \mathcal{O}(\log n_{i}) \\}\)
+liegt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Aufbau eines Heap</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+<b>Idee:</b>
+</p>
+
+<ul class="org-ul">
+<li>bauen den Heap bottom-up auf
+</li>
+<li>starte bei Knoten
+\(i = Vater(n-1) = \lfloor \frac{n-1-1}{2} \rfloor = \lfloor \frac{n}{2} \rfloor -1\)
+</li>
+<li>durchlaufe den Baum von unten nach oben und pro Ebene von rechts nach
+links (d.h. vermindere \(i\) um \(1\)) und rufe <code>HEAPIFY</code> auf.
+</li>
+</ul>
+
+<pre class="example">
+BUILDHEAP(A) {
+  integer n = length(A);
+  for i = (n/2) -1 downto 0 do
+    HEAPIFY(A, i, n);
+  od
+}
+</pre>
+
+<p>
+<b>Beobachtung:</b> Maximum steht dann an der Wurzel.
+</p>
+
+<p>
+<b>Laufzeit:</b> Das Erzeugen der Heap-Eigenschaft für einen Haldenbaum mit
+\(n\) Knoten ist mit <code>BuildHeap</code> in \(\mathcal{O}(n)\) möglich.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Einfügen eines Elements in einen Heap</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+<b>Idee:</b> Füge das neue Element \(x\) auf der untersten Ebene ein und dann
+vertausche \(x\) iterativ mit seinem Vater, bis \(A(Vater(x)) \geq x\) gilt.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Suchbaum</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Es sei \(S\) eine endliche Menge von <i>Schlüsseln</i> (oder auch
+<i>Markierungen</i>) und \(T=(V,E)\) ein gerichteter Binärbaum mit
+<i>Knotenmenge</i> \(V\) und <i>Kantenmenge</i> \(E\). Die Knoten von \(T\) sind mit
+Elementen aus \(S\) beschriftet (d.h. wir haben eine Abbildung
+\(Schlüssel: V \rightarrow S\)). Es sei \(w\) die Wurzel von \(T\) und \(L\)
+bzw. \(R\) sei der linke bzw. rechte Unterbaum von \(T\).
+</p>
+
+<p>
+\(T\) heißt <i>Suchbaum</i>, wenn:
+</p>
+
+<ol class="org-ol">
+<li>\(L\) und \(R\) sind leer oder selbst Suchbäume.
+</li>
+<li>Schlüssel in \(L\) sind kleiner oder gleich dem Schlüssel der Wurzel,
+d.h. \(\forall v \in L: Schlüssel(v) \leq Schlüssel(w)\) (doppelte
+Schlüssel sind demnach zulässig).
+</li>
+<li>Schlüssel in \(R\) sind echt größer als der Schlüssel der Wurzel, d.h.
+\(\forall v \in R: Schlüssel(v) > Schlüssel(w)\).
+</li>
+</ol>
+
+<p>
+TODO: Präzisieren mit Wissen aus Mathe A (insb. ist eine
+Ordnungsrelation auf der Menge der Markierungen erforderlich)
+</p>
+</div>
+
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Suche in einem Suchbaum</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+<b>geg:</b> Suche in \(T\) nach einem Element \(x\).
+</p>
+
+<p>
+<b>Idee:</b> Vergleiche \(x\) mit dem Schlüssel des \(w\) Wurzelelements des
+Suchbaums:
+</p>
+
+<ol class="org-ol">
+<li>Falls \(x = Schlüssel(w)\): \(x\) gefunden.
+</li>
+<li>Falls \(x < Schlüssel(w)\): suche rekursiv weiter nach \(x\) in \(L\)
+</li>
+<li>Falls \(x > Schlüssel(w)\): suche rekursiv weiter nach \(x\) in \(R\)
+</li>
+</ol>
+
+<p>
+Falls der betrachtete Knoten ein Blatt ist und nicht \(x\) enthält, oder
+der Unterbaum leer ist, so ist \(x\) nicht im Suchbaum enthalten.
+</p>
+
+<pre class="example">
+TODO: Algorithmus
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Mittlere Weglänge</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Die maximale Suchzeit in einem Suchbaum \(T\) ist duch \(h(T) + 1\)
+beschränkt. Sei \(T\) ein Suchbaum, der die Schlüsselmenge
+\(\\{x_{1}, ..., x_{n}\\}\) knotenorientiert speichert und sei \(b_{i}\) die
+Ebene des Knotens, der \(x_{i}\) enthält in \(T\). Dann ist die <i>mittlere
+Weglänge</i> von \(T\) definiert durch
+\(P := \frac{1}{n} \sum_{i=1}^{n} (b_{i} + 1)\).
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>\(h(T) \geq \lceil \log_{2} (n+1) \rceil - 1\), wobei \(n\) die Anzahl
+der Knoten ist.
+</li>
+<li>Die mittlere Weglänge ist logarithmisch beschränkt. Es gilt
+\(P \leq \lfloor \log (n+1) \rfloor -1\).
+</li>
+</ul>
+
+<p>
+<b>Laufzeit:</b>
+</p>
+
+<ul class="org-ul">
+<li>maximale LZ für einen Suchbaum im schlimmsten Fall (Worst Case ist
+der maximal entartete Baum): \(\in \Omega(n)\).
+</li>
+<li>maximale durchschnittliche Suchzeit für einen Suchbaum im schlimmsten
+Fall: \(\in \Omega(n)\)
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> AVL-Baum</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Ein Suchbaum \(T=(V,E)\) heißt <i>AVL-Baum</i> (benannte nach den Autoren
+Adelson, Veslky und Landis), falls für jeden Knoten \(v \in V\) sich die
+Höhen (definiert über \(\overline{Höhe}\)) des linken und rechten
+Teilbaums um höchtens \(1\) unterscheiden.
+</p>
+
+<p>
+<b>Ziel:</b> Konstruktion von Suchbäumen, die eine "nahezu" optimale
+Durchführung (d.h. in \(\log\) Zeit) der Operationen "Einfügen", Löschen
+und Suchen erlauben und insgesamt eine beschränkte (im wesentlichen
+\(c \log n\)) Höhe haben.
+</p>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> \(\overline{Höhe}\)</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+\(\overline{Höhe}(T)\) ist die maximale Anzahl von Knoten auf einem Pfad
+von der Wurzel zu einem Blatt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Balance</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+<i>Balance</i> von \(v\):
+\(\rho (v) = \overline{Höhe}(L_{v}) - \overline{Höhe}(R_{v}) \in \\{0,1,-1\\}\)
+</p>
+
+<p>
+"Differenz der Höhe der Kindbäume 0, 1 oder -1"
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Ist \(T=(V,E)\) ein AVL-Baum mit \(n\) <i>Blättern</i>, so gilt für die Höhe:
+\(Höhe(T) \leq 1.4405 \cdot \log (n+1) + 1\) und
+\(\overline{Höhe}(T) \leq Höhe(T) - 1\).
+</li>
+<li>Ist \(T\) ein AVL-Baum mit \(n\) <i>Knoten</i>, so gilt
+\(\overline{Höhe}(T) \leq 1.4405 \cdot \log (n+1) + 2\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> Operationen</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+In einem AVL-Baum mit \(n\) Knoten kann ein Schlüssel in Zeit
+\(\mathcal{O}(\log n)\) gesucht, eingefügt oder gelöscht werden.
+</p>
+</div>
+
+<div id="outline-container-sec-7-3-1" class="outline-4">
+<h4 id="sec-7-3-1"><span class="section-number-4">7.3.1</span> Einfügen eines neuen Knotens</h4>
+<div class="outline-text-4" id="text-7-3-1">
+<p>
+Sei \(x\) ein neuer Knoten, der in einen AVL-Baum \(T\) eingefügt werden
+soll.
+</p>
+
+<p>
+Wie beim Suchen, durchlaufe den Baumbis zu einem Knoten \(b\), der
+entweder Blatt ist, oder kein linkes Kind (bei \(x \leq Schlüssel(b)\))
+oder kein rechtes Kind (bei \(x > Schlüssel(b)\)) hat. Dann hänge an
+diesen Knoten \(b\) ein neuse Blatt \(b'\) mit \(Schlüssel(b') =x\) an.
+</p>
+
+<p>
+Auf dem Pfad von \(b'\) zur Wurzel können nun nicht balancierte Knoten
+liegen (frühestens beim Vater von \(b\)). Falls es solch einen Knoten
+gibt,führe eine sog. <i>Rotation</i> oder <i>Doppelrotation</i> durch (beginne
+beim tiefst gelegenen unbalancierten Knoten).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-3-2" class="outline-4">
+<h4 id="sec-7-3-2"><span class="section-number-4">7.3.2</span> Löschen eines Knotens</h4>
+<div class="outline-text-4" id="text-7-3-2">
+<p>
+<b>3 Fälle:</b> 1. Löschen eines Blatts 2. Löschen der Wurzel 3. Löschen
+eines Knotens
+</p>
+</div>
+</div>
+</div>
+</div>

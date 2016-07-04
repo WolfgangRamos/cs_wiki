@@ -1,0 +1,128 @@
+---
+layout: page
+title: Regulaere_sprachen
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Reguläre Sprachen</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Eine formale Sprache ist <b>genau dann</b> regulär, wenn sie von einem
+endlichen Automaten (DFA oder NFA) erkannt wird.
+</li>
+<li>Eine formale Sprache \(L\) ist genau dann regulär, wenn sie durch einen
+<i>regulären Ausdruck</i> \(R\) bestimmt wird, d.h.
+\(L(R) = L\) gilt.
+</li>
+<li>Jede reguläre Sprache ist <i>kontextfrei</i>.
+</li>
+<li>Jede endliche Sprache ist regulär.
+</li>
+<li>Sei \(L\) eine Sprache und sei \(w\) ein Wort maximaler Länge \(n := |w|\)
+in \(L\), dann hat jeder DFA (und NFA), der \(L\) erkennt M mindestens
+\(n\) Zustände.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Abschlusseigenschaften</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Reguläre Sprachen sind abgeschlossen bzgl. der sog. <i>regulären
+Operationen</i>:
+</p>
+
+<ul class="org-ul">
+<li><b>Vereinigung:</b> \(A \cup B = \{w | w \in A \vee w \in B\}\)
+</li>
+<li><b>Konkatentation:</b> \(A \circ B = \{uv | u \in A \vee v \in B\}\)
+</li>
+<li><b>Kleene Stern:</b>
+   \(A^* = \{w_0w_1...w_{n-1}| n \in \mathbb{N} \wedge \forall i \in \mathbb{N}_0: i < n \Rightarrow w_i \in A\}\)
+</li>
+</ul>
+
+<p>
+Außerdem sind reguläre Sprachen abgeschlossen unter
+</p>
+
+<ul class="org-ul">
+<li><b>Schnitt:</b> \(A \cap B = \{w | w \in A \wedge w \in B \}\)
+</li>
+<li><b>Komplement:</b>
+   \(\Sigma^* \setminus A = \{w | w \in \Sigma^* \wedge \neg w \in A \}\)
+</li>
+</ul>
+
+<p>
+Sind also \(A\) und \(B\) reguläre Sprachen, dann sind auch \(A \cup B\),
+\(A \circ B\), \(A^*\), \(A \cap B\), \(\Sigma^+ \setminus A\) reguläre
+Sprachen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Pumping Lemma</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Sei \(L\) eine formale Sprache. Wenn \(L\) regulär ist, dann gibt es eine
+Konstante \(p \geq 1\), sodass für jedes Wort \(w \in L\) mit \(|w| \geq p\)
+eine Zerlegung \(w = xyz\) existiert mit:
+</p>
+
+<ol class="org-ol">
+<li>\(x,y,z \in \Sigma^*\),
+</li>
+<li>\(|xy| \leq p\),
+</li>
+<li>\(|y| \geq 1\) und
+</li>
+<li>\(xy^iz \in L\) für alle \(i \in \mathbb{N}\).
+</li>
+</ol>
+
+<p>
+In Prädikatenlogik: Wenn \(L\) regulär ist, dann gilt
+\(\exists p \geq 1: \forall w \in L: |w| \geq p \Rightarrow \exists x,y,z \in \Sigma^*: w = xyz \wedge |xy| \leq p \wedge |y| \geq 1 \wedge \forall i \in \mathbb{N}:xy^iz \in L\).
+</p>
+
+<p>
+Mit Hilfe der <b>Kontraposition</b> des Pumping Lemmas kann man zeigen, dass
+eine Sprache nicht regulär ist: Wenn es für alle \(p \geq 1\) ein Wort
+\(w \in L\) gibt mit \(|w| \geq p\) und für jede Zerlegung \(w=xyz\) mit
+\(|xy| \leq p\) und \(|y| > 0\) ein \(i\) existiert mit \(xy^iz \not\in L\),
+dann ist \(L\) nicht regulär.
+</p>
+
+<p>
+Mit Hilfe der Kontraposition des Pumping Lemma können fast alle
+nicht-regulären Sprachen als solche identifiziert werden.
+</p>
+
+<p>
+<b>Alternative Definitionen:</b>
+</p>
+
+<p>
+Sei \(L\) eine reguläre Sprache, dann gibt es eine Konstante \(p \geq 1\),
+sodass für jedes Wort \(w \in L\) mit \(|w| \geq p\) gilt: Es gibt
+\(x,y,z \in \Sigma^*\), sodass \(w = xyz\), \(|yz| \leq p\), \(|y| \geq 1\),
+\(xy^iz \in L\) für alle \(i \in \mathbb{N}\)
+</p>
+
+<p>
+Sei \(L\) eine reguläre Sprache, dann gibt es eine Konstante \(p \geq 1\),
+sodass für jedes Wort \(wL\) mit \(|w| \geq p\) gilt: Es gibt
+\(x,y,z \in \Sigma^*\), sodass \(w = xyz\), \(|xy| \leq p\), \(|y| \geq 1\),
+\(xy^iz \in L \Longleftrightarrow xy^jz \in L\) für alle
+\(i,j \in \mathbb{N}\)
+</p>
+</div>
+</div>

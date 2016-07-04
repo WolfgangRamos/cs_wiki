@@ -1,0 +1,336 @@
+---
+layout: page
+title: Reihe
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Reihe</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sei \((a_n)\_{n \in \mathbb{N}}\) eine Folge reeller oder komplexer Zahlen
+(d.h. es gilt \((a_n)\_{n \in \mathbb{N}} \subseteq \mathbb{R}\) oder
+\((a_n)\_{n \in \mathbb{N}} \subseteq \mathbb{C}\)). Dann heißt
+\(s_{k} = \sum_{k=1}^{n} a_k\) \(k\)-te <i>Partialsumme</i>. Die Folge der
+Partialsummen einer Folge \((s_{n})\_{n \in \mathbb{N}}\) heißt die
+zugeordnete <i>Reihe</i>. Sie wird mit "\(\sum_{n=1}^{\infty} a_n\)"
+bezeichnet. Hierbei handelt es sich um eine symbolische Schreibweise,
+d.h. das Summenzeichen ist nicht wörtlich zu verstehen.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Grenzwert eine Reihe</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Wir schreiben "\(\sum_{n=1}^{\infty} a_n = a\)", wenn die Reihe
+\(\sum_{n=1}^{\infty} a_n \subseteq X\) gegen \(a \in X\) konvergiert. \(a\)
+wird heißt dann Grenzwert von \(\sum_{n=1}^{\infty} a_n\) bezeichnet.
+Hierbei handelt es sich um eine symbolische Schreiweise, d.h. das
+Summenzeichen ist nicht wörtlich zu versetehen.
+</p>
+
+<p>
+Um anzuzeigen, dass ein eine Reihe konvergiert verwenden wir auch die
+Schreibweise "\(\sum_{n=1}^{\infty} a_n < \infty\)" (auch hier handelt es
+sich um eine symbolische Schreibweise, so dass weder das Summenzeichen,
+noch \(\infty\) wörtlich zu verstehen sind).
+</p>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Absolute Konvergenz</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+Eine Reihe \(\sum_{k=0}^{\infty} a_k\) heißt absolut konvergent, wenn die
+Reihe \(\sum_{k=0}^{\infty} |a_k|\) konvergiert.
+</p>
+
+<p>
+<b>Eigenschaften</b>
+</p>
+
+<ul class="org-ul">
+<li>sofern eine Reihe absolut konvergiert, konvergiert sie auch normal,
+d.h.
+\(\sum_{k=1}^{\infty} |a_k| < \infty \Longrightarrow \sum_{k=1}^{\infty} a_k < \infty\)
+*absolut konvergente Reihen bleiben nach Umsortierung absolut
+konvergent.
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> geometrische Reihe</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Die Reihe \(\sum_{n=0}^{\infty} q^n\) heißt <i>geometrische Reihe</i>.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Falls \(q \geq 1\), dann divergiert die geometrische Reihe bestimmt
+gegen \(+\infty\), d.h. es gilt \(\sum_{n=0}^{\infty} q^n = +\infty\)
+</li>
+<li>Falls \(q \leq 1\), dann divergiert die geometrische Reihe, d.h. es
+gilt \(\sum_{n=0}^{\infty} q^n = \infty\)
+</li>
+<li>Falls \(|q| < 1\), dann konvergiert die geometrische Reihe gegen
+\(\frac{1}{1-q}\), d.h. es gilt
+\(\sum_{n=0}^{\infty} q^n = \frac{1}{1-q}\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> harmonische Reihe</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Die Reihe \(\sum_{n=1}^{\infty} \frac{1}{n}\) heißt <i>harmonische Reihe</i>.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Die harmonische Reihe divergiert bestimmt gegen \(+\infty\), d.h. es
+gilt \(\sum_{n=1}^{\infty} \frac{1}{n} = +\infty\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Konvergenzkriterien für Reihen</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Majorantenkriterium</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Eine Reihe nichtnegativer Glieder \(\sum_{n=0}^{\infty} a_{n}'\) mit
+\(a_{n}' \geq 0\) heißt <i>Majorante</i> der Reihe \(\sum_{n=1}^{\infty} a_n\),
+wenn ein \(c \geq 0\) existiert, sodass \(|a_{n}| \leq c a_{n}'\) für "fast
+alle" (d.h. alle bis auf endlich viele) \(n \in \mathbb{N}\) gilt. D.h.
+wenn gilt:
+</p>
+
+<p>
+\(\exists c \geq 0: \exists n_0 \in \mathbb{N}: \forall n \geq n_{0}: |a_{n}| \leq c a_{n}'\)
+</p>
+
+<p>
+Eine Reihe ist <i>absolut konvergent</i>, wenn sie eine konvergente
+<i>Majorante</i> besitzt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Wurzelkriterium</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Eine Reihe \(\sum_{n=0}^{\infty} a_n\) ist <i>absolut konvergent</i>, wenn ein
+\(0 \leq q < 1\) existiert, sodass \(\sqrt[n]{|a_{n}|} \leq q\) für fast
+alle \(n\) gilt. D.h. wenn gilt
+</p>
+
+<p>
+\(\exists 0 \leq q < 1: \exists n_0 \in \mathbb{N}: \forall n \geq n_0: \sqrt[n]{|a_{n}|} \leq q\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Quotientenkriterium</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Eine Reihe \(\sum_{n=0}^{\infty} a_n\) ist <i>absolut konvergent</i>, wenn ein
+\(0 \leq q < 1\) existiert, sodass \(|\frac{a_{n+1}}{a_n}| \leq q\) für fast
+alle \(n\) gilt. D.h. es gilt
+</p>
+
+<p>
+\(\exists 0 \leq q < 1: \exists n_0 \in \mathbb{N}: \forall n \geq n_0: |\frac{a_{n+1}}{a_n}| \leq q\)
+</p>
+
+<p>
+Gilt hingegen \(|\frac{a_{n+1}}{a_n}| \geq q > 1\) für fast alle \(n\), dann
+ist die Reihe nicht <i>absolut konvergent</i>, D.h. es gilt
+</p>
+
+<p>
+\(\exists q > 1: \exists n_0 \in \mathbb{N}: \forall n \geq n_0: |\frac{a_{n+1}}{a_n}| \geq q > 1\)
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Potenzreihen</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Unter einer <i>reellen Potenzreihe</i> versteht man eine Reihe der Form
+\(P(x)=\sum_{n=0}^{\infty} a_n x^n\) mit \(a_n \in \mathbb{R}\).
+</p>
+
+<p>
+Sei \(M \subseteq \mathbb{R}\), die Menge der \(x\) für welche die
+Potenzreihe \(\sum_{n=0}^{\infty} a_n x^n\) konvergiert. Dann kann man
+eine Funktion \(P: M \rightarrow \mathbb{R}\) definieren mit
+\(P(x) := \sum_{n=0}^{\infty} a_n x^n\).
+</p>
+
+<p>
+Allgemeinere Form der Potenzreihe:
+</p>
+
+<p>
+\(P(x) = \sum_{n=0}^{\infty} a_n (x-x_0 )^n\) mit \(x_0 \in \mathbb{R}\)
+fest.
+</p>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Konvergenzradius</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Sei \(P(x) = \sum_{n=0}^{\infty} a_n x^n\) eine reelle Potenzreihe, dann
+heißt
+</p>
+
+<p>
+\(R(P) = \sup\{|x| \mid x \in \mathbb{R} \wedge P(x) < \infty\}\)
+</p>
+
+<p>
+<i>Konvergenzradius</i> der Potenzreihe.
+</p>
+
+<p>
+Wir schreiben \(R(P) = \infty\) um anzudeuten, dass die Potenzreihe \(P(x)\)
+für beliebig große \(x \in \mathbb{R}\) konvergiert.
+</p>
+
+<p>
+<b>Konvergenzkriteium für Potenzreihen:</b>
+</p>
+
+<p>
+Sei \(P(x) = \sum_{n=0}^{\infty} a_n x^n\) eine Potenzreihe mit
+Koeffizienten ungleich Null, d.h. \(\forall n \in \mathbb{N}: a_n \neq 0\)
+und existiert \(r := \lim_{n\rightarrow\infty} |\frac{a_n}{a_{n+1}}|\).
+Dann gilt für den Konvergenzradius
+\(R(P) = \lim_{n\rightarrow\infty} |\frac{a_n}{a_{n+1}}|\).
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Konvergiert eine reelle Potenzreihe
+\(P(x) = \sum_{n=0}^{\infty} a_n x^n\) in einem Punkt
+\(x_0 \in \mathbb{R}\), so konvergiert sie auch absolut für alle
+\(x \in \mathbb{R}\) mit \(|x| < |x_0|\).
+</li>
+<li>Sei \(P(x) = \sum_{n=0}^{\infty} a_n x^n\) eine Potenzreihe mit
+\(R(P) > 0\), dann
+
+<ul class="org-ul">
+<li>konvergiert \(P(x)\) absolut für \(|x| < R(P)\).
+</li>
+<li>divergiert \(P(x)\) für \(|x| > R(P)\).
+</li>
+<li>lässt sich keine Aussage über die Konvergenz von \(P(x)\) für
+\(x=R(P)\) treffen.
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Spezielle Potenzreihen</h3>
+<div class="outline-text-3" id="text-5-2">
+</div><div id="outline-container-sec-5-2-1" class="outline-4">
+<h4 id="sec-5-2-1"><span class="section-number-4">5.2.1</span> Exponentialfunktion</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<p>
+Die Potenzreihe \(e^x := \sum_{k=0}^{\infty} \frac{1}{k!} x^k\) heißt
+<i>Exponentialfunktion</i>. Statt \(e^x\) schreibt man auch \(\exp(x)\).
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Die Exponentialfunktion konvergiert für alle \(z \in \mathbb{C}\), d.h.
+der Konvergenzradius von \(\exp\) ist \(R(\exp) = \infty\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2-2" class="outline-4">
+<h4 id="sec-5-2-2"><span class="section-number-4">5.2.2</span> Sinus und Cosinus</h4>
+<div class="outline-text-4" id="text-5-2-2">
+<p>
+Die <i>Sinusfunktion</i> lässt sich über die Potenzreihe
+\(\sin(x) := \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!} x^{2n+1}\) mit
+\(x \in \mathbb{R}\) definieren.
+</p>
+
+<p>
+Die <i>Cosinusfunktion</i> lässt sich über die Potenzreihe
+\(\cos(x) := \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n}\) mit
+\(x \in \mathbb{x}\) definieren.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Die Sinusfunktion konvergiert für alle \(x \in \mathbb{R}\), d.h. der
+Konvergenzradius von \(\sin\) ist \(R(\sin) = \infty\).
+</li>
+<li>Die Cosinusfunktion konvergiert für alle \(x \in \mathbb{R}\), d.h. der
+Konvergenzradius von \(\cos\) ist \(R(\cos) = \infty\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2-3" class="outline-4">
+<h4 id="sec-5-2-3"><span class="section-number-4">5.2.3</span> Binomialreihe</h4>
+<div class="outline-text-4" id="text-5-2-3">
+<p>
+Die Potenzreihe \(B_m (z) := \sum_{n=0}^{\infty} \binom{m}{n} z^n\) für
+\(z \in \mathbb{C}\) und festes \(m \in \mathbb{N}_0\) heißt
+<i>Binomialreihe</i>. \(R(P) = \infty\).
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Die Binomialreihe konvergiert für alle \(z \in \mathbb{C}\) und alle
+\(m \in \mathbb{N}_0\) mit Grenzwert
+\(\sum_{n=0}^{\infty} \binom{m}{n} z^n = (z+1)^m\), d.h. der
+Konvergenzradius ist \(R(B_m) = \infty\).
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>

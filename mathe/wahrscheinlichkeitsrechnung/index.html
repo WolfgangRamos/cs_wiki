@@ -1,0 +1,174 @@
+---
+layout: page
+title: Index
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Wahrscheinlichkeitsrechnung</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Grundbegriffe</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+\(\Omega\) heißt <i>Ergebnismenge</i>
+</p>
+
+<p>
+Ein <i>Ereignis</i> \(E\) ist eine Teilmenge von \(\Omega\). Es gilt also
+\(E \subseteq \Omega\) bzw. \(E \in \mathcal{P}(\Omega)\).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Wahrscheinlichkeitsmaß / Wahrscheinlichkeitsraum</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Sei \((\Omega, \mathcal{A})\) ein Messraum und
+\(P:\mathcal{A} \rightarrow [0,1]\) mit folgenden Eigenschaften:
+</p>
+
+<ol class="org-ol">
+<li>\(P(\Omega) = 1\)
+</li>
+<li>\(P(\bigcup_{n \in \mathbb{N}} A_n = \sum_{n\in\mathbb{N}} P(A_n)\) für
+alle <b>paarweise disjunkten</b> \(A_n \in \mathcal{A}\) für
+\(n \in \mathbb{N}\).
+</li>
+</ol>
+
+<p>
+Das Tripel aus <i>Ergebnisraum</i>, <i>Sigma-Algebra</i> und
+Wahrscheinlichkeitsmaß \((\Omega, \mathcal{A}, P)\) heißt dann
+<i>Wahrscheinlichkeitsraumm</i>.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>\(\forall A \in \mathcal{A}: P(A^C) = 1 - P(A)\)
+</li>
+<li>\(\forall A,B \in \mathcal{A}: P(A \cup B) = P(A) + P(B) - P(A \cap B)\)
+</li>
+<li>\(\forall A,B \in \mathcal{A}: A \subseteq B \Rightarrow P(B \setminus A) = P(B) - P(A)\)
+</li>
+<li>\(\forall A,B \in \mathcal{A}: A \subseteq B \Rightarrow P(A) \leq P(B)\)
+</li>
+</ul>
+
+<p>
+<b>Konvention:</b> Wir schreiben \(A \dot{\cup} B\), wenn \(A\) und \(B\) disjunkte
+Zerlegung von \(A \cup B\) sind.
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Siebformel von Sylvester-Poincaré</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+\(P(A_1 \cup A_2 \cup \dots \cup A_n) = \sum_{k=10}^{n} (-1)^{k-1} \sum_{1\leq i_1 < \dots i_k \leq n} P(\bigcap_{l=1}^{k} A_{i_l}\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Ungleichung von Bonferroni</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Sei \((\Omega, \mathcal{A}, P)\) Wahrscheinlichkeitsraum. Dann gilt für
+<i>endliche</i> Schnitte von \(A_1 , \dots, \A_n \in \mathcal{A}\) für festes
+\(n \geq 2\):
+</p>
+
+<p>
+\(P(\bigcap_{k=1}^{n}) \geq 1 - \sum_{k=1}^{n} P(A_k^C)\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Laplace'sches Wahrscheinlichkeitsmaß</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Ein Wahrscheinlichkeitsmaß \(P: \mathcal{A} \rightarrow [0,1]\) heißt
+<i>Laplace'sches Wahrscheinlichkeitsmaß</i> wenn für alle
+\(A \in \mathcal{P}(\Omega): P(A) = \frac{|A|}{|\Omega|}\) gilt (es muss
+also \(\mathcal{A} = \mathcal{P}(\Omega)\) gelten).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Bedingte Wahrscheinlichkeit</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Sei \((\Omega, \mathcal{A}, P)\) ein Wahrscheinlichkeitsraum und seien
+\(A,B \in \mathcal{A}\). Dann heißt \(P(A|B) := \frac{P(A \cap B)}{P(B)}\)
+die <i>bedingte Wahrscheinlichkeit</i> von \(A\) unter \(B\).
+</p>
+</div>
+
+<div id="outline-container-sec-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> Satz von Bayes</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+Sei \((\Omega, \mathcal{A}, P)\) ein Wahrscheinlichkeitsraum und seien
+\(A,B \in \mathcal{A}\). Dann gilt
+\(\frac{P(A|B)}{P(A)} = \frac{P(B|A)}{P(B)}\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-2" class="outline-4">
+<h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> Satz der totalen Wahrscheinlichkeit</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+Sei \((\Omega, \mathcal{A}, P)\) ein Wahrscheinlichkeitsraum und sei
+\(\Omega = \dot{\bigcup_{n \in \mathbb{N}}} B_n\) mit
+\(B_n \in \mathcal{A}\) für alle \(n \in \mathbb{N}\) und
+\(\forall i,j \in \mathbb{N}: i \neq j \Rightarrow B_i \cap B_j = \emptyset\).
+Dann gilt
+</p>
+
+<p>
+\(P(A) = \sum_{n \in \mathbb{N}} P(A|B_n) \cdot P(B_n)\)
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Stochastische Unabhängigkeit</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Sei \((\Omega, \mathcal{A}, P)\) ein Wahrscheinlichkeitsraum und seien
+\(A,B \in \mathcal{A}\), dann heißen \(A\) und \(B\) <i>stochastisch
+unabhängig</i>, wenn \(P(A \cap B) = P(A) \cdot P(B)\) gilt.
+</p>
+
+<p>
+Sei \((\Omega, \mathcal{A}, P)\) ein Wahrscheinlichkeitsraum und seien
+\(A_1,\dots,A_n \in \mathcal{A}\) mit \(n \geq 2\), dann heißen
+\(A_1,\dots,A_n\) <i>stochastisch unabhängig</i>, wenn
+</p>
+
+<p>
+\(P(\bigcap_{j=1}^{k} A_{i_j})= \prod_{j=1}^{k} P(A_{i_j})\)
+</p>
+
+<p>
+für alle \(k \in \{2,\dots,n\}\) und \(1 \leq i_1 < \dots < i_k \leq n\)
+gilt.
+</p>
+
+<p>
+D.h. die Ereignisse \(A_1, \dots, A_n \in \mathcal{A}\) für festes
+\(n \in \mathbb{N}\) heißen <i>stochastisch unabhängig</i>, genaus dann wenn
+alle endlichen Teilmengen dieser Ereignisse stochstisch unabhängig sind.
+</p>
+</div>
+</div>
+</div>

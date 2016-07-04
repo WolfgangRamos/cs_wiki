@@ -1,0 +1,106 @@
+---
+layout: page
+title: Priorityqueue
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Priorityqueue</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Eine <i>Priorityqueue</i> (dt. Prioritätswarteschlange) ist eine dynamische
+Datenstruktur, die eine Menge S verwaltet und folgende Operationen
+unterstützt:
+</p>
+
+<ul class="org-ul">
+<li><code>insert(S,x)</code>: füge Element <code>x</code> in <code>S</code> ein (\(\mathbb{O}(1)\);
+vorausgesetzt, dass ein Feld in konstanter Laufzeit um ein Element
+vergößert werden kann)
+</li>
+<li><code>maximum(S)</code>: gib das größte Element in <code>S</code> zurück
+(\(\mathbb{O}(\log n)\))
+</li>
+<li><code>extractMax(S)</code>: gib das größte Elemente zurück und lösche es in <code>S</code>
+   (\(\mathbb{O}(\log n)\))
+</li>
+</ul>
+
+<p>
+<b>Idee:</b> Verwende einen <i>Heap</i> für die Priorityqueue.
+</p>
+
+<p>
+Implementierung von <code>insert</code>:
+</p>
+
+<p>
+Füge das neue Element <code>x</code> auf der untersten Ebene ein und dann
+vertausche <code>x</code> iterativ mit seinem Vater, bis der Wert des Vaterknotens
+\(\leq x\) ist.
+</p>
+
+<pre class="example">
+insert(S, x) {
+  integer n = length(S);
+  integer i;
+
+  erzeuge Feld A mit n+1 Elementen;
+
+  for i = 0 to n - 1 do
+    A[i] = S[i];
+  od
+  A[n] = x;
+
+  bool stop = false;
+  while n &gt; 0 and not(stop) do
+    if A[n] &gt; A[(n-1)/2] then
+      tmp = A[n];
+      A[n] = A[(n-1)/2];
+      S[(n-1)/2] = tmp;
+      n = (n-1)/2;
+    else
+      stop = true;
+    fi
+  od
+
+  S = A;
+}
+</pre>
+
+<p>
+Implementierung von <code>maximum(S)</code>:
+</p>
+
+<pre class="example">
+maximum(S) {
+  return S[0];
+}
+</pre>
+
+<p>
+Implementierung von <code>extractMax(S)</code>:
+</p>
+
+<pre class="example">
+extractMax(S){
+  integer n = length(S);
+
+  erzeuge Feld A mit n-1 Elementen;
+
+  A[0] = S[n-1];
+  integer max = S[0];
+  for i 1 to n-2 do
+    A[i] = S[i];
+  od
+  HEAPIFY(A,0,n-1);
+  S=A;
+  return max;
+}
+</pre>
+
+<p>
+Ersetze Wurzel durch letztes Element des Heaps. Dann stelle mit
+<code>HEAPIFY</code> die Heap-Eigenschaft wieder her.
+</p>
+</div>
+</div>

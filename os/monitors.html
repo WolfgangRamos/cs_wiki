@@ -1,0 +1,119 @@
+---
+layout: page
+title: Monitors
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Monitore</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Ein Monitor ist ein abstrakter Datentyp, der gemeinsam genutzte Daten
+und zugehörige Zugriffsfunktionen kapselt. Dabei wird beim Aufruf der
+Zugriffsfunktionen Mutual Exclusion sichergestellt (Compiler schützt zur
+Kompilierzeit die Aufrufe der Zugriffsfunktionen durch Semaphoren;
+<i>Implicit Mutual Exclusion</i>). Zu jeder Zeit kann also nur ein
+Prozess/Thread eine Zugriffsfunktion ausführen. Innerhalb eines Monitors
+können außerdem Condition Variables (CV) zum Warten auf Events bei der
+Abarbeitung der Zugriffsfunktionen verwendet werden.
+</p>
+
+<p>
+Damit ergeben sich folgende Queues von Prozessen, die auf die Nutzung
+eines Monitors warten:
+</p>
+
+<ul class="org-ul">
+<li><i>Entry Queue</i> (EQ),
+</li>
+<li>eine <i>Condition Queue</i> (CQ) für jede Condition Variable,
+</li>
+<li><i>Waiting Queue</i> (WQ) und
+</li>
+<li>/Signalling Queue/(SQ)
+</li>
+</ul>
+
+<p>
+<i>monitor.png</i>
+</p>
+</div>
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Monitorsemantiken</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Man unterscheidet verschiedene <i>Monitorsemantiken</i> hinsichtlich der
+Priorisierung der Queues:
+</p>
+
+<ul class="org-ul">
+<li><i>Wait &amp; Notify</i> (MESA-Typ) \(\text{EQ} = \text{WQ} < \text{SQ}\), z.B.
+Java Synchronized
+</li>
+<li><i>Signal &amp; Continue</i> (MESA-Typ) \(\text{EQ} < \text{WQ} < \text{SQ}\)
+</li>
+<li><i>Signal &amp; Wait</i> (Hoare-Typ) \(\text{EQ} = \text{SQ} < \text{WQ}\)
+</li>
+<li><i>Signal &amp; Urgent Wait</i> (Hoare-Typ)
+\(\text{EQ} < \text{SQ} < \text{WQ}\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Condition Variables</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Innerhalb eines Monitors können <i>Condition Variables</i> (CV) zum Warten
+auf Events bei der Abarbeitung der Zugriffsfunktionen verwendet werden.
+Condition Variables haben keinen Wert sondern lediglich eine <i>Condition
+Queue</i> mit Prozessen/Threads, die darauf warten, dass der Condition
+Variable signallisiert wird. Condition Variablen stellen zwei
+Operationen zur Verfügung:
+</p>
+
+<ul class="org-ul">
+<li><code>cwait(⟨cv⟩)</code>:
+
+<ul class="org-ul">
+<li>blockiert den aufrufenden Thread/Prozess
+</li>
+<li>reiht den aufrufenden Prozess/Thread hinten in die Condition Queue
+der CV ein
+</li>
+<li>gibt den Monitor für den nächsten Thread frei.
+</li>
+</ul>
+</li>
+
+<li><code>csignal(⟨cv⟩)</code>:
+
+<ul class="org-ul">
+<li>wenn die Condtion Queue nicht leer ist:
+
+<ul class="org-ul">
+<li>versetzt den ersten Prozess aus der Condtion Queue in den Ready
+Zustand
+</li>
+<li>entfernt diesen Prozess/Thread aus der Condtion Queue
+</li>
+<li>reiht diesen Prozess/Thread hinten in die Waiting Queue des
+Monitors ein.
+</li>
+</ul>
+</li>
+
+<li>wenn die Condition Queue leer ist geht das Signal verloren und
+nichts geschieht
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Unterschiede zwischen Condition Variablen und
+<i>Semaphoren</i>:
+</p>
+</div>
+</div>
+</div>

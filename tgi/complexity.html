@@ -1,0 +1,483 @@
+---
+layout: page
+title: Complexity
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Komplexitätstheorie</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Die Komplexitätstheorie beschäftigt sich mit dem Zeit- und
+Speicherplatzbedarf (allg. Ressourcenverbrauch) von Berechnungen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Zeitkomplexität</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Laufzeitfunktion</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<b>Laufzeit determinisitischer Turing Machinen:</b> Die <i>Laufzeit</i> (auch
+<i>Laufzeitfunktion</i>)
+\(t_T :\mathbb{N} \rightarrow \mathbb{N} \cup \\{\infty\\}\) einer
+<b>deterministischen</b> Turing Machine
+\(T = (Q, \Sigma, \Gamma, \delta, q_0, q_{acc}, q_{rej})\) ist:
+</p>
+
+<p>
+\(t_T(n) := \max\\{\text{Länge der Berechnung von T auf w} \mid w \in \Sigma^* \wedge |w| = n\\}\)
+</p>
+
+<p>
+Die Länge der Berechnung ist dabei die Anzahl der Konfigurationen von
+(einschließlich) Start- bis (einschließlich) Haltekonfiguration,
+verringert um 1.
+</p>
+
+<p>
+<b>Laufzeit nicht determinisitscher Turing Machinen:</b> Die <i>Laufzeit</i> (auch
+<i>Laufzeitfunktion</i>)
+\(t_T :\mathbb{N} \rightarrow \mathbb{N} \cup \\{\infty\\}\) einer <b>nicht
+deterministischen</b> Turing Machine
+\(T = (Q, \Sigma, \Gamma, \delta, q_0, q_{acc}, q_{rej})\) ist:
+</p>
+
+<p>
+\(t_T(n) := \max\\{\text{Länge von } \beta \mid \beta \text{ ist eine Berechnung von } T \text{ auf } w \in \Sigma^* \wedge |w| = n \\}\)
+</p>
+
+<p>
+Wenn es also zu einem Wort mehrere Berechnungen, dann bestimmt die
+längste (diese muss nicht akzeptierend sein) die Laufzeitfunktion.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Komplexitätsklassen</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Sei \(f\) Laufzeitfunktion, dann heißt die Sprache der Probleme, die in
+\(\mathcal{O}(f)\) entscheidbar sind
+</p>
+
+<p>
+\(DTIME(f) := \\{ L \mid \exits T \in DTM: T \text{ entscheidet } L \wedge t_T \in \mathcal{O}(f) \\}\)
+</p>
+
+<p>
+die (determinisitsche) <i>Komplexitätsklasse</i> zu \(f(n)\) und
+</p>
+
+<p>
+\(NTIME(f) := \\{ L \mid \text{es gibt eine NTM } T \text{, die } L \text{ entscheidet und für die gilt: } \forall n \in \mathbb{N}: t_T(n) \leq f(n)\\}\)
+</p>
+
+<p>
+die (nicht determinisitsche) <i>Komplexitätsklasse</i> zu \(f(n)\) und
+</p>
+
+<p>
+Falls \(\mathfrak{F}\) eine Menge von Funktionen
+\(\mathbb{N} \rightarrow \mathbb{N}\), dann ist
+\(DTIME(\mathfrak{F}) = \bigcup\_{f \in\mathfrak{F}} DTIME(f)\) und analog
+\(NTIME(\mathfrak{F}) = \bigcup\_{f \in\mathfrak{F}} NTIME(f)\)
+</p>
+</div>
+
+<div id="outline-container-sec-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> Die Zeitkomplexitätsklasse P</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+Sei \(\mathfrak{P}\) die Menge aller Polynome \(p \in \mathbb{R}[n]^+\)
+(also Polynome mit nicht negativen Koeffiezienten). Dann ist
+</p>
+
+<p>
+\(P := DTIME(\mathfrak{P}) = \\{ L \mid \exits T \in DTM: T \text{ entscheidet } L \exists p \in \mathfrak{P}: t_T \in \mathcal{O}(p) \\}\)
+</p>
+
+<p>
+die Komplexitätsklasse der Probleme, die <b>deterministisch</b> in
+<i>polynomieller Laufzeit</i> entscheidbar sind.
+</p>
+
+<p>
+<b>Beispiele für Probleme der Klasse P:</b>
+</p>
+
+<ul class="org-ul">
+<li><i>Sind zwei Knoten in einem Graphen durch einen Pfad verbunden?</i>:
+\(PATH := \\{\langle G, s, t \rangle \mid G \text{ ist endlicher gerichteter Graph und } s,t \text{ sind Knoten von } G \text{ und es gibt einen Pfad von s nach t}\\}\)
+</li>
+<li>\(CIRCUITVALUE := \\{\langle C \rangle \mid C \text{ ist Schaltkreis mit einem Ausgang und vorgegebenen Eingabewerten und } C \text{ wird unter diesen zu 1 ausgewertet}\\}\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2-2" class="outline-4">
+<h4 id="sec-2-2-2"><span class="section-number-4">2.2.2</span> Die Zeitkomplexitätsklasse NP</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<p>
+Sei \(\mathfrak{P}\) die Menge aller Polynome \(p \in \mathbb{N}[n]\). Dann
+ist
+</p>
+
+<p>
+\(NP := NTIME(\mathfrak{P}) = \\{ L \mid \text{es gibt eine NTM } T \text{, die } L \text{ entscheidet und es gibt } p \in \mathfrak{P} \text{ sodass gilt: } \forall n \in \mathbb{N}: s_T(n) \leq p(n)\\}\)
+</p>
+
+<p>
+die Komplexitätsklasse der Probleme, die <b>nicht-deterministisch</b> in
+<i>polynomieller Laufzeit</i> entscheidbar sind.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Da jede determinisitische TM auch eine NTM ist gilt \(P \subseteq NP\)
+</li>
+<li>Es gibt viele Probleme, von denen bekannt ist, dass sie zur
+komplexitätklasse \(NP\) gehören, von denen aber unklar ist, ob sie
+auch zur Komplexitätsklasse \(P\) gehören.
+</li>
+</ul>
+
+<p>
+<b>Beispiele für Probleme der Klasse NP:</b>
+</p>
+
+<ul class="org-ul">
+<li><i>Traveling Salesman Problem</i>
+</li>
+<li><i>3-Farben-Problem</i>:
+\(3COLOR := \\{\langle G \rangle \mid G \text{ist ungerichteter endlicher Graph und es gibt eine Färbung der Knoten von G mit 3 Farben, sodass benachbarte Knoten unterschiedlich gefärbt sind}\\}\)
+</li>
+<li>\(CIRCUITSAT := \\{\langle C \rangle \mid \text{C ist Schaltkreis mit einem Ausgang und unbelegten Eingängen und es gibt eine Belegung der Eingänge, unter der der Schaltkreis zu 1 ausgewertet wird}\\}\)
+</li>
+<li><i>independent set</i> (auch \(PARTY\)):
+\(IND := \\{\langle G \rangle \mid \text{G ist ungereichter Graph} \wedge k \in \mathbb{N} \wedge \text{ es gibt eine Menge von k Knoten von denen keiner mit einem der anderen k-1 Knoten verbunden ist}\\}\)
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Speicherplatzkomplexität</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Speicherbedarfsfunktion</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Der <i>Speicherbedarf</i> (auch <i>Speicherbedarfsfunktion</i>)
+\(s_T :\mathbb{N} \rightarrow \mathbb{N} \cup \{\infty\}\) einer
+nicht-deterministischen oder deterministischen Turing Machine
+\(T = (Q, \Sigma, \Gamma, \delta, q_0, q_{acc}, q_{rej})\) ist:
+</p>
+
+<p>
+\(s_T(n) = \max\\{\text{Anzahl der Bandzellen, die in } \beta \text{ genutzt werden} \mid \beta \text{ ist eine Berechnung von T auf einem Wort der Länge n}\\}\)
+</p>
+
+<p>
+Wenn es also zu einem Wort mehrere Berechnungen gibt, dann bestimmt die
+längste (diese muss nicht akzeptierend sein) den Speicherbedarf.
+</p>
+
+<p>
+Sei \(f\) Speicherbedarfsfunktion, dann heißt die Sprache der Probleme,
+die mit einem Speicherplatzbedarf in \(\mathcal{O}(f)\) entscheidbar sind
+</p>
+
+<p>
+\(SPACE(f) := \\{ L \mid \text{es gibt eine deterministische TM } T \text{, die } L \text{ entscheidet und für die gilt: } \forall n \in \mathbb{N}: s_T(n) \leq f(n)\\}\)
+</p>
+
+<p>
+die (determinisitsche) <i>Speicherkomplexitätsklasse</i> zu \(f(n)\) und
+</p>
+
+<p>
+\(NSPACE(f) := \\{ L \mid \text{es gibt eine NTM } T \text{, die } L \text{ entscheidet und für die gilt: } \forall n \in \mathbb{N}: s_T(n) \leq f(n)\\}\)
+</p>
+
+<p>
+die (nicht determinisitsche) <i>Speicherkomplexitätsklasse</i> zu \(f(n)\) und
+</p>
+
+<p>
+Falls \(\mathfrak{F}\) eine Menge von Funktionen
+\(\mathbb{N} \rightarrow \mathbb{N}\), dann ist
+\(SPACE(\mathfrak{F}) = \bigcup\_{f \in\mathfrak{F}} SPACE(f)\) und analog
+\(NSPACE(\mathfrak{F}) = \bigcup\_{f \in\mathfrak{F}} NSPACE(f)\)
+</p>
+</div>
+
+<div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> Die Speicherbedarfskomplexitätsklasse PSPACE</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+Sei \(\mathfrak{P}\) die Menge aller <a href="../mathe/polynom">Polynome</a>
+\(p \in \mathbb{N}[n]\). Dann ist
+</p>
+
+<p>
+\(PSPACE := DSPACE(\mathfrak{P}) = \\{ L \mid \text{es gibt eine TM } T\text{, die } L \text{ entscheidet und es gibt } p \in \mathfrak{P} \text{ sodass gilt: } \forall n \in \mathbb{N}: s_T(n) \leq p(n)\\}\)
+</p>
+
+<p>
+die Speicherkomplexitätsklasse der Probleme, die <b>deterministisch</b> mit
+<i>polynomiellem Speicherbedarf</i> entscheidbar sind.
+</p>
+
+<p>
+Sei \(\mathfrak{P}\) die Menge aller Polynome \(p \in \mathbb{N}[n]\). Dann
+ist
+</p>
+
+<p>
+\(PSPACE := NSPACE(\mathfrak{P}) = \\{ L \mid \text{es gibt eine NTM } T\text{, die } L \text{ entscheidet und es gibt } p \in \mathfrak{P} \text{ sodass gilt: } \forall n \in \mathbb{N}: s_T(n) \leq p(n)\\}\)
+</p>
+
+<p>
+die Speicherkomplexitätsklasse der Probleme, die <b>nicht-deterministisch</b>
+mit <i>polynomiellem Speicherbedarf</i> entscheidbar sind.
+</p>
+
+<p>
+<b>Eigenschafte:</b>
+</p>
+
+<ul class="org-ul">
+<li><i>Satz von Savitch</i>: Es gilt
+\(PSPACE = DSPACE(\mathfrak{P}) = NSPACE(\mathfrak{P})\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-2" class="outline-4">
+<h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> Die Speicherkomplexitätsklassen L und NL</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+\(NSPACE(\log n)\) ergibt mit obiger Definition von \(NSPACE\) keinen Sinn,
+da der vorgegebene Platz dann kleiner als die Eingabe wäre. Deshalb
+modifiziert man die obige Definition: Man betrachtet eine mehrband TM
+mit einem Eingabeband, dass mit einer Anfangs und einer Endmarkierung
+versehen ist und nur gelesen werden darf. Der Platzbedarf bezieht sich
+dann nur auf die anderen Bänder.
+</p>
+
+<p>
+Dann ist
+</p>
+
+<p>
+\(L := SPACE(\mathfrak{\log n}) = \\{ L \mid \text{es gibt eine TM } T\text{, die } L \text{ entscheidet und es gibt } p \in \mathfrak{P} \text{ sodass gilt: } \forall n \in \mathbb{N}: s_T(n) \leq \log n\\}\)
+</p>
+
+<p>
+die Speicherkomplexitätsklasse der Probleme, die <b>deterministisch</b> mit
+<i>logarithmischem Speicherbedarf</i> entscheidbar sind und
+</p>
+
+<p>
+\(L := SPACE(\mathfrak{\log n}) = \\{ L \mid \text{es gibt eine NTM } T\text{, die } L \text{ entscheidet und es gibt } p \in \mathfrak{P} \text{ sodass gilt: } \forall n \in \mathbb{N}: s_T(n) \leq \log n\\}\)
+</p>
+
+<p>
+die Speicherkomplexitätsklasse der Probleme, die <b>nicht-deterministisch</b>
+mit <i>logarithmischem Speicherbedarf</i> entscheidbar sind und
+</p>
+
+<p>
+<b>Beispiele für Probleme der Speicherkomplexitätsklasse NL:</b>
+</p>
+
+<ul class="org-ul">
+<li><i>Sind zwei Konten eines Graphen miteinander verbunden?</i>:
+\(PATH := \\{\langle G, s, t \rangle \mid G \text{ist endlicher gerichteter Graph und } s,t \text{sind Knoten von } G \text{ und es gibt einen Pfad von s nach t}\\}\).
+</li>
+<li>\(GEOGRAPHY := \\{\langle G, S \rangle \mid G \text{ ist endlicher gerichteter Graph, S ist Knoten von G und Spieler 0 besitzt einen Gewinnsrategie}\\}\).
+Spiel: Spieler 0 und 1 ziehen abwechelnd eine Spielstein von einem
+Knoten über eine Kante zu einem anderen Knoten. Spieler 0 fäng an.
+Spielstein dann auf S. Wichtig: Der Spielstein darf jeden Knoten
+höchsten einmal besuchen. Wer nicht mehr ziehen kann verliert.
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Funktionale Reduktion</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Eine Funktion \(f: \Sigma^\* \rightarrow \Gamma^\*\) heißt
+(<i>Turing-</i>)/berechenbar/ (oder auch <i>total berechenbar</i>), wenn es eine
+deterministische TM
+\(T = (Q, \Sigma, \Gamma, \delta, q_0, q_{acc}, q_{rej})\) gibt, sodass
+für alle \(u \in \Sigma^\*\) gilt: Die Berechnung von \(T\) auf \(u\)
+terminiert und bei Termination \(f(u)\) auf dem Band steht.
+</p>
+
+<p>
+Eine Sprache \(A \subseteq \Sigma^\*\) ist <i>funktional reduzierbar</i>, auf
+eine Sprache \(B \subseteq \Gamma^\*\), falls es eine Funktion
+\(f: \Sigma^\* \rightarrow \Gamma^\*\), gibt, sodass gilt
+</p>
+
+<p>
+\(\forall u \in \Sigma^\*: u \in A \Leftrightarrow f(u) \in B\)
+</p>
+
+<p>
+Wir nennen \(f\) <i>Reduktion</i> von \(A\) auf \(B\) und schreiben \(A \leq B\).
+</p>
+
+<p>
+Eine Funktionale Reduktion einer Sprache A ermöglicht es die Frage nach
+dem Enthaltensein eines Wortes w in A durch die Frage die Frage nach dem
+Enthaltensein eines Wortes in einer Sprache B auszudrücken. Lässt sich
+diese Frage für die Sprache B beantworten, liefert die Reduktion einen
+Weg diese Frage auch für A zu beantworten.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Polynomzeitreduktion</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Eine Funktion \(f: \Sigma^\* \rightarrow \Gamma^\*\) heißt
+<i>polynomzeit-berechenbar</i>, wenn es eine deterministische TM
+\(T = (Q, \Sigma, \Gamma, \delta, q_0, q_{acc}, q_{rej})\) gibt, die \(f\)
+berechnet und für deren Laufzeitfunktion \(t_T \in \mathbb{N}[n]\) gilt
+(d.h. \(t_T\) ist polynomiell beschränkt).
+</p>
+
+<p>
+Eine Sprache \(A \subseteq \Sigma^\*\) ist <i>polynomzeitreduzierbar</i>, auf
+eine Sprache \(B \subseteq \Gamma^\*\), falls es eine
+polynomzeit-berechenbare Funktion \(f: \Sigma^\* \rightarrow \Gamma^\*\),
+gibt, sodass gilt
+</p>
+
+<p>
+\(\forall u \in \Sigma^\*: u \in A \Leftrightarrow f(u) \in B\)
+</p>
+
+<p>
+Wir nennen \(f\) <i>Polynomzeitreduktion</i> von \(A\) auf \(B\) und schreiben
+\(A \leq_{p} B\).
+</p>
+
+<p>
+<b>Eigenschaft:</b>
+</p>
+
+<ul class="org-ul">
+<li><i>Transititvität</i>:
+\(\forall A,B,C: A \leq_p B \wedge B \leq_p C \Rightarrow A \leq_p C\)
+</li>
+<li><i>Reflexivität</i>: \(\forall A: A \leq_p A\)
+</li>
+<li>Eine Sprache ist in polynomieller Zeit (deterministisch)
+entscheidbar, wenn eine Polynomzeitreduktion dieser Sprache auf eine
+Sprache existiert, welche bekanntermaßen (deterministisch) in
+Polynomzeit berechnet werden kann. Es gilt also
+\(L \leq_p L' \wedge L' \in P \Longrightarrow L \in P\)
+</li>
+<li>Eine Sprache ist in polynomieller Zeit (nicht-deterministisch)
+entscheidbar, wenn eine Polynomzeitreduktion dieser Sprache auf eine
+Sprache existiert, welche bekanntermaßen (nicht-deterministisch) in
+Polynomzeit berechnet werden kann. Es gilt also
+\(L \leq_p L' \wedge L' \in NP \Longrightarrow L \in NP\)
+</li>
+<li>Aufgrund ihrer Eigenschaften lässt sich die Polynomzeitreduktion
+nutzen, um (formale) Sprachen bzgl. ihrer Komplexität zu vergleichen.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> NP Vollständigkeit</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Sei \(L_0 \subseteq \Sigma^\*\), dann heißt \(L_0\) <i>NP-vollständig</i>, genau
+dann wenn
+</p>
+
+<ol class="org-ol">
+<li>\(L_0 \in NP\) und
+</li>
+<li>\(\forall L \in NP: L \leq_p L_0\) (d.h. für jede Sprache \(L \in NP\)
+gibt es eine Funktion \(f\), die in polynomieller Zeit berechenbar ist
+und für die gilt \(u \in L \Longleftrightarrow f(u) \in L_0\)).
+</li>
+</ol>
+
+<p>
+<b>Beispiele für NP-vollständige Probleme:</b>
+</p>
+
+<ul class="org-ul">
+<li>\(3COLOR\)
+</li>
+<li>\(CLIQUE\)
+</li>
+<li>\(CIRCUITSAT\)
+</li>
+</ul>
+
+<p>
+NP-vollständige Probleme lassen sich vermutlich nicht effizient lösen
+(man nimmt dies an, kann es jedoch nicht beweisen). Alle bekannten
+deterministischen Algorithmen für diese Probleme erfordern
+exponentiellen Rechenaufwand.
+</p>
+
+<p>
+<b>Schema um zu zeigen, dass ein Problem</b> \(A\) <b>in P bzw. NP liegt</b>:
+</p>
+
+<ul class="org-ul">
+<li><i>Möglichkeit 1</i>: Gib eine deterministische bzw.
+nicht-deterministische TM \(T\) an, die \(A\) entscheidet und zeige, dass
+\(t_T \in \mathcal{O}(p)\) für ein Polynom \(p\) gilt, wobei \(p\) die Form
+\(p: \mathbb{N} \rightarrow \mathbb{R}^+\) mit
+\(p(n) = \sum\_{i=0}^{m} a_i n^i\) für festes \(m \in \mathbb{N}\) hat.
+</li>
+<li><i>Möglichkeit 2:</i> Zeige, dass es eine polynomzeitreduktion von \(A\) auf
+ein Problem \(B\) gibt (d.h. es gilt \(A \leq_p B\)), welches
+bekanntermaßen in \(P\) bzw. \(NP\) liegt.
+</li>
+</ul>
+
+<p>
+<b>Schema um zu zeigen, dass ein Problem</b> \(A\) <b>NP-vollständig ist:</b>
+</p>
+
+<ol class="org-ol">
+<li>Zeige, dass \(A \in NP\) gilt
+</li>
+<li>Zeige, dass es ein bekanntermaßen NP-vollständiges Problem \(B\) gibt,
+welches sich nicht-determinisitsch polynomiell auf \(A\) reduzieren
+lässt, d.h. es ist zu zeigen, dass \(B \leq_p A\) gilt. (Rationale: Da
+\(B\) NP-vollständig ist gilt \(\forall L \in NP: L \leq_p B\). Wenn
+\(B \leq_p A\) gitl, dann folgt wegen der Transitivität von \(\leq_p\),
+dass \(\forall L \in NP: L \leq_p A\).)
+</li>
+</ol>
+</div>
+</div>

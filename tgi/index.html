@@ -1,0 +1,299 @@
+---
+layout: page
+title: Index
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Theoretische Grundlagen der Informatik</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><a href="./regulaere_sprachen.html">Reguläre Sprachen</a>
+
+<ul class="org-ul">
+<li><a href="./endliche_automaten.html">Endliche Automaten</a>
+
+<ul class="org-ul">
+<li><a href="./dfa.html">DFA</a>
+</li>
+<li><a href="./nfa.html">NFA</a>
+</li>
+<li><a href="./gnfa.html">GNFA</a>
+</li>
+<li><a href="./pda.html">PDA</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li><a href="./cfl.html">Kontextfreie Sprachen</a>
+
+<ul class="org-ul">
+<li><a href="./cfg.html">Kontextfreie Grammatiken</a>
+</li>
+<li><a href="./pda.html">PDA</a>
+</li>
+</ul>
+</li>
+
+<li><a href="./turing_machinen.html">Turing Machinen</a>
+</li>
+<li><a href="./complexity.html">Komplexitätstheorie</a>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Grundbegriffe</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Folgen</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Eine endliche Folgen der Länge \(n \in \mathbb{N}\) bezeichnen wir mit
+\((a_0, \dots, a_{n-1})\). Endliche Folgen können auch als \(n\)-Tupel
+aufgefasst werden.
+</p>
+
+<p>
+Zwei Folgen/Tupel sind gleich, wenn ihre Komponenten gleich sind.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Alphabet</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Ein <i>Alphabet</i> ist eine <b>nichtleere endliche</b> Menge \(\Sigma\). Die
+Elemente eines Alphabets heißen <i>Symbole</i>.
+</p>
+
+<p>
+Ist das leere Wort Element eines Alphabets \(\Sigma\) so kennzeichnen wir
+dies durch den Index \(\epsilon\). Es gilt also
+\(\Sigma_{\epsilon}:= \Sigma \cup \{ \epsilon \}\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Wörter</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<b>Endliche</b> Folgen von Symbolen aus einem Alphabet \(\Sigma\) heißen
+<i>Wörter</i> (engl. <i>strings</i>). Wörter sind also Elemente von
+\(\Sigma^* := \{(w_0,\dots,w_{k-1}) | k \in \mathbb{N} \wedge \forall i \in \{0,\dots,k\}: w_i \in \Sigma\}\).
+</p>
+
+<p>
+Das <i>leere Wort</i> wird mit \(\epsilon\) bezeichnet. Es gilt
+\(|\epsilon| = 0\). \(\epsilon\) ist Element jeder Menge \(\Sigma^*\).
+</p>
+
+<p>
+<b>Notationskonventionen:</b>
+</p>
+
+<ul class="org-ul">
+<li>Die Anzahl der Symbole in einem Wort \(w\) bezeichnen wir mit \(|w|\).
+</li>
+<li>Die Häufigkeit, mit der ein Symbol \(s \in \Sigma\) in einem Wort \(w\)
+vorkommt bezeichnen wir mit \(|w|_s\). Beispielsweise bezeichnet
+\(|w|_1\) die Anzahl der Einsen in \(w\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Formale Sprache</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Sei \(\Sigma\) ein Alphabet, dann heißt eine Teilmenge von \(\Sigma^*\)
+<i>formale Sprache</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Übersicht über Beweisschemata</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Möglichkeiten zu zeigen, dass eine Sprache \(L\) &#x2026;
+</p>
+
+<p>
+<b>&#x2026; regulär ist:</b>
+</p>
+
+<ol class="org-ol">
+<li>Mit Hilfe eines DFA oder NFA: Gib einen DFA oder NFA \(M\) an (Schritt
+<ol class="org-ol">
+<li>und zeige, dass \(L(M) = L\) gilt (Schritt 2).
+</li>
+</ol>
+</li>
+<li>Mit Hilfe eines regulären Ausdrucks: Stelle \(L\) als
+<a href="./regulaere_ausdruecke.html">regulären Ausdruck</a> dar.
+</li>
+<li>Mit Hilfe der Operationen unter denen reguläre Sprachen abgeschlossen
+sind: Stelle \(L\) als Vereingung, Konkatenation, Kleene-Stern, Schnitt
+und Komplement anderer (bekanntermaßen) regulärer Sprachen dar.
+</li>
+<li>Zeige dass \(L\) endlich ist: Dann ist \(L\) regulär, da jede endliche
+Sprache regulär ist.
+</li>
+</ol>
+
+<p>
+<b>&#x2026; nicht regulär ist:</b>
+</p>
+
+<ol class="org-ol">
+<li>Mit Hilfe des Pumping Lemma für reguläre Sprachen: &#x2026;
+</li>
+<li>Mit Hilfe der regulären Operationen: Erzeuge durch Vereinigung,
+Konkatenation und Kleene-Stern von \(L\) mit ausschließlich regulären
+Sprachen eine (bekannterweise) nicht reguläre Sprache. Dann folgt
+aufgrund der Abgeschlossenheit regulärer Sprachen bzgl. regulärer
+Operationen, dass \(L\) nicht regulär ist.
+</li>
+</ol>
+
+<p>
+<b>&#x2026; kontextfrei ist:</b>
+</p>
+
+<ol class="org-ol">
+<li>Mit Hilfe einer CFG: Gib einen CFG \(G\) an und zeige, dass \(L(G) = L\)
+gilt (i.d.R. durch Induktion über die Wortlänge und durch Induktion
+über die Länge der Ableitung mit Fallunterscheidung entsprechend den
+Regeln der Grammatik oder den Regeln, nach denen das Wort aufgebaut
+ist).
+</li>
+<li>Mit Hilfe eines PDA: Gib einen PDA \(P\) an und zeige, dass \(L(P) = L\)
+gilt. Man kann das über eine strukturelle Induktion über die Worte
+von \(L\) versuchen. In anderen Fälle ist das oft schwierig. Hier kann
+man versuchen zu zeigen, dass man durch Lesen eines Teilworts in
+einen Zustand \(q\) mit Stackinhalt \(s\) kommt und dass man aus diesem
+Zustand mit dem gegebnen Stackinhalt durch lesen des Restwortes in
+den Endzustand kommt. I.d.R. sind Korrektheitsbeweise für eine
+Grammatik einfacher und daher vorzuziehen.
+</li>
+<li>Mit Hilfe der Vereinigung und des Schnitts: Stelle \(L\) als Vereingung
+anderer (bekannterweise) kontextfreier Sprachen oder als Schnitt
+(bekannterweise) regulärer Sprachen mit kontextfreien Sprachen dar.
+</li>
+</ol>
+
+<p>
+<b>&#x2026; nicht kontextfrei ist:</b>
+</p>
+
+<ol class="org-ol">
+<li>Mit Hilfe des Pumping Lemma für kontextfreie Sprachen
+</li>
+<li>Mit Hilfe der Vereinigung: Erzeuge durch Vereinigung von \(L\) mit
+ausschließlich kontextfreien Sprachen eine (bekannterweise) nicht
+kontextfreie Sprache. Dann folgt aufgrund der Abgeschlossenheit
+kontextfreier Sprachen bzgl. Vereinigung, dass \(L\) nicht regulär ist.
+(weitere Operationen unter denen CFL abgeschlossen sind, sind:
+Konkatenation, Kleene Stern, aber diese waren nicht Teil der
+Vorlesung)
+</li>
+<li>Mit Hilfe des Durschnitts: Erzeuge durch Schnitt von \(L\) mit
+ausschließlich regulären Sprachen eine (bekannterweise) nicht
+reguläre Sprache. Dann folgt aufgrund der Abgeschlossenheit
+kontextfreier Sprachen bzgl. des Schnitts mit regulären Sprachen,
+dass \(L\) nicht regulär ist.
+</li>
+</ol>
+
+<p>
+<b>&#x2026; Turingerkennbar ist:</b>
+</p>
+
+<ol class="org-ol">
+<li>Mit Hilfe einer TM/NTM/MTM: Gib eine TM/NTM/MTM \(T\) an und zeige,
+dass \(L(T) = L\) gilt. Für uns genügt dabei eine informelle
+Beschreibung, also eine Beschreibung durch ein Flow-Chart oder
+Pseudocode oder eine graphische Beschreibung von \(T\). Eine formale
+Beschreibung ist für uns zu aufwendig. Außerdem sind
+Korrektheitsbeweis nicht erforderlich, da sie ebenfalls zu aufwendig
+sind (und nicht Teil der Vorlesung) sind.
+</li>
+</ol>
+
+<p>
+<b>&#x2026; (Turing)-entscheidbar/(Turing)-berechenbar ist:</b>
+</p>
+
+<ol class="org-ol">
+<li>Mit Hilfe einer TM/NTM/MTM: Gib eine TM/NTM/MTM \(T\) an und zeige,
+dass \(L(T) = L\) gilt. Für uns genügt dabei eine informelle
+Beschreibung, also eine Beschreibung durch ein Flow-Chart oder
+Pseudocode oder eine graphische Beschreibung von \(T\). Eine formale
+Beschreibung ist für uns zu aufwendig. Außerdem sind
+Korrektheitsbeweis nicht erforderlich, da sie ebenfalls zu aufwendig
+sind (und nicht Teil der Vorlesung) sind.
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Übersicht über Konstruktionsverfahren:</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+<b>NFA -&gt; DFA:</b> Potenzmengenkonstruktion (s. Vorlesung vom 04.11.2015)
+</p>
+
+<p>
+<b>regulärer Ausdruck -&gt; NFA:</b> induktive Konstruktion s.
+<a href="./regulaere_ausdruecke.html">Reguläre Ausdrücke</a>
+</p>
+
+<p>
+<b>NFA -&gt; GNFA:</b> jeder NFA ist ein GNFA.
+</p>
+
+<p>
+<b>GNFA -&gt; regulärer Ausdruck:</b> Eliminationsregel (s. Vorlesung
+11.11.2015)
+</p>
+
+<p>
+<b>GNFA -&gt; NFA:</b> müsste über die Umkehrung der Eliminationsregel möglich
+sein
+</p>
+
+<p>
+<b>CFG -&gt; PDA:</b> s. Buch (Idee: pushe Variablen der Grammatik auf den
+Stack)
+</p>
+
+<p>
+<b>PDA -&gt; CFG:</b> s. Vorlesung vom 02.12.15
+</p>
+
+<p>
+<b>CFG in Chomsky Normal Form bringen:</b> s. <a href="./cfg.html">CFG</a>
+</p>
+
+<p>
+<b>DFA -&gt; CFG:</b> s. <a href="./cfg.html">CFG</a>
+</p>
+
+<p>
+<b>MTM -&gt; TM:</b> s. Vorlesung vom 09.12.2015 und Ergänzung k-tape-dtm vom
+20.12.2015
+</p>
+
+<p>
+<b>NTM -&gt; MTM:</b> s. Vorlesung 15.12.2015 und Ergänzung ntm vom 16.12.2015
+</p>
+</div>
+</div>
+</div>

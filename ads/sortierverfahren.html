@@ -1,0 +1,172 @@
+---
+layout: page
+title: Sortierverfahren
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Sortieralgorithmen</h2>
+<div class="outline-text-2" id="text-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">stabile Sortierverfahren</th>
+<th scope="col" class="left">instabile Sortierverfahren</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><i>Insertionsort</i></td>
+<td class="left"><i>Selectionsort</i></td>
+</tr>
+
+<tr>
+<td class="left"><i>Bubblesort</i></td>
+<td class="left"><i>Quicksort</i></td>
+</tr>
+
+<tr>
+<td class="left"><i>Radixsort</i></td>
+<td class="left"><i>Heapsort</i></td>
+</tr>
+
+<tr>
+<td class="left"><i>Mergesort</i></td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><i>Bucketsort</i></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Übersicht über Laufzeiten</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sortierverfahren</th>
+<th scope="col" class="left">Worst-Case Laufzeiten</th>
+<th scope="col" class="left">Average-Case Laufzeiten</th>
+<th scope="col" class="left">Best-Case Laufzeiten</th>
+<th scope="col" class="left">zusätzlicher Speicherbedarf</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><i>Insertionsort</i></td>
+<td class="left">\(\mathcal{O}(n^2), \Omega(n^2)\)</td>
+<td class="left">\(\mathcal{O}(n^2)\)</td>
+<td class="left">\(\mathcal{O}(n)\)</td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left"><i>Selectionsort</i></td>
+<td class="left">\(\mathcal{O}(n^2), \Omega(n^2)\)</td>
+<td class="left">\(\mathcal{O}(n^2)\)</td>
+<td class="left">\(\mathcal{O}(n^2)\)</td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left"><i>Bubblesort</i></td>
+<td class="left">\(\mathcal{O}(n^2), \Omega(n^2)\)</td>
+<td class="left">\(\mathcal{O}(n^2)\)</td>
+<td class="left">\(\mathcal{O}(n)\)</td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left"><i>Quicksort</i></td>
+<td class="left">\(\mathcal{O}(n^2), \Omega(n^2)\)</td>
+<td class="left">\(\mathcal{O}(n \log n)\)</td>
+<td class="left">\(\mathcal{O}(n \log n)\)</td>
+<td class="left">\(\mathcal{O}(\log n)\)</td>
+</tr>
+
+<tr>
+<td class="left"><i>Mergesort</i></td>
+<td class="left">\(\mathcal{O}(n \log n), \Omega(n \log n)\)</td>
+<td class="left">dito</td>
+<td class="left">dito</td>
+<td class="left">\(\mathcal{O}(n \log n)\)</td>
+</tr>
+
+<tr>
+<td class="left"><i>Bucketsort</i></td>
+<td class="left">\(\mathcal{O}(n+m), \Omega(n+m)\)</td>
+<td class="left">dito</td>
+<td class="left">dito</td>
+<td class="left">\(\mathcal{O}(k)\)</td>
+</tr>
+
+<tr>
+<td class="left"><i>Radixsort</i></td>
+<td class="left">\(\mathcal{O}(d(n+k)), \Omega(d(n+k))\)</td>
+<td class="left">dito</td>
+<td class="left">dito</td>
+<td class="left">\(\mathcal{O}(n)\)</td>
+</tr>
+
+<tr>
+<td class="left"><i>Heapsort</i></td>
+<td class="left">\(\mathcal{O}(n \log n), \Omega(n \log n)\)</td>
+<td class="left">dito</td>
+<td class="left">dito</td>
+<td class="left">-</td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li>zu zusätzlichem Speicherbedarf: "-" bedeutet konstatner zusätzlicher
+Speicherbedarf (in \(\mathcal{O}(1)\))
+</li>
+<li>zu Radixsort: \(d\) ist die Anzahl der Ziffern, \(n\) die Anzahl der
+Elemente im Feld und \(k\) die Anzahl der möglichen Werte jeder Ziffer.
+</li>
+<li>zu Bucketsort: \(n\) ist die Anzahl der Elemente im Feld ist und \(m\)
+   die Anzahl der Buckets
+</li>
+<li>zu Bubblesort: gemeint ist eine Version von Bubblesort, die abbricht,
+sobald in einer Iteration keine Vertauschungen vorgenommen wurden.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Untere Schranken von vergleichsbasierten Sortieralgorithmen</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Vergleichsbasierte Sortierverfahren, die \(n\) Elemente mit Hilfe von
+Vergleichen der Elementen miteinander sortieren, können nicht schneller
+als \(\Omega (n \log n)\) sein.
+</p>
+</div>
+</div>
+</div>

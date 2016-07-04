@@ -1,0 +1,327 @@
+---
+layout: page
+title: Matrix
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Matrix</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Der Raum der Matrizen \(\mathbb{K}^{n \times m}\) bildet zusammen mit der
+<i>Matrizenaddition</i> \(A + B\) und der <i>Skalarmultiplikation</i> \(\lambda A\)
+einen \(\mathbb{K}\)-Vektorraum.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Matrixaddition und Skalarmultiplikation</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Sei \(A = (a_{ij}), B := (b_{ij}) \in \mathbb{K}^{m \times n}\) und
+\(\lambda \in \mathbb{K}\). Dann gilt:
+</p>
+
+<ul class="org-ul">
+<li><b>Matrizenaddition:</b>
+   \(A + B = (a_{ij} + bij) \in \mathbb{K}^{m \times n}\)
+</li>
+<li><b>Skalarmultiplikation:</b> \(\lambda A = (\lambda a_{ij})\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Standardabbildung einer Matrix</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Die <i>Standardabbildung</i> einer Matrix
+\(A = (a_{ij}) \in \mathbb{K}^{m \times n}\) von \(\mathbb{K}^n\) nach
+\(\mathbb{K}^m\) ist für \(x \in \mathbb{K}^m\) gegeben durch die
+Maxtrix-Vektor-Multiplikation \(A \mathbf{x}\)
+</p>
+
+<p>
+Die Standardabbildung einer Matrix ist eine lineare Abbildung.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Matrixmultiplikation</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+\(\cdot : \mathbb{K}^{m \times n} \times \mathbb{K}^{n \times r} \rigtharrow \mathbb{K}^{m \times r}\)
+</p>
+
+<p>
+Sei \(B \in \mathbb{K}^{n \times r}, A := \mathbb{K}^{m \times n}\)
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>entspricht Kompositon linearer Abbildungen
+</li>
+<li>Kommutativgesetz gilt im Allgemeinen nicht, d.h. \(AB \neq BA\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> quadratische Matrizen</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Sei \(A: \mathbb{K}^{n} \rightarrow \mathbb{K}^{n}\) eine lineare
+Abbildung und sei \(A \in \mathbb{K}^{n \times n}\) die quadratische
+Abbildungsmatrix.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Die Menge der regulären Matrizen \(GL(n,\mathbb{K})\) bildet zusammen
+mit der Matrixmultiplikation eine (nicht kommutative)
+<i>Gruppe</i>.
+</li>
+<li>Sei \(A \in \mathbb{K}^{n \times n}\), dann gelten folgende
+Äquivalenzen:
+
+<p>
+\(rang(A) = n \Longleftrightarrow A \text{ ist surjektiv} \Longleftrightarrow A \text{ ist injektiv} \Longleftrightarrow \dim(\ker(A)) = 0 \Longleftrightarrow A \text{ ist bijektiv} \Longleftrightarrow A \text{ ist regulär}\)
+</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> General Linear Group</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Die Menge der Matrizen \(A \in \mathbb{K}^{n \times n}\) die ein
+multiplikatives Inverse beitzen, heißt \(GL(n, \mathbb{K})\) (GL = genaral
+linear group) bildet eine Gruppe, d.h. es gilt
+</p>
+
+<p>
+$$GL(n, \mathbb{K}) = \{ A \in \mathbb{K}^{n \times n} | \exists A^{-1} \in \mathbb{K}^{n \times n}: AA^{-1} = I_{n} \}$$
+</p>
+
+<ul class="org-ul">
+<li>\(I_{n}\) (Einheitsmatrix) ist das neutrale Element in
+\(\mathbb{K}^{n \times n}\) bzgl. der Matrixmultiplikation.
+</li>
+</ul>
+
+<p>
+Invertiere Matrizen heißen <i>regulär</i>, nicht invertierbare heißen
+<i>singulär</i>.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Sein \(A, B\) invertierbar, dann gilt: \((AB)^{-1} = B^{-1}A^{-1}\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Quadratische Matrizen:</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Sei \(A \in \mathbb{K}^{n \times n}\), dann sind folgende Aussagen
+äquivalten:
+</p>
+
+<p>
+(i). \(A\) ist injektiv (ii). \(A\) ist surjektiv (iii). \(A\) ist bijektiv
+(iv). \(A\) ist regulär (v). \(\dim (\ker A) = 0\) (vi). \(rang(A) = n\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Dreiecksmatrix</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Sei \(A \in \mathbb{K}^{n \times n}\) eine quadratische Matrix. Dann gilt:
+</p>
+
+<ul class="org-ul">
+<li>wenn
+\(\forall i,j \in \mathbb{N}\_{\leq n}: i > j \Rightarrow a_{ij} = 0\)
+gilt ist \(A\) <i>obere Dreiecksmatrix</i>
+</li>
+<li>wenn
+\(\forall i,j \in \mathbb{N}\_{\leq n}: i < j \Rightarrow a_{ij} = 0\)
+gilt ist \(A\) <i>untere Dreiecksmatrix</i>
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>eine untere/obere Dreiecksmatrix ist genau dann regulär, wenn alle
+Diagonaleinträge \(a_{ii} \neq 0\) sind.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> Transponierte Matrizen</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+Sei \(A \in \mathbb{K}^{m \times n}\) mit \(A = (a_{ij})\) eine Matrix. Dann
+ist \(A^{T} \in mathbb{K}^{n \times m}\) mit \(A^{T} = (a_{ji})\).
+</p>
+</div>
+
+<div id="outline-container-sec-1-8-1" class="outline-4">
+<h4 id="sec-1-8-1"><span class="section-number-4">1.8.1</span> Eigenschaften</h4>
+<div class="outline-text-4" id="text-1-8-1">
+<ul class="org-ul">
+<li>\((A^{T})^{T} = A\)
+</li>
+<li>die Transponierte der Summe ist die Summe der Transponierten, d.h.
+\((A+B)^{T} = A^{T} + B^{T}\)
+</li>
+<li>\((\lambda A)^{T} = \lambda A^{T}\)
+</li>
+<li>\((AB)^{T} = B^{T} A^{T}\)
+</li>
+<li>Die Inverse der Transponierten ist die Transponierte der Inversen:
+Sei \(A \in GL(n, \mathbb{K})\) gilt, dass auch
+\(A^{T} \in GL(n, \mathbb{K})\) und \((A^{T})^{-1} = (A^{-1})^{T}\)
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> Symmterische Matrizen</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+Eine quadratische Matrix \(A \in \mathbb{R}^{n \times n}\) heißt
+symmetrisch, wenn \(A^{T} = A\) gilt.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Alle Eigenwerte symmerischer reeler Matrizen sind reell.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-10" class="outline-3">
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> Definite Marizen</h3>
+<div class="outline-text-3" id="text-1-10">
+<p>
+Sei \(A \in \mathbb{R}^{n \times n}\) eine symmetrische Matrix und
+\(x \in \mathbb{R}^n \setminus \{0\}\), dann heißt \(A\)
+</p>
+
+<ul class="org-ul">
+<li><i>positiv definit</i>, wenn \(\langle Ax,x\rangle = x^T Ax > 0\)
+</li>
+<li><i>positiv semi-definit</i>, wenn \(\langle Ax,x\rangle = x^T Ax \geq 0\)
+</li>
+<li><i>negativ definit</i>, wenn \(\langle Ax,x\rangle = x^T Ax < 0\)
+</li>
+<li><i>negativ semi-definit</i>, wenn \(\langle Ax,x\rangle = x^T Ax \leq 0\)
+</li>
+</ul>
+
+<p>
+Ist \(A\) weder positiv noch negativ semi-definit, dann heißt \(A\)
+<i>indefinit</i>.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>\(A \in \mathbb{R}^{n \times n}\) ist genau dann positiv definit, wenn
+ein \(\mu > 0\) existiert, sodass
+\(\forall x \in \mathbb{R}^n \setminus \{0\}: \langle Ax, x \rangle \geq \mu \|x\|_2^2\)
+</li>
+<li>\(A \in \mathbb{R}^{n \times n}\) ist genau dann negativ definit, wenn
+ein \(\mu > 0\) existiert, sodass
+\(\forall x \in \mathbb{R}^n \setminus \{0\}: \langle Ax, x \rangle \leq -\mu \|x\|_2^2\)
+</li>
+<li>Eine symmetrische Matrix \(A \in \mathbb{R}^{n \times n}\) ist genau
+dann positiv definit, wenn \(\lambda > 0\) für alle Eigenwerte
+\(\lambda\) von \(A\) gilt.
+</li>
+<li>Eine symmetrische Matrix \(A \in \mathbb{R}^{n \times n}\) ist genau
+dann positiv semi-definit, wenn \(\lambda \geq 0\) für alle Eigenwerte
+\(\lambda\) von \(A\) gilt.
+</li>
+<li>Eine symmetrische Matrix \(A \in \mathbb{R}^{n \times n}\) ist genau
+dann negativ definit, wenn \(\lambda < 0\) für alle Eigenwerte
+\(\lambda\) von \(A\) gilt.
+</li>
+<li>Eine symmetrische Matrix \(A \in \mathbb{R}^{n \times n}\) ist genau
+dann negativ semi-definit, wenn \(\lambda \leq 0\) für alle Eigenwerte
+\(\lambda\) von \(A\) gilt.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-11" class="outline-3">
+<h3 id="sec-1-11"><span class="section-number-3">1.11</span> Rang einer Matrix</h3>
+<div class="outline-text-3" id="text-1-11">
+<p>
+Seien \(a_1, ... a_n\) die Spaltenvektoren und \(a^1, ... a^n\) die
+Zeilenvektoren einer Matrix \(A\). Dann gilt:
+</p>
+
+<ul class="org-ul">
+<li>Spaltenrang A = \(dim span(a_1, ..., a_n)\) und
+</li>
+<li>Zeilenrang A = \(dim span(a^1, ..., a^n)\) und
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b> TODO
+</p>
+
+<ul class="org-ul">
+<li>Es gilt Spaltenrang A = Zeilenrang A.
+</li>
+<li>eine <i>lineare Abbildung</i> ist genau dann
+injektiv, wenn die Abbildungsmatrix \(A^{m \times n}\) vollen
+Spaltenrang hat, also \(rang(A) = n\) gilt.
+</li>
+<li>eine <i>lineare Abbildung</i> ist genau dann
+surjektiv, wenn die Abbildungsmatrix \(A^{m \times n}\) vollen
+Zeilenrang hat, also \(rang(A) = m\) gilt.
+</li>
+<li>eine <i>lineare Abbildung</i> ist genau dann
+bijektiv, wenn die Abbildungsmatrix \(A^{m \times m}\) quadratisch ist
+und vollen Rang hat, also \(rang(A) = m\) gilt.
+</li>
+</ul>
+</div>
+</div>
+</div>

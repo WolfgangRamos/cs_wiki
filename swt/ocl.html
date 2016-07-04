@@ -1,0 +1,105 @@
+---
+layout: page
+title: Ocl
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Object Constraint Language (OCL)</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Die OCL ist eine deklarative Sprache zur Beschreibung von Zusicherungen
+für OO-Modelle. Die OCL ist Teil der <i>UML</i>.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> OCL-Ausdrücke</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>OCL-Ausdrücke haben den Typ <code>boolean</code>
+</li>
+<li>boolesche Operatoren in OCL-Ausdrücken:
+
+<ul class="org-ul">
+<li>Gleichheit: <code>=</code>
+</li>
+<li>Ungleichheit: <code>&lt;&gt;</code>
+</li>
+<li>UND: <code>and</code>
+</li>
+<li>ODER: <code>or</code>
+</li>
+<li>NOT: <code>not</code>
+</li>
+</ul>
+</li>
+
+<li>Kontext:
+
+<ul class="org-ul">
+<li>einer Instanz eine Klasse: <code>context: ⟨Klasse⟩</code>
+</li>
+<li>eines Methodenaufrufs: <code>context: ⟨Klasse⟩::⟨Methode⟩(⟨Argumente⟩)</code>
+</li>
+<li>eines Methodeaufrufs, mit einer Instanz einer bestimmten Klasse:
+<code>context: ⟨Klasse⟩::⟨Methode⟩(x: ⟨Klasse⟩, ...)</code>)
+</li>
+<li>mit <code>self</code> kann auf die konkret zu prüfende Instanz zugegriffen
+werden<br  />
+</li>
+</ul>
+</li>
+
+<li>Invarianten (<code>inv</code>):
+</li>
+<li>Vorbedingungen (<code>pre</code>):
+</li>
+<li>Nachbedingungen (<code>post</code>):
+
+<ul class="org-ul">
+<li>in Nachbedingungen kann auf den Zustand eines Ausdrucks vor
+Methodenaufruf mit <code>⟨Ausdruck⟩@pre</code> zugegriffen werden
+</li>
+<li>mit <code>result</code> kann auf den Rückgabewert einer Methode zugegriffen
+werden
+</li>
+</ul>
+</li>
+
+<li><i>Collections</i>: Mengen von Objekten
+
+<ul class="org-ul">
+<li><i>Set</i>: Menge
+</li>
+<li><i>Bag</i>: Multimenge
+</li>
+<li><i>Sequence</i>: Sequenz von Objekten
+</li>
+<li><code>⟨Klasse⟩.allInstances()</code>: Menge aller Instanzen einer Klasse
+</li>
+<li>Operationen auf Collections:
+
+<ul class="org-ul">
+<li><code>⟨Collection⟩-&gt;size</code>: Anzahl der Objekte in der Collection?
+</li>
+<li><code>⟨Collection⟩-&gt;isEmpty</code>: ist die Collection leer?
+</li>
+<li><code>⟨Collection⟩-&gt;notEmpty</code>: ist die Collection nicht leer?
+</li>
+<li><code>⟨Collection⟩-&gt;count(⟨Element⟩)</code>: wie oft kommt <code>⟨Element⟩</code> in
+der Collection vor?
+</li>
+<li><code>⟨Collection⟩-&gt;exists(x:⟨Klasse⟩ | ⟨Ausdruck mit x⟩)</code>: gibt es
+ein Element, dass den Ausdruck erfüllt?
+</li>
+<li><code>⟨Collection⟩-&gt;forAll(x:⟨Klasse⟩ | ⟨Ausdruck mit x⟩)</code>: erfüllen
+alle Elemente einer Collection den Ausdruck?
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>

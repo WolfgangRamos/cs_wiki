@@ -1,0 +1,60 @@
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Datenbanken</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> <span class="todo TODO">TODO</span> konstante Werte</h3>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Build in Predicates</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Bei Datenbankanfragen darf man auch Relationen und Funktionen
+benutzen, die eine feste Beduetung haben, z.B. "\(<\)" auf den ganzen
+Zahlen, oder "\(+\)" auf Additionen.
+</p>
+
+<p>
+Wir erlauben das auch:
+</p>
+
+<p>
+Wir geben Relationssymbole/Funktionsymnole mit fester Interpretation
+von, also z.B. wenn \(M_s = \Z\) können wir ein Synbol \(<\)" mit
+\(\Sigma(<) = S\:S\) haben und wir fordern für jede Struktur
+(Datenbankzustände): \(<^{\St}\) = "natürliche kleiner Relation auf
+ganzen Zahlen."
+</p>
+
+<p>
+Notation: 
+</p>
+
+<p>
+\(\al \dots x_0^{Number} < x_1^{Number}), x_0, x_1^{String}/"Meier"\ar\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Active Universe</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Das <b>active universe</b> Bezeichnet die Menge der Werte zu allen Sorten,
+die in einem gegebenen Datenbankzustand \(\St\) vorkommen.
+</p>
+
+<p>
+Anfragen, wie z.B. \(\al \top, x_0^{s}\ar^{\St}\) würden alle möglichen
+Werte aus \(s^{\St}\) liefern, auch solchen, die <i>nicht</i> in den Relationen
+des aktuellen Datenzustands \(\St\) vorkommen.
+</p>
+
+<p>
+Daher beschränken wir Anfragen dieser Art auf das <i>acitve universe</i>. D.h. wir
+schreiben sie um zu Anfragen der Form: \(\al \top \wedge, \dots\ar\).
+</p>
+</div>
+</div>
+</div>

@@ -1,0 +1,217 @@
+---
+layout: page
+title: Lineare_gleichungssysteme
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Lineare Gleichungssysteme (LGS)</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Seien \(x_j, b_i, a_{ij} \in \mathbb{K}\) für \(1 \leq i \leq m\) und
+\(1 \leq j \leq n\), dann lässt sich das lineare Gleichungssystem
+</p>
+
+<!-- TODO insert picture -->
+
+<p>
+kompakt schreiben als \(Ax=b\) mit
+</p>
+
+<ul class="org-ul">
+<li><i>Koeffizientenmatrix</i> \(A=(a_{ij}) \in \mathbb{K}^{m \times n}\)
+</li>
+<li><i>Lösungsvektor</i> \(x = (x_{j}) \in \mathbb{K}^{n}\) und
+</li>
+<li><i>rechte Seite</i> \(b = (b_{i}) \in \mathbb{K}^{m}\).
+</li>
+</ul>
+
+<p>
+Wenn \(b \neq 0\), dann heißt das LGS <i>inhoogen</i> und \(Ax=0\), das
+zugehörige <i>homogene</i> LGS.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Eigenschaften</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Wenn \(A \in GL(n, \mathbb{K})\), dann hat das LGS \(Ax = b\) eine
+eindeutige Lösung.
+</li>
+<li>Multipliziren der Gleichung mit regulären Matrizen
+\(S \in GL(m, \mathbb{K})\) ändert die Lösung nicht, d.h. es gilt:
+\(Ax= b \Leftrightarrow SAx = Sb\).
+</li>
+<li>Ist \(x\) <i>eine</i> Lösung von \(Ax=b\), dann gilt für die Lösungsmenge von
+\(Ax=b\):
+\(\{z \in \mathbb{K}^{n} | Az=b \} = \{x+y \in \mathbb{K}^{n} | y \in \ker(A)\}\).
+Anders ausgedrückt: Wenn man eine Lösung kennt und den \(\ker(A)\),
+dann kann man die Lösungsmenge bestimmen.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Lösbarkeit linearer Gleichungsssteme</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Sei \(A \in \mathbb{K}^{m \times n}\)
+</p>
+
+<p>
+<b>Definition:</b> \(rang(A,b)\) bezeichne den Rang der um den Spaltenvektor
+\(b\) erweiterten Matrix \((A|b)\).
+</p>
+
+<ul class="org-ul">
+<li>Es sind äquivalent:
+
+<ul class="org-ul">
+<li>\(Ax=b\) hat eine Lösung
+</li>
+<li>\(b \in \Im (A)\)
+</li>
+<li>\(rang(A) = rang(A,b)\)
+</li>
+</ul>
+</li>
+
+<li>\(Ax=b\) ist genau dann lösbar, wenn \(rang(A) = rang(A,b)\) gilt
+</li>
+<li>\(Ax=b\) ist genau dann eindeutig lösbar, wenn
+\(rang(A) = rang(A,b) = n \leq m\) gilt
+</li>
+<li>\(Ax=b\) ist nicht lösbar, wenn \(rang(A,b) > rang(A)\) gilt
+</li>
+
+<li>Es gilt \(rang(A)=n \leq m\), genau dann, wenn \(\ker(A) = \\{0\\}\).
+</li>
+<li>Falls \(Ax=b\) genau eine Lösung besitzt, dann gilt
+\(\ker(A) = \\{0\\}\).
+</li>
+<li>Falls \(\ker (A) = \\{0\\}\), so besitzt \(Ax=b\) maximal eine Lösung.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Bestimmung der Lösungsmenge</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<b>Vorgehen:</b>
+</p>
+
+<p>
+(a). Finde eine spezielle Lösung eines inhomogenen LGS und (b). <i>alle</i>
+Lösungen des zugehörigen homogenen LGS
+</p>
+
+<p>
+<b>Techniken:</b>
+</p>
+
+<ol class="org-ol">
+<li>"Vorwärts- und Rückwertseinsetzen"
+</li>
+<li>"Gaußsches Eliminierungsverfahren"
+</li>
+</ol>
+</div>
+
+<div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> Vorwärts- und Rückwertseinsetzen</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+Sei \(A\) eine reguläre obere Dreiecksmatrix. Dann erhält man eine
+eindeutige Lösung von \(Ax=b\) durch die folgende Vorschrift
+(<i>Rückwärtseinsetzen</i>):
+</p>
+
+<p>
+\(x_m\)
+</p>
+
+<p>
+Sei \(A\) eine reguläre untere Dreiecksmatrix. Dann erhält man eine
+eindeutige Lösung von \(Ax=b\) durch die folgende Vorschrift
+(<i>Vorwärtsseinsetzen</i>):
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> Gaußsches Eliminierungsverfahren</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+Eine Matrix befindet sich in <i>Zeilen-Stufenform</i> (ZSF), wenn
+</p>
+
+<p>
+(a). die Nichtnullzeilen oberhalt aller Nullzeilen stehen. (b). die
+Anzahl der links stehenden Nullen in den Nichtnullzeilen von oben nach
+unten echt größer wird.
+</p>
+
+<ol class="org-ol">
+<li>Jede obere Dreiecksmatrix ist bereits in Zeilen-Stufenform.
+</li>
+<li>Wenn ein quadratische Matrix in Zeilen-Stufenform ist, dann ist sie
+auch eine oberer Dreicksmatrix.
+</li>
+</ol>
+
+<p>
+<b>Idee:</b>
+</p>
+
+<p>
+Überführe \(A\) durch die folgenden <i>Zeilenumformungen</i> in ZSF
+</p>
+
+<ol class="org-ol">
+<li>Vertauschen zweier Zeilen
+</li>
+<li>Multiplikation einer Zeile mit einem Skalar \(\lambda \in mathbb{K}\)
+</li>
+<li>Addieren des \(\lambda\)-fachen einer Zeile \(j\) zu einer Zeile \(i\).
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-3" class="outline-4">
+<h4 id="sec-1-3-3"><span class="section-number-4">1.3.3</span> Rezept für allgmeine LGS</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<ol class="org-ol">
+<li><b>Umformung der Matrix in ZSF:</b>
+
+<ol class="org-ol">
+<li>Fall 1: in einer der unteren Nullzeilen ist der Koefffizient der
+rechten Seite \(\neq 0\). Dann hat \(Ax=b\) keine Lösung, denn
+\(rang(A,b) = rang(A) + 1\). Dann ist man fertig.
+</li>
+<li>Fall 2: alle Nullzeilen haben auf der rechten Seite \(\hat{b}\)
+einen Nulleintrag. Dann gilt \(rang(A) = rang(A,b)\). Also existiert
+mindestesn eine Lösung.
+</li>
+</ol>
+</li>
+
+<li><b>Finde spezielle Lösung des inhomogenen Systems:</b> Für alle Spalten
+\(l\), die entweder eine Nullspalte sind oder deren unterster
+Nichtnulleintrag nicht am Anfang einer Zeile steht, setze \(x_l = 0\).
+Die übrigen \(x_j\) erhält man durch Rückwärtseinsetzen.
+</li>
+<li><b>Finde alle Lösungen des homogenen Systems:</b> Alle im 2. Schritt auf
+\(0\) gesetzten Komponenten \(x_l\) werden zu freien Parametern und
+bilden eine neue rechte Seite. Die übrigen Komponenten ergeben sich
+dann wieder durch Rückwärtseinsetzen
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>

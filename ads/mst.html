@@ -1,0 +1,167 @@
+---
+layout: page
+title: Mst
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Minimal spannender Baum</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sei \(G=(V,E)\) ein <i>ungerichteter Graph</i>, dann
+heißt ein Graph \(G' = (V',E')\) <i>Teilgraph</i> von \(G\), wenn
+\(V' \subseteq V\) und
+\(E' \subseteq E \cap \\{ \\{u,v\\} | u,v \in V' \wedge u \neq v\\}\).
+\(G'\) heißt dann auch der von \(V'\) <i>induzierte Teilgraph von</i> \(G\) und
+wird als \(G[V']\) bezeichnet.
+</p>
+
+<p>
+Sei \(G = (V,E)\) ein ungerichteter, zusammenhängender Graph und
+\(w: E \rightarrow \mathbb{R}\) eine
+<i>(Kanten-)Gewichtungsfunktion</i>. Dann heißt
+ein Teilgraph \(T=(V_T, E_T)\) von \(G\) <i>minimal spannender Baum</i> (MST) von
+\(G\), wenn:
+</p>
+
+<ol class="org-ol">
+<li>\(V_T = V\) und \(E_T \subseteq E\)
+</li>
+<li>\(T\) ist zusammenhängend und kreisfrei (also ein Baum)
+</li>
+<li>\(T\) hat minimales Gesamtgewicht \(w(T) = \sum_{e \in E_T} w(e)\).
+</li>
+</ol>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Bestimmen von minimal spannenden Bäumen</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Algorithmus von Kruskal</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+<b>Idee:</b> Wähle iterativ Kanten mit minimalem Gewicht, ohne dass ein Kreis
+entsteht.
+</p>
+
+<p>
+<b>Algorithmus:</b>
+</p>
+
+<pre class="example">
+MST-Kruskal(G=(V,E), w) {  // w = Kantengewichtungsfunktion
+
+  Set E_T = {}; // leere Menge
+  integer n = |V|;
+  integer m = |E|;
+  erzeuge Feld von Sets v mit n Elementen;
+
+  for i = 1 to n do
+    erzeuge Menge v[i] = {i};
+  od
+
+  sortiere die Kanten nach den Gewichten, so dass w(e_1) &lt;= w(e_2) &lt;= ... &lt;= w (e_m);
+
+  for k = 1 to m do
+    bestimme Endpunkte v,w von Kante e_k und Mengen v[i] und v[j], die v und w enthalten;
+
+    if i != j then // d.h. wenn v und w in unterschiedlichen Mengen liegen
+      ersetzte v[i] und v[j] durch eine Menge v[i] ∪ v[j];
+      E_T = E_T ∪ {{v,w}}; // nur wenn sich dadurch kein Kreis ergibt!!!
+    fi
+  od
+  return Baum T = (V,E_T);
+}
+</pre>
+
+<p>
+<b>Eigenschaften des Algorithmus:</b>
+</p>
+
+<ol class="org-ol">
+<li>Die Mengen \(v[i]\) geben zu jedem Zeitpunkt die
+Zusammenhangskomponenten des momentan erzeugten Graphen \((V, E_T)\) an
+</li>
+<li>Durch die Zusammenhangskomponenten wird implizit getestet, ob durch
+die betrachtete Kante \(e_k\) ein Kreis entsteht.
+</li>
+</ol>
+
+<p>
+<b>Laufzeit:</b> \(\mathcal{O}(|E| \log |E|) = \mathcal{O}(|E| \log |V|)\) (Die
+Sortierung der Kanten z.B. mit <i>Mergesort</i> benötigt
+\(\mathcal{O}(|E| \log |E|)\))
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Algorithmus von Jarnik-Prim</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+<b>Idee:</b> Wähle einen Startknoten \(v \in V\) und füge ihn in eine intial
+leere Knotenmenge \(U\) ein. Erzeuge eine intial leere Kantenmenge \(E_T\).
+Erweitere dann den minimal spannenden Baum \(T = (U, E_T)\) iterativ um
+Kanten \(e = \\{i,j\\}\) mit \(i \in U\) und \(j \in V \setminus U\) und
+minimalen Gewicht.
+</p>
+
+<pre class="example">
+JARNIK-PRIM(G=(V,E), w) {  // w = Kantengewichtungsfunktion
+
+  Set U = {1};       // 1 sei der Startknoten des Algorithmus
+  Set E_T = {};
+  integer n = |V|;
+
+  for k = 1 to n-1 do
+    bestimme Kante e={i,j} mit i in U und j in V∖U von minimalem Gewicht w(e);
+
+    E_T = E_T ∪ {e};
+    U = U ∪ {j};
+
+  od
+
+  return Baum T=(U,E_T);
+}
+</pre>
+
+<p>
+<b>Laufzeit:</b> Die Laufzeit der angegeben Implementierung liegt in
+\(\mathcal{O}(|V| \cdot |E|)\) (Bestimmung einer Kante minimaler Länge
+erfordert \(\mathcal{O}(|E|)\) und wird \((|V| - 1)\)-Mal durchgeführt).
+</p>
+
+<p>
+<b>Optimierung des Algorithmus:</b>
+</p>
+
+<p>
+Die Laufzeit lässt sich optimieren, wenn eine Relation <code>closest</code>
+verwendet wird. Diese gibt für jeden Knoten in \(V\), der noch nicht Teil
+des Baumes \(T\) ist an, welcher Knoten in \(T\) über eine Kante mit
+minimalem Gewicht erreicht werden kann. Es gilt also:
+</p>
+
+<ul class="org-ul">
+<li><code>closest[v] = w</code>, wenn \(\\{w,v\\} \in E\) mit \(w \in U\) und
+\(v \in V \setminus U\) existiert und keine andere Kante mit geringerem
+Gewicht \(v\) mit einem Knoten in \(U\) verbindet.
+</li>
+<li><code>closest[v] = 0</code>, wenn es keine Kante \(\\{w,v\\} \in E\) mit \(w \in U\)
+   und \(v \in V \setminus U\) existiert.
+</li>
+</ul>
+
+<pre class="example">
+JARNIK-PRIM-OPT(G=(V,E),w) {  // w = Kantengewichtungsfunktion
+  TODO
+}
+</pre>
+
+<p>
+<b>Laufzeit der optimierten Implementierung:</b> \(\mathcal{O}(|V|^2)\)
+</p>
+</div>
+</div>
+</div>
+</div>

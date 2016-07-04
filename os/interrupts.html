@@ -1,0 +1,146 @@
+---
+layout: page
+title: Interrupts
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Interrupt</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Die Übertragung der Kontrolle (über die CPU) an das Betriebsystem als
+Reaktion auf ein Systemereignis (engl. <i>system event</i>) bezeichnet man
+als <i>Interrupt</i> (z.T. auch <i>Exception</i> genannt). Man unterscheidet
+zwischen <i>synchronen</i> und <i>asynchronen</i> Interrupts. Bei den <i>synchronen
+Interrupts</i> unterscheidet man <i>Traps</i>, <i>Faults</i> und <i>Aborts</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Interrupthandler</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Als <i>Interrupthandler</i> bezeichnet man Programme, die zur Behandlung
+eines Interrupts dienen und beim Auftreten eines Interrupts aufgerufen
+werden.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Interrupthandling</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Zur Behandlung von Interrupts werden Interrupts in verschiedene Typen
+eingeteilt. Jedem Typ wird eine eindeutige <i>Interrupt Number</i>
+zugewiesen. Diese dient als Index in einen <i>Interrupt Vector</i> (eine
+Tabelle von <i>Interrupthandlern</i>).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Interrupt Vector</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Eine Tabelle von auf <i>Interrupthandlern</i> wird <i>Interrupt Vector</i>
+genannt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Synchrone Interrupts</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Interrputs, die durch Ausführung von Instruktionen hervorgerufen werden
+heißen <i>synchron</i>. Man unterscheidet zwischen <i>Traps</i>, <i>Faults</i> und
+<i>Aborts</i>:
+</p>
+
+<ul class="org-ul">
+<li><i>Traps</i> sind intentional hervorgerufene Interrupts. Nach einer Trap
+kann die Ausführung eines Programms i.d.R. an der nächsten Intruktion
+fortgesetzt. Traps sind z.B.:
+
+<ul class="org-ul">
+<li>Aufrufe von Routinen des Betriebssystems (engl. <i>system calls</i>),
+z.B. zum Öffnen einer Datei
+</li>
+</ul>
+</li>
+
+<li><i>Faults</i> sind nicht intentional hervorgerufene Interrupts. Sie können
+(manchmal) behoben werden. Wenn der Fault behobe werden konnte wird
+i.d.R. die fehlererzeugende Instruktion erneut ausgeführt. Wenn nicht
+wird der Prozess beendet. Faults sind z.B.:
+
+<ul class="org-ul">
+<li><i>page fault</i> (Interrupt Number <code>14</code> in IA32 Architektur)
+</li>
+<li><i>protection fault</i> (z.B. ein <i>segmentation fault</i>; Interrupt
+Number <code>13</code> in IA32 Architektur)
+</li>
+<li>Divisionsfehler (Interrupt Number <code>0</code> in IA32 Architektur)
+</li>
+</ul>
+</li>
+
+<li><i>Aborts</i> sind nicht intential hervorgerufene Interrupts. Sie können
+nicht behoben werden, d.h. der entsprechende Prozess wird beendet.
+Aborts sind z.B.:
+
+<ul class="org-ul">
+<li>Probleme beim <i>machine check</i> (Interrupt Number <code>18</code> in IA32
+Architektur)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Asynchrone Interrupts</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Interrupts, die durch externe Ereignisse (nicht durch CPU-interne
+Ereignisse) hervorgerufen werden heißen <i>asynchron</i>. Sie werden durch
+Setzen der Interrupt Pins des Prozessors angezeigt. Asynchrone
+Interrupts sind z.B.:
+</p>
+
+<ul class="org-ul">
+<li>Abschluss von I/O Requests (Daten von Festplatte oder Netzwerk, etc.
+sind angekommen)
+</li>
+<li>Reset (drücken des Reset-Knopfes oder Ctrl-Alt-Entf)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Ablauf eines Interrupts</h2>
+<div class="outline-text-2" id="text-7">
+<ol class="org-ol">
+<li>Speichern des Program Counters
+</li>
+<li>Identifikation des Interrupts über seine Interrupt Number
+</li>
+<li>Speichern der Registerinhalte
+</li>
+<li>Ausführen des zugehörigen Interrupt Handlers
+</li>
+<li>Ausführen des Schedulers
+</li>
+<li>Auswahl des Prozesses der als nächstes bearbeitete werden soll (das
+kann der Prozess sein, bei dem der Interrupt auftrat oder ein
+anderer)
+</li>
+<li>Laden des Program Counters und der Register für den auszuführenden
+Prozess
+</li>
+</ol>
+</div>
+</div>

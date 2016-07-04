@@ -1,0 +1,85 @@
+---
+layout: page
+title: Eigenwert
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Eigenwert</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sei \(A \in \mathbb{K}^{n \times n}\), dann heißt \(\lambda \in \mathbb{K}\)
+<i>Eigenwert</i> von \(A\), wenn ein \(v \in \mathbb{K}^{n} \setminus \{ 0 \}\)
+existiert, sodass \(Av = \lambda v\) gilt. \(v\) heißt dann <i>Eigenvektor</i>
+von \(A\) zum Eigenwert \(\lambda\).
+</p>
+
+<p>
+<b>Wichtig:</b> Nur quadratische Matrizen haben Eigenwerte!
+</p>
+
+<p>
+(Man könnte sagen: "Eigenvektoren behalten ihre Richtung bei Abbildung
+mit \(A\).")
+</p>
+
+<p>
+(Für \(v = 0\) ist die Bedingung immer erfüllt.)
+</p>
+
+<p>
+Sei \(F: V \rightarrow V\) <i>Endomorphismus</i> auf einem
+\(\mathbb{K}\)-Vektorraum. Dann heißt \(\lambda \in \mathbb{K}\) <i>Eigenwert</i>
+von \(F\), wenn \(F(v) = \lambda v\) für \(v \in V \setminus \{ 0 \}\) gilt.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Vielfache von Eigenvektoren sind ebenfalls Eigenvektoren: Wenn \(v\)
+Eigenvektor von \(A\) zum Eigenwert \(\lambda\) ist, dann ist
+\(\forall \mu \in \mathbb{K} \setminus \{ 0 \}\) auch \(\mu v\)
+Eigenvektor zum Eigenwert \(\lambda\).
+</li>
+<li>Sei \(A \in \mathbb{K}^{n \times n}\) eine Diagonalmatrix, dann sind
+die Diagonalelemente \(a_{ii} =: \lambda_{i}\) Eigenwerte von \(A\)
+zugehörigen Eigenvektoren \(e_{i}\) (Einheitsvektoren).
+</li>
+<li>nicht jede reelle Matrix beseitzt reelle Eigenwerte
+</li>
+<li>Eigenvektoren zu unterschiedlichen Eigenwerten sind stets linear
+unabhängig
+</li>
+<li>Sei \(A \in \mathbb{K}^{n \times n}\). Dann ist \(\lambda in \mathbb{K}\)
+   genau dann Eigenwert von \(A\), wenn \(\det (A - \lambda I_{n}) = 0\)
+   gilt.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Berechnung</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<b>Berechnung der Eigenwerte:</b> Bestimme Nullstellen des charaktersitischen
+Polynoms \(\det (A - \lambda I) = 0\). Dieses sind die Eigenwerte von \(A\).
+</p>
+
+<p>
+<b>Berechnung der Eigenvektoren:</b> Sei \(\lamda\) Eigenwert von \(A\). Die
+Eigenvektoren zu \(\lambda\) sind die Lösungen des LGS
+\((A - \lambda I)x = 0\).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> charakteristisches Polynom</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+\(P_{A}(\lambda) = \det (A - \lambda I)\)
+</p>
+</div>
+</div>

@@ -1,0 +1,245 @@
+---
+layout: page
+title: Norm
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Norm / normierter Raum</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sei \((V, \oplus)\) Vektorraum über dem Körper \((\mathbb{K}, +, \cdot)\).
+Eine Abbildung \(\| \cdot \|: V \rightarrow \mathbb{R}_{0}^{+}\) heißt
+<i>Norm</i>, wenn gilt:
+</p>
+
+<ol class="org-ol">
+<li><i>Definitheit</i>:
+\(\forall v \in V: \| v \| = 0 \Longleftrightarrow v = e_{\oplus}\)
+</li>
+<li><i>Linearität///Homogenität</i>:
+\(\forall \lambda \in \mathbb{K}, v \in V: \| \lambda \odot v \| = | \lambda | \cdot \| v \|\)
+</li>
+<li><i>Dreiecksungleichung</i>:
+\(\forall v,w \in V: \| v \oplus w \| \leq \| v \| + \| w \|\)
+</li>
+</ol>
+
+<p>
+Das Paar aus Vektorraum und Norm heißt <i>normierter Raum</i>.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Aus jeder Norm \(\| \cdot \|\) lässt sich mit \(d(x,y) := \|(x-y)\|\)
+eine Metrik \(d\) definieren (der Umkehrschluss gilt im Allgemeinen
+nicht).
+</li>
+<li>Im \(\mathbb{K}^n\) sind alle Normen äquivalent zur Maximumsnorm, d.h.
+für jede Norm \(\|\cdot\|\) existieren \(m,M \geq 0\), sodass
+\(\forall x \in \mathbb{K}^n: m\|x\|_{\infty} \leq \|x\| \leq M \|x\|_{\infty}\).
+
+<ul class="org-ul">
+<li>Daher sind die Begriffe <i>abgeschlossene Menge</i> und <i>offene Menge</i>
+unabhängig von der zugrundegelegten Norm (d.h. alle Normen führen
+zu denselben abgeschlossenen bzw. offenen Menge)
+</li>
+<li>Bei der Betrachtungn von <i>Grenzprozessen</i> (z.B. Stetigkeit,
+Differenzierbarkeit) im \(\mathbb{K}^n\) ist es egal, welche Norm
+man zugrunde legt. Wir können daher die Kurzschreibweise
+\(x_k \rightarrow x\) verwenden um die Konvergenz einer Folge
+\((x_k)_{k \in \mathbb{N}} \subset \mathbb{R}^n\), also
+\(\lim_{k \rightaarow \infty} \|x_k - x\| = 0\) anzudeuten.
+</li>
+</ul>
+</li>
+
+<li>Sei \(S_1 := \{x \in \mathbb{K}^n | \|x\|_{\infty}\}\) <i>Einheitssphäre</i>
+bzgl. \(\|\cdot\|_{\infty}\) im \(\mathbb{K}^n\) und \(\|\cdot\|\) eine
+beliebig Norm auf \(\mathbb{K}^n\). Dann gilt:
+\(m := \inf\{\|x\| | x \in S_1 \} > 0\).
+</li>
+<li>Normen auf einem Vektorraum heißen <i>Vektornormen</i>.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Aquivalenz</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Zwei Normen \(\|\cdot\|_A\) und \(\|\cdot\|_B\) heißen äquivalent, wenn es
+\(m, M \in \mathbb{K}\) gibt, sodass
+\(\forall v \in V: m\|v\|_A \leq \|v\|_B \leq M\|v\|_A\) gilt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Induzierte Norm</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+In einem <i>euklidischen</i> oder <i>unitären Raum</i>
+(d.h. einem Vektorraum über dem Körper der reellen
+\((\mathbb{R},+,\cdot)\) oder dem Körper der komplexen Zahlen
+\((\mathbb{C},+,\cdot)\)) wird durch ein <i>Skalarprodukt</i>
+eine Norm induziert.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Beschränktheit</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Eine Teilmenge \(A\) eines Vektorraums, auf dem eine Norm \(\|\cdot\|\)
+definiert ist, heißt <i>beschränkt</i>, wenn gilt
+</p>
+
+<p>
+\(\exists M \in \mathbb{R}\_{>0}: \forall a \in A: \|a\| \leq M\)
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Normen auf dem Vektorraum der reellen Zahlen</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Sei \(x \in \mathbb{R}^n\), dann heißt
+</p>
+
+<ul class="org-ul">
+<li>\(\|x\|_2 := \sqrt{\sum\_{i=1}^{n} x_i^2}\) <i>euklidische Norm</i> (diese
+wird durch das <i>euklidische Skalarprodukt</i>
+\(\langle x,y \rangle = \sum\_{i=1}^n x_i y_i\) auf dem Vektorraum der
+reellen Zahlen induziert durch
+\(\|v\| := \sqrt{\langle v,v \rangle} = \sqrt{\sum\_{i=1}^{n} x_i^2}\)).
+</li>
+<li>\(\|x\|\_{\infty} := \max\{|x_i| | 1 \leq i \leq n\}\) <i>Maximumsnorm</i>
+</li>
+<li>\(\|x\|_1 := \sum\_{i=1}^{n} |x_i|\) $l<sub>1</sub>$/-Norm/
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Im \(\mathbb{R}^n\) sind alle Normen äquivalent zur Maximumsnorm, d.h.
+für jede Norm \(\|\cdot\|\) existieren \(m,M \geq 0\), sodass
+\(\forall x \in \mathbb{K}^n: m\|x\|_{\infty} \leq \|x\| \leq M \|x\|_{\infty}\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Matrixnormen</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Normen auf dem Vektorraum \(\matbb{K}^{n\times n}\) heißen <i>Matrixnormen</i>.
+</p>
+
+<p>
+<b>Beispiele für Matrixnormen:</b> Sei \(A \in \matbb{K}^{n\times n}\), dann
+heißt
+</p>
+
+<ul class="org-ul">
+<li>\(\|A\|_{F} := (\sum_{i,j=1}^{n} |a_{ij}^2|)^{\frac{1}{2}}\)
+<i>Frobeniusnorm</i>. Sie ist verträglich mit der euklidischen Norm (d.h.
+es gilt
+\(\forall x \in \mathbb{K}^n, A \in \mathbb{K}^{n \times n}: \|Ax\|_{2} \leq \|A\|_{F} \|x\|_{2}\)).
+Sie wird aber nicht durch die euklische Norm erzeugt. Da
+\(\|I\|_{F} = \sqrt{n}\) gilt ist die Frobeniusnorm keine natürlich
+Matrixnorm.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Verträglichkeit</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Eine Matrixnorm \(\|\cdot\|_{M}\) heißt <i>verträglich</i> mit einer Vektornorm
+\(\|\cdot\|_{V}\), wenn
+\(\forall x \in \mathbb{K}^{n}: \|Ax\|_{V} \leq \|A\|_{M} \|x\|_{V}\)
+gilt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Submultiplikativität</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Eine Matrixnorm \(\|\cdot\|_{M}\) heißt <i>submultiplikativ</i>, wenn
+\(\forall A,B \in \mathbb{K}^{n \times n}: \|AB\|_{M} \leq \|A\|_{M} \cdot \|B\|_{M}\)
+gilt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> erzeugte Matrixnormen</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Sei \(\|\cdot\|_{V}\) eine Vektornorm auf \(\mathbb{K}^n\). Dann wird für
+\(A \in \mathbb{K}^{n \times n}\) die Norm
+</p>
+
+<p>
+\(\|A\|_{M} := \sup_{x \in \mathbb{K}^n \setminus \{0\}} \frac{\|Ax\|_{V}}{\|x_{V}\|} = \sup_{x \in \mathbb{K}^n \wedge \|x\|_{V} = 1} \|Ax\|_{V}\)
+</p>
+
+<p>
+die von \(\|\cdot\|_{V}\) <i>erzeugte (natürliche) Matrixnorm</i> genannt.
+</p>
+
+<p>
+Die durch eine Vektornorm erzeugte Matrixnorm ist mit dieser verträglich
+und submultiplikativ. Da außerdem \(\|I\|_{M} = 1\) gilt heißt die Norm
+<i>natürlich</i>.
+</p>
+
+<p>
+Die in dieser Definition verwendeten Indices \(V\) und \(M\) für Vektor-
+bzw. Maxtrixnorm werden oft weggelassen. Es muss dann aus dem Kontext
+erschlossen werden, welche Norm gemeint ist.
+</p>
+
+<p>
+<b>Beispiele für (erzeugte) Maxtrixnormen:</b> Sei
+\(A \in \matbbb{K}^{n\times n}\), dann heißt
+</p>
+
+<ul class="org-ul">
+<li>\(\| A \|_{\infty} := \max_{1\leq i \leq n} \sum_{j=1}{n} |a_{ij}|\)
+   <i>Zeilensummennorm</i>. Sie wird von der Maximumsnorm erzeugt.
+</li>
+<li>\(\|A\|_{1} := \max{j=1\dots n} \sum_{i=1}{m} \|a_{ij}\}\)
+   <i>Spaltensummennorm</i>. Sie wird von der \(l_1\)-Norm erzeugt.
+</li>
+<li>\(\|A\|_{2} := \dots\) <i>Spektralnorm</i>. Sie wird von der euklidischen
+Norm erzeugt.
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Ist \(A\) eine symmetrische, reelle Matrix, dann gilt
+\(\|A\|_{2} = \max_{1 \leq i \leq n\} |\lambda_{i}|\) mit \(\lambda_i\)
+ist Eigenwert von \(A\).
+</li>
+</ul>
+</div>
+</div>
+</div>

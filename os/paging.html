@@ -1,0 +1,297 @@
+---
+layout: page
+title: Paging
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Paging</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Page Replacement Algorithmen</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Ziel: Minimierung der Häufigkeit von Page Faults.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Bélády's Algorithmus</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+Ersetze die page, die am weitesten in der Zukunft referenziert wird.
+</p>
+
+<ul class="org-ul">
+<li>nicht implementierbar, da die Abfolge der Referenzierungen zur
+Kompolierzeit nicht bekannt ist
+</li>
+<li>nützlich als Benchmark für implementierbare Algorithmen
+</li>
+<li>stackbasiert (Bélády's Anomalie kann nicht auftreten)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> First In First Out (FIFO)</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+Ersetze die Page, die am längsten im Hauptspeicher ist.
+</p>
+
+<ul class="org-ul">
+<li><i>nicht stackbasiert</i> (Bélády's Anomalie kann auftreten)
+</li>
+<li>Vorteil: einfach zu implementieren
+</li>
+<li>Nachteil:
+
+<ul class="org-ul">
+<li>häufig genutze Pages können ersetzt werden
+</li>
+<li>selten referenzierte Pages können lange im Hauptspeicher bleiben
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Least Recently Used (LRU)</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<p>
+Ersetze die Page, welche am längsten nicht mehr referenziert wurde.
+</p>
+
+<ul class="org-ul">
+<li>stackbasiert (Bélády's Anomalie kann nicht auftreten)
+</li>
+<li>Vorteil: bislang beste Approximation von Bélády's Algorithmus
+</li>
+<li>Nachteil: schwer zu implementieren
+
+<ul class="org-ul">
+<li>Möglichkeit 1: Zähler (Zähler wird imkrementiert, wenn auf eine
+Page zugegriffen wird; Page mit dem kleinsten Wert wird ersetzt)
+</li>
+<li>Möglichkeit 2: Stack (Page wird oben auf den Stack gelegt, wenn
+sie referenziert wird; unterste Page wird ersetzt)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4" class="outline-4">
+<h4 id="sec-1-1-4"><span class="section-number-4">1.1.4</span> 2nd Chance</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<p>
+Ersetze die Page, die am längsten im Speicher ist (wie FIFO), aber gib
+jeder Page eine zweite Chance.
+</p>
+
+<ul class="org-ul">
+<li>Verwendung eine Queue und eines <b>R (referenced) Bits</b>
+</li>
+<li>Pages werden nach dem FIFO Prizip ersetzt (älteste Page steht an der
+Spitze der Queue)
+</li>
+<li>wenn \(R=1\): Page erhält eine zweite Chance (setze \(R = 0\) und
+verschiebe Page ans Ende der Queue)
+</li>
+<li>wenn \(R=0\): ersetze Page
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-5" class="outline-4">
+<h4 id="sec-1-1-5"><span class="section-number-4">1.1.5</span> Clock</h4>
+<div class="outline-text-4" id="text-1-1-5">
+<p>
+Ersetze die Page, die am längsten im Speicher ist (wie FIFO), aber gib
+jeder Page eine zweite Chance.
+</p>
+
+<ul class="org-ul">
+<li>nicht stackbasiert (Bélády's Anomalie kann auftreten)
+</li>
+<li>wie 2nd Chance, aber unter Verwendung einer zirkulären Liste anstelle
+einer Queue (Pointer zeigt auf die älteste Page)
+
+<ul class="org-ul">
+<li>Version mit zwei Zeigern möglich (einer zum setzen des R Bits,
+einer zum prüfen des R Bits)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-6" class="outline-4">
+<h4 id="sec-1-1-6"><span class="section-number-4">1.1.6</span> Aging</h4>
+<div class="outline-text-4" id="text-1-1-6">
+<p>
+Periodische Berechnung eines Werts für jede Page
+</p>
+
+<ul class="org-ul">
+<li>R Bit wird auf <code>1</code> gesetzt, wenn die Page in einer Periode
+referenziert wurde
+</li>
+<li>R Bit wied am Ende jeder Periode auf <code>0</code> gesetzt
+</li>
+<li>R Bit wird periodisch (z.B. alle 100 msec) vorn an diesen Wert
+angehängt
+</li>
+<li>Page mit dem kleinsten Wert wird ersetzt
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Bélády's Anomalie</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Das Phänomen, dass bei nicht-stackbasierten Paging-Algorithmen bei
+Verwendung eines Hauptspeichers mit größerer Kapazität mehr Page Faults
+auftreten könen, als bei Verwendung eines Hauptspeichers mit kleinerer
+Kapazität wird als Bélády's Anomalie bezeichnet.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Distanzstrings</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Zur Vorhersage von Page Fault Haufigkeiten (nur sinnvoll, bei
+stackbasierten Algorithmen)
+</p>
+
+<ol class="org-ol">
+<li>Bestimme Distanzstring
+
+<ul class="org-ul">
+<li>\(\infty\): Wenn page bisher nicht referenziert wurde (page nicht im
+stack)
+</li>
+<li>\(n\): Wenn page an Position n (beginnend bei 1) im stack gefunden
+wurde ist
+</li>
+</ul>
+</li>
+
+<li>Bestimme für jeden Wert \(j\) im Distanzstring dessen absolute
+Häufigkeit: \(c_j\)
+</li>
+<li>bestimme die Anzahl der page faults \(F_m\) für ein System mit
+Speichergröße \(m\) frames: \(F_m = \sum_{k=m+1}^{n}{c_k + c_\infty}\)
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Thrashing</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Bezeichnet einen Zustand, in dem ein System ständig mit Paging (laden
+von Pages aus dem Sekundärspeicher, zurückschreiben von Pages in den
+Sekundärspeicher) beschäftigt ist.
+</p>
+
+<p>
+mögliche Gründe:
+</p>
+
+<ul class="org-ul">
+<li>Prozess zu groß für den Hauptspeicher (zu wenig Pages)
+</li>
+</ul>
+
+<p>
+Lösungen:
+</p>
+
+<ul class="org-ul">
+<li>Überwache Page Fault Raten alles Prozesse:
+
+<ul class="org-ul">
+<li>gib Prozessen mehr Frames, wenn die Rate einen bestimmten Wert
+überschreitet
+</li>
+<li>nimm Prozessen Frames weg, wenn die Rate einen bestimmten Wert
+unterschreitet
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Global vs. Local Replacement von Pages</h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li><b>Global Replacement</b>: es wird eine Page von irgendeinem Prozess
+ersetzt
+</li>
+<li><b>Local Raplacement</b>: es wird eine Page von dem Prozess ersetzt, der
+eine neue Page benötigt
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Paging Policies</h3>
+<div class="outline-text-3" id="text-1-6">
+<ul class="org-ul">
+<li><b>Fetch Policy</b>: legt fest, wann Pages in den Hauptspeicher geladen
+werden.
+
+<ul class="org-ul">
+<li><b>on demand</b>: Pages werden erst bei Auftreten eines Page Faults in
+den Hauptspeicher geladen
+
+<ul class="org-ul">
+<li>keine Verschwendung von Speicherplatz
+</li>
+<li>Page Fault Rate beim Start von Prozessen größer als bei
+pre-paging
+</li>
+</ul>
+</li>
+
+<li><b>pre-paging</b>: wenn ein Page Fault auftritt wird nicht nur die
+angefragte Page in den Hauptspeicher geladen, sondern auch einige
+der angrenzenden Pages
+
+<ul class="org-ul">
+<li>Ausnutzung von Spatial Locality
+</li>
+<li>Transfer von größeren Blöcken aus dem Sekundärspeicher ist
+effizienter als Transfer von kleinen Blöcken
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li><b>Placement Policy</b>: legt fest, wo Pages im Hauptspeicher abgelegt
+werden
+</li>
+<li><b>Replacement Policy</b>: legt fest, welche Pages im Hauptspeicher
+ersetzt werden, wenn dieser voll ist
+</li>
+</ul>
+</div>
+</div>
+</div>

@@ -1,0 +1,667 @@
+---
+layout: page
+title: Virtual_memory
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Virtual Memory</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>Idee:</b>
+</p>
+
+<ul class="org-ul">
+<li>jeder Prozess erhält einen eigenen virtuellen Adressraum
+</li>
+<li>Unterteilung des physikalischen Hauptspeichers in Speicherbereiche
+gleicher Größe (<i>frames</i>)
+</li>
+<li>Unterteilung des virtuellen Adressraums jedes Prozesse in
+Speicherbereiche derselben Größe (<i>pages</i>)
+</li>
+<li>Verwendung einer <i>Page Table</i> zur Zuordnung von Pages zu Frames; vom
+Betriebssystem wird für jeden Prozess eine eigene solche Page Table
+verwaltet
+</li>
+<li>OS verwaltet <i>Free Page Frames Table</i> (Liste freier frames) und das
+Laden von pages
+</li>
+<li><i>resident set</i>: der Teil eines Programms (also diejenigen pages), der
+sich im Hauptspeicher befindet
+</li>
+<li>Ein Register (<i>Page Table Register</i>) enthält einen Pointer auf die
+Startadresse der Page Table im physikalischen Speicher (die phy.
+Adresse der Page Table eines Prozesses wird aus dem Process Control
+Block in dieses Register geladen, wenn der Prozess dispatched wird)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Memory Management</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Die Hardwarekomponente, die den Zugriff auf den Hauptspeicher verwaltet
+wird als <i>Memory Management Unit</i> (MMU) bezeichnet.
+</p>
+
+<p>
+<b>Aufgaben:</b>
+</p>
+
+<ul class="org-ul">
+<li>Übsetzung von virtuellen in phyiskalische Adressen
+</li>
+<li>Verwaltung des freien physikalischen Speicherplatzes
+</li>
+<li>Allozieren und Deallozieren von Speicher für Prozesse
+</li>
+<li>Austausch von Daten und Code zwischen Hauptspeicher und
+Sekundärspeicher(n)
+</li>
+</ul>
+
+<p>
+<b>Anforderungen:</b>
+</p>
+
+<ol class="org-ol">
+<li><i>Relocation</i>: Dynamische Zuweisung von Daten eines Prozesses zu
+Adressen im physikalischen Speicher
+
+<ul class="org-ul">
+<li>notwendig, da Prozessen erst beim Laden konkrete physikalische
+Speicheradressen zugewiesen werden und diese sich auch während der
+Ausführung z.B. durch Swapping ändern können
+</li>
+</ul>
+</li>
+
+<li><i>Protection</i>: Schutz von Code und Daten im Speicher vor unerlaubtem
+Zugriff/Manipulation
+
+<ul class="org-ul">
+<li>Schutz des Speicherbereichs eines Prozesses vor dem Zugriff
+anderern Prozesse (external protection)
+</li>
+<li>Schutz des Betriebssystems
+</li>
+<li>Schutz vor Stack- oder Bufferoverflows im Speicherbereich eines
+Prozesses (internal protection)
+</li>
+</ul>
+</li>
+
+<li><i>Sharing</i>: mehreren Prozesssen den Zugriff auf gemeinsam genutzten
+Speicher ermöglichen
+
+<ul class="org-ul">
+<li>zum Datenaustausch zwischen Prozessen
+</li>
+<li>zum Codesharing zwischen Prozessen
+</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Übersetzung virtueller Adressen in physikalische</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> Übersetzung mit Page Tables</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Das Betriebssystem verwaltet für jeden Prozess eine eigene Page Table,
+die die Zuordnung von Pages zu Frames im Hauptspeicher ermöglicht. Ein
+Eintrag in der Page Table (<i>Page Table Entry</i>) besteht aus:
+</p>
+
+<p>
+<i>page_table_entry.png</i>
+</p>
+
+<ul class="org-ul">
+<li><i>P (present) bit</i>: gibt an, ob die Page im Hauptspeicher ist
+</li>
+<li><i>M (modified) bit</i>: gibt an, ob die Page seit dem letzten Laden in
+den Hautspeicher modifiziert wurde und beim Ersetzen in den
+Sekundärspeicher zurückgeschriebend werden muss oder einfach
+überschrieben werden kann
+</li>
+<li><i>R (referenced) bit</i>: gibt an, ob die Page kürzlich referenziert
+wurde (verwendet für Replacement-Strategien; Bedeutung
+systemabhängig)
+</li>
+<li><i>C (caching) bit</i>: gibt an, ob Caching für die Page aktiviert ist
+</li>
+<li><i>protection bits</i>: z.B.:
+
+<ul class="org-ul">
+<li><i>read bit</i>: darf die page gelesen werden
+</li>
+<li><i>write bit</i>: darf die page geschrieben werden
+</li>
+<li><i>supervisor bit</i>: page darf nur im kernel mode gelesen und
+geschrieben werden
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<i>address_translation.png</i>
+</p>
+<p>
+<i>address_translation_two_level.png</i>
+Die virtuelle Adresse wird zur Kompilierzeit durch den Compiler
+erstellt. Sie wird unterteilt in <i>page number</i> und <i>page offset</i>
+</p>
+
+<ul class="org-ul">
+<li><i>page offset</i> bestimmt die <i>page size</i>: Sei \(o\) die Anzahl der bits
+des page offset und \(p\) die page size, dann gilt \(p = 2^o\)
+</li>
+<li><i>page number</i> bestimmt die Anzahl der Einträge in der Page Table: Sei
+\(n\) die Anzahl der bits der page number und \(e\) die Anzahl der page
+table entries, dann gilt \(e = 2^n\)
+</li>
+</ul>
+
+<p>
+<i>virtual_address.png</i>
+</p>
+
+<ul class="org-ul">
+<li>Übersetzung erfolgt zur Laufzeit (durch die Memory Managment Unit)
+</li>
+<li><i>page hit</i>: angefragtes page befindet sich in einem frame (im
+physikalischen Speicher)
+</li>
+<li><i>hit rate</i>: relative Häufigkeit von page hits
+</li>
+<li><i>hit time</i> = Zugriffszeit + Zeit zur Festellung von Hit/Miss
+</li>
+<li><i>page miss</i>: angefragte page befindet sich nicht im Hauptspeicher
+(erzeugt einen <i>page fault</i>; page muss aus dem Sekundärspeicher
+nachgeladen werden)
+</li>
+<li><i>Miss Rate</i>: relative Häufigkeit von Misses (\(1 - \text{Hit Rate}\))
+</li>
+<li><i>Miss Penalty</i>: Zeit um eine Page in den Hauptspeicher zu laden +
+Zeit um das Datum zur CPU zu liefern
+</li>
+</ul>
+
+<p>
+<b>Nachteil:</b> eine Page Table liegt i.d.R. im Hauptspeicher. Daher ist zur
+Addressübersetzung ein zusätzlicher Speicherzugriff nötig (dieser
+Nachteil kann durch Verwendung eines <i>Translation Lokkaside Buffers</i>
+abgemildert werden).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> Übersetzung mit Inverted Page Table</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+<i>address_translation_inverted_page_table.png</i>
+</p>
+
+<ul class="org-ul">
+<li>ein Page Table Entry für jeden Frame im Hauptspeicher (Frame Numbers
+werden als Index für die Inverted Page Table verwendet)
+</li>
+<li>Berechnung der Frame Number aus der Page Number der virtuellen
+Adresse mittels Hash-Funktion
+</li>
+<li>Page Table Entry besteht aus:
+
+<ul class="org-ul">
+<li>PID: PID des Prozesses, zu dem die Page gehört
+</li>
+<li>Page Number: Page Number, die sich gerade in dem Frame befindet
+(zum Abgleich mit der Page Number der virtuellen Adresse)
+</li>
+<li>Chain/Next: nächste Frame Number, an der gesucht werden soll, wenn
+die gesuchte Page nicht in diesem Frame ist
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-3" class="outline-4">
+<h4 id="sec-2-1-3"><span class="section-number-4">2.1.3</span> Beschleunigung der Addressübersetzung durch Translation Lookaside</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p>
+Buffer
+</p>
+
+<p>
+<i>address_translation_tlb.png</i>
+Der <i>Translation Lookaside Buffer</i> (TLB) ist ein schneller, assozitiver
+<a href="../oar/caches">cache</a> in der MMU, der dazu dient den Zugriff auf
+Pages zu beschleunigen. Er enthält die zuletzt verwendeten Page Tables
+Entries.
+</p>
+
+<p>
+Unterteilung der page number in <i>tlb tag</i> und <i>tlb index</i>
+</p>
+
+<p>
+<i>tlb_address.png</i>
+</p>
+
+<ul class="org-ul">
+<li><i>TLB Hit</i>: angefragter Page Table Entry befindet sich im TLB
+(Adressübersetzung ohne zusätzlichen Speicherzugriff auf die Page
+Table möglich)
+</li>
+<li><i>TLB Miss</i>: angefragter Page Table Entry befindet sich im TLB (Suche
+wird in der Page Table fortgesetzt)
+</li>
+</ul>
+
+<p>
+physikalische
+</p>
+
+<p>
+<i>address_translation_flowchart.png</i>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Page Size</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Vorteile einer kleinen Page Size:
+</p>
+
+<ul class="org-ul">
+<li>geringere interne Fragmentierung
+</li>
+<li>geringere Page Fault Rate (irgendwann liegen alle häufig benötigten
+Pages im Hautpspeicher)
+</li>
+</ul>
+
+<p>
+Nachteile kleiner Page Sizes:
+</p>
+
+<ul class="org-ul">
+<li>Prozesse benötigen mehr Pages -&gt; Page Tables werden größer -&gt; Page
+Tables verbrauchen mehr Speicherplatz
+</li>
+<li>Transfer von kleinen Blöcken aus dem Sekundärspeicher in den
+Hauptspeicher ist ineffizienter als Transfer von großen
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Effektive Speicherzugriffszeit</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Die effektive Speicherzugriffzeit \(t_{\text{effective}}\) berechnet aus
+der Dauer für Zugriffe auf den Hautpspeicher (\(t_{\text{Memory}}\)), der
+Wahrscheinlichkeit für Page Faults (\(p\)) und der Dauer zum Beheben von
+Page Faults
+(\(t_{\text{Page Fault}} \approx 2 t_{\text{Disk Access Time}}\)) als:
+</p>
+
+<p>
+$$t_{\text{effective}} = (1-p) t_{\text{Memory}} + p t_{\text{Page Fault}}$$
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Memory Manager</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Aufgaben des Memory Managers:
+</p>
+
+<ul class="org-ul">
+<li>Verwaltung des freien Speichers im Hauptspeicher
+</li>
+<li>Allozierung und Deallozierung von Speicher für Prozesse
+</li>
+<li>Verwaltung des Austauschs zwischen Hauptspeicher und Sekundärspeicher
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> Dynamic Memory Allocation</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+Allocator verwaltet Speicherblöcke mit dynamischer Größer im Heap
+(dynamisch allozierter Speicherplatz eines Prozesses) von Prozessen.
+</p>
+
+<ul class="org-ul">
+<li>explizite Speicherallozierung mit <code>void *malloc(size_t size)</code>:
+
+<ul class="org-ul">
+<li>erfordert <code>stdlib.h</code>
+</li>
+<li>explizit allozierter Speicher muss durch <code>void free(void *p)</code>
+      wieder freigegeben werden
+</li>
+<li>fehler: git nullpointer zurück und setzt <code>errno</code>
+</li>
+</ul>
+</li>
+
+<li>implizite Speicherallozierung: z.B. Objekterzeugung
+
+<ul class="org-ul">
+<li>implizit allozierter Speicher wird i.d.R. automatisch, z.B. durch
+einen sog. <i>Garbage Collector</i> wieder freigegeben.
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Funktionen zur expliziten Speicherallozierung in C#:
+</p>
+
+<ul class="org-ul">
+<li><code>void realloc(void *p, size_t size)</code>: Veränderung der Größe eines
+allozierten Speichblocks.
+</li>
+<li><code>calloc</code>
+</li>
+</ul>
+
+<p>
+Verwaltung von freien Speichers erfolgt mit Hilfe einer Liste. Dabei
+gibt es vier verschiedene Methoden:
+</p>
+
+<ul class="org-ul">
+<li><i>Implicit List</i>: jeder freie Block enthält eine Information über die
+Größe des Blocks und den Allozierungszustand (Information wird in
+einem <i>header field</i> gespeichert, das am Beginn des Blocks steht)
+</li>
+<li><i>Explicit List</i>: jeder freie Block enthält einen Pointer auf den
+nächsten und einen auf den vorangehenden freien Block (diese Blöcke
+müssen nicht in dieser Reihenfolge im Speicher liegen)
+
+<ul class="org-ul">
+<li>Vorteil: allozierte Blöcke müssen nicht mehr durchsucht werden
+</li>
+</ul>
+</li>
+
+<li><i>Segregated Free List</i>: separate Liste mit Adressen und Größen freier
+Speicherblöcke
+</li>
+<li><i>Blocks Sorted By Size</i>: ein sortierter Suchbaum mit Adressen freier
+Speicherblöcke
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-4-1-1" class="outline-5">
+<h5 id="sec-2-4-1-1"><span class="section-number-5">2.4.1.1</span> Implicit List</h5>
+<div class="outline-text-5" id="text-2-4-1-1">
+<p>
+<b>Idee:</b> Verwendung eines <i>Header Field/Header</i> für jeden Speicherblock
+mit folgenden Informationen:
+</p>
+
+<ul class="org-ul">
+<li>Länge des Blocks (Header, Payload und (optionales) Padding)
+</li>
+<li>Allozierungsstatus (codiert im niederwertigesten Bit, welches
+unbenutzt ist, wenn Blocklängen Vielfache von 2 sind)
+
+<ul class="org-ul">
+<li><code>1</code>: alloziert
+</li>
+<li><code>0</code>: frei
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Der <i>Header</i> wird in dem Wort, welches am Anfang des Speicherblocks
+steht gespeichert.
+</p>
+
+<p>
+<b>Vorteil:</b> einfache Freigabe von Speicherblöcken durch Veränderung des
+Allozierungsstatus
+</p>
+
+<p>
+<b>Nachteil:</b> Zum Finden eines passenden freien Blocks müssen alle (sowohl
+freie als auch allozierte) Speicherblöcke durchsucht werden.
+</p>
+
+<p>
+<b>Strategien zum Coalesing:</b> Verschmelze einen neu freigegeben Block mit
+einem vorangehenden/nachfolgenden freien Blocks. Zur Realisierung dieser
+Coalescing-Strategie werden <i>Boundary Tags</i> benötigt. <i>Boundary Tags</i>
+realisieren eine doppelte (implizite) Verkettung von Speicherblöcken,
+indem das Header Field am Ende des Speicherblocks wiederholt wird.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-1-2" class="outline-5">
+<h5 id="sec-2-4-1-2"><span class="section-number-5">2.4.1.2</span> Explicit Free List</h5>
+<div class="outline-text-5" id="text-2-4-1-2">
+<p>
+<b>Idee:</b> Direkte (doppelte) Verkettung freier Speicherblöcke durch
+Verwendung von Pointern; einen auf den nächsten freien Speicherblock
+(<i>Forward Pointer</i>) und einen auf den vorangehenden (<i>Backward
+Pointer</i>).
+</p>
+
+<p>
+<b>Strategien zum Coalesing:</b> Wie bei implicit free lists, also werden
+<i>Boundary Tags</i> nach wie vor zum Coalescing benötig.
+</p>
+
+<p>
+<b>Strategien zur Freigabe von Speicherblöcken:</b>
+</p>
+
+<ul class="org-ul">
+<li><i>LIFO</i>: neu freigegeben Speicherblöcke werden vorn in der Liste der
+freien Speicherblöcke eingehängt.
+</li>
+<li><i>address-ordered</i>: Reihenfolge der Blöcke in der Liste entspricht
+Reihenfolge der Blöcke im Speicher
+</li>
+</ul>
+
+<p>
+<b>Vorteil:</b> Allozierte Blöcke müssen (im Gegensatz zur Verwendung einer
+implicit free list) nicht durchsucht werden.
+</p>
+
+<p>
+<b>Nachteil:</b> Allozierung und Freigabe von Blöcken ist geringfügig
+aufwendiger als bei Verwednung einer Implicit Free List.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-1-3" class="outline-5">
+<h5 id="sec-2-4-1-3"><span class="section-number-5">2.4.1.3</span> Segregated List</h5>
+<div class="outline-text-5" id="text-2-4-1-3">
+<p>
+<b>Idee:</b> Einteilung freier Speicherblöcke in <i>size classes</i>. Direkte
+Verkettung der Speicherblöcke einer size class (Verwendung eines Arrays
+von <i>Explicit Free List</i>, eine für jede size class).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-1-4" class="outline-5">
+<h5 id="sec-2-4-1-4"><span class="section-number-5">2.4.1.4</span> Garbage Collection</h5>
+<div class="outline-text-5" id="text-2-4-1-4">
+<p>
+<b>Idee:</b> Gib Speicherblöcke im Heap, die nicht mehr referenziert werden
+(automatisiert) frei.
+</p>
+
+<p>
+<b>Finden von nicht mehr referenzierten Speicherblöcken:</b> Betrachte
+Speicher als einen gerichteten Graphen. Speicherblöcke im Heap sind
+Knoten und Pointer sind Kanten. Ein <i>root node</i> ist ein Speicherblock,
+der nicht im Heap liegt und einen Pointer auf einen Speicherblock im
+Heap enthält. Ein Speicherblock ist <i>erreichbar</i>, wenn es einen Pfad von
+einem root node zu dem Block gibt. Allozierte Speicherblöcke, die nicht
+erreichbar sind <i>garbage</i>.
+</p>
+
+<p>
+<b>Strategien zur Garbage Collection:</b>
+</p>
+
+<ol class="org-ol">
+<li><i>Mark and Free</i>: Laufe von allen root nodes zu allen erreichbaren
+Speicherblöcken und markiere diese (setze <i>reachable bit</i>). Dann
+durchlaufe alle Speicherblöcke im Heap und lösche diejenigen, die
+nicht markiert sind.
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-1-5" class="outline-5">
+<h5 id="sec-2-4-1-5"><span class="section-number-5">2.4.1.5</span> Algorithmen zum finden freier Speicherblöcke im Heap</h5>
+<div class="outline-text-5" id="text-2-4-1-5">
+<ul class="org-ul">
+<li><i>First Fit</i>: durchsuche die Liste mit freien Speicherblöcken von
+Anfang an und wähle den ersten freien Speicherblock mit ausreichender
+Größe
+
+<ul class="org-ul">
+<li>schnellster Algorithmus (lineare Laufzeit)
+</li>
+<li>i.d.R. starke externe Fragmentierung am Anfang des
+Speicherbereichs
+</li>
+</ul>
+</li>
+
+<li><i>Next Fit</i>: durchsuche die Liste mit freien Speicherblöcken von der
+Stelle der letzten Allokation aus und wähle den ersten freien
+Speicherblock mit ausreichender Größe
+
+<ul class="org-ul">
+<li>externe Fragmentierung i.d.R. stärker als bei First Fit
+</li>
+</ul>
+</li>
+
+<li><i>Best Fit</i>: durchsuche die Liste mit freien Speicherblöcken
+vollständig und wähle den freien Speicherblock dessen Größe am
+nähesten an der benötigten Größe liegt
+
+<ul class="org-ul">
+<li>externe Fragmentierung i.d.R. geringer als bei den anderen
+Algorithmen
+</li>
+<li>i.d.R. langsamer als First Fit
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Performanzziele:
+</p>
+
+<ul class="org-ul">
+<li>Maximierung des <i>Throughput</i> (Allozierungsoperationen pro
+Zeiteinheit)
+</li>
+<li>Maximierung der <i>Peak Memory</i> Utilization (
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-2" class="outline-4">
+<h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> Fragmentation</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<ul class="org-ul">
+<li><i>internal Fragmentation</i>
+
+<ul class="org-ul">
+<li>Gründe: Overhead zur Verwaltung der Speicherblöcke im Heap,
+Alignment, andere allocation policies
+</li>
+</ul>
+</li>
+
+<li><i>external Fragmentation</i>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-3" class="outline-4">
+<h4 id="sec-2-4-3"><span class="section-number-4">2.4.3</span> Coalescing</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+Fusionierung von freien Speicherblöcken mit angrenzenden freien
+Speicherblöcken wenn Speicherblöcke dealloziert werden (beim Aufruf von
+<code>free()</code>) zur Vermeidung von <i>False Fragmentation</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-4" class="outline-4">
+<h4 id="sec-2-4-4"><span class="section-number-4">2.4.4</span> Bidirectional Coalescing</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<p>
+Replikation des <i>Header Field</i> am Ende des Speicherblocks (<i>Header
+Field</i> und <i>Footer Field</i> heißen auch <i>Boundary Tag</i>). Ermöglicht es die
+Liste der Speicherblöcke in beide Richtungen zu durchsuchen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-5" class="outline-4">
+<h4 id="sec-2-4-5"><span class="section-number-4">2.4.5</span> Splitting</h4>
+<div class="outline-text-4" id="text-2-4-5">
+<p>
+Teilung eines freien Speicherblocks in zwei Speicherblöcke, wenn darin
+ein Speicherblock alloziert wird, der nicht den gesamten freien
+Speicherblock ausfüllt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4-6" class="outline-4">
+<h4 id="sec-2-4-6"><span class="section-number-4">2.4.6</span> Memory Leak</h4>
+<div class="outline-text-4" id="text-2-4-6">
+<p>
+Von einem <i>Memory Leak</i> spricht man, wenn dynamisch allozierter Speicher
+(z.B. mit <code>malloc()</code>) nicht wieder freigegeben wird, wenn er nicht mehr
+benötigt wird und der Heap dadurch konstant größer wird.
+</p>
+</div>
+</div>
+</div>
+</div>

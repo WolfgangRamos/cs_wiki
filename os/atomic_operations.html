@@ -1,0 +1,67 @@
+---
+layout: page
+title: Atomic_operations
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Atomare Operationen</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Eine Sequenz von Instruktionen, während deren Abarbeitung nicht von
+Interrupts unterbrochen werden kann (es kann also kein Scheduling
+währenddessen erfolgen) heißt atomare Operation (engl. <i>atomic
+operation</i>). Klassische atomare Operationen, die durch Hardware
+unterstützt werden sind <i>Test &amp; Set</i> (bzw. <i>Test &amp; Compare</i>) und <i>Swap</i>.
+</p>
+
+<pre class="example">
+\\ Swap
+void swap(var1, var2) {
+   tmp = var1; 
+   var1 = var2; 
+   var2 = tmp;
+}
+</pre>
+
+<pre class="example">
+\\ Test &amp; Set / Test &amp; Compare
+void testAndCompare(int *word, int testval, int newval) {
+   int oldval;
+   oldval = *word;
+   if(oldval == testval) {
+
+      *word = newval;
+   }
+   return oldval;
+}
+</pre>
+
+<p>
+Eine Zuweisung der Form <code>x = ⟨expression⟩</code> kann als atomar angenommen
+werden, wenn sie die <i>At-Most-Once Property</i> erfüllt.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> At-Most-Once Property</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Eine Zuweisung der Form <code>x = ⟨expression⟩</code> erfüllt die <i>At-Most-Once
+Property</i>, wenn:
+</p>
+
+<ul class="org-ul">
+<li><code>⟨expression⟩</code> keine <i>Critical Reference</i> enthält, oder
+</li>
+<li><code>⟨expression⟩</code> höchstens eine <i>Critical Reference</i> enthält und <code>x</code>
+   nicht von einem anderen Prozess gelesen wird.
+</li>
+</ul>
+
+<p>
+Eine <b>Critical Reference</b> ist eine Referenz auf eine Variable, die von
+einem anderen Prozess/Thread verändert wird.
+</p>
+</div>
+</div>
+</div>

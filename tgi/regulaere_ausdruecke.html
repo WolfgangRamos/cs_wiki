@@ -1,0 +1,119 @@
+---
+layout: page
+title: Regulaere_ausdruecke
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Reguläre Ausdrücke</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sei \(\Sigma\) ein Alphabet, dann ist die Menge der regulären Ausdrücke
+über \(\Sigma\) induktiv wie folgt definiert:
+</p>
+
+<ul class="org-ul">
+<li>\(\{a\}\) ist ein regulärer Ausdruck für \(a \in \Sigma\). Statt \(\{a\}\)
+   wird häufig einfach \(a\) geschrieben.
+</li>
+<li>\(\epsilon\) ist ein regulärer Ausdruck. Statt \(\{\epsilon\}\) wird
+häufig einfach \(\epsilon\) geschrieben.
+</li>
+<li>\(\emptyset\) ist ein regulärer Ausdruck.
+</li>
+<li>Falls \(R_0\) und \(R_1\) reguläre Ausdrücke sind, dann \((R_0 \cup R_1)\)
+und \((R_0 \circ R_1)\). Statt \((R_0 \circ R_1)\) wird häufig einfach
+\((R_0\,R_1)\) geschrieben.
+</li>
+<li>Falls \(R_0\) ein regulärer Ausdruck ist, dann auch \((R_0^*)\).
+</li>
+</ul>
+
+<p>
+Jeder reguläre Ausdruck \(R\) bezeichnet eine Sprache \(L(R)\) (d.h.
+reguläre Ausdrücke Beschreiben Mengen). Es gilt:
+</p>
+
+<ul class="org-ul">
+<li>\(L(a) := \{a\}\) für \(a \in \Sigma\)
+</li>
+<li>\(L(\epsilon) := \{\epsilon\}\)
+</li>
+<li>\(L(\emptyset) := \emptyset\)
+</li>
+<li>\(L(R_0 \cup R_1) := L(R_0) \cup L(R_1)\)
+</li>
+<li>\(L(R_0 \circ R_1) := L(R_0) \circ L(R_1)\)
+</li>
+<li>\(L(R^*) := L(R)^*\)
+</li>
+</ul>
+
+<p>
+Insbesondere gilt:
+</p>
+
+<ul class="org-ul">
+<li>\(L(\emptyset^*) = \emptyset^* = \{\epsilon\}\)
+</li>
+<li>Konkatenation mit \(\emptyset\) liefert \(\emptyset\). Für alle regulären
+Ausdrücke \(R\) gilt also \(R \circ \emptyset = \emptyset\)
+</li>
+</ul>
+
+<p>
+<b>Konventionen:</b>
+</p>
+
+<ul class="org-ul">
+<li>Reihenfolge der Bindungsstärke: \(^*\), \(\circ\), \(\cup\)
+</li>
+<li>äußere Klammern dürfen wegfallen
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Eine Sprache \(L\) ist genau dann regulär, wenn sie durch einen
+regulären Ausdruck \(R\) bestimmt wird, d.h. es gilt \(L(R) = L\)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Konstruktion eines NFA aus einem regulären Ausdruck</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Auf induktive Weise kann aus einem regulären Ausdruck ein NFA
+konstruiert werden. Die Idee ist:
+</p>
+
+<ul class="org-ul">
+<li>Gelte \(R := a\) mit \(a \in \Sigma\): &#x2026;
+</li>
+<li>Gelte \(R := \epsilon\): &#x2026;
+</li>
+<li>Gelte \(R := \emptyset\): &#x2026;
+</li>
+<li>Gelte \(R := R_1 \cup R_2\): Führe einen neuen Anfangszustand ein,
+sowie \(\epsilon\)-Transitionen von diesem neuen Anfangszustand zu den
+"alten" von \(R_1\) und \(R_2\).
+</li>
+<li>Gelte \(R := R_1 \circ R_2\): Führe \(\epsilon\)-Transitionen von allen
+Endzuständen von \(R_1\) zum Anfangszustand von \(R_2\) ein.
+</li>
+<li>Gelte \(R := R_1^*\): Führe einen neuen akzeptierenden Anfangszustand
+ein (um das leere Wort zu akzeptieren) und führe
+\(\epsilon\)-Transitionen von allen Endzuständen von \(R_1\) zum
+Anfangszustand von \(R_1\) ein.
+</li>
+</ul>
+
+<p>
+Formal bedeutet das: &#x2026;
+</p>
+</div>
+</div>
+</div>

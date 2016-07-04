@@ -1,0 +1,107 @@
+---
+layout: page
+title: Deadlocks
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Deadlocks</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Zwei oder mehr Prozesse befinden sich im Zustand des <i>Deadlocks</i>, wenn
+jeder Prozess blockiert ist und auf eine Event wartet, dass nur von
+einem der anderen Prozesse ausgelöst werden kann (<i>zirkuläres Warten</i>),
+wie z.B. die Freigabe einer allozierten Ressource.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Bedingungen für Deadlocks</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Zu einem Deadlock kommt es, wenn die folgenden vier Bedingungen erfüllt
+sind:
+</p>
+
+<ol class="org-ol">
+<li><b>Mutual Exclusion</b>: Ressourcen können von nur <i>einem</i> Prozess
+zugleich verwendet werden 2 <b>Hold and Wait</b>: Prozesse können
+Ressourcen halten, während sie auf weitere Ressourcen warten
+</li>
+<li><b>No Preemtion</b>: Ressourcen können Prozessen nicht weggenommen werden
+</li>
+<li><b>Circular Wait</b>: Zwei oder mehr Prozesse von denen jeder eine
+Ressource hält und auf eine Ressource wartet, die ein anderer dieser
+Prozesse hält.
+</li>
+</ol>
+
+<p>
+Bedingung 1 - 3 basieren auf Betriebssystem-Policies (Maßnahmen zur
+Vermeidung dieser Bedingung werden als <i>Deadlock Prevention</i>
+bezeichnet). Bedingung 4 ergibt sich zur Laufzeit (Maßnahmen zur
+dynamischen Lösung von Deadlocks zur Laufzeit werden als <i>Deadlock
+Avoidance</i> bezeichnet). Deadlocks werden vermieden, wenn es gelingt
+mindestens eine der Bedingungen außer Kraft zu setzen (s.
+<i>Deadlock Handling</i>)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Process-Resource Trajectories Graph</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Ausführungstrajektorien können nur von links-unten nach rechts-oben
+verlaufen
+</li>
+<li>durch Mutual Exclusion entstehen im Graph <i>unmögliche Bereiche</i> (z.B.
+können nicht A und B gleichzeitig eine durch einen Semaphor
+geschützte Ressource benutzen)
+</li>
+<li>Deadlocks entstehen, wenn die Ausführungstrajektorie in eine
+"Sackgasse" zwischen unmöglichen Bereichen läuft, d.h. wenn die
+Ausführungstrajektorie weder nach rechts noch nach oben fortgesetzt
+werden kann.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Resource Allocation Graph</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>Menge von Knoten \(V=P \cup R\) mit
+
+<ul class="org-ul">
+<li>Menge von Prozessen \(P\)
+</li>
+<li>Menge von Ressourcen \(R\)
+</li>
+</ul>
+</li>
+
+<li>Menge von Kanten \(E = E_{R} \cup E_{A}\) mit
+
+<ul class="org-ul">
+<li>"Request"-Kanten \(E_{R} = \{(p,r) | p \in P \wedge r \in R\}\)
+</li>
+<li>"Allozierungs"-Kanten \(E_{A} = \{(r,p) | r \in R \wedge p \in P\}\)
+</li>
+</ul>
+</li>
+
+<li>ein Deadlock impliziert einen Kreis im Ressource Allocation Graph
+</li>
+<li>ein Kreis im Ressource Allocation Graph implizieren aber nicht
+unbedingt Deadlocks (ein Prozess könnte seine Ressourcen wieder
+freigeben)
+</li>
+</ul>
+
+<p>
+<i>resource_allocation_graph.png</i>
+</p>
+</div>
+</div>
+</div>

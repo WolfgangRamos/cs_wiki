@@ -1,0 +1,452 @@
+---
+layout: page
+title: Java
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Generics</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<i>Parametrische Polymorphie</i> = Parametrisierung von Klassen und Methoden
+mit Typen (diese heißen dann <i>Typparameter</i>)
+</p>
+
+<p>
+Form: <code>Klasse &lt;⟨Typparameter⟩&gt;</code>, z.B. <code>Optional &lt;T&gt;</code>, <code>T</code> heißt dann
+auch <i>formaler Typparameter</i>
+</p>
+
+<p>
+parametrisierung von Klassenmethoden:
+<code>static &lt;Typparamter&gt; ⟨Rückgabewert⟩ methode (...)</code>
+</p>
+
+<p>
+Klassenvariablen können nicht parametrisiert werden.
+</p>
+
+<p>
+Vererbungsbeziehungen von Typparamtern übertragen sich nicht auf die
+parametrisierten Klassen. Z.B. ist <code>Klasse&lt;Integer&gt;</code> kein Subtyp von
+<code>Klasse&lt;Number&gt;</code>
+</p>
+
+<p>
+Als Typparameter sind nur Subklassen von <code>Object</code> zulässig, keine
+atomaren Datentypen
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Einschränkung von Typparementern</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+auch in der Typparametersektion von Klassen und Methoden erlaubt
+</p>
+
+<ul class="org-ul">
+<li><code>T extends ⟨Superklasse⟩</code>: <code>T</code> heißt auch \<sub>formaler</sub> Typparameter
+</li>
+<li><code>T extends ⟨Interface⟩</code>:
+
+<ul class="org-ul">
+<li>angabe mehrerer Interfaces und max. einer Superklasse möglich:
+<code>T extends ⟨Superklasse⟩ &amp; ⟨Interface 1⟩ &amp; ⟨Interface 2⟩ &amp; ...</code>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Bei Übersetzen generischer Klassen wird <i>Type Erasure</i> angewendet. Dabei
+werden durch den Compiler alle Vorkommen des formalen Typpaaramters
+durch <code>Object</code> ersetzt und die Typparameter-Sektion aus dem Klassennamen
+entfernt. Der so generierte Byte-Code heißt <i>raw type</i>. Gleichzeit
+werden vom Compiler Typcasts eingefügt, um die Typsicherheit generischer
+Klassen wieder sicherzustellen.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Wildcards zur Polymorphie</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+Nur zur Deklaration von Referenzvariablen erlaubt (nicht in der
+Typparametersetion von Klassen/Methoden)
+</p>
+
+<ul class="org-ul">
+<li><i>unbounded wildcard</i> <code>?</code>: Parametrisierung von Refernzvariablen, die
+Objekte einer beliebig parametrisierten Klasse referenzieren können,
+Bsp: <code>MyClass&lt;?&gt; ref = new MyClasse&lt;String&gt;();</code>
+
+<ul class="org-ul">
+<li>darf nur in der Definition von Referenzvariablen verwendet werden,
+nicht abe in der Tapparametersektion einer generischen
+Klasse/Interface/Methode
+</li>
+</ul>
+</li>
+
+<li><i>upper bounded wildcard</i> <code>&lt;? extends ⟨Superklasse⟩&gt;</code> (Kovarianz):
+⟨Superklasse⟩ und alle ihre Subklassen (beim Type Erasure wird der
+Typparameter durch en Namen der Superklasse ersetzt)
+</li>
+<li><i>lower bounded wildcard</i> <code>&lt;? super ⟨Subklasse⟩&gt;</code>: ⟨Subklasse⟩ und
+alle ihre Superklassen
+</li>
+</ul>
+
+<p>
+<b>Kovarianz:</b> Erlaubt sind alle Methodenaufrufe, die den Subklassen von
+⟨Superklasse⟩ gemeinsam sind mit Argumenten, die von allen Klassen
+verarbeitete werden können. Aus einer Referenzvariablen die mit
+<code>? extends Y</code> parametrisiert wurde
+</p>
+
+<ul class="org-ul">
+<li>können wir nur Objekte vom Typ <code>null</code> hineinstecken
+</li>
+<li>können wir nur Objekte vom Typ <code>Y</code> herausholen
+</li>
+</ul>
+
+<p>
+Bsp:
+</p>
+
+<pre class="example">
+Optional&lt;? extends Number&gt; on = oi;
+
+on.set(null); // erlaubt
+on.set(new Integer(42)); // nicht erlaubt, da nur für Klasse Intege zulässig
+
+Number n = on.get(); // erlaubt
+Integer n = on.get(); // nicht erlaubt
+</pre>
+
+<p>
+<b>Kontravarianz:</b> Aus einer Referenzvariablen, die mit <code>? super Y</code>
+parametrisiert wurde können wir:
+</p>
+
+<ul class="org-ul">
+<li>nur Objekte vom Typ <code>Y</code> hineinstecken
+</li>
+<li>Objekte vom Typ <code>Object</code> herausholen
+</li>
+</ul>
+
+<p>
+<b>Typparameterinferenz:</b> Seit Java 7 kann die Angabe des Typparameters
+i.d.R. bei der Instanziierung entfallen und durch den <i>Diamantoperator</i>
+<code>&lt;&gt;</code> ersetzt werden. Dieser wird dann aus dem Typ der Referenzvariablen
+abgeleitet:
+</p>
+
+<pre class="example">
+MyClass&lt;Integer&gt; = new MyClass&lt;&gt;();
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Nebenläufigkeit</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Threads</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<b>Klasse</b> <code>Thread</code>: Bsp: <code>MyThreadClass extends Thread</code>
+</p>
+
+<p>
+<b>Interface</b> <code>Runable</code>: Bsp: <code>MyThreadClass implements Runable</code> (aktuelle
+Thread Objekt erreichbar über: <code>Thread.currentThread()</code>)
+</p>
+
+<ul class="org-ul">
+<li>Methode <code>public void run()</code>: Code, der beim Aufruf von <code>start()</code>
+   ausgeführt wird
+</li>
+<li><code>start()</code>: startet einen Thread
+</li>
+</ul>
+
+<p>
+Threads freiwillig unterbrechen:
+</p>
+
+<ul class="org-ul">
+<li><code>yield</code>: synchronized Methode wird nicht verlassen
+</li>
+<li><code>suspend</code>
+</li>
+<li><code>sleep(⟨Millisekunden⟩)</code>, <code>Thread.sleep(⟨Millisekunden⟩)</code>:
+suspendiert Thread, synchronized Methode wird nicht verlassen
+</li>
+
+<li><code>wait()</code>, <code>⟨object⟩.wait()</code>:
+
+<ul class="org-ul">
+<li>Methode der Klasse <code>Object</code>
+</li>
+<li>kann nur innerhalb eines <code>synchronized</code>-Blocks des Objekts
+<code>⟨object⟩</code> aufgerufen werden
+</li>
+<li>suspendiert den Thread und gibt das <i>lock</i> von <code>⟨object⟩</code> frei
+</li>
+<li><code>wait(⟨ms⟩)</code>, <code>wait(⟨ms⟩, ⟨ns⟩)</code>: Causes the current thread to
+wait until either another thread invokes the notify() method or
+the notifyAll() method for this object, or a specified amount of
+time has elapsed.
+</li>
+</ul>
+</li>
+
+<li><code>notify()</code>, <code>⟨object⟩.notify()</code>: deblockiert irgendeinen Thread aus
+dem waiting set von ⟨object⟩
+
+<ul class="org-ul">
+<li>Deblockiert irgendeinen Thread aus dem waiting set von <code>⟨object⟩</code>
+(der Thread wird in die <i>waiting queue</i> des Objekts verschoben).
+Wenn kein Thread auf das lock wartet geht das Signal verloren.
+</li>
+</ul>
+</li>
+
+<li><code>notifyAll()</code>, <code>⟨object⟩.notifyAll()</code>:
+
+<ul class="org-ul">
+<li>kann nur innerhalb eines <code>synchronized</code>-Blocks des Objekts
+<code>⟨object⟩</code> aufgerufen werden
+</li>
+<li>Deblockiert alle Threads aus dem waiting set von <code>⟨object⟩</code>. Wenn
+kein Thread auf das lock wartet geht das Signal verloren. Die
+aufgeweckten Threads müssen sich neu um das lock bewerben.
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<code>wait()</code>, <code>notify()</code> und <code>notifyAll()</code> dürfen nur in <code>synchronized</code>
+Methoden oder <code>synchronized</code>-Blöcken verwendet werden. Ansonsten ergibt
+sich zur Laufzeit eine <code>IllegalMoitorStateException</code>.
+</p>
+
+<p>
+Semantik des Monitorskonzepts in Java: EQ = WQ &lt; SQ;
+</p>
+
+<p>
+<b>Zustände von Threads:</b>
+</p>
+
+<ul class="org-ul">
+<li><code>NEW</code>
+</li>
+<li><code>RUNABLE</code>: Thread ist in ausführung (d.h. jedoch nicht zwangsläufig,
+dass der Thread sich zu jedem Zeitpunkt in Ausführung befindet)
+</li>
+<li><code>WAITING</code>: Thread ist ausführbereit und wartet auf das lock eines
+Objekts
+</li>
+<li><code>BLOCKED</code>: Thread wartet darauf durch ein <code>notify()</code> oder
+<code>notifyAll()</code> geweckt zu werden.
+</li>
+<li><code>TIMED_WAITING</code>: Thread wartet darauf durch ein <code>notify()</code> oder
+<code>notifyAll()</code> oder durch Ablauf einer spezifizierten Zeit geweckt zu
+werden.
+</li>
+<li><code>TERMINATED</code>:
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Semaphoren</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Klasse: <code>java.util.concurrent.Semaphore</code>
+</p>
+
+<ul class="org-ul">
+<li><code>aquireUninterruptibly()</code>:
+</li>
+<li><code>release()</code>:
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Synchronized</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Das Monitor-Konzept für Codeblöcke, Klassen- und Instanzmethoden wird in
+Java wird mit Hilfe des Schlüsselworts <code>synchronized</code> realisiert.
+</p>
+
+<ul class="org-ul">
+<li>jedes Objekt hat ein genau ein sog. <i>intrinsic lock</i>, welches für die
+Synchronisation auf Instanzmethoden verwendet wird
+</li>
+<li>jede Klasse hat ein <i>lock</i>, welches für die Synchronisation auf
+Klassenmethoden verwendet wird
+</li>
+<li>zu jedem Zeitpunkt darf sich in <i>allen</i> <code>synchronized</code>
+Methoden/Blöcken eines Objekts oder einer Klasse <i>höchstens</i> ein
+Thread befinden
+</li>
+<li>jede Klasse/jedes Objekt hat ein <i>wait set</i>, d.h. eine Menge von
+Threads, die ausführbereit sind (Status <code>BLOCKED</code>) und auf das lock
+dieses Objekts/dieser Klasse warten. Das Warten auf ein lock erfolgt
+in Java also nicht über eine Warteschlange. Stattdessen erhalten
+Threads das lock in zufälliger Reihenfolge
+</li>
+<li>Instanz- oder Klassenvariablen können nicht <code>synchronized</code> sein! Soll
+der Zugriff synchronisiert erfolgen, so muss der Zugriff in Methoden
+gekapselt werden
+</li>
+<li>Konstruktoren können nicht <code>synchronized</code> sein!
+</li>
+<li><code>synchronized</code> ist <i>reentrend</i>, d.h. ein Tread, der das Lock eines
+Objekts / einer Klasse hat kann ohne Suspendierung weitere
+synchronized Instanz- bzw. Klassenmethoden aufrufen
+</li>
+</ul>
+
+<p>
+<b>synchronized block</b>: Ermöglichen
+</p>
+
+<ul class="org-ul">
+<li>Synchronisierung auf variablen Codeabschnitten (und nicht nur auf
+ganzen Methoden)
+</li>
+<li>Synchronisierung auf beliebigen Synchronisationsobjekten (und nicht
+nur auf <code>this</code>)
+</li>
+<li>Client-Side Synchronization
+</li>
+</ul>
+
+<pre class="example">
+synchronized(⟨Synchronisationsobjekt⟩) { // es wird auf dem lock des Synchronisationsobjekt synchronisiert
+  ⟨block⟩
+}
+</pre>
+
+<p>
+<b>synchronized Methoden:</b>
+</p>
+
+<pre class="example">
+synchronized void aMethod() {
+  ...
+}
+</pre>
+
+<p>
+ist syntaktischer Zucker und wird durch den Compiler in einen
+<code>synchronized</code> Block (synchronisiert wir aud <code>this</code>) übersetzt, der den
+Methodenrumpf umgibt:
+</p>
+
+<pre class="example">
+void aMethod() {
+  synchronized(this) {
+    ... // Methodenrumpf
+  }
+}
+</pre>
+
+<p>
+Zur Realisierung eines Monitors in Java muss sichergestellt werden, dass
+der Zugriff auf alle Attribute synchronized erfolgt. Das kann wie folgt
+realisiert werden:
+</p>
+
+<ul class="org-ul">
+<li>mache alle Attribute <code>private</code>
+</li>
+<li>mache alle Methoden, die auf Attribute (oder wenigstens diejenigen,
+die schreibend zugreifen) <code>synchronized</code>
+</li>
+</ul>
+
+<p>
+Man unterscheidet:
+</p>
+
+<p>
+<b>server side synchronization:</b> Hier stellt die Klasse (eigentlich die
+VM) die Synchronisation sicher. Das ist möglich für einzelne
+Methodenaufrufe (und alle Methode, die innerhalb von synchronized
+Methoden aufgerufen werden).
+</p>
+
+<p>
+<b>client side synchronization:</b> Hier muss der Client die Synchronisation
+sicherstellen. Das ist nötig, wenn mehrere aufeianderfolgende Aufrufe
+unsbhängiger Methoden synchronisiert werden müssen
+</p>
+
+<p>
+Bsp:
+</p>
+
+<pre class="example">
+List&lt;Integer&gt; unsynclist = new List&lt;&gt;();
+List&lt;Integer&gt; list = Collections.synchronizedList(list);
+
+// client side synchronization
+synchronized(list) {
+  b = new Integer[list.size()]; // prevent scheduling between call to size() and toArray()
+  list.toArray[b];
+}
+
+//server-side synchronization
+Integer[] a = list.toArray(new Integer[0]); // the determination of the size and the call to toArray() are synchronized
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> RMI</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>sequentielle Programmierung wird auf verteilten Objekten fortgesetzt
+</li>
+<li>Objekte werden als Parameter oder als Rückgabewert verschickt
+(entspricht dem Senden eines Pids in Erlang)
+</li>
+<li>Registry sollte nur für Erstkontakt genutzt werden
+</li>
+<li>Synchronisation auf Serverobjekten nötig!
+</li>
+<li>Objekte werden verändert (anders als in Erlang, wo es "keine
+Nebeneffekte" gibt)
+</li>
+<li>Objekte werden als Referenzen (Objektidentität bleibt erhalten) oder
+als Kopie auf Zielknoten (Kopie!) übergeben.
+
+<ul class="org-ul">
+<li>eine Kopie macht Sinn, wenn man viele Daten aus dem Objekt
+auslesen möchte und keine schreiben möchte (das veränder ja nur
+die lokale Kopie)
+</li>
+</ul>
+</li>
+
+<li>Viele Methodenaufrufe können zu viel Netzwerkkommunikation führen
+(insbesondere, wenn die Kapselung im Code hoch ist)
+</li>
+</ul>
+</div>
+</div>

@@ -1,0 +1,137 @@
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Entscheidungsprobleme</a></li>
+<li><a href="#sec-2">2. Entscheidbarkeit</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Aufzählen von Mengen</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Entscheidungsprobleme</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Ein <b>Entscheidungsproblem</b> ist gegeben durch:
+</p>
+
+<ul class="org-ul">
+<li>eine Menge von Instanzen \(\mathcal{I}\),
+</li>
+<li>eine Menge von positiven Instanzen \(\mathcal{P} \subseteq \mathcal{I}\)
+</li>
+<li>eine Menge von negativen Instanzen \(\mathcal{I} \setminus \mathcal{P}\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Entscheidbarkeit</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Ein Algorithmus <b>entscheidet</b> ein Problem mit \(\mathcal{I}\) und \(\mathcal{P}\), falls gilt
+</p>
+
+<ul class="org-ul">
+<li>für positive Instanzen liefert er "ja"
+</li>
+<li>für negative Instanzen liefert er "nein"
+</li>
+</ul>
+
+<p>
+<b>Wichtig</b>: Nicht alle Probleme sind entscheidbar!
+</p>
+
+<p>
+Ein Algorithmus ist ein <b>negatives Semienschtscheidungsverfahren</b> für
+\(\mathcal{I}\) und \(\mathcal{P}\), falls gilt
+</p>
+
+<ul class="org-ul">
+<li>für positive Instanzen terminiert er nicht
+</li>
+<li>für negative Instanzen liefert er "nein"
+</li>
+</ul>
+
+<p>
+Analog gilt: Ein Algorithmus ist ein <b>positives Semienschtscheidungsverfahren</b> für
+\(\mathcal{I}\) und \(\mathcal{P}\), falls gilt
+</p>
+
+<ul class="org-ul">
+<li>für negative Instanzen terminiert er nicht
+</li>
+<li>für positive Instanzen liefert er "ja"
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Aufzählen von Mengen</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Um zu zeigen, dass Probleme mit unendlicher Menge positiver Instanzen
+\(\mathcal{P}\) entscheidbar sind, kann man z.B. einen Algorithmus
+angeben, der die Elemente von \(\mathcal{P}\) aufzählt.
+</p>
+
+<p>
+Ein Algorithmus \(A(i:\mathbb{N}):M \cup \{null\}\) <b>zählt</b> die Menge \(N \subseteq M\) auf, falls gilt:
+</p>
+
+<ul class="org-ul">
+<li>\(A\) terminiert für jede Eingabe \(e\in \mathbb{N}\)
+</li>
+<li>\(N = \{A(i) \mid A(i) \neq null \wedge i \in \mathbb{N}\}\)
+</li>
+</ul>
+
+<p>
+Eine Menge \(M\) ist genau dann aufzählbar, wenn sie positiv
+semientscheidbar ist.
+</p>
+
+<pre class="example">
+$A(i:\mathbb{N}):\mathbb{N} \cup \{null\}$
+return $i$
+</pre>
+
+<p>
+<b>Idee:</b> Test für jedes \(n \in \mathbb{N}\) jeweils, ob \(\{\varphi_0,
+\dots, \varphi_{n-1}\) erfüllbar ist. Falls das für ein \(n\) nicht
+möglich ist, dann ist auch die unendliche Formelmenge \(\{varphi_0,
+\varphi_1, \dots \}\) nicht erfüllbar.
+</p>
+
+<pre class="example">
+$A(B:\mathbb{N} \rightarrow F_{AL}\cup \{null\}):\{ja, nein\}$
+-------------------------
+Setze $\varphi = \top$;
+Setze $i = 0$;
+Setze $f = erfuellbar$;
+
+Solange $f == erfuellbar$
+  Setze $\psi = B(i)$;
+  Falls $\psi \neq null$
+    Setze $\varphi = \varphi \wedge \psi$;
+  $f = SATSOLVE(\varphi)$;
+  Setze $i = i+1$;
+
+return $nein$;
+</pre>
+
+<p>
+Der Algorithmus zeigt, dass das Entscheidbarkeitsproblem für
+aufzählbare Formelmengen negativ semientscheidbar ist. Es ist jedoch
+nicht entscheidbar.
+</p>
+</div>
+</div>
+</div>

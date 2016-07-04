@@ -1,0 +1,121 @@
+---
+layout: page
+title: Landau_symbole
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Obere Schranken</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+\(\mathcal{O}(f) := \\{ g: \mathbb{N} \rightarrow \mathbb{R}\_{+} | \exists c \in \mathbb{R}\_{>0}: \exists n_{0} \in \mathbb{N}\_{\geq 1}: \forall n \in \mathbb{N}\_{\geq n_{0}}: g(n) \leq cf(n)\\}\)
+</p>
+
+<p>
+Größenordnungen (aufsteigend sortiert):
+</p>
+
+<ol class="org-ol">
+<li>\(\log \log n\)
+</li>
+<li>\(\log n\)
+</li>
+<li>\((\log (n))^{2} = \log^{2} n\)
+</li>
+<li>\(n^{\epsilon}\) mit \(\epsilon \in (0, \frac{1}{2})\)
+</li>
+<li>\(\sqrt{n}\)
+</li>
+<li>\(n\)
+</li>
+<li>\(n \log n\)
+</li>
+<li>\(n^{\frac{3}{2}}\)
+</li>
+<li>\(n^2\)
+</li>
+<li>\(n^3\)
+</li>
+<li>\(2^n\)
+</li>
+<li>\(3^n\)
+</li>
+<li>\(n^n\)
+</li>
+</ol>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Eigenschaften</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Ist \(g(n) = \sum_{i=1}^{m} c_{i} n^{d_{i}}\) ein
+<a href="../mathe/polynom">Polynom</a> in \(n\) mit
+\(c_{i}, d_{i} \in \mathbb{R}\_{>0}\), so ist
+\(g \in \mathcal{O}(n^{k})\) für
+\(k = \max\\{d_{j} | j \in \\{0,...,m\\}\\}\).
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Untere Schranken</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+\(\Omega (f) = \\{ g: \mathbb{N} \rightarrow \mathbb{R}\_{+} | \exists c \in \mathbb{R}\_{>0}: \exists n_{0} \in \mathbb{N}\_{\geq 1}: \forall n \in \mathbb{N}\_{\geq n_{0}}: g(n) \geq cf(n) \\}\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Exakte Schranken</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+\(\Theta (f) = \\{ g: \mathbb{N} \rightarrow \mathbb{R}\_{+} | \exists c \in \mathbb{R}\_{>0}: \exists n_{0} \in \mathbb{N}\_{\geq 1}: \forall n \in \mathbb{N}\_{\geq n_{0}}: \frac{1}{c} \leq g(n) \leq cf(n) \\}\)
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>\(f\) ist genau dann exakte Schranke von \(g\), wenn \(f\) untere und obere
+Schranke von \(g\) ist, d.h.
+\(g \in \Theta(f) \Longleftrightarrow g \in \mathcal{O}(f) \wedge g \in \Omega(f)\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Zählen von Operationen</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li><code>for x=1 to n do ...</code>: 2 Operationen je Iteration (1. Iteration:
+Intialisierung und Test der Schleifenbedingung; 2. bis n. Iteration:
+Inrekmentierung und Test der Schleifenbedingung); <code>n</code> Iterationen
+</li>
+<li><code>for(⟨Intitialisierung⟩; ⟨Test⟩; ⟨Inkrementierung⟩) {...}</code>:
+</li>
+<li><code>while ⟨Bedingung⟩ do ...</code>: Operationen für den Test der
+Schleifenbedinung je Iteration
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Asymptotisch vernachlässigbar</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Wir schreiben \(f \in o(g)\), wenn
+\(|\lim_{n \rightarrow \infty} \frac{f(n)}{g(n)}| = 0\) gilt. Anschaulich
+bedeutet das gilt:
+</p>
+
+<p>
+\(\forall \epsilon \in \mathbb{R}_{>0}: \exists n_0 \in \mathbb{N}: \forall n \geq n_0: f(n) < c \cdot g(n)\)
+</p>
+</div>
+</div>

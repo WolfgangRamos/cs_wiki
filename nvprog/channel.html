@@ -1,0 +1,88 @@
+---
+layout: page
+title: Channel
+---
+
+<pre class="example">
+class Chan&lt;T&gt; {
+
+  private MVar&lt;MVar&lt;ChanElem&lt;T&gt;&gt;&gt; read, write;
+
+  private ChanElem&lt;T&gt; {
+
+    private T value;
+    private MVar&lt;ChanElem&lt;T&gt;&gt; next;
+
+    public ChanElem(T v, MVar&lt;ChanElem&lt;T&gt;&gt; n) {
+      this.value = v;
+      this.next = n;
+    }
+
+    public T value() {
+      return this.value;
+    }
+
+    public MVar&lt;ChanElem&lt;T&gt;&gt; next() {
+      return this.next;
+    }
+
+  }
+
+  public Chan() throws Interrupted Exception {
+    MVar&lt;ChanElem&gt; hole = new MVar&lt;T&gt;();
+    read = new MVar&lt;&gt;(hole);
+    write = new MVar&lt;&gt;(hole);
+  }
+
+  public void read() {
+    MVar&lt;ChanElem&lt;T&gt;&gt; rEnd = read.take();
+    ChanElem&lt;T&gt; item = rEnd.take();
+    read.put(item.next());
+    return item.value();
+  }
+
+  public void write(T value) {
+    MVar&lt;ChanElem&lt;T&gt;&gt; newHole = new MVar&lt;&gt;();
+    ChanElem&lt;T&gt; item = new ChanElem&lt;&gt;(value, newHole);
+    MVar&lt;ChanElem&lt;T&gt;&gt; wEnd = write.take();
+    wEnd.put(item);
+    write.put(newHole);
+  }
+
+  public boolean isEmpty() throws InterruptedException{
+    MVar&lt;ChanElem&lt;T&gt;&gt; rEnd read.read();
+    MVar&lt;ChanElem&lt;T&gt;&gt; wEnd write.read();
+    return rEnd == wEnd;
+  }
+
+
+}
+</pre>
+
+<pre class="example">
+class ChanTest extends Thread {
+
+  static Chan&lt;Object&gt; ch;
+
+  public void run() {
+    try {
+      ch.read();
+      System.out.println("Gelesen");
+    } catch(Exception e) {
+    }
+  }
+
+  // results in a deadlock
+  public void main (String[] args) {
+    ch = new Chan&lt;&gt;();
+    new ChanTest().start();
+
+    sleep(10);
+    if(ch.isEmpty()) {
+      ch.write(new Object());
+    }
+
+    System.out.println("Fertig");
+  }
+}
+</pre>

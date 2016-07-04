@@ -1,0 +1,137 @@
+---
+layout: page
+title: Polynom
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Polynom</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sei \((R,+,\cdot)\) ein <i>kommutativer Ring</i> und sei
+\(n \in \mathbb{N}\_{0}\) fest aber beliebig (die Anzahl der \(a_i\) muss
+jedoch endlich sein) und gelte
+\(\forall i \in \mathbb{N}\_{\leq n}: a_i \in R\), dann versteht man unter
+einem <i>Polynom</i> auf \(R\) eine Abbildung \(p: R \rightarrow R\) mit
+\(p(x) := \sum\_{i=0}^{n} a_i \cdot x^i\).
+</p>
+
+<p>
+Die \(a_i \in R\) heißen <i>Koeffizienten</i> und \(x \in R\) heißt <i>Argument</i>
+des Polynoms.
+</p>
+
+<p>
+Wenn \(p = e_{+}\) gilt, wobei \(e_{+}\) das neutrale Element der Gruppe
+\((R,+)\) ist, heißt \(p\) auch <i>Nullpolynom</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Grad eines Polynoms</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Sei \((R,+,\cdot)\) ein <i>kommutativer Ring</i> und sei \(e_{+}\) das
+neutrale Element der Gruppe \((R,+)\) und \(p\) Polynom auf \(R\), dann heißt
+\(\deg : ? \rightarrow \mathbb{Z}\_{>-1}\) gegeben durch
+</p>
+
+<p>
+$$\deg(p) := \begin{cases}
+-1 & \text{falls } p = e_{+}\\\\ 
+n & \text{falls } p = (\sum_{i=0}^{n} a_i \cdot x^i) \wedge a_n \neq e_{+}\\\\
+\end{cases}$$
+</p>
+
+<p>
+<i>Grad</i> des Polynoms \(p\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Polynomarithmetik</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Sei \((R,+,\cdot)\) kommutativer Ring und seien \(p,q\) Polynome auf \(R\),
+dann ist:
+</p>
+
+<ul class="org-ul">
+<li>eine <i>Polynomadditon</i> \(p +_p q: R \rightarrow R\) definiert durch
+\((p +_p q)(x) := p(x) + q(x)\).
+</li>
+<li>eine <i>Polynommultiplikation</i> \(p \cdot_p q: R \rightarrow R\) definiert
+durch \((p \cdot_p q)(x) := p(x) \cdot q(x)\).
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>\(\deg(p +_p q) \leq \max\\{\deg(p), deg(q)\\}\)
+</li>
+<li>\(\deg(p \cdot_p q) \leq \deg(p) + deg(q)\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Polynomring</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Sei \((R,+,\cdot)\) ein <i>kommutativer Ring</i>. Dann bildet die Menge
+der Polynome zusammen mit der Polynomaddition "\(+_p\)" und der
+Polynommultiplikation "\(\cdot_p\)" einen <i>Ring</i> den sog.
+<i>Polynomring</i> \((R[x], +_p, \cdot_p)\), kurz \(R[x]\). Der Polynomring ist
+einen Unterring aller Allbildungen \(R \rightarrow R\).
+</p>
+
+<p>
+Besitzt der Ring \((R,+,\cdot)\) eine neutrales Element bzgl. der
+Mulitplikation \(e_{\cdot}\), dann besitzt auch der Polynomring \(R[x]\) ein
+neutrales Element bzgl der Polynommultiplikation \(\cdot_p\), nämlich
+\(p(x) = e_{\cdot}\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Polynomdivision</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+TODO (benötigt Körper)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Komplexe Polynome</h2>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Polynome lösen</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<b>Polynome 2. Grades:</b> löse Polynome der Form \(ax^2 + bx + c\) mit der
+Mitternachtsformel: \(x_{1,2} = \frac{-b \pm \sqrt{b^{2} - 4ac}}{2a}\)
+</p>
+
+<p>
+<b>Polynome 3. Grades:</b>
+</p>
+
+<ol class="org-ol">
+<li>rate eine Nullstelle \(\lambda\)
+</li>
+<li>Teile \(p(x)\) durch \((x - \lambda)\). Das liefert ein Restpolynom 2.
+Grades.
+</li>
+<li>löse Restpolynom mit Mitternachtsformel
+</li>
+</ol>
+</div>
+</div>

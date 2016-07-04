@@ -1,0 +1,143 @@
+---
+layout: page
+title: Concurrency
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Nebenläufigkeit</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Prozesse deren <i>Kontrollflüsse</i> sich überlappen ohne
+zeitgleich ausgeführt zu werden (d.h. es finden <i>context switches</i>
+zwischen den Prozessen statt, bevor jeder einzelne terminiert) heißen
+<i>nebenläufig</i> (engl. <i>concurrent</i>). Man spricht auch von <i>interleaving
+control flows</i>. Prozesse, deren Kontrollflüsse sich nicht auf diese
+Weise überlappen heißen <i>sequentiell</i>.
+</p>
+
+<p>
+Prozesse deren Kontrollflüsse zeitgleich (z.B. auf verschiedenen Kernen
+einer CPU) ausgeführt werden heißen <i>parallel</i>. Man spricht auch von
+<i>overlapping control flows</i>.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Prozesssynchronisation</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Die Koordination der Abarbeitung mehrerer Prozesse/Threads, die auf
+geteilten Daten operieren bezeichnet man als <i>Prozesssynchronisation</i>.
+Um Prozesse/Threads miteiander synchronisieren zu können, müssen die
+Prozesse/Threads miteinander kommunizieren (Daten austauschen) können.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Race Conditions</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<i>Race Conditions</i> treten in Situationen auf, in der mehrere
+Prozesse/Threads auf gemeinsame Daten lesend oder schreibend zugreifen,
+sodass das Resultat der Zugriffe von ihrer Ausführungsreihenfolge
+abhängt. Man unterscheidet:
+</p>
+
+<ul class="org-ul">
+<li><i>Write-Write Race Conditions</i>: alle Prozesse greifen schreibend auf
+gemeinsame Daten zu
+</li>
+<li><i>Read-Write Race Condtions</i>: min. ein Prozess greift lesend und min.
+ein Prozess greift schreibend auf gemeinsame Daten zu
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Deadlocks</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Siehe <i>Deadlocks</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Starvation</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Starvation bezeichnet den Zustand, dass ein ausführbereiter Prozess
+(ready state) nie Zugriff auf die CPU erhält (dispatched wird), also nie
+zur Ausführung gebracht wird (Running state).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Livelock</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Ein Zustand, in dem zwei oder mehr Prozesse keine Fortschritte mehr
+machen können, aber im Gegensatz zum Dealock noch zwischen Zuständen hin
+und herwechseln (also nicht dauerhaft blockiert sind), denen sie aber
+nicht mehr entkommen können.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Mutual Exclusion</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Mutual Exclusion (dt. wechselseitiger Ausschluss) bezeichnet den
+wechselseitigen Ausschluss von Prozessen beim Zugriff auf eine Ressource
+(z.B. eine Critical Section). D.h., dass kein anderer Prozess Zugriff
+auf die Ressource erhalten kann, so lang <i>ein</i> anderer Prozess die
+Ressource verwendet. Mutual Exclusion kann z.B. mit
+<i>Binären Semaphoren</i> (auch <i>Mutex</i>
+genannt) realisiert werden.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Methoden zur Behandlung von Race Condtions</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Race Conditions können aufgelöst werden durch Verwendung von:
+</p>
+
+<ul class="org-ul">
+<li>hardwaregestützten <i>atomaren Operationen</i>
+(Nachteil: Lösungen von Race Conditions durch hardwaregestützte
+atomare Operationen kommen i.d.R. nicht ohne Busy Wait aus)
+</li>
+<li><i>Semaphoren</i>
+</li>
+<li><i>Monitore</i>
+</li>
+<li><i>Message Passing</i>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> Bekannte Problemstellungen</h3>
+<div class="outline-text-3" id="text-1-8">
+<ul class="org-ul">
+<li><i>Critical Section</i>
+</li>
+<li><i>Producer/Consumer Problem</i>
+</li>
+<li><i>Readers/Writers Problem</i>
+</li>
+<li><i>Philosophenproblem</i> (engl. <i>Dining
+Philosophers Problem</i>)
+</li>
+</ul>
+</div>
+</div>
+</div>

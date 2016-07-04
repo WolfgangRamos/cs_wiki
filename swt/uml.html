@@ -1,0 +1,333 @@
+---
+layout: page
+title: Uml
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Unified Modelling Language</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Die UML dient zur:
+</p>
+
+<ul class="org-ul">
+<li>Modellierung unterschiedlicher Aspekte eines Systems
+</li>
+<li>Kommunikation von Entwurfsentscheidungen
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Stereotype</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Stereotype (<code>&lt;&lt;⟨Stereotyp⟩&gt;&gt;</code>) ermöglichen eine Klassifizierung von
+Elementen eines Modells zusätzlich zu den anderen
+Klassizierungsmöglichkeiten der UML.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Diagramme zur Modellierung der Struktur</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Komponentendiagramm</h4>
+</div>
+
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Verteilungsdiagramm (Deploymentdiagram)</h4>
+</div>
+
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> Klassendiagramm</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<ul class="org-ul">
+<li>Beziehungen zwischen Klassen
+
+<ul class="org-ul">
+<li>Dependency: eine Klasse nutzt eine andere Klasse in irgendeiner
+Form, ohne eine Referenz auf diese Klasse zu haben
+</li>
+<li>Assoziation: Modelliert eine Verbindung (Link) zwischen zwei
+Klassen
+
+<ul class="org-ul">
+<li>Aggregation: schwache Form einer Teil-Ganzes-Beziehung zwischen
+zwei Klassen. Teile können auch ohne Ganzes existieren
+</li>
+<li>Komposition: starke Form einer Teil-Ganzes-Beziehung zwischen
+zwei Klassen. Teile können nicht ohne Ganzes existieren
+(<i>lifecycle dependency</i>).
+</li>
+<li>Navigierbarkeit
+</li>
+<li>Multiplizität: 1 (Default), n (*), x bis y (x..y)
+</li>
+</ul>
+</li>
+
+<li>Delegationsbeziehung: Stereotyp <code>&lt;&lt;delegate&gt;&gt;</code> (i.d.R. mit
+Multiplizität 1:1)
+
+<ul class="org-ul">
+<li>Klasse A bietet alle Dienste von Klasse B an
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li>Klassen
+
+<ul class="org-ul">
+<li>Sichtbarkeit: nicht in UML dargestellt (evtl. über Stereotype)
+</li>
+<li>abstract: Stereotyp <code>&lt;&lt;abstract&gt;&gt;</code>
+</li>
+</ul>
+</li>
+
+<li>Modifikatoren für Attribute und Methoden
+
+<ul class="org-ul">
+<li>Sichtbarkeiten: public (+), protected (#), private (-)
+</li>
+<li>abstract: Stereotyp <code>&lt;&lt;abstract&gt;&gt;</code>
+</li>
+</ul>
+</li>
+
+<li>Interface: Stereotyp <code>&lt;&lt;interface&gt;&gt;</code>
+
+<ul class="org-ul">
+<li>Realisierung eines Interface
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-4" class="outline-4">
+<h4 id="sec-1-2-4"><span class="section-number-4">1.2.4</span> Objektdiagramm</h4>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Diagramme zur Modellierung der Dynamik</h3>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Anwendungsfall</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Beschreibt die Nutzung eines bestimmten Teils der Funktionalität eines
+Systems durch einen <i>Akteur</i> (eine Folge von Ereignissen zwischen Aktuer
+und System). Ein Akteur ist eine <i>Rolle</i> in der eine Entitäten, die sich
+außerhalb des Systems befinden und einen Einfluss auf das System hat
+(z.B. ein Benutzer oder ein System), an einem Use-Case beiteiligt ist
+(d.h. dieselbe Entität kann in verschiedenen Rollen an einem Use-Case
+beteiligt sein). Jeder Anwendungsfall wird durch ein oder mehrere
+Szenarien (i.d.R. eine textuelle Beschreibung eines prototypischen
+Benutzungsablaufs) konkretisiert. Szenarien werden später durch
+Sequenzdiagramme beschrieben.
+</p>
+
+<p>
+Ermittlung von Anwendungsfällen: 1. Akteure identifizieren 2.
+Anwendungsfälle identifzieren 3. Anwendungsfälle strukturieren (durch
+Beziehungen zwischen Anwendungsfällen)
+</p>
+
+<p>
+Anwendungsfälle werden textuell, i.d.R. in tabellarischen
+Spezifikationsschabolen beschrieben. Anwendungsfalldiagramme geben
+Übersichten über Anwendungsfälle und deren Beziehungen zueinander.
+</p>
+</div>
+
+<div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1"><span class="section-number-4">1.4.1</span> Anwendungsfalldiagramm (Use-Case Diagram)</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+Übersicht über Anwendungsfälle. Wichtige UML-Elemente:
+</p>
+
+<ul class="org-ul">
+<li><i>Anwendungsfall</i>: s.o.
+</li>
+<li><i>Akteur</i>: s.o.
+</li>
+<li><i>System</i>: s.o.
+</li>
+<li><i>Assoziation</i>: Beziehung zwischen einem Akteur und einem
+Anwendungsfall
+</li>
+<li>Beziehungen zwischen Anwendungsfällen:
+
+<ul class="org-ul">
+<li><code>&lt;&lt;include&gt;&gt;</code>: (obligate) Benutzung eines Anwendungsfalls (der
+benutze Anwendungsfall ist unbedingt notwendig für die
+Funktionalität)
+</li>
+<li><code>&lt;&lt;extend&gt;&gt;</code>: optionale Benutzung eines Anwendungsfalls
+(Erweiterung)
+</li>
+<li>Vererbung: Anwendungsfälle können das Verhalten anderer
+Anwendugsfälle erben und überschreiben und/oder spezialisieren
+</li>
+</ul>
+</li>
+
+<li><i>Extension Points</i>: geben an, wo ein erweiternder Anwendungsfall
+einzufügen ist
+</li>
+<li><i>Pakete</i>: können zur Strukturierung von Anwendungsfällen verwendet
+werden.
+
+<ul class="org-ul">
+<li><code>&lt;&lt;import&gt;&gt;</code>-Beziehung: Vererbung zwischen Paketen (in diesm Fall
+erben die Anwendungsfälle eines Pakets das Verhalten der
+Anwendungsfälle des anderen Pakets)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Zustandsdiagramme</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Beschreiben das <i>gesamte</i> Verhaltensrepertoire von Objekten einer Klasse
+(beziehen sich als auf die Dynamik einer Klasse).
+</p>
+</div>
+
+<div id="outline-container-sec-1-5-1" class="outline-4">
+<h4 id="sec-1-5-1"><span class="section-number-4">1.5.1</span> Verhaltenszustandsautomat</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<p>
+Beschreibt das Verhalten der Objekte einer Klasse. Wichtige
+UML-Elemente:
+</p>
+
+<ul class="org-ul">
+<li><i>Zustände</i>
+
+<ul class="org-ul">
+<li><i>Aktionen</i> in Zuständen:
+
+<ul class="org-ul">
+<li><code>entry /</code>:
+</li>
+<li><code>do /</code>:
+</li>
+<li><code>exit /</code>:
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li><i>Transitionen</i> (Zustandsübergänge)
+
+<ul class="org-ul">
+<li><i>Trigger</i>: Ereignis, dass den Zustandsübergang auslöst
+</li>
+<li><i>Guard</i>: Bedingung die erfüllt sein muss, damit eine Transition
+feuert
+</li>
+<li><i>Effect</i>: Ereignis, dass mit dem Zustandsübergang verbunden ist
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-2" class="outline-4">
+<h4 id="sec-1-5-2"><span class="section-number-4">1.5.2</span> Protokollzustandsautomat</h4>
+<div class="outline-text-4" id="text-1-5-2">
+<p>
+Beschreibt wie eine Komponente (z.B. Objekte einer Klasse) genutzt
+werden darf/kann, d.h. es steht die Beschreibung der Dienste einer
+Klasse im Vordergrund (Transitionen entsprechen hier Methodenaufrufen
+oder Aktionen eines Nutzers). Wichtige UML-Elemente:
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Aktivitätsdiagramme</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Spezifikation von Arbeitsabläufen (Workflows), die unabhängig von
+Klassen oder Klassenübergreifend sein können. Wichtige UML-Elemente:
+</p>
+
+<ul class="org-ul">
+<li><i>initial node</i>
+</li>
+<li><i>final node</i>
+
+<ul class="org-ul">
+<li><i>flow final</i>:
+</li>
+<li><i>activity final</i>: Ende der im Diagramm dargestellten Aktivität
+</li>
+</ul>
+</li>
+
+<li><i>activity node</i>: Aktivität (eindeutige Bezeichnung)
+</li>
+<li><i>decision node</i>: für Fallunterscheidungen
+
+<ul class="org-ul">
+<li>Guard: spezifiziert die Bedingungen einer Verzweigung
+</li>
+</ul>
+</li>
+
+<li><i>fork nodes</i> und <i>merge nodes</i>: zur Modellierung paralleler
+Aktivitäten
+</li>
+<li><i>swimlanes</i>: zur Modellierung von Verantwortlichkeitsgrenzen
+</li>
+<li>Aktefakt: Objekte, die an Aktivitäten beiteiligt sind
+</li>
+</ul>
+
+<p>
+Workflows können auch mit der <i>Business Process Modelling
+Language</i> dargestellt werden.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Sequenzdiagramm</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Ein Sequenzdiagramm beschreibt ein Beispiele für eine Interaktionen
+zwischen Objekten. Ein Sequenzdiagramm beschreibt also eine konkrete
+Sequenz von Verarbeitungsschritten (Methodenaufrufen). Wichtige
+UML-Elemente
+</p>
+
+<ul class="org-ul">
+<li>synchrone Aufrufe
+</li>
+<li>asynchrone Aufrufe
+</li>
+<li>Erzeugungsnachrichten
+</li>
+</ul>
+</div>
+</div>
+</div>

@@ -1,0 +1,102 @@
+---
+layout: page
+title: Kernel
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Kernel</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Typische Funktionen eines Kernel</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Prozessmanagement
+
+<ul class="org-ul">
+<li>Erzeugung von Prozessen
+</li>
+<li>Scheduling zwischen Prozessen und Dispatching
+</li>
+<li>Context Switches
+</li>
+<li>Interprozesskommunikation
+</li>
+<li>Verwaltung der Process Control Blocks
+</li>
+</ul>
+</li>
+
+<li>Memory Mangement
+
+<ul class="org-ul">
+<li>Allokation von Adressräumen für Prozesse (Verwaltung des Virtual
+Memory)
+</li>
+<li>Swapping
+</li>
+</ul>
+</li>
+
+<li>I/O-Management
+
+<ul class="org-ul">
+<li>Allozierung von I/O-Channels und I/O-Geräten für Prozesse
+</li>
+</ul>
+</li>
+
+<li>Interrupt Handling
+</li>
+<li>File Management
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Monolithic Kernel vs. Microkernel</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li><b>Monolithic Kernel (Layered Kernel)</b>:
+
+<ul class="org-ul">
+<li>erledigt alle klassischen Kernelfunktionen (Memory Management,
+Process Management, etc.)
+</li>
+<li>Kernfunktionen können direkt aufgerufen werden
+</li>
+</ul>
+</li>
+
+<li><b>Microkernel</b>:
+
+<ul class="org-ul">
+<li>leichtgewichtiger als ein monolithischer Kernel (Layered Kernel)
+</li>
+<li>enthält ausschließlich zentrale Betriebssystemfunktionenen
+</li>
+<li>viele klassiche Kernelfunktionen werden in User-Prozesse
+ausgelagert (z.B. Virtual Memory, File Server, Device Drivers,
+etc.). Diese Funktionen können über Messages an die Prozesse
+aufgerufen werden. Der Microkernel stellt Funktionen zum
+Messagepassing zwischen den Prozessen zur Verfügung. * Vorteile:
+
+<ul class="org-ul">
+<li>Portabilität: Prozessorspezifischer Code befindet sich fast
+ausschlieblich im Microkernel (darauf aufbauende Prozesse
+müssen nicht an Veränderungen der Hardware angepasst werden)
+</li>
+<li>Erweiterbarkeit: neue Funktionalitäten können einfach über neue
+Prozesse hinzugefügt werden
+</li>
+<li>Zuverlässigkeit: Microkernels können aufgrund ihres geringern
+Funktionsumfangs ausgibiger getestet werden
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>

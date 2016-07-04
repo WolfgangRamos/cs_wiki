@@ -1,0 +1,223 @@
+---
+layout: page
+title: Scheduling
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Scheduler</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Als Scheduler bezeichnet man die Betriebssystemroutine(n), welche den
+zeitlichen Ablauf der Abarbeitung mehrerer Prozesse festlegt/festlegen.
+Ein Scheduler wählt dazu aus den ausführungsbereiten Prozessen (Ready
+state) im Hauptsspeicher einen (im Fall von Multicore Prozessoren evtl.
+auch mehrere gleichzeitig) aus, dem als nächstes die CPU zugeteilt
+werden soll (<i>Dispatching</i>). Scheduling ist z.B. dann
+erforderlich, wenn ein Prozess
+</p>
+
+<ul class="org-ul">
+<li>seinen Zustand von Running zu Blocked wechselt
+</li>
+<li>seinen Zustand von Running zu Ready wechselt
+</li>
+<li>Terminiert
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Optimierungskriterien</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Maximierung
+
+<ul class="org-ul">
+<li>der CPU Auslastung
+</li>
+<li>der Anzahl fertiggestellter Jobs pro Zeitintervall (Throughput)
+</li>
+</ul>
+</li>
+
+<li>Minimierung
+
+<ul class="org-ul">
+<li>der Reaktionszeit (<i>Response time</i>), durch Bevorzugung von
+Prozessen, die auf Benutzereingaben reagieren
+</li>
+<li>der Zeit, die ein Thread in der ready-queue verbringt (<i>Waiting
+Time</i>)
+</li>
+<li>der Dauer zwischen Submission und Completion eines Jobs
+(<i>Turnaroundtime</i>)
+</li>
+</ul>
+</li>
+
+<li>Echtzeitausführung (Real-time) von Prozessen
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Preemtive und Non-Preemptive Scheduling</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li><b>Preemtive Scheduling Algorithmen</b>: entziehen Prozessen die CPU, wenn
+bestimmte Bedingungen eintreten (z.B. Ablauf des Time Quantums)
+
+<ul class="org-ul">
+<li>Vorteile:
+
+<ul class="org-ul">
+<li>verhindert Monopolisierung der CPU durch einen Prozess
+</li>
+<li>ermöglicht geringe Reaktionszeiten (Response Time)
+</li>
+</ul>
+</li>
+
+<li>Nachteile:
+
+<ul class="org-ul">
+<li>mehr Context Switches als bei Non-Preemtive Scheduling →
+größerer Overhead durch Scheduling
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li><b>Non-Preemtive Algorithmen</b>: lassen einen Prozess dem die CPU
+zugeteilt wurde so lange laufen, bis dieser die CPU freiwillig
+freigibt (z.B. blockiert oder terminiert)
+
+<ul class="org-ul">
+<li>Vorteil:
+
+<ul class="org-ul">
+<li>geringere Anzahl an Context Switches (minimaler Overhead durch
+Scheduling)
+</li>
+</ul>
+</li>
+
+<li>Nachteile:
+
+<ul class="org-ul">
+<li>geringe Reaktionszeit (Response Time) können nicht garantiert
+werden
+</li>
+<li>Monopolisierung der CPU möglich durch einen Prozess möglich
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Scheduling Algorithmen</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li><b>First Come, First Served (FCFS)</b>: Prozessing Requests werden nach
+Ankunftszeit abgearbeitetet
+
+<ul class="org-ul">
+<li>non-preemtive
+</li>
+<li>implementierbar durch Queue
+</li>
+<li>Nachteil: <b>Convoi Effect</b> (Prozesse/Threads mit kurzen CPU-Bursts
+können durch einen einzelnen Prozess/Thread mit langem CPU-Burst
+lange blockieren werden, was die durchschnittliche Wartezeit des
+Systems drastisch erhöhen kann)
+</li>
+</ul>
+</li>
+
+<li><b>Round Robin Scheduling</b>: preemtive Version von First-Come First
+Served
+
+<ul class="org-ul">
+<li>Prozessing Requests werden nach Ankunftszeit abgearbeitetet
+</li>
+<li>nach Ablauf eines <i>Time Quantums</i> wird der Running Process
+unterbrochen und der nächste Prozess erhält den Zugriff auf die
+CPU
+</li>
+<li>terminiert ein Prozess vor Ablauf seines Time Quatums, erhält
+direkt der nächste Prozess Zugriff auf die CPU
+</li>
+<li>durchschnittliche Wartezeit bei \(n\) Prozessen:
+\(t_{wait} = (n - 1) \cdot t_{quantum}\)
+</li>
+<li>Vorteile:
+
+<ul class="org-ul">
+<li>i.d.R geringere Response Time
+</li>
+</ul>
+</li>
+
+<li>Nachteil:
+
+<ul class="org-ul">
+<li>i.d.R größere Turnaroundtime
+</li>
+<li>größerer Overhead durch mehr Context Switches
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li><b>Shortest Job First</b>: Bevorzugung von Processing Requests mit
+geringer CPU Burst Dauer
+
+<ul class="org-ul">
+<li>non-preemtive
+</li>
+<li>Nachteil: Dauer des nächsten CPU-Bursts muss vorab bekannt sein
+</li>
+</ul>
+</li>
+
+<li><b>Shortest Remaining Time First</b>: Bevorzugung von Processing Requests
+mit geringer CPU Burst Dauer; ggf. Unterbechung des aktuellen
+Prozess, wenn ein neuer Prozess ankommt, dessen nächster CPU-Burst
+kürzer ist als die vebleibende CPU-Burst Dauer des aktuellen
+Prozesses.
+
+<ul class="org-ul">
+<li>preemtive Version von Shortest Job First
+</li>
+<li>Nachteil: Dauer des nächsten CPU-Bursts muss vorab bekannt sein
+</li>
+</ul>
+</li>
+
+<li><b>Priority Scheduling</b>: Bevorzugung von Processing Requests mit
+kleineren Prioritätswerten (kleiner Wert = hohe Priorität)
+
+<ul class="org-ul">
+<li>non-preemtive: Thread mit höchster Priorität erhält Zugriff auf
+die CPU, wenn der aktuelle ausgeführt Thread die CPU frei gibt
+</li>
+<li>preemtive: aktuell ausgeführter Thread wird unterbrochen, wenn ein
+Thread kommt, der eine höhere Priorität hat
+</li>
+<li>Nachteil: Fairness ist nicht sichergestellt (Threads mit
+niedrigerer Priorität können aushungern, wenn immer Threads mit
+höherer Priorität ausführbereit sind)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>

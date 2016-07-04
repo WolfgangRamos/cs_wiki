@@ -1,0 +1,214 @@
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Klausurthemen ComSys</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Klausurthemen ComSys</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+(ca. 2. Termin 2011 - 1. Termin 2014)
+</p>
+
+<ul class="org-ul">
+<li>Netzwerke
+<ul class="org-ul">
+<li><i>paket-</i> und <i>circuit-switched</i> Netzwerke
+<ul class="org-ul">
+<li>Vor- und Nachteile der verschiedenen Netzwerke
+</li>
+</ul>
+</li>
+<li>Topologien (BUS, Star, Mesh, Ring; internet core Netzwerk ist mesh)
+<ul class="org-ul">
+<li>Einschätzung der Topologien bzgl. QoS Paramtern
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ISO/OSI-Referenzmodell
+<ul class="org-ul">
+<li>Bereiche
+</li>
+<li>Schichten (Namen, Funktion/Dienst und Beispielprotokolle)
+</li>
+<li>Gründe für Einteilung in Schichten (vs. monolithischer Ansatz)
+</li>
+<li>Nachteile der Einteilung in Schichten (z.B. Overhaed durch Header)
+</li>
+</ul>
+</li>
+<li>Internetarchitektur
+<ul class="org-ul">
+<li>Transit- und Endsysteme (Welche Schichten des ISO/OSI-RM müssen in
+einem Transitsystem abgedeckt sein?)
+</li>
+<li>Prinzipien der Internetarchitektur (&#x2026;)
+</li>
+</ul>
+</li>
+<li>Quality of Service
+<ul class="org-ul">
+<li>Parameter (bandwidth, throughput, delay, jitter, reliability)
+</li>
+<li>Jitter-Buffer in VOIP-Anwendung (auch Größe berechnen)
+</li>
+</ul>
+</li>
+<li>IPv4
+<ul class="org-ul">
+<li>Welchen Dienst erbringt IPv4
+</li>
+<li>Arten der Nachrichtenübertragung (broadcast, unicast, multicast,
+anycast)
+</li>
+<li>Aufbau einer IPv4 Adresse (Adressgröße, etc.)
+</li>
+<li>Aufbau eines IPv4 Header (&#x2026;)
+</li>
+<li>Hierarchische Adressierung in IPv4 (Networkprefix, host)
+</li>
+<li>private und öffentliche Adressen (warum werden sie unterschieden)
+</li>
+<li>classful und classless adressing (Vor- und Nachteile)
+</li>
+<li>(Port-)NAT (auch NAT-Tabelle erstellen können)
+</li>
+<li>adress scopes (<i>link-local</i>, <i>unique-local</i>, <i>global</i>)
+</li>
+<li>Unterschiede zwischen IPv4 und IPv6 Header
+</li>
+<li>IPv6-in-IPv4-Tunnel
+</li>
+<li>Prinzip von <i>Traceroute</i> mit ICMP
+</li>
+</ul>
+</li>
+<li>IPv6
+<ul class="org-ul">
+<li>Grund für die Umstellung auf IPv6
+</li>
+<li>Unterschiede zu IPv4 (Was hat sich bei Adressierung und Protokoll verändert?)
+</li>
+<li>Aufbau einer IPv6-Adresse (Adressgröße, unicast, anycast, &#x2026;)
+</li>
+<li>Bestandteile eines IPv4 Headers (type, next hdr, header length,
+checksum, source address, dest addresse, flow label, &#x2026;)
+</li>
+<li>adress scopes
+</li>
+<li>Bestandteile einer IPv6 Adresse
+</li>
+<li>adress autoconfiguration (auf Basis der MAC-Adresse)
+</li>
+</ul>
+</li>
+<li>DNS
+<ul class="org-ul">
+<li>Was leistet DNS
+</li>
+</ul>
+</li>
+<li>SMTP
+<ul class="org-ul">
+<li>Beschreibung des Ablaufs beim Versenden einer Email per SMTP
+</li>
+</ul>
+</li>
+<li>Transport(-schicht)
+<ul class="org-ul">
+<li>TCP und UDP (Vorteile von UDP gegenüber TCP und umgekehrt,
+Unterschiede, 2 Einsatzbereiche nennen können) 
+</li>
+<li>Abgrenzung von Verbindungsorientierten und verbindungslosen Protokollen
+</li>
+<li>Zuordnung von Protokollen zur Familie der verbindungsorientierten oder verbindungslosen Protokolle
+<ul class="org-ul">
+<li>verbindungsorientiert: HTTP1.1, TCP
+</li>
+<li>verbindungslos: HTTP1.0, UDP
+</li>
+</ul>
+</li>
+<li>3 Phasen des Kommunikationsverlaufs bei verbindungsorientierte
+Kommunikation (Verbingungsaufbau, Datenübertragung, Schließen der
+Verbindung)
+</li>
+<li>Zuordnung von Protokollen zur Famile der zuverlässigen oder unzuverlässigen (Transport-)Protokolle
+<ul class="org-ul">
+<li>zuverlässig: TCP
+</li>
+<li>unzuverlässig: IP, UDP
+</li>
+</ul>
+</li>
+<li>TCP-(Three-Way-)Handshake
+<ul class="org-ul">
+<li>Welche Parameter werden beim Aufbau einer TCP-Verbindung ausgetauscht (sliding window größe?, &#x2026;)
+</li>
+</ul>
+</li>
+<li>Sliding Window Verfahren (Begrenzung der Window Größe)
+</li>
+<li>Congestion Control (Slow Start, Congestion Avoidance)
+</li>
+<li>Routing und Forwarding
+<ul class="org-ul">
+<li>Aktionen eines Routers beim Forwarding eines Pakets nennen und beschreiben
+</li>
+</ul>
+</li>
+<li>Hierarchische Routing über Autonome Systeme (<i>stub AS</i>, <i>multihomed AS</i>, <i>transit AS</i>)
+</li>
+<li><i>link-state-routing</i> und <i>distance-vector-routing</i>
+</li>
+<li>Routing-Tabellen erstellen
+</li>
+<li>OSPF Protokoll (Funktionsweise erkären)
+</li>
+</ul>
+</li>
+<li>Ethernet (LAN und WLAN)
+<ul class="org-ul">
+<li>deterministische und probabilistische MAC-Verfahren zur Vermeidung von Kollisionen bei Nutzung eines gemeinsamen Mediums
+<ul class="org-ul">
+<li>probabilistisch: Collision Detection mit <i>CSMA/CD</i> und <i>CSMA/CA</i> (Funktionsweise erläutern können)
+</li>
+<li>deterministisch: Token Ring
+</li>
+</ul>
+</li>
+<li>Detektieren von Übertragungsfehlern mit <i>Cyclic Redundancy Check</i> (inkl. Anwendung von CRC)
+</li>
+<li>WLAN
+<ul class="org-ul">
+<li>hidden terminal problem
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MAC-Verfahren
+</li>
+<li>Email
+<ul class="org-ul">
+<li>Multipurpose Internet Mail Extension (MIME)
+<ul class="org-ul">
+<li>2 MIME Parameter nennen
+</li>
+<li>content types
+</li>
+</ul>
+</li>
+<li>Unterschied zwischen POP3 und IMAP
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>

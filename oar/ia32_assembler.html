@@ -1,0 +1,492 @@
+---
+layout: page
+title: Ia32_assembler
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Assembler (IA32)</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Wortlänge</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Suffix</th>
+<th scope="col" class="left">Länge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>b</code> (<i>Byte</i>)</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>w</code> (<i>word</i>)</td>
+<td class="left">2 B</td>
+</tr>
+
+<tr>
+<td class="left"><code>l</code> (<i>long word</i>)</td>
+<td class="left">4 B</td>
+</tr>
+
+<tr>
+<td class="left"><code>q</code> (<i>quad word</i>)</td>
+<td class="left">8 B</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Register</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+TODO: Bild einfügen
+</p>
+
+<p>
+Konventionen zur Sicherung von Registerinhalten:
+</p>
+
+<ul class="org-ul">
+<li><i>Caller-Save</i>: <code>%eax</code>, <code>%ecx</code>, <code>%edx</code>,
+</li>
+<li><i>Callee-Save</i>: <code>%ebx</code>, <code>%esi</code>, <code>%edi</code>
+</li>
+<li>spezielle Register (spezielle Form des <i>Callee-Save</i>): <code>%esp</code>, <code>%ebp</code>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Flags / Condition Codes</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li><i>zero flag</i> (ZF)
+</li>
+<li><i>overflow flag</i> (OF)
+</li>
+<li><i>sign flag</i> (SF)
+</li>
+<li><i>carry flag</i> (CF): v.a. für Operationen, die Operanden in 2-adischer
+Darstellung interpretieren gedacht
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Stack</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Stack für Funktionsaufrufe verdendet.
+</p>
+
+<p>
+Jede Funktion hat einen eigenen <i>stack frame</i>. Dieser enthält:
+</p>
+
+<ul class="org-ul">
+<li>Adresse des stack frames der Prozedur, welche die Prozedur aufgerufen
+hat
+</li>
+<li>lokale Variablen, wenn diese von anderen Prozeduren referenzierbar
+sein sollen
+</li>
+<li>ggf. gespeicherte Werte aus Registern (s. Register)
+</li>
+<li>Adresse der nächsten Operation der Prozedur, wenn eine andere
+Prozedur aufrufen wird (s.a. <code>call</code>)
+</li>
+<li>Werte der Paramenter, wenn eine Prozedur mit Parametern aufgerufen
+wird
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Operationen</h3>
+<div class="outline-text-3" id="text-1-5">
+</div><div id="outline-container-sec-1-5-1" class="outline-4">
+<h4 id="sec-1-5-1"><span class="section-number-4">1.5.1</span> Laden</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<ul class="org-ul">
+<li><code>movl ⟨x⟩, ⟨y⟩</code>:
+</li>
+<li><code>movzbl ⟨8 bit reg⟩, ⟨reg⟩</code>: setzt den Rest von <code>⟨reg⟩</code> auf <code>0</code> und
+behält nur die Werte in <code>⟨8 bit reg⟩</code>
+</li>
+<li><code>movsbl ⟨8 bit reg⟩, ⟨reg⟩</code>: Laden von Adresse <code>⟨x⟩</code> in Register
+<code>⟨reg⟩</code> mit sign extend
+</li>
+</ul>
+
+<p>
+Verschieden Modi für <code>movl</code>:
+</p>
+
+<ul class="org-ul">
+<li>Immediate, z.B. <code>$0x1c</code> in Hexadezimaldarstellung oder <code>$-32</code> in
+Dezimaldarstellung
+</li>
+<li>indexed: <code>⟨d⟩(⟨b⟩, ⟨i⟩, ⟨s⟩)</code> ergibt Adresse <code>d + (b + i*s)</code>
+
+<ul class="org-ul">
+<li>d (<i>displacement</i>): immediate mit Länge von bis zu 4 bytes
+</li>
+<li>b (<i>base</i>): Register mit Basisadresse
+</li>
+<li>i (<i>index</i>): Register mit Indexadresse
+</li>
+<li>s (<i>scale</i>): immediate <code>$1</code>, <code>$2</code>, <code>$4</code> oder <code>$8</code>
+</li>
+</ul>
+</li>
+
+<li>Spezialformen von indexed:
+
+<ul class="org-ul">
+<li><code>(⟨b⟩)</code> =&gt; b
+</li>
+<li><code>⟨d⟩(⟨b⟩)</code> =&gt; d + b (auch <i>displacement</i> genannt)
+</li>
+<li><code>(⟨b⟩, ⟨i⟩)</code> =&gt; b + i
+</li>
+<li><code>(⟨b⟩, ⟨i⟩, ⟨s⟩)</code> =&gt; b + i*s
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-2" class="outline-4">
+<h4 id="sec-1-5-2"><span class="section-number-4">1.5.2</span> Logik</h4>
+<div class="outline-text-4" id="text-1-5-2">
+<ul class="org-ul">
+<li><code>not ⟨x⟩</code>:
+</li>
+<li><code>andl ⟨x⟩, ⟨y⟩</code>:
+</li>
+<li><code>orl ⟨x⟩, ⟨y⟩</code>:
+</li>
+<li><code>xorl ⟨x⟩, ⟨y⟩</code>:
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-3" class="outline-4">
+<h4 id="sec-1-5-3"><span class="section-number-4">1.5.3</span> Arithmetik</h4>
+<div class="outline-text-4" id="text-1-5-3">
+<ul class="org-ul">
+<li><code>addl ⟨x⟩, ⟨y⟩</code>: y = y + x;
+
+<ul class="org-ul">
+<li><code>x</code> kann sein: immediate, register, displacement, indexed
+</li>
+<li><code>y</code> kann sein: register, displacement, indexed
+</li>
+</ul>
+</li>
+
+<li><code>addl ⟨x⟩, (⟨y⟩)</code>: /y = /y + x
+</li>
+<li><code>subl ⟨x⟩, ⟨y⟩</code>:
+</li>
+<li><code>incl ⟨x⟩, ⟨y⟩</code>:
+</li>
+<li><code>decl ⟨x⟩, ⟨y⟩</code>:
+</li>
+<li><code>imull ⟨x⟩, ⟨y⟩</code>: &#x2026;(Multiplikationen/Divisionen mit Vielfachen von
+2 sind auch mit Shifts möglich)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-4" class="outline-4">
+<h4 id="sec-1-5-4"><span class="section-number-4">1.5.4</span> Shifts</h4>
+<div class="outline-text-4" id="text-1-5-4">
+<ul class="org-ul">
+<li><code>shll ⟨x⟩, ⟨y⟩</code> oder <code>sall ⟨x⟩, ⟨y⟩</code>: Linksshift (Nullen werden
+nachgezogen). Das Verhalten von <code>sall</code> ist undefiniert, wenn um Werte
+\(\mathtt{x} \geq 32\) geshiftet wird. Auf einigen Architekturen kann
+<code>sall</code> daher nur mit Konstanten (Immediate) oder <code>%cl</code> aufgerufen
+werden. Auf anderen Architekturen wird derselbe Effekt erreicht,
+indem nur die ersten 4 bits vo <code>⟨x⟩</code> verwendet und der Rest ignoriert
+werden.
+</li>
+<li><code>sarl ⟨x⟩, ⟨y⟩</code>: arithmetischer Rechtsshift (MSB wird nachgezogen)
+</li>
+<li><code>shrl ⟨x⟩, ⟨y⟩</code>: logischer Rechtsshift (Nullen werden nachgezogen)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-5" class="outline-4">
+<h4 id="sec-1-5-5"><span class="section-number-4">1.5.5</span> Adressrechnung</h4>
+<div class="outline-text-4" id="text-1-5-5">
+<ul class="org-ul">
+<li><code>leal ⟨x⟩, ⟨y⟩</code>: &#x2026; (<code>lea</code> Instruktionen setzen keine Flags)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-6" class="outline-4">
+<h4 id="sec-1-5-6"><span class="section-number-4">1.5.6</span> Sprünge</h4>
+<div class="outline-text-4" id="text-1-5-6">
+<p>
+<b>Setzen von Flags:</b>
+</p>
+
+<ul class="org-ul">
+<li><code>testl ⟨a⟩, ⟨b⟩</code>: setzt Flags für das Ergebnis der Operation <code>a &amp; b</code>
+</li>
+<li><code>cmpl ⟨a⟩, ⟨b⟩</code>: setzt Flags für das Ergebnis der Operation <code>b - a</code>
+
+<ul class="org-ul">
+<li>CF gesetzt, wenn \(a > b\) (a und b 2-adischer Darstellung
+interpretiert)
+</li>
+<li>SF gesetzt, wenn \(a > b\) (a und b in Zweierkomplement Darstellung
+interpretiert)
+</li>
+<li>OF gesetzt, wenn
+\((b > 0 \wedge a < 0 \wedge (b-a) < 0) \vee (b < 0 \wedge a > 0 \wedge (b-a) > 0)\)
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<b>Sprungbefehle:</b> (die Benennungen der Befehle beschreiben, wie <code>b</code> sich
+zu <code>a</code> verhält)
+</p>
+
+<ul class="org-ul">
+<li><code>jmp ⟨label⟩</code> (<i>unconditional jump</i>)
+</li>
+<li><code>jmp *⟨label⟩(,⟨reg⟩,4)</code> (<i>unconditional jump</i>): setze <code>%eip</code> auf
+<code>⟨label⟩ + 4*⟨reg⟩</code> (nur für \(0 \leq \mathtt{reg} \leq 6\))
+</li>
+<li><code>je ⟨label⟩</code> (<i>jump equal</i>): wenn ZF gesetzt ist setze <code>%eip</code> auf
+<code>⟨label⟩</code>
+</li>
+<li><code>jne ⟨label⟩</code> (<i>jump not equal</i>): wenn ZF nicht gesetzt ist setze
+<code>%eip</code> auf <code>⟨label⟩</code>
+</li>
+<li><code>js ⟨label⟩</code> (<i>jump sign</i>): wenn SF gesetzt ist setze <code>%eip</code> auf
+<code>⟨label⟩</code>
+</li>
+<li><code>jns ⟨label⟩</code> (<i>jump no sign</i>): wenn SF nicht gesetzt ist setze
+<code>%eip</code> auf =⟨label⟩=~SF
+</li>
+<li>Operationen, die Operanden in Zweierkomplementdarstellung
+interpretieren:
+
+<ul class="org-ul">
+<li><code>jge ⟨label⟩</code> (<i>jump greater equal</i>):
+</li>
+<li><code>jg ⟨label⟩</code> (<i>jump greater</i>):
+</li>
+<li><code>jl ⟨label⟩</code> (<i>jump less</i>):
+</li>
+<li><code>jle ⟨label⟩</code> (<i>jump less equal</i>):
+</li>
+</ul>
+</li>
+
+<li>Sprungbefehle, die Operanden in 2-adischer Darstllung interpretieren:
+
+<ul class="org-ul">
+<li><code>ja ⟨label⟩</code> (<i>jump above</i>): wenn
+\(\neg \mathtt{CF} \wedge \neg \mathtt{ZF}\) gilt, gehe zu <code>⟨label⟩</code>
+</li>
+<li><code>jb ⟨label⟩</code> (<i>jump below</i>): wenn CF gesetzt ist setze <code>%eip</code> auf
+<code>⟨label⟩</code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-7" class="outline-4">
+<h4 id="sec-1-5-7"><span class="section-number-4">1.5.7</span> Zugriff auf Flags Operationen</h4>
+<div class="outline-text-4" id="text-1-5-7">
+<p>
+<b>Flags auslesen:</b> * <code>sete ⟨reg⟩</code>: setze * <code>setne ⟨reg⟩</code> * &#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-8" class="outline-4">
+<h4 id="sec-1-5-8"><span class="section-number-4">1.5.8</span> Stackoperationen</h4>
+<div class="outline-text-4" id="text-1-5-8">
+<ul class="org-ul">
+<li><code>push ⟨src⟩</code>:
+</li>
+<li><code>pop ⟨dest⟩</code>:
+</li>
+</ul>
+
+<p>
+<b>Ablauf von</b> <code>push</code>:
+</p>
+
+<ol class="org-ol">
+<li>dekrementiere <code>%esp</code> um <code>4</code>
+</li>
+<li>Schreibe Wert von <code>⟨src⟩</code> an die Stelle, auf die <code>%esp</code> zeigt.
+</li>
+</ol>
+
+<p>
+<code>push ⟨src⟩</code> führt also atomar im Prinzip folgende Instruktionen aus:
+</p>
+
+<pre class="example">
+subl $0x4, %esp
+movl ⟨src⟩, (%esp)
+</pre>
+
+<p>
+<b>Ablauf von</b> <code>pop ⟨dest⟩</code>:
+</p>
+
+<ol class="org-ol">
+<li>schreibe Wert, auf den <code>%esp</code> aktuell zeigt in das Register <code>⟨dest⟩</code>
+</li>
+<li>dekrementiere <code>%esp</code> um <code>4</code>
+</li>
+</ol>
+
+<p>
+<code>pop ⟨dest⟩</code> führt also atomar im Prinzip folgende Instruktionen aus:
+</p>
+
+<pre class="example">
+movl (%esp), ⟨dest⟩
+subl $0x4, %esp
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-9" class="outline-4">
+<h4 id="sec-1-5-9"><span class="section-number-4">1.5.9</span> Aufruf von Prozeduren</h4>
+<div class="outline-text-4" id="text-1-5-9">
+<p>
+<b>Ablauf eines Prozeduraufrufs mit</b> <code>call ⟨label⟩</code>:
+</p>
+
+<ol class="org-ol">
+<li>Addresse der nächsten Instruktion (<code>%eip</code> + \(x\), wobei \(x\) die Länge
+der aktuellen Instruktion ist) wird auf den Stack gelegt. An dieser
+Adresse, wird nach Ausführung der aufgerufenen Prozedur die
+Ausführung der aufrufenden Prozedur fortgesetzt (der Wert des alten
+<code>%eip</code> liegt dann im Stack an der Adresse <code>%ebp + 4</code>).
+</li>
+<li><code>%eip</code> wird auf <code>⟨label⟩</code> (die Adresse der aufgerufenen Prozedur)
+gesetzt (hierfür wird die Referenztabelle)
+</li>
+</ol>
+
+<p>
+<b>Konvention zur Übergabe von Parametern:</b> Lege die Parameter, mit denen
+die Prozedur aufgerufen wird in umgekehrter Reihenfolge auf den Stack.
+Das erste Argument wird also als letztes auf den Stack gelegt (die
+aufgerufene Prozedur kann dann mit <code>%ebp + 8</code> auf das erste Argument
+zugreifen und mit <code>%ebp + 12</code> auf das zweite, usw.)
+</p>
+
+<p>
+<b>Setup-Code:</b>
+</p>
+
+<p>
+Als Setup-Code bezeichnet man die Instruktionen, mit denen &#x2026; und ein
+<i>stack frame</i> für die aufgerufenen Prozedur erzeugt wird. Der Ablauf ist
+wie folgt:
+</p>
+
+<ol class="org-ol">
+<li>lege Wert des alten <code>%ebp</code> auf den Stack
+</li>
+<li>setze neuen <code>%ebp</code> auf den aktuellen Wert des stack pointers in
+<code>%esp</code> (der Wert des alte <code>%ebp</code> liegt dann im Stack an der Adresse
+des neuen <code>%ebp</code>)
+</li>
+<li>dekrementiere <code>%esp</code> um Platz im neuen stack frame für lokale
+Variablen zu schaffen
+</li>
+</ol>
+
+<p>
+Der Setup-Code sieht also so aus:
+</p>
+
+<pre class="example">
+push %ebp
+movl %esp, %ebp
+subl $40, %esp // Konvention: Stack Pointer wird um Vielfache von 16 dekrementiert
+</pre>
+
+<p>
+<b>Finish-Code:</b>
+</p>
+
+<p>
+Also <i>finish code</i> werden die Instruktionen bezeichnet, mit denen der
+Wert des <code>%eip</code> und des <code>%ebp</code> der aufrufenden Prozedur
+wiederhergesetllt werden.
+</p>
+
+<pre class="example">
+// ggf. überschriebene Werte in Callee Save Register wieder herstellen
+movl %ebp, %esp // %esp zeigt auf %ebp
+pop %ebp       // restore old %ebp
+ret             // restore old %eip
+</pre>
+
+<p>
+<b>Ablaufs des Zurückkehrens einer Prozedur mit</b> <code>ret</code>: <code>ret</code> popt ein
+Element vom Stack und läd dessen Wert in <code>%eip</code>. Der Instruktionpointer
+wird also auf den gepopten Wert gesetzte (d.h. die Ausführung der
+Instruktionen wird an dieser Adresse fortgesetzt). Damit <code>ret</code> also
+korrekt funktioniert, muss der <code>%esp</code> vorher auf <code>%ebp</code> der
+retournierenden Prozedur zeigen.
+</p>
+
+<p>
+<b>Ablaufs des Zurückkehrens einer Prozedur mit</b> <code>leave</code>: <code>leave</code> entfernt
+den aktuellen Stackframe und springt zurück in den vorherigen
+Stackframe. Dazu wird der Stackpointer auf die Basisadresse des
+aktuellen Stackframes gesetzt und anschließend der Wert des alten <code>%ebp</code>
+mit <code>pop</code> in <code>%ebp</code> geladen. Es werden also folgende Instruktionen
+ausgeführt:
+</p>
+
+<pre class="example">
+movl %ebp, %esp
+pop %ebp
+</pre>
+</div>
+</div>
+</div>
+</div>

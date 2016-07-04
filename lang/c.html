@@ -1,0 +1,544 @@
+---
+layout: page
+title: C
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> C</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>Standards</b>:
+</p>
+
+<ul class="org-ul">
+<li><i>Kernighan &amp; Ritchie</i> (auch <i>K&amp;R-C</i>)
+</li>
+<li><i>ANSI C</i> (auch <i>C89</i>; alle Compiler entsprechen heute diesem
+Standard)
+
+<ul class="org-ul">
+<li>Auslagerung von Funktionen in Bibliotheken (<i>header</i>-Dateien)
+</li>
+<li>Deklaration der Typen von Parametern direkt beim Paramternamen
+</li>
+</ul>
+</li>
+
+<li><i>C-99</i>
+
+<ul class="org-ul">
+<li>Aufnahme von Rückgabetypen in die Funktionsdeklaration
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> elementare Datentypen</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Datentyp</th>
+<th scope="col" class="right">Länge in bytes</th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>char</code></td>
+<td class="right">1</td>
+<td class="left">Kodierung eines alphanumerischen Zeichens in ASCII Code</td>
+</tr>
+
+<tr>
+<td class="left"><code>short</code></td>
+<td class="right">2</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>int</code></td>
+<td class="right">4</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>long</code></td>
+<td class="right">4</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>long long</code></td>
+<td class="right">8</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>float</code></td>
+<td class="right">4</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>double</code></td>
+<td class="right">8</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>long double</code></td>
+<td class="right">10/12</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">pointer</td>
+<td class="right">4</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Diese Datentypen können mit folgenden <i>Typmodifikatoren</i> kombiniert
+werden:
+</p>
+
+<ul class="org-ul">
+<li><code>unsigned</code>:
+</li>
+</ul>
+
+<p>
+<b>Wichtig:</b> In C erfolgt <i>keine</i> default-Belegung von Variablen mit
+Werten!
+</p>
+
+<p>
+Konstanten (z.B. Zahlen <code>10</code>) sind standardmäßig von einem signed
+Datentyp. Zahlen von einem unsigned Datentyp erhält man durch das Suffix
+<code>U</code>, also z.B. <code>10U</code>.
+</p>
+
+<p>
+Konstanten für maximale und minimale Werte mit <code>#include&lt;limits.h&gt;</code>: *
+<code>INT_MIN</code> * <code>INT_MAX</code> * <code>UINT_MIN</code> * <code>UINT_MAX</code> * <code>LONG_MIN</code> *
+<code>LONG_MAX</code> * <code>ULONG_MIN</code> * <code>ULONG_MAX</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Casting</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Als <i>casting</i> bezeichnet man die Umwandlung von einem Datentyp A in
+einen Datentyp B. Casting kann explizit (durch Cast Operatoren) oder
+implizit (z.B. durch Zuweisung und für Parameter von Fuktionsaufrufen)
+erfolgen. Je nach Länge von A und B haben casts unterschiedliche Folgen:
+</p>
+
+<ul class="org-ul">
+<li>sind A und B gleich lang, so erfolgt lediglich eine Neuinterpretation
+der Bitfolge
+</li>
+<li>ist B ein signed Datentyp und länger als A, so erfolgt sign extension
+(Verlängerung der Bitfolge durch Wiederholung des MSB)
+</li>
+<li>ist B ein unsigned Datentyp und länger als A, so wird die Bitfolge
+durch Nullen verlängert
+</li>
+<li>ist B kürzer als A, so wird die Bitfolge verkürzt
+</li>
+</ul>
+
+<pre class="example">
+unsigned int y = 0;
+
+// explicit cast with cast operator
+int x = (int) y;
+
+// implicit cast
+int x = y;
+</pre>
+
+<p>
+<b>Achtung:</b> Wenn in einem Ausdruck unsigned und signed Datentypen
+vorkommen werden implizit alle signed Datentypen zu unsigned gecastet:
+</p>
+
+<p>
+<i>sign extension</i>: Wiederholung des msb zur Verlängerung einer Bitfolge
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> gemischte Datentypen</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<b>Alignment:</b>
+</p>
+
+<p>
+Das Ablegen von Daten an bestimmten Speicheradressen bezeichnet man als
+<i>aligment</i>. Wenn dafür die Länge des Datentyps im Speicher vergößert
+werden muss, bezeichnet man den zusätzlich verwendeten Speicher als
+<i>padding</i>. Alignment wird z.B. durchgeführt * innerhalb von <code>struct=s
+(d.h. für die Datenfelder einer =struct</code>), * =union=s, * Arrays von
+=struct=s.
+</p>
+
+<p>
+Es gilt die Faustregel: Datenypten, die \(k\) Byte lang sind werden so im
+Speicher abgelegt, dass ihre Adresse ein Vielfaches von \(k\) ist.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Datentyp</th>
+<th scope="col" class="left">Alignmentanforderung (Linux IA32)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>char</code></td>
+<td class="left">Vielfache von 1</td>
+</tr>
+
+<tr>
+<td class="left"><code>short</code></td>
+<td class="left">Vielfache von 2</td>
+</tr>
+
+<tr>
+<td class="left"><code>int</code></td>
+<td class="left">Vielfache von 4</td>
+</tr>
+
+<tr>
+<td class="left"><code>long long</code></td>
+<td class="left">Vielfache von 4</td>
+</tr>
+
+<tr>
+<td class="left"><code>double</code></td>
+<td class="left">Vielfache von 4</td>
+</tr>
+
+<tr>
+<td class="left"><code>long double</code></td>
+<td class="left">Vielfache von 4</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>Vorteil:</b> ermöglich Adressrechnung durch shifts
+</p>
+</div>
+
+<div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> Strukturen</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<ul class="org-ul">
+<li>innerhalb einer <code>struct</code> muss die Aligmentanforderung jedes Datentyps
+erfüllt sein
+</li>
+<li>die Alignmentanforderung einer <code>struct</code> selbst wird durch die größten
+Aligmentanforderung der enthaltenen Felder festgelegt (wenn also eine
+<code>struct</code> nur <code>char</code> Typen enthält wird sie auf Vielfache von 1
+aligned, wenn eine struct jedoch mindestens einen <code>int</code> Typ enthält
+wird sie auf Vielfache von 4 aligned)
+</li>
+</ul>
+
+<pre class="example">
+struct a {
+  ...
+};
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> Union</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<pre class="example">
+union u {
+  ...
+}
+</pre>
+
+<ul class="org-ul">
+<li>die Länge eines Union wird durch die größte Länge eines verwendeten
+Datentyps festgelegt
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Operationen</h3>
+<div class="outline-text-3" id="text-1-4">
+</div><div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1"><span class="section-number-4">1.4.1</span> Bit-Operationen</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<ul class="org-ul">
+<li><code>x | y</code>: bit-weises "oder" (\(\vee\))
+</li>
+<li><code>x ^ y</code>: bit-weises "x-or"
+</li>
+<li><code>x &amp; y</code>: bit-weises "und" (\(\wedge\))
+</li>
+<li><code>x &lt;&lt; y</code>: left-shift (<code>x</code> wird um <code>y</code> bits nach links geschoben)
+</li>
+<li><code>x &gt;&gt; y</code>: right-shift (<code>x</code> wird um <code>y</code> bits nach rechts geschoben)
+</li>
+<li><code>~x</code>: Einerkomplement von <code>x</code> (jede <code>1</code> wird zu einer <code>0</code> u.u.)
+</li>
+<li>Alle binären Operatoren können mit der Zuweisungs-kurzschreibweise
+kombiniert (z.B. <code>x &lt;&lt;</code> 2= für <code>x = x &lt;&lt; 2</code> oder <code>x |</code> y= für
+<code>x = x | y</code>)
+</li>
+</ul>
+
+<p>
+Bei unsigned Datentypen wird i.d.R. ein logical right shift ausgeführt.
+Bei signed Datentypen wird i.d.R. ein arithmetischer right-shift
+ausgeführt. Undefiniertes Verhalten, wenn Shifts um negative Werte oder
+um mehr Stellen, als der Datentyp bietet, ausgeführt werden.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4-2" class="outline-4">
+<h4 id="sec-1-4-2"><span class="section-number-4">1.4.2</span> Logische Operationen</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<ul class="org-ul">
+<li><code>a &amp;&amp; b</code> (short circuited)
+</li>
+<li><code>a || b</code> (short circuited)
+</li>
+<li><code>!x</code>: <code>0</code>, wenn \(x \neq 0\), <code>1</code>, wenn \(x=0\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4-3" class="outline-4">
+<h4 id="sec-1-4-3"><span class="section-number-4">1.4.3</span> Arithmetische Operationen</h4>
+<div class="outline-text-4" id="text-1-4-3">
+<ul class="org-ul">
+<li><code>x % y</code>: <a href="../mathe/modulorelation.md">Modulooperation</a>
+</li>
+<li><code>x++</code>: post-increment (<code>x</code> wird zunächst ausgewertet und dann
+inkrementiert)
+</li>
+<li><code>++x</code>: pre-increment (<code>x</code> wird zunächst inkrementiert und dann
+ausgewertet)
+</li>
+<li><code>x--</code>: post-decrement (<code>x</code> wird zunächst ausgewertet und dann
+dekrementiert)
+</li>
+<li><code>--x</code>: pre-decrement (<code>x</code> wird zunächst dekrementiert und dann
+ausgewertet)
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Main Methode</h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li><i>exit code</i>: Rückgabewert der Main Methode
+
+<ul class="org-ul">
+<li><code>0</code>: programm ended without error
+</li>
+<li><code>1</code>: programm ended with error
+</li>
+</ul>
+</li>
+</ul>
+
+<pre class="example">
+int main(int argc, char* argv[]) {
+
+  return 0; // exit code
+}
+</pre>
+
+<p>
+oder
+</p>
+
+<pre class="example">
+int main(int argc, char** argv) {
+
+  return 0; // exit code
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Arrays</h3>
+<div class="outline-text-3" id="text-1-6">
+<ul class="org-ul">
+<li>Konvention: Elemente werden <i>zusammenhängend</i> und <i>entsprechend ihrer
+Reihenfolge</i> im Array im Speicher abgelegt. Das ermöglicht den
+einfachen Zugriff auf Elemente des Arrays über eine Base-Adresse,
+einen Index und eine Skalierungsfaktor (s.
+<a href="../oar/ia_32_assembler">indexed Adressierungsmodus</a>
+</li>
+<li>zweidimensionale <i>nested arrays</i> folgen der <i>row-major ordering</i>
+Konvention, d.h. die Zeilen eines Arrays <code>a</code> werden zusammenhängend
+im Speicher abgelegt, wenn man der Konvention folgt <code>a[i]</code> als <code>i</code>-te
+Zeile von <code>a</code> zu interpretieren.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-6-1" class="outline-4">
+<h4 id="sec-1-6-1"><span class="section-number-4">1.6.1</span> multi-level-array</h4>
+<div class="outline-text-4" id="text-1-6-1">
+<p>
+Deklaration: <code>int *a[3]</code> (ein Array von Intergerpointern <code>int*</code>)
+</p>
+
+<p>
+<b>Vorteil:</b> Spalten können unterschiedlich lang sein
+</p>
+
+<p>
+<b>Nachteil:</b> Zwei Speicherzugriffe zum Auslesen eines Elements nötig
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6-2" class="outline-4">
+<h4 id="sec-1-6-2"><span class="section-number-4">1.6.2</span> nested-array</h4>
+<div class="outline-text-4" id="text-1-6-2">
+<p>
+Deklaration: <code>int a[3][3]</code> (ein Array mit $3 &times; 3 $ Elementen)
+</p>
+
+<p>
+<b>Vorteil:</b> Nur ein Speicherzugriff nötig, um ein Element auszulesen
+</p>
+
+<p>
+<b>Nachteil:</b> Spalten müssen gleichlang sein
+</p>
+</div>
+
+<div id="outline-container-sec-1-6-2-1" class="outline-5">
+<h5 id="sec-1-6-2-1"><span class="section-number-5">1.6.2.1</span> eindimensionale nested Arrays</h5>
+<div class="outline-text-5" id="text-1-6-2-1">
+<pre class="example">
+⟨typ⟩ ⟨name⟩[⟨size⟩];
+</pre>
+
+<p>
+Bsp: <code>int a[10];</code>
+</p>
+
+<ul class="org-ul">
+<li><code>a</code> ist ein Pointer vom Typ <code>int*</code>
+</li>
+<li><code>*a</code> liefert den Wert des ersten Elements in <code>a</code>. <code>*a</code> ist äquivalent
+zu <code>a[0]</code>.
+</li>
+<li><code>a + i</code> ist ein Pointer auf das <code>i</code>-te Element in <code>a</code>
+</li>
+<li><code>*(a + k)</code> liefert den Wert des <code>k</code>-te Elements in <code>a</code>. <code>*(a + k)</code>
+   ist äquivalent zu <code>a[k]</code>.
+</li>
+<li><code>&amp;(a[j])</code> ist ein Pointer auf das <code>j</code>-te Element in <code>a</code>
+</li>
+<li>Größe: <code>⟨size⟩ * ⟨typgröße⟩</code> Bytes
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6-2-2" class="outline-5">
+<h5 id="sec-1-6-2-2"><span class="section-number-5">1.6.2.2</span> zweidimensionale nested Arrays</h5>
+<div class="outline-text-5" id="text-1-6-2-2">
+<pre class="example">
+⟨typ⟩ ⟨name⟩[⟨size⟩][⟨size⟩];
+</pre>
+
+<p>
+Bsp: <code>int a[10][10];</code>
+</p>
+
+<ul class="org-ul">
+<li><code>a</code> ist ein Array von Integerarrays, d.h. <code>a</code> ist ein Pointer vom Typ
+<code>(int*)*</code> oder kurz <code>int**</code>
+</li>
+<li><code>*a</code> liefert die Adresse des ersten Integerarrays in <code>a</code> (d.h. die
+Adresse von dessen ersten Wert). <code>*a</code> ist äquivalent zu <code>a[0]</code>
+</li>
+<li><code>a[i]</code> ist ein Pointer auf das <code>i</code>-te Integerarray in <code>a</code>. Da Arrays
+zusammenhängend im Speicher abgelegt werden, kann man sagen, dass die
+Spalten einer Matrix zusammenhängen im Speicher abgelegt werden
+(<i>row-major ordering</i>-Konvention), wenn man der Konvention folgt <code>i</code>
+als Zeilenindex zu interpretieren.
+</li>
+<li><code>a[i][j]</code> liefert den Wert des <code>j</code>-ten Elements im <code>i</code>-ten
+Integerarray in <code>a</code>.
+</li>
+<li>Größe: <code>⟨zeilen⟩ * ⟨spalten⟩ * ⟨typgröße⟩</code> Bytes
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Prozesse in C</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+<a href="../os/process">s. Prozesse</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> GCC Flags</h3>
+<div class="outline-text-3" id="text-1-8">
+<ul class="org-ul">
+<li><code>-S</code>: erzeuge <code>.s</code> files mit assembler code
+</li>
+<li>Optimierungsstufen: <code>-01</code>, <code>-02</code>, <code>-03</code>
+</li>
+</ul>
+</div>
+</div>
+</div>

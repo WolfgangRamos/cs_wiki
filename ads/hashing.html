@@ -1,0 +1,232 @@
+---
+layout: page
+title: Hashing
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Hashing</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>Ziel:</b> Verwaltung einer Menge \(S\) von Elementen aus einem Universum \(U\)
+unter folgenden Operationen:
+</p>
+
+<ul class="org-ul">
+<li><code>insert(x)</code>: Füge neues Element \(x\) in \(S\) ein
+</li>
+<li><code>lookup(x)</code>: Stelle fest, ob \(x\) in \(S\) ist
+</li>
+<li><code>remove(x)</code>: Entferne \(x\) aus \(S\)
+</li>
+</ul>
+
+<p>
+<b>Idee:</b> Speichere Elemente aus \(S\) in einer Hashtabelle mit
+\(m \in \mathbb{N}\) Elementen \(T[0], ... T[m-1]\) mit Hilfe einer
+<i>Hashfunktion</i> \(h: U \rightarrow \\{0, ..., m-1\\}\).
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Beispiele für Hashfunktionen</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<b>Divisionsmethode:</b> \(h(x) = x \mod m\)
+</p>
+
+<p>
+<b>erweiterte Divisionsmethode:</b> \(h(x) = (ax+b) \mod m\) mit
+\(a,b \in \mathbb{Z}\) und \(m \in \mathbb{N}\), wobei für \(m\) i.d.R. eine
+Primzahl gewählt wird.
+</p>
+
+<p>
+<b>Multiplikationsmethode:</b>
+\(h(x) = \lfloor m(xc \mod 1) \rfloor = \lfloor m(xc - \lfloor xc \rfloor) \rfloor\),
+wobei \(c \in \mathbb{R}\) so gewählt ist, dass \(0 \leq xc \mod 1 < 1\)
+(\(xc\) ist also keine natürliche Zahl). Diese Methode ist auch für
+\(x \in \mathbb{R}\) geeignet.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Universelle Hashfunktionen</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Eine Familie von Hashfunktionen \(h_{0}(x), ..., h_{m-1}(x)\) heißt
+<i>universell</i>, wenn:
+</p>
+
+<ul class="org-ul">
+<li>\(\forall x \in M: (h_{0}(x), ..., h_{m-1}(x)) \in S_{m}\), d.h.
+\((h_{0}(x), ..., h_{m-1}(x))\) ist eine Permutation der Elemente
+\(\\{0, ..., m-1\\}\)
+</li>
+<li>jede Permutation tritt mit gleicher Wahrscheinlichkeit auf
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Hashkollision</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Sind \(x,y \in U\) mit \(x \neq y\) und sollen \(x\) und \(y\) an der gleichen
+Postion der Hashtabelle abgespeicher werden (d.h. \(h(x) = h(y)\)), so
+kommt es zu einer <i>Hashkollision</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Konkrete Hashverfahren</h3>
+<div class="outline-text-3" id="text-1-4">
+</div><div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1"><span class="section-number-4">1.4.1</span> Hashing mit direkter Verkettung</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+<b>Idee:</b> Verwende eine Feld aus <i>einfach verketteten Liste</i> als
+Hastabelle. Speicher Elemente mit gleichem Hashwert in derselben Liste.
+Realisiere die Hashtabellen-Operationen durch Listenoperationen:
+</p>
+
+<ul class="org-ul">
+<li><code>lookup(x)</code>: suche in Liste \(T[h(x)]\) nach \(x\)
+</li>
+<li><code>insert(x)</code>: füge \(x\) am Anfang der Liste \(T[h(x)]\) ein
+</li>
+<li><code>remove(x)</code>: entferne \(x\) aus der Liste \(T[h(x)]\)
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>der Erwartungswert der Länge \(n_j\) der Liste in \(T[j]\) nach dem
+Einfügen von \(m\) Elementen ist
+\(\mathrm{E}(n_j) = \frac{n}{m} =: \alpha\) <sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>
+</li>
+</ul>
+
+<p>
+<b>Laufzeiten:</b>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">worst case</th>
+<th scope="col" class="left">average case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>lookup(x)</code></td>
+<td class="left">\(\mathcal{O}(n)\)</td>
+<td class="left">\(\Theta(1+\alpha)\) <sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup></td>
+</tr>
+
+<tr>
+<td class="left"><code>insert(x)</code></td>
+<td class="left">\(\mathcal{O}(1)\)</td>
+<td class="left">\(\mathcal{O}(1)\)</td>
+</tr>
+
+<tr>
+<td class="left"><code>remove(x)</code></td>
+<td class="left">\(\mathcal{O}(n)\)</td>
+<td class="left">\(\Theta(1+\alpha)\) <sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4-2" class="outline-4">
+<h4 id="sec-1-4-2"><span class="section-number-4">1.4.2</span> Hashing mit offener Addressierung</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<p>
+<b>Idee:</b> Speichere Elemente direkt in einem Feld. Verwende eine
+alternative Position, falls \(h(x)\) schon belegt ist. Prüfe unter
+Verwendung einer Familie universeller Hashfunktionen $h\<sub>1</sub>(x),
+h\<sub>2</sub>(x), &#x2026; $ alternative Positionen, bis man eine freie Position
+findet. Verwende eines der folgenden Verfahren zum Finden alternativer
+Positionen:
+</p>
+
+<ol class="org-ol">
+<li><i>lineare Sondierung</i>: \(h_{i}(x) = (h(x) + i) \mod m\). <sup><a id="fnr.4" name="fnr.4" class="footref" href="#fn.4">4</a></sup>
+</li>
+<li><i>quadratische Sondierung</i>: \(h_{i}(x) = (h(x) + i^{2}) \mod m\). Wenn
+man \(m\) Primzahl der Form \(\exists n \in \mathbb{N}: m = 4n + 3\)
+wählt, liefert die Sondierungen mit \(m\) Hashfunktionen
+\(h_1, ..., h_{m}\) eine Permutation der Zahlen \(\\{0, ..., m-1\\}\)
+</li>
+</ol>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li><code>lookup(x)</code>: Die Suche nach einem Element kann nicht abbrechen, wenn
+eine freie Position erreicht wird, da dort ein Element gestanden
+haben könnte, dass zwischenzeitlich gelöscht wurde. Konsequenz:
+Postionen, an denen Elemente gelöscht wurden, müssen markiert werden.
+</li>
+<li><code>insert(x)</code> enstpricht einem nicht-erfolgreichen <code>lookup</code>
+</li>
+<li>Die erwartete Anzahl von Proben in einer Einfüge-Operation oder nicht
+erfolgreichen Suche ist \(\leq \frac{1}{1-\alpha}\), falls bisher keine
+Elemente entfernt wurden.
+</li>
+<li>Die durchschnittliche Anzahl an Proben bei einer erfolgreichen Suche
+oder einer Entfernen-Operation, sofern \(x \in S\), ist höchstens
+\(\frac{1}{\alpha} \ln \frac{1}{1-\alpha}\)
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+Wir gehen davon aus, dass jedes Element mit gleicher Wahrschlichkeit
+auf eines der Arrayelemente abgebildet wird, unabhängig von der
+Zuordnung anderer Elemente
+</p></div>
+
+<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+Berechnung des Haswerts \(h(x)\) erfolgt in \(\Theta(1)\)
+</p></div>
+
+<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
+Berechnung des Haswerts \(h(x)\) erfolgt in \(\Theta(1)\)
+</p></div>
+
+<div class="footdef"><sup><a id="fn.4" name="fn.4" class="footnum" href="#fnr.4">4</a></sup> <p class="footpara">
+Bei linearer Sondierung können sich Elementcluster in der
+Hashtabelle bilden, wenn viele Elemente mit ähnlichem Hashwert
+eingefügt werden.
+</p></div>
+
+
+</div>
+</div>

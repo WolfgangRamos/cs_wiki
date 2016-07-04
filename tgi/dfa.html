@@ -1,0 +1,102 @@
+---
+layout: page
+title: Dfa
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Endliche deterministische Automaten</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Ein endlicher <i>deterministischer Automat</i> (DFA oder DEA) ist ein Tupel
+\(M=(Q, \Sigma, \delta, q_{0}, F)\) aus:
+</p>
+
+<ul class="org-ul">
+<li>einer endlichen Menge \(Q\) von Zuständen (<i>Zustandsmenge</i>)
+</li>
+<li>einem Alphabet \(\Sigma\)
+</li>
+<li>einer Transitionsfunktion \(\delta: Q \times A \rightarrow Q\)
+</li>
+<li>einem <i>Anfangszustand</i> \(q_{0} \in Q\)
+</li>
+<li>einer Menge \(F\) von <i>Endzuständen</i>
+</li>
+</ul>
+
+<p>
+Ein Wort wird <i>akzeptiert</i>, wenn der Zustand, der nach dem Lesen des
+Wortes eingenommen wird, ein <i>Endzustand</i> (auch <i>akzeptierender
+Zustand</i>) ist.
+</p>
+
+<p>
+Dieses Automatenmodell heißt <i>deterministisch</i>, da es zu jedem Wort \(w\)
+genau eine Möglichkeit gibt das Wort zu lesen.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Eine Sprache ist genau dann regulär, wenn sie von einem DFA erkannt
+wird.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Berechnung</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Sei \(M = (Q,\Sigma,\delta,q_0,F)\) ein DFA und \(w = w_0\dots{}w_{n-1}\)
+ein Wort mit \(w_{i} \in \Sigma\). Eine <i>Berechnung</i> von \(M\) auf \(w\) ist
+eine Folge \(r:=(r_{0},r_{1},...,r_{n})\) von Zuständen \(r_{i} \in Q\) mit
+folgenden Eigenschaften:
+</p>
+
+<ol class="org-ol">
+<li>\(r_0 = q_0\)
+</li>
+<li>\(\forall i < n: \delta(r_i , w_i) = r_{i+1}\)
+</li>
+</ol>
+
+<p>
+\(M\) <i>akzeptiert</i> (engl. <i>accept</i>) \(w\) (man sagt auch die Berechnung ist
+<i>akzeptierend</i>, falls gilt:
+</p>
+
+<ol class="org-ol">
+<li>\(r_n \in F\)
+</li>
+</ol>
+
+<p>
+Die Menge der von \(M\) akzeptierten Wörter bildet eine <i>formale Sprache</i>
+\(L(M) := \{ w \in \Sigma^* | M \text{ akzeptiert } w \}\). \(L(M)\) wird
+auch die von \(M\) <i>erkannte Sprache</i> genannt (engl. <i>recognize</i>).
+(<b>Merke:</b> ein Automat kann viele Wörter <i>akzeptieren</i>, aber nur eine
+Sprache <i>erkennen</i>.)
+</p>
+
+<p>
+Dieses Automatenmodell heißt <i>deterministisch</i>, da es zu jedem Wort \(w\)
+<b>genau eine</b> Möglichkeiten gibt das Wort zu lesen. Insbesondere ist die
+Berechnung von \(M\) zu einem Wort \(w \in \Sigma^+\) eindeutig.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Graphische Darstellung</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>zu jedem Zustand und jedem Symbol gibt es <i>genau</i> eine ausgehende
+Kante, die mit diesem Symbol beschriftet ist.
+</li>
+</ul>
+</div>
+</div>
+</div>

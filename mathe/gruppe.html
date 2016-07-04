@@ -1,0 +1,199 @@
+---
+layout: page
+title: Gruppe
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Gruppen</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Eine <i>Halbgruppe</i> ist ein Paar \((G,\ast)\) aus einer nichtleere Menge \(G\)
+und einer Verknüpfung \(\ast: G \times G \rightarrow G\) auf dieser Menge,
+für die gilt:
+</p>
+
+<ol class="org-ol">
+<li>Assoziativgesetz bzgl. "\(\ast\)", d.h.
+\(\forall a,b,c \in G: (a \ast b) \ast c = a \ast (b \ast c)\)
+</li>
+</ol>
+
+<p>
+Gilt außerdem:
+</p>
+
+<ol class="org-ol">
+<li>es gibt ein neutrales Element \(e_{\ast}\) bzgl. "\(\ast\)", d.h.
+\(\exists e_{\ast} \in G: \forall a \in G: a \ast e_{\ast} = e_{\ast} \ast a = a\)
+</li>
+<li>es gibt inverse Elemente bzgl. "\(\ast\)", d.h.
+\(\forall a \in G: \exists inv_{\ast}(a) \in G: a \ast inv_{\ast}(a) = e_{\ast}\)
+</li>
+</ol>
+
+<p>
+dann heißt das Paar \((G,\ast)\) <i>Gruppe</i>.
+</p>
+
+<p>
+Gilt außerdem:
+</p>
+
+<ol class="org-ol">
+<li>Kommutativgesetz bzgl. "\(\ast\)", d.h.
+\(\forall a,b \in G: (a \ast b) = (b \ast a)\)
+</li>
+</ol>
+
+<p>
+dann heißt das Paar \((G,\ast)\) <i>kommutative</i> oder <i>abelsche Gruppe</i>.
+</p>
+
+<p>
+Ist \(G\) endliche Menge, dann heißt \((G,\ast)\) auch <i>endliche Gruppe</i>.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>In einer Gruppe oder einer kommutativen Gruppe sind Links- und
+Rechtsinverse Elemente identisch. Es gilt also:
+\(\forall a \in G: \exists inv_{\ast}(a) \in G: a \ast inv_{\ast}(a) = inv_{\ast}(a) \ast a = e\)
+</li>
+<li>Das neutrale Element einer Gruppe \((G,\ast)\) ist eindeutig, d.h. &#x2026;
+</li>
+<li>Das Inverse Element zu einem Element \(a \in G\) ist eindeutig, d.h.
+&#x2026;
+</li>
+<li>Das Inverse des neutralen Elements ist das neutrale Element. Sei
+\(e \in G\) das netrale Element der Gruppe \((G,\ast)\), dann gilt
+\(inv_{\ast}(e) = e\).
+</li>
+<li>Sei \((G,\ast)\) eine endliche Gruppe mit neutralem Element \(e_{\ast}\),
+dann gilt \(\forall a \in G: a^{|G|} = e_{\ast}\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Untergruppe</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Sei \((G,\ast)\) eine Gruppe und \(U \subseteq G\). Dann heißt \((U,\ast)\)
+<i>Untergruppe von</i> \(G\), wenn gilt:
+</p>
+
+<ul class="org-ul">
+<li>\(\ast\) ist in \(U\) abgeschlossen, d.h.
+\(\forall a,b \in U: a \ast b \in U\)
+</li>
+<li>inverse Elemente sind in \(U\), d.h.:
+\(\forall a \in U: inv_{\ast}(a) \in U\)
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Sei \(e\) neutrales Element der Gruppe \((G,\ast)\) und sei \((U,\ast)\)
+   Untergruppe von \(G\), dann gilt \(e \in U\).
+</li>
+<li><i>Satz von Lagrange</i>: Sei \((U,\ast)\) Untergruppe der endlichen Gruppe
+\((G,\ast)\). Dann gilt \(|U| | |G|\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Homomorphismus/Isomorphismus</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Eine Abbildung \(f: G_1 \rightarrow G_2\) zwischen zwei Gruppen
+\((G_1,\ast)\) und \((G_2, +)\) heißt <i>(Gruppen-) Homomorphismus</i>, wenn
+\(\forall a,b \in G_1: f(a \ast b) = f(a) + f(b)\) gilt.
+</p>
+
+<p>
+Ist \(f\) <i>bijektiv</i> so heißt \(f\) <i>(Gruppen-) Isomorphismus</i> und \(G_1\)
+und \(G_2\) heißen <i>isomorph</i> (oder auch <i>Isomorphismen</i>).
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Sei \(e_1 \in G_1\) das neutrale Element der Gruppe \((G_1, \ast)\) und
+\(\e_2 \in G_2\) das neutrale Element \((G_2, +)\), dann gilt für alle
+Homomorphismen \(f: G_1 \rigtharrow G_2\):
+
+<ul class="org-ul">
+<li>das neutrale Element wird auf das neutrale Element abgebildet,
+d.h. \(f(e_1) = e_2\)
+</li>
+<li>das Bild eines inversen Elements ist die inverse des Bildes, d.h.
+\(\forall a \in G_{1}: f(inv_{\ast}(a)) = inv_{\ast}(f(a))\)
+</li>
+</ul>
+</li>
+
+<li>Gruppen mit einem Element \(|G| = 1\) sind isomorph zu
+\(G = \\{e_{\ast}\\}\).
+</li>
+<li>Gruppen mit zwei Elementen \(|G| = 2\) sind isomorph zu
+\(\mathbb{Z}_{2}\).
+</li>
+<li>Gruppen mit drei Element \(|G| = 3\) sind isomorph zu \(\mathbb{Z}_{3}\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> zyklische Gruppen</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Eine Gruppe \((G,\ast)\) heißt <i>zyklisch</i>, wenn es ein \(a \in G\) und ein
+\(n \in \mathbb{N}\) gibt, sodass
+\(G = \\{a^i | i \in \mathbb{N}\_{\leq n} \\}\) gilt, wobei wir \(a^n\)
+definieren als:
+</p>
+
+<p>
+$$a^n := \begin{cases}
+a & \text{falls } n = 1\\
+a^{n-1} \ast n & \text{falls } n > 1\\
+\end{cases}$$
+</p>
+
+<p>
+\(a\) heißt dann auch <i>erzeugendes Element</i> der Gruppe.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Sei \((G,\ast)\) eine zyklische Gruppe mit \(n \in \mathbb{N}\) Elementen
+und erzeugendem Element \(a \in G\), dann gilt für das neutrale Element
+der Gruppe \(e_{\ast} = a^n\).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Permutationsgruppe</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+TODO
+</p>
+</div>
+</div>

@@ -1,0 +1,96 @@
+---
+layout: page
+title: Listen
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Listen</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Einfach verkette Listen</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Eine <i>einfach verkette Liste</i> (oder kurz: Liste) besteht aus einer Folge
+von Knoten. Jeder Knoten enthält hierbei:
+</p>
+
+<ol class="org-ol">
+<li>ein Datenelement
+</li>
+<li>einen Zeiger auf das nächste Element der Liste, wobei der Zeiger für
+das letzte Element der Liste auf das <code>null</code>-Element zeigt.
+</li>
+</ol>
+
+<p>
+Zusätzlich enthält eine Liste eine Variable <code>head</code>, die auf den ersten
+Knoten der Liste zeigt, und eine Variable <code>tail</code>, die auf den letzten
+zeigt. Zeigen sowohl <code>head</code> als auch <code>tail</code> auf das <code>null</code>-Element, so
+haben wir eine leere Liste.
+</p>
+
+<p>
+<b>Implementierung:</b> TODO
+</p>
+
+<p>
+<b>Laufzeiten:</b>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Operation</th>
+<th scope="col" class="left">Laufzeit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">einen Knoten vorn an die Liste anfügen</td>
+<td class="left">\(\mathcal{O}(1)\)</td>
+</tr>
+
+<tr>
+<td class="left">den ersten Knoten löschen</td>
+<td class="left">\(\mathcal{O}(1)\)</td>
+</tr>
+
+<tr>
+<td class="left">einen Knoten hinten an die Liste anfügen</td>
+<td class="left">\(\mathcal{O}(1)\)</td>
+</tr>
+
+<tr>
+<td class="left">den letzten Knoten löschen</td>
+<td class="left">\(\mathcal{O}(n)\)</td>
+</tr>
+
+<tr>
+<td class="left">zwei Listen aneinanderhängen</td>
+<td class="left">\(\mathcal{O}(1)\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> zweifach verkette Listen</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<b>Implementierung:</b>
+</p>
+
+<p>
+<b>Laufzeiten:</b>
+</p>
+</div>
+</div>
+</div>

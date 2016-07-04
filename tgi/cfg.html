@@ -1,0 +1,233 @@
+---
+layout: page
+title: Cfg
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Context free grammar</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Eine <i>Context Free Grammar</i> (CFG, dt. <i>kontextfreie Grammatik</i>) ist ein
+4-Tupel \((V,\Sigma,R,S)\) aus:
+</p>
+
+<ul class="org-ul">
+<li>einer endliche Menge von <i>Variablen</i> \(V\)
+</li>
+<li>einer endliche Menge von <i>Terminalen</i> \(\Sigma\), mit
+\(\Sigma \cap V = \emptyset\)
+</li>
+<li>einer endliche Menge von <i>(Produktions-)Regeln</i> \(R\), wobei jede Regel
+aus einer Variablen und einem Wort aus \((V \cup \Sigma)^*\) (also ein
+Folge von Variablen und Terminalen) besteht. Regeln werden in der
+Form \(\langle Variable \rangle \longrightarrow \langle Wort \rangle\)
+aufgeschrieben.
+</li>
+<li>einer <i>Startvariablen</i> \(S \in V\)
+</li>
+</ul>
+
+<p>
+Sei \(G\) eine CFG, dann bezeichnet
+\(L(G) := \{w \in \Sigma^* | S \Rightarrow_* w\}\) die Sprache, die durch
+\(G\) <i>erzeugt</i> wird.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Eine Grammatik \(G\) ist <i>genau dann</i> kontextfrei, wenn sie von einem
+PDA <i>erkannt</i> wird (d.h. es gibt einen PDA \(P\) gibt mit
+\(L(P) = L(G)\)).
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Substitution</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Das Ersetzen einer Variablen durch die rechte Seite einer Regel heißt
+<i>Substitution</i>.
+</p>
+
+<p>
+Eine Substitution ist <i>left-most</i>, wenn die Variable, die im Wort am
+weitesten links steht ersetzt wird.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Ableitung</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Seien \(u,v \in (V \cup \Sigma)^*\). Wir sagen \(v\) kann von \(u\)
+<i>abgeleitet</i> (engl. derived) werden und schreiben \(u \Rightarrow_* v\),
+wenn es eine Folge von <i>left-most</i> Substitutionen gibt, sodass
+\(u \Rightarrow u_1 \Rightarrow u_2 \Rightarrow \dots \Rightarrow u_k \Rightarrow v\)
+gilt mit \(k>0\) und \(u_i \in (V \cup \Sigma)^*\) für alle
+\(i \in \{1,\dots,k\}\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Mehrdeutigkeit</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Eine Grammatik \(G\) heißt <i>mehrdeutig</i>, wenn es \(w \in L(G)\) gibt, dass
+mehrdeutig aus \(S\) abgeleitet werden kann.
+</p>
+
+<p>
+Eine Ableitung heißt <i>mehrdeutig</i> oder <i>nicht-eindeutig</i> (engl.
+ambiguous), wenn es für \(v,w \in (V \cup \Sigma)^*\) mehrere Ableitungen
+\(v \Rightarrow w\) gibt.
+</p>
+
+<p>
+Eine Sprache heißt <i>inherent mehrdeutig</i> (engl. inherently ambiguous),
+wenn sie nur durch eine mehrdeutige Grammatik erzeugt werden kann.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Operationen</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li>Vereinigung kontexfreier Sprachen \(L_1 \cup ... \cup L_n\) sind
+kontextfrei: Vereinige Menge der Regeln, erstelle neue Regel
+\(S \rightarrow S_1 | S_2 | \dots | S_n\)
+</li>
+<li>Umwandlung DFA in CFG
+
+<ul class="org-ul">
+<li>erstelle Variable \(R_i\) für jeden Zustand \(q_i \in Q\)
+</li>
+<li>erstelle Regel \(R_i \rightarrow aR_j\), wenn \(\delta(q_i,a) = q_j\)
+      gilt
+</li>
+<li>erstelle Regel \(R_i \rightarrow \epsilon\), wenn \(q_i \in F\) gilt
+</li>
+<li>wähle \(S = R_0\), wenn \(q_0\) Startzustand des DFA ist
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Chomsky Normalform</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Eine CFG \(G=(V,\Sigma,R,S)\) ist in <i>Chomsky Normalform</i> (CNF), wenn alle
+Regeln \(r \in R\) folgende Form haben:
+</p>
+
+<ul class="org-ul">
+<li>\(A \rightarrow BC\) für \(A \in V\) und \(B,C \in V\setminus\{S\}\) oder
+</li>
+<li>\(A \rightarrow a\) für \(A \in V\) und \(a \in \Sigma\) oder
+</li>
+<li>\(S \rightarrow \epsilon\)
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften</b>
+</p>
+
+<ul class="org-ul">
+<li>Jede CFL kann durch eine CFG in Chomsky Normalform erzeugt werden.
+</li>
+
+<li>Sei \(G\) eine CFG in CNF und \(M\) die kleinste Menge, die die
+Bedingungen erfüllt:
+
+<ol class="org-ol">
+<li>Falls \(S\rightarrow \epsilon\) Regel von \(G\), dann gilt \(S \in M\)
+</li>
+<li>Falls \(A\rightarrow a\) Regel von \(G\), dann gilt \(A \in M\)
+</li>
+<li>Falls \(B,C \in M\), und \(A\rightarrow BC\) Regel von \(G\), dann gilt
+\(A \in M\)
+</li>
+</ol>
+<p>
+Dann gilt für jede Variable \(A\):
+\(\exists w \in \Sigma^*: A \vdash_{G}^{*} w\), genau dann wenn
+\(A \in M\) \(L(G) \neq \emptyset\) genau dann wenn \(S \in M\)
+</p>
+</li>
+</ul>
+
+<p>
+<b>Verfahren um eine CFG in Chomsky Normalform zu bringen:</b>
+</p>
+
+<p>
+Sei \(G:=(V,\Sigma,R,S)\) ein CFG. Führe folgende Schritte aus, um \(G\) in
+Chomsky Normalform zu bringen:
+</p>
+
+<ol class="org-ol">
+<li>Füge neuen Startzustand \(S_0\) und die Regel \(S_0 \rightarrow S\)
+   hinzu.
+</li>
+<li>Entferne iterativ Regeln der Form \(A\rightarrow\epsilon\), mit
+\(A \neq S\) (Eine Regel \(S \rightarrow \epsilon\) darf erhalten
+bleiben). Lösche zunächst die Regel \(A \rightarrow \epsilon\). Füge
+dann für <i>jedes</i> Auftreten von \(A\) auf der rechten Seite einer Regel
+eine neue Regel hinzu, in der dieses \(A\) nicht mehr auftritt. Die
+Regel \(B \rightarrow uAvAw\) führt also dazu, dass die Regeln
+\(B \rightarrow uvAw | uAvw | uvw\) hinzugefügt werden. Die Regel
+\(B \rightarrow A\) führt also dazu, dass die Regel
+\(B \rightarrow \epsilon\) hinzugefügt wird, <b>außer</b>
+\(B \rightarrow \epsilon\) wurde bereits vorher entfernt.
+</li>
+<li>Entferne iterativ Regeln der Form \(A \rightarrow B\) (sog.
+<i>Unit-Rules</i>). Lösche zunächst die Regel \(A \rightarrow B\). Wenn es
+die Regeln \(B \rightarrow CDE | FG\) und \(B \rightarrow a\) gibt, dann
+füge die Regeln \(A \rightarrow CDE | FG | a\) hinzu, außer eine dieser
+Regeln wurde bereits vorher ersetzt.
+</li>
+<li>Bringe alle Regeln in die Form \(A \rightarrow BC\) oder
+\(A \rightarrow a\) durch Einführung von <i>Hilfsregeln</i>. Die Regel
+\(A \rightarrow BCDu\) wird also ersetzt durch \(A \rightarrow BA_1\),
+\(A_1 \rightarrow CA_2\), \(A_2 \rightarrow DA_3\) und
+\(A_3 \rightarrow u\).
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Pumping Lemma</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Sei \(L\) eine formale Sprache. Wenn \(L\) kontextfrei ist, dann gibt es
+eine Zahl \(p\), so dass für alle \(w \in L\) mit \(|w| \geq p\) eine
+Zerlegung \(w=xuyvz\) mit \(|uyv| \leq p\) und \(|uv| \geq 1\) existiert und
+\(x u^{i} y v^{i} z \in L\) für alle \(i \in \mathbb{N}\) gilt.
+</p>
+
+<p>
+In Prädikatenlogik: Wenn \(L\) kontextfrei ist, dann gilt
+\(\exists p \geq 1: \forall w \in L: |w| \geq p \Rightarrow \exists x,u,y,v,z \in \Sigma^* : w = xuyvz \wedge |uyv| \leq p \wedge |uv| \geq 1 \wedge \forall i \in \mathbb{N}: x u^{i} y v^{i} z \in L\).
+</p>
+
+<p>
+Mit Hilfe der <b>Kontraposition</b> des Pumping Lemmas kann man zeigen, dass
+eine Sprache <i>nicht</i> kontextfrei ist: Wenn es für alle \(p \geq 1\) ein
+Wort \(w \in L\) gibt mit \(|w| \geq p\) und für jede Zerlegung \(w=xuyvz\)
+mit \(|uyv| \leq p\) und \(|uv| \geq 1\) ein \(i\) existiert mit
+\(x u^i y v^i z \not\in L\), dann ist \(L\) nicht kontextfrei ist.
+</p>
+</div>
+</div>
+</div>

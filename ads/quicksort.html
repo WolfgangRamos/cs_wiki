@@ -1,0 +1,135 @@
+---
+layout: page
+title: Quicksort
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Quicksort</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>geg:</b> Feld \(A\) mit \(n\) Elementen.
+</p>
+
+<p>
+<b>Idee:</b> Wähle Pivotelement \(x\) aus \(A\) (i.d.R. \(x := A[0]\); s.
+<i>randomized_quicksort</i> für eine Quicksort-Version, die ein zufällig
+gewähltes Pivotelement verwendet). Ordne das Feld so um, dass zwei
+Teilfelder entstehen, wobei im vorderen Teilfeld alle Elemete \(\leq x\)
+sind und im hinteren Teilfeld alle Element \(\geq x\) sind (verwende zum
+Umordnen eine der nachfolgend genannten Techniken). Dann sortiere die
+beiden Teilfelder rekursiv.
+</p>
+
+<p>
+<b>1. Technik zum Umordnen des Feldes:</b> Verwende ein zusätzliches Feld \(B\)
+und kopiere zunächst die Elemente \(\<x\) nach \(B\), danach \(x\) selbst und
+zuletzt die Elemente \(\geq x\).
+</p>
+
+<ul class="org-ul">
+<li>Vorteil: Reihenfolge der Elemente \(\<x\) und bzw. \(\geq x\) bleibt
+erhalten.
+</li>
+<li>Nachteil: zusätzlicher Speicher nötig
+</li>
+</ul>
+
+<p>
+<b>2. Technik zum Umordnen des Feldes:</b> Verwende zwei Zeiger (Indizes)
+\(i,j\). Setze zu Anfang \(i:=l+1\) und \(j:=r\), wobei \(l\) die linke Grenze
+des umzuordnenden Bereichs und \(r\) die recht Grenze ist. Solange
+\(i \leq j\):
+</p>
+
+<ol class="org-ol">
+<li>lasse \(i\) von links nach rechts über Feld \(A\) laufen, bis \(A[i] > x\)
+   gilt.
+</li>
+<li>lasse \(j\) von rechts nach links über Feld \(A\) laufen, bis \(A[j] < x\)
+   gilt.
+</li>
+<li>vertausche \(A[i]\) und \(A[j]\), falls \(i < j\) ist
+</li>
+<li>füge Pivotel. an Position \(i-1\) bzw. \(j\) ein.
+</li>
+</ol>
+
+<p>
+<b>Algorithmus:</b>
+</p>
+
+<pre class="example">
+quicksort(A, l, r) {
+  integer x, i, j, temp;
+  if l &lt; r then
+    x = A[l];
+    i = l+1;
+    j = r;
+    while i &lt;= j) do
+      while i &lt;= j and A[i] &lt;= x do
+        i = i+1;
+      od
+      while i&lt;= j and A[j] &gt;= x do
+        j = j-1;
+      od
+      if i &lt; j then
+        temp = A[i];
+        A[i] = A[j];
+        A[j] = temp;
+      fi
+    od
+    i = i-1;
+    A[l] = A[i];
+    A[i] = x;
+    quicksort(A, l, i-1);
+    quicksort(A, i+1, r);
+  fi
+}
+</pre>
+
+<p>
+<b>Vermeidung von Zugriffsfehler:</b> Zugriffe auf \(A[r+1]\) können vermieden
+werden durch:
+</p>
+
+<ul class="org-ul">
+<li>Verwendung eines Felds der Länge \(n+1\) (dann existiert \(A[r+1]\)),
+oder
+</li>
+<li>Verwendung einer \(\wedge\)-Operation, die <i>short-circuit evaluation</i>
+   <a href="http://de.wikipedia.org/wiki/Kurzschlussauswertung">Kurzschlussauswertung</a>
+   unterstützt.
+</li>
+</ul>
+
+<p>
+<b>Laufzeit:</b> (s. <i>Übersicht über Sortierverfahren</i>)
+</p>
+
+<ul class="org-ul">
+<li>LZ des Umordnens liegt in $ \mathcal{O}(r-l)$
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Randomized Quicksort</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<b>Idee:</b> Wähle zunächst zufällig ein Pivotelement \(A[k]\) aus dem Teilfeld
+\(A[l],...,A[r]\) (also \(k \in \\{l,...,r\\}\)). Vertauche danach \(A[l]\)
+und \(A[k]\). Durch die zufällige Wahl des Pivotelements ist die erwartete
+Größe der beiden Teilprobleme (Teilfelder) etwa gleich groß.
+</p>
+
+<p>
+TODO: Bild
+</p>
+
+<p>
+<b>Laufzeit:</b> Die erwartete durchschnittliche Laufzeit von Randomized
+Quicksort ist \(\mathcal{O}(n \log(n))\).
+</p>
+</div>
+</div>

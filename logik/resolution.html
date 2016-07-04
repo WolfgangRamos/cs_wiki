@@ -1,0 +1,124 @@
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Resolution</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Korrektheit</a></li>
+<li><a href="#sec-1-2">1.2. Vollständigkeit</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. SDL-Resolution</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Resolution</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+\(res_{X_i} := K \setminus \{X_i\} \cup K' \setminus \{\neg X_i\}\).
+</p>
+
+<p>
+Sei \(M\) eine Menge von Klauseln und \(K, K' \in M\) resolvierbar bzgl. \(X_i\), dann gilt:
+</p>
+
+<p>
+\(\{\bigvee K \mid K \in M \} |\models \bigvee res_{X_i}(K, K')\) 
+</p>
+
+<p>
+Ein <b>Resolutionsbeweis</b> einer Klausel \(K\) aus einer Menge von Klauseln
+\(M\) ist eine <i>endliche</i> Folge \(K_0, \dots, K_n\) von Klauseln mit
+folgenden Eigenschaften:
+</p>
+
+<ul class="org-ul">
+<li>\(K_n = K\)
+</li>
+<li>Für jedes \(i < n\) gilt eine der drei folgenden Bedingungen:
+</li>
+
+<li><i>Voraussetungsregel</i> (V): \(K_i \in M\)
+</li>
+<li><i>Monotonieregel</i> (M): Es gibt \(j < i\) mit \(K_j \subseteq K_i\)
+</li>
+<li><i>Resolutionsregel</i> (R): Es gibt \(X_l\), sodass \(K_i = res_{X_l}(K_j, K_k}\) für \(j,k < i\)
+</li>
+</ul>
+
+<p>
+Wir schreiben \(M\vdash_{res}^n K\), wenn es einen Resolutionsbeweis von
+\(K\) aus \(M\) mit der Länge \(n\) gibt.
+</p>
+
+<p>
+Wir schreiben \(M\vdash_{res}^{*} K\), wenn es einen Resolutionsbeweis
+von \(K\) aus \(M\) gibt.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Korrektheit</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Sei \(M\) eine Menge von Klauseln und \(K\) eine Klausel. Wenn \(M
+\vdash_{res}^{*} K\) gilt, so gilt auch \(\{\bigvee K' \mid K' \in
+M\} |\models \bigvee K\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Vollständigkeit</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Ist \(M\) eine Klauselmenge und \(K\) eine nicht-tautologische Klausel,
+für die \(\{ \bigvee K \mid K \in M \} |\models \bigvee K\) gilt, dann
+gilt auch \(M\vdash_{res}^{*}K\).
+</p>
+
+<p>
+Insbesondere gilt: Ist \(M\) eine unerfüllbare Klauselmenge, dann gibt
+es einen Resolutionsbeweis für die leere Klausel aus \(M\), d.h. es gilt
+\(M \vdash_{res}^{*} \{\}\).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> SDL-Resolution</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Für bestimmte Klauselmengen kann man zielgerichtet resolvieren.
+</p>
+
+<p>
+Eine <b>Hornformel</b> ist eine Konjunktion von <b>Hornklauseln</b>.
+</p>
+
+<p>
+Eine <b>Hornklausel</b> ist eine Klausel, mit höchstens einem positivem
+Literal, z.B. 
+</p>
+
+<ul class="org-ul">
+<li><i>leere Klausel</i>: \(\bigvee \{\} \equiv \bot\)
+</li>
+<li><i>Zielklausel</i>: \(\{\neg X_0, \dots \neg X_n\}\)
+</li>
+<li><i>Tatsachenklausel</i>: \(\bigvee \{X_0\} \equiv X_0\)
+</li>
+<li><i>Programmklausel</i>: \(\bigvee \{\neg X_0, \dots, \neg X_n, X_{n+1}\} \equiv X_0 \wedge \dots \wedge X_n \rightarrow X_{n+1}\)
+</li>
+</ul>
+
+<p>
+Bei der SLD Resolution wird ausgehend von einer Zielklausel in jedem
+Schritt mit einer vorausgesetzten Klausel (Tatsachen und
+Programmklauseln) resolviert.
+</p>
+</div>
+</div>

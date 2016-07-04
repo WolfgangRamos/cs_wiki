@@ -1,0 +1,337 @@
+---
+layout: page
+title: Erlang
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Erlang</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Kommentare: <code>%</code>
+</li>
+<li>Variablen groß schreiben
+</li>
+<li>Atome klein schreiben
+</li>
+</ul>
+
+<pre class="example">
+-module().
+-export([fac/1, lookup/2]).
+
+fac(0) -&gt; 1;
+fac(N) when N &gt; 0 -&gt; N * fac(N-1).
+
+% lookup :: a -&gt; [(a,b)] -&gt; Maybe b
+lookup(_,[]) -&gt;
+
+map(_,[]) -&gt; [];
+map(Fun,[X,Xs]) -&gt; [Fun(X)|map(Fun,Xs)].
+
+map2(Fun, Xs) -&gt;
+  case Xs of
+    [] -&gt; [];
+    [Y|Ys] -&gt; [Fun(Y)|map2(Fun, Ys)]; ???
+  end.
+</pre>
+
+<ul class="org-ul">
+<li>Kompilieren mit <code>c(Modulname)</code>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Nebenläufigkeit</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Jeder Prozess hat eine Mailbox. Diese ist eine Queue (FIFO). Die
+Reihenfolge der Pattern im <code>receive</code> Aufruf hat keinen Einfluss auf die
+Reihenfolge der Verarbeitung der Nachrichten.
+</p>
+
+<p>
+Jeder Prozess hat eine <i>Pit</i>. Die <i>Pit</i> des laufenden Prozesses erhält
+man mit <code>self()</code>.
+</p>
+
+<p>
+Nachricht senden: <code>self()!hallo</code>
+</p>
+
+<p>
+Nachricht empfangen: `receive 42 -&gt; bla; X -&gt; X
+</p>
+
+<p>
+Variable freigeben (free) <code>f(X)</code>
+</p>
+
+<pre class="example">
+-module(database).
+-export([start/0]).
+
+start() -&gt; spawn(fun() -&gt; database([]) end).
+
+database(KVs) -&gt;
+  receive
+    {allocate,Key,P} -&gt;
+      case fac:lookup(Key,KVs) of
+        nothing -&gt; P!free,
+                   receive
+                     {value,V,P} -&gt; database([{Key,V}|KVs])
+                   end;
+        {just,_} -&gt; P!allocated;
+      end;
+    {lookup,Key,P} -&gt; P!fac:lookup(Key,KVs),
+                      database(KVs)
+  end.
+</pre>
+
+<p>
+<code>spawn(Funktion)</code> geniert einen Prozess und gitb den Pit des Prozesse
+zurück
+</p>
+
+<pre class="example">
+-module(phil).
+-export([start/0]).
+%-import([]).
+
+newStick() -&gt; spawn(fun() -&gt; stickDown() end).
+
+stickDown() -&gt;
+  receive
+    {take,P} -&gt; P!took, stickUp()
+  end.
+
+stickUp() -&gt;
+  receive
+    put -&gt; stickDown()
+  end.
+
+take(S) -&gt; S!take{take,self()},
+           receive
+             took -&gt; ok
+           end.
+
+put(S) -&gt; S!put.
+
+start() -&gt;
+  S1 = newStick(),
+  S2 = newStick(),
+  S3 = newStick(),
+  S4 = newStick(),
+  S5 = newStick(),
+  spawn(fun() -&gt; phil(1, S1, S2) end),
+  spawn(fun() -&gt; phil(2, S2, S3) end),
+  spawn(fun() -&gt; phil(3, S3, S4) end),
+  spawn(fun() -&gt; phil(4, S4, S5) end),
+  fun() -&gt; phil(5, S1, S2).
+
+phil(N,SL,SR) -&gt;
+  base:printLn(base:show(N)++" thinks"),
+  take(SL),
+  take(SR),
+  base:printLn(Base:show(N)++" eats"),
+  put(SL),
+  put(SR),
+  phil(N,SL,SR).
+</pre>
+
+<pre class="example">
+new_mvar() -&gt; spawn(fun() -&gt; empty() end).
+
+empty() -&gt;
+  receive
+    {put,V,P} -&gt; P!put, % schreiber blockieren
+                 full(V)
+  end.
+
+full(V) -&gt;
+  receive
+    {take,P} -&gt; P!{took,V},
+                empty()
+  end.
+
+take_mvar(MVar) -&gt;
+  MVar!{take, self()},
+  receive
+    {took,V} -&gt; V
+  end.
+
+put_mvar(MVar,V) -&gt;
+  MVar!{put,V,self()},
+  receive
+    put -&gt; ok
+  end.
+
+clear_mvar(MVar) -&gt;
+</pre>
+
+<p>
+Knoten auf Server starten: <code>erl -name &lt;Knotenname&gt;</code> oder
+<code>erl -sname &lt;Knotenname&gt;</code>
+</p>
+
+<p>
+Prozesse auf dem Server registrieren: <code>register(&lt;Name&gt;, &lt;pit&gt;).</code>
+</p>
+
+<p>
+Danach können Nachrichten an den registierten Service geschickt werden:
+<code>{&lt;Name&gt;, &lt;Knoten&gt;}!&lt;Nachricht&gt;</code>. Für Antworten kann der Sender seine
+Pit mitschicken.
+</p>
+
+<p>
+chatServer:
+</p>
+
+<pre class="example">
+-module(chatServer).
+-export([start/0]).
+-import(base,[lookup/2]).
+
+start() -&gt; register(chat, self()), server_loop([]).
+
+server_loop(Clients) -&gt;
+  receive
+    {login,Name,P} -&gt; case lookup(Name,Clients) of
+      nothing -&gt; P!{welcome, map(fun({X,_}) -&gt; X end, Clients), self()},
+                 ...
+                 server_loop([{Name,P}|Clients]);
+      {just,_} -&gt; P!name_occupied.
+                 server_loop([{Name,P}|Clients])
+                 end;
+    {logout,P} -&gt; NewClients = lists:keydelete(P,2,Clients),
+                  case lists:keyfind(P,2,Cleints) of
+                    false -&gt; server_loop(Clients);
+                    {Name,_} -&gt; NewClients = lists:keydelete(P,2,Clients),
+                                broadcast(NewClients,{logout,Name}),
+                                server_loop(NewClients).
+                  end.
+    {message,Msg,P} -&gt;
+                  case lists:keyfind(P,2,Clients) of
+                    false -&gt; server_loop(Clients);
+                    {Name,_} -&gt; broadcast(Clients,{message,Name}),
+                                server_loop(Clients).
+                  end.
+
+    Msg -&gt; println("Not implemented yet:"++show(Msg)),
+           server_loop(Clients)
+  end.
+
+broadcast(Clients) -&gt;
+</pre>
+
+<p>
+chatClient:
+</p>
+
+<pre class="example">
+-module(chatClient).
+-export([joinChat/2]).
+
+joinChat(Name, ServerNode) -&gt;
+  {chat,ServerNode}!{login,Name,self()},
+  receive
+    {welcome,Names,Server} -&gt; println(Names),
+                              Me = self(),
+                              Client spawn(fun() -&gt; user_input(Server, Name, Me) end),
+                              client_loop();
+    name_occupied -&gt; printLn("Name bereits vergeben")
+  after 2000 -&gt; printLn("Keine Verbindung")
+  end.
+
+user_input(Server, Name, Me) -&gt;
+  Str = getLn(Name++"&gt; "),
+  case Str of
+    "bye" -&gt; Server!{logout,Me},
+    _ -&gt; Server!{message, Str, Me}
+  end,
+  user_input(Server, Name, Me).
+
+client_loop() -&gt;
+  receive
+    {loogout, Name} -&gt; printLn(Name++" hat den Chat verlassen."),
+                       client_loop();
+    {message, Msg, Name} -&gt; printLn(Name++"
+</pre>
+
+<p>
+Verknüpfung von Prozessen mit <code>spawn_link(&lt;FUN&gt;)</code> oder <code>link(&lt;PID&gt;)</code>
+</p>
+
+<p>
+Verhindern, mit einem verlinkten Prozess zu sterben:
+<code>process_flag(trap_exit, true)</code>. Dann erhalten wir eine Message, wenn
+der verlinkte Prozess stirbt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Generic Server</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Modul <code>gen_server</code>.
+</p>
+
+<p>
+Chat unter Verwendung von Genserver
+</p>
+
+<pre class="example">
+-module(genChat).
+-behaviour(gen_server). % Behaviour-Klasse, geladen wie Modul ähnlich wie abstraktes Interface, welche zu implementieren ist
+-export([start/0]).
+-export([login/0, msg/2, logout/1, who/1]).
+-export([init/0, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
+
+start() -&gt; base:printLn("Server started"),
+gen_server:start_link({local,chat},genChat,[],[]). % Code für Server im Modul genChat
+
+init() -&gt; {ok,[]}.
+
+% asynchronous interface
+handle_cast({message, Text, P}, Clients) -&gt; % Clients sind automatisch bekannt
+    ... COde
+    {noreply,Clients}; % sagt dem Server, dass er den Clients nicht antworten muss
+    {noreply, &lt;Neuer Zustand&gt;}
+handle_cast(...)
+
+% synchronous interface
+handle_call({login, Name})
+    ...
+    {reply, &lt;Message&gt;, &lt;neuer Zustand&gt;} 
+
+terminate(shutdown, _) -&gt; ok.
+
+code_change(_OldVsn, _Extra) -&gt; {ok, State}.
+
+% client interface
+
+login(Node, Name) -&gt; gen_server:call({chat_Nod}, {login, Name}).
+
+msg(Pid, Msg) -&gt; gen_server:cast(Pid, {message, Msg, self()}).
+</pre>
+
+<p>
+Chat Client mit gen\<sub>server</sub>
+</p>
+
+<p>
+```` -module(genChatClient).
+</p>
+
+<p>
+lokales Dictionary mit Key-Value-Paaren:
+</p>
+
+<p>
+<code>put(42, hallo)</code> und <code>get(42)</code>
+</p>
+</div>
+</div>
+</div>

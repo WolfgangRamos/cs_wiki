@@ -1,0 +1,38 @@
+---
+layout: page
+title: Insertionsort
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Insertionsort</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>Idee:</b> Halte einen sortierten Bereich \(A[0]\) bis \(A[i-1]\) und einen
+unsortierten Bereich \(A[i]\) bis \(A[n-1]\) vor. Wähle im \(i\)-ten Schritt
+\(A[i]\) aus dem unsortierten Bereich aus und füge es durch Vertauschung
+an der richtigen Stelle im sortierten Bereich ein.
+</p>
+
+<pre class="example">
+INSERTIONSORT(A) {
+  integer n = length(A);
+  integer x, j;
+  boolean abbruch;
+  for i = 1 to i = n-1 do
+    x = A[i];
+    j = i-1;
+    abbruch = false;
+    while not(abbruch) and (j &gt;= 0) do
+      if A[j] &lt;= x then
+        abbruch = true;
+      else
+        A[j+1] = A[j];
+        j = j-1;
+      fi
+    od
+    A[j+1] = x;
+  od
+}
+</pre>
+</div>
+</div>

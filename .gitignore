@@ -2,23 +2,11 @@
 *~
 
 # org mode temp files
-/org/*/ltxpng
+/org/*/ltxpng/
+/*/ltxpng/
 
 # jekyll derived directories
 _site
 .sass-cache
 .jekyll-metadata
 
-# org-publish derived directories
-/ads
-/comsys
-/digisys
-/lang
-/logik
-/mathe
-/nvprog
-/oar
-/oop
-/os
-/swt
-/tgi

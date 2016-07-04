@@ -1,0 +1,84 @@
+---
+layout: page
+title: Groesseneinheiten
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Byte (B)</h2>
+<div class="outline-text-2" id="text-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Einheit</th>
+<th scope="col" class="left">Größe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">1 B</td>
+<td class="left">8 bit</td>
+</tr>
+
+<tr>
+<td class="left">1 kB</td>
+<td class="left">\(1024 B = 2^10 B\)</td>
+</tr>
+
+<tr>
+<td class="left">1 MB</td>
+<td class="left">\(1024 kB = 2^20 B\)</td>
+</tr>
+
+<tr>
+<td class="left">1 GB</td>
+<td class="left">$1024 MB = 2\<sup>30</sup> B</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Speicher wird i.d.R. byteweise adressiert.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Wort</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Die Wortlänge ist systemabhängig. I.d.R. ist ein Wort die Größe einer
+Adresse auf dem jeweiligen System. Wortgrößen:
+</p>
+
+<ul class="org-ul">
+<li>IA32: 4 byte = 32 bits (Adresse des erstes byte eines Wortes ist
+vielfaches von 4)
+</li>
+<li>x86-64: 8 byte = 64 bits (Adresse des erstes byte eines Wortes ist
+vielfaches von 8)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Bytereihenfolge in mehr-byte großen Worten</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li><i>big endian</i>: least significant byte hat höchste adresse (das
+entspricht der gewohnten Zahlendarstellung, dass größere Stellen
+zuerst genannt werden)
+</li>
+<li><i>little endian</i>: least significant byte hat niedriste Adresse (Linux
+verwendet i.d.R das little endian Bytereihenfolge)
+</li>
+</ul>
+</div>
+</div>
+</div>

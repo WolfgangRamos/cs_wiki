@@ -1,0 +1,138 @@
+---
+layout: page
+title: Extreme_elemente
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Extreme Elemente</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sei \((M,\sqsubseteq)\) eine <i>Ordnung</i> <sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup> und \(N \subseteq M\),
+dann heißt \(x \in N\):
+</p>
+
+<ul class="org-ul">
+<li><i>größtes Element</i> von \(N\), wenn \(\forall y \in N: y \sqsubseteq x\)
+   gilt
+</li>
+<li><i>kleinstes Element</i> von \(N\), wenn \(\forall y \in N: x \sqsubseteq y\)
+   gilt
+</li>
+<li><i>maximales Element</i> von \(N\), wenn
+\(\neg \exists y \in N: x \sqsubset y\) gilt
+</li>
+<li><i>minimales Element</i> von \(N\), wenn
+\(\neg \exists y \in N: y \sqsubset x\) gilt
+</li>
+</ul>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>in einer Menge \(N\) gibt es höchstens <i>ein</i> größtes und <i>ein</i>
+   kleinstes Element
+</li>
+<li>wenn \(x\) größtes Element von \(N\) ist, dann ist \(x\) auch maximales
+Element von \(N\)
+</li>
+<li>wenn \(x\) kleinstes Element von \(N\) ist, dann ist \(x\) auch minimales
+Element von \(N\)
+</li>
+<li>\(x\) ist genau dann maximales Element von \(N\), wenn
+\(\forall y \in N: x \sqsubseteq y \Rightarrow y=x\) gilt.
+</li>
+<li>\(x\) ist genau dann minimales Element von \(N\), wenn
+\(\forall y \in N: y \sqsubseteq x \Rightarrow y=x\) gilt.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Schranken</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Sei \((M,\sqsubseteq)\) eine <i>Ordnung</i> <sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup> und \(N \subseteq M\),
+dann heißt \(x \in M\):
+</p>
+
+<ul class="org-ul">
+<li><i>obere Schranke</i> von \(N\), wenn \(\forall y \in N: y \sqsubseteq x\)
+   gilt
+</li>
+<li><i>untere Schranke</i> von \(N\), wenn \(\forall y \in N: x \sqsubseteq y\)
+   gilt
+</li>
+</ul>
+
+<p>
+Falls &#x2026;
+</p>
+
+<ul class="org-ul">
+<li>eine untere Schranke \(x\) von \(N\) existiert, heißt \(N\) <i>nach unten
+beschränkt</i> (bezüglich der Relation \(\sqsubseteq\)).
+</li>
+<li>eine obere Schranke \(x\) von \(N\) existiert, heißt \(N\) <i>nach oben
+beschränkt</i> (bezüglich der Relation \(\sqsubseteq\)).
+</li>
+<li>eine untere und obere Schranke \(x_u\) und \(x_o\) von \(N\) existieren,
+heißt \(N\) <i>beschränkt</i> (bezüglich der Relation \(\sqsubseteq\)).
+</li>
+</ul>
+
+<p>
+Wir definieren:
+</p>
+
+<ul class="org-ul">
+<li>die Menge der <i>oberen Schranken</i> von \(N\) als:
+\(N^{\vartriangle} := \{x \in M | \forall y \in N: y \sqsubseteq x\}\).
+</li>
+<li>die Menge der <i>unteren Schranken</i> von \(N\) als:
+\(N^{\triangledown} := \{x \in M | \forall y \in N: x \sqsubseteq y\}\).
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Supremum</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Das kleinste Element der Menge der oberen Schranken heißt <i>Supremum</i> von
+\(N\), geschrieben als \(\sup\,N\). Es gilt also
+\(\sup\,N \in N^{\vartriangle} \wedge \forall y \in N^{\vartriangle}: \sup\,N \sqsubseteq y\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Infimum</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Das größte Element der Menge der unteren Schranken heißt <i>Infimum</i> von
+\(N\), geschrieben als \(\inf\,N\). Es gilt also
+\(\inf\,N \in N^{\triangledown} \wedge \forall y \in N^{\triangledown}: y \sqsubseteq \inf\,N\).
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+\(M\) ist eine nichtleere <i>Trägermenge</i> und \(\sqsubseteq\) ist eine
+<i>Ordnungsrelation</i> auf \(M\)
+</p></div>
+
+<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+\(M\) ist eine nichtleere <i>Trägermenge</i> und \(\sqsubseteq\) ist eine
+<i>Ordnungsrelation</i> auf \(M\)
+</p></div>
+
+
+</div>
+</div>

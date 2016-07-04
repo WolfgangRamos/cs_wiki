@@ -1,0 +1,84 @@
+---
+layout: page
+title: Gnfa
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Generalisierte Nicht-deterministische Automaten</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Ein <i>generalisierter endlicher nicht-deterministischer Automat</i> (engl.
+<i>generalized non-deterministic finite automaton</i>; GNFA) ist ein 5-Tupel
+\(M := (Q,\Sigma, \delta, q, p)\) mit:
+</p>
+
+<ul class="org-ul">
+<li>einer endlichen <i>Zustandsmenge</i> \(Q\)
+</li>
+<li>einem Alphabet \(\Sigma\)
+</li>
+<li>einer Transitionsfunktion
+\(\delta: Q\setminus\{p\} \times Q\setminus\{q\} \rightarrow \mathcal{R}\)
+(von jedem Zustand zu jedem Zustand gibt es genau eine Kante, die mit
+einem regulären Ausdruck \(\mathcal{R}\) beschriftet ist, ggf. mit
+\(\emptyset\), aber keine <b>in</b> den Anfangszustand und keine <b>aus</b> dem
+Endzustand).
+</li>
+<li><b>genau einem</b> Anfangszustand \(q \in Q\)
+</li>
+<li><b>genau einem</b> Endzustand \(p \neq q\), der vom Anfangszustand
+verschieden ist
+</li>
+</ul>
+
+<p>
+<b>Vorgehen um aus einem NFA einen GNFA zu machen:</b>
+</p>
+
+<ul class="org-ul">
+<li>Führe einen neuen Anfangszustand \(q'\) ein und eine
+\(\epsilon\)-Transition von dort zum alten Anfangszustand \(q\).
+</li>
+<li>Führe einen neuen Endzustand \(p\) ein und von allen alten Endzuständen
+eine \(\epsilon\)-Transition nach \(p\). Wähle dann \(p\) als Endzustand
+des GNFA.
+</li>
+<li>Führe von jedem Zustand \(q_1\) zu jedem Zustand \(q_2\) genau eine Kante
+ein.
+
+<ul class="org-ul">
+<li>Wenn es vorher genau eine Kante von \(q_1\) nach \(q_2\) gab, dann
+verwende diese Kante unverändert.
+</li>
+<li>Wenn es vorher mehr als eine Kante von \(q_1\) nach \(q_2\) gab, dann
+entferne diese und verwende als Beschriftung für die neue Kante
+zwischen \(q_1\) und \(q_2\) die Vereinigung der alten
+Kantenbeschriftungen
+</li>
+<li>Wenn es vorher keine Kante von \(q_1\) nach \(q_2\) gab, dann
+Beschrifte die neue Kante mit \(\emptyset\).
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<b>Vorgehen um aus einem GNFA einen regulären Ausdruck zu machen:</b>
+</p>
+
+<p>
+Eliminiere iterativ Zustände \(q \in Q\), bis \(Q\) nur noch zwei Zustände
+(den Anfangs und den Endzustand enthält). Die verbleibende Kante ist
+dann mit dem gesuchten regulären Ausdruck beschriftet. Bilde also in
+jeder Iteration \(Q'\) und \(\delta'\) mit:
+</p>
+
+<ul class="org-ul">
+<li>\(Q' = Q\setminus\{q\}\)
+</li>
+<li>\(\delta'(q_1, q_2) = \delta(q_1, q_2) \cup \delta(q_1, q) (\delta(q, q))^* \delta(q, q_2)\)
+   für alle \(q_1, q_2 \in Q'\)
+</li>
+</ul>
+</div>
+</div>

@@ -1,0 +1,73 @@
+---
+layout: page
+title: Binarysearch
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Binäre Suche</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>geg:</b> Feld \(A\), dass \(n\) austeigend sortierten Zahlen enthält.
+</p>
+
+<p>
+<b>ges:</b> Index eines gesuchten Elements \(x\) (\(x\) muss nicht im Feld
+enthalten sein)
+</p>
+
+<p>
+<b>Idee:</b> Vergleiche in jeder Iteration \(i\) das gesuchte Element \(x\) mit
+dem "mittleren" Element an Position
+\(mid := \left\lfloor \frac{i+j}{2} \right\rfloor\) von \(A\).
+</p>
+
+<ul class="org-ul">
+<li>Wenn das Feld die Länge Null hat, also \(i = j\) gilt beende die Suche
+und gib \(-1\) zurück, also Indikator dafür, dass \(x\) nicht gefunden
+wurde
+</li>
+<li>Wenn \(x = A[i]\) gilt, dann beende die Suche, und gib \(mid\) zurück.
+</li>
+<li>Wenn \(x < A[i]\) gilt setze die Suche im linken Teilfeld
+\(A[0], ... A[i-1]\) fort.
+</li>
+<li>Wenn \(x > A[i]\) gilt setze die Suche im rechten Teilfeld
+\(A[i+1], ... A[n-1]\) fort.
+</li>
+</ul>
+
+<pre class="example">
+BINARY-SEARCH(A, x) {
+  integer n = length(A);
+  integer i = 0;
+  integer j = n-1;
+  integer mid;
+  boolean found = false;
+
+  while i ≤ j ∧ ¬found do
+    mid = (i+j)/2;
+
+    if x &lt; A[mid] then
+      j = mid - 1;
+    else
+      if x &gt; A[mid] then
+        i = mid + 1;
+      else
+        found = true;
+      fi
+    fi
+  od
+
+  if found then
+    return mid;
+  else
+    return -1;
+  fi
+}
+</pre>
+
+<p>
+<b>Laufzeit:</b> \(\mathcal{O}(\log_{2} n)\)
+</p>
+</div>
+</div>

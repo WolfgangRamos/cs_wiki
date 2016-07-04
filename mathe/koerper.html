@@ -1,0 +1,262 @@
+---
+layout: page
+title: Koerper
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Körper</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+\((K,+,\cdot)\) heißt genau dann <i>Körper</i>, wenn
+</p>
+
+<ol class="org-ol">
+<li>\((K,+,\cdot)\) <i>kommutativer Ring</i> und
+</li>
+<li>\((K\setminus\\{e_{+}\\}, \cdot)\) eine <i>Gruppe</i> ist, wobei
+\(e_{+}\) das neutrale Element der Gruppe \((K,+)\) ist.
+</li>
+</ol>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>wegen (1) gilt
+
+<ol class="org-ol">
+<li>\((K,+)\) ist <i>kommutative/abelsche Gruppe</i>, d.h. es gilt:
+
+<ul class="org-ul">
+<li>Assoziativgesetz bzgl. "\(+\)", d.h.
+\(\forall a,b,c \in K: (a+b)+c = a+(b+c)\)
+</li>
+<li>es gibt ein neutrales Element \(e_{+}\) bzgl. "\(+\)", d.h.
+\(\exists e_{+} \in K: \forall a \in K: a+e_{+} = e_{+}+a = a\)
+</li>
+<li>es gibt inverse Elemente bzgl. "\(+\)", d.h.
+\(\forall a \in K: \exists inv_{+}(a) \in K: a + inv_{+}(a) = e_{+}\)
+</li>
+<li>Kommutativgesetz bzgl. "\(+\)", d.h.
+\(\forall a,b \in K: a+b = b+a\)
+</li>
+</ul>
+</li>
+
+<li>\((K, \cdot)\) ist <i>Halbgruppe</i>, d.h. es gilt
+
+<ul class="org-ul">
+<li>Assoziativgesetz bzgl. "\(\cdot\)", also
+\(\forall a,b,c \in K: (a \cdot b) \cdot c = a \cdot (b \cdot c)\)
+</li>
+</ul>
+</li>
+
+<li>Kommutativgesetz bzgl. "\(\cdot\)", d.h.
+\(\forall a,b \in K: a \cdot b = b \cot a\)
+</li>
+<li>linkes und rechtes Distributivgesetz, d.h. es gilt
+
+<p>
+\(\forall a,b,c \in K: a \cdot (b+c) = (a \cdot b) + (a \cdot c)\)
+</p>
+
+<p>
+\(\forall a,b,c \in K: (b+c) \cdot a = (b \cdot a) + (c \cdot a)\)
+</p>
+</li>
+</ol>
+</li>
+
+<li>wegen (2) gilt
+
+<ol class="org-ol">
+<li>es gibt ein neutrales Element \(e_{\cdot}\) bzgl. "\(\cdot\)", d.h.
+\(\exists e_{\cdot} \in K\setminus \\{e_{+}\\}: \forall x \in K\setminus \\{e_{+}\\}: e_{\cdot} \cdot x = x\)
+</li>
+<li>es existieren Inverse bzgl. "\(\cdot\)", d.h.
+\(\forall x \in K\setminus \\{e_{+}\\}: \exists inv_{\cdot}(x) \in K\setminus \\{e_{+}\\}: x \cdot inv_{\cdot}(x) = e_{\cdot}\)
+</li>
+</ol>
+</li>
+
+<li>\(\forall x,y \in K: x \cdot y = e_{+} \Rightarrow x = e_{+} \wedge y = e_{+}\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> angeordnete Körper</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Ein Körper \((K,+,\cdot)\) heißt <i>angeordnet</i>, wenn es einen
+<i>Positivbereich</i> \(P \subset K\) und einen <i>Negativbereich</i>
+\(-P := \\{ x \in K | inv_{+}(x) \in P\\}\) mit folgenden Eigenschaften
+gibt:
+</p>
+
+<ol class="org-ol">
+<li>\(P\), \(-P\) und \(\\{0\\}\) bilden eine <i>Zerlegung</i> von \(K\),
+</li>
+<li>Summen und Produkte positiver Elemente sind wieder positiv, d.h. es
+gilt \(\forall x,y \in P: x + y \in P \wedge x \cdot y \in P\).
+</li>
+</ol>
+
+<p>
+Die Elemente aus \(P\) heißen <i>positiv</i>, die aus \(-P\) <i>negativ</i>.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>in einem angeordenten Körper \((K,+,\cdot)\) lassen sich folgende
+<i>Ordnungsrelationenen</i> definieren:
+
+<ul class="org-ul">
+<li>\(< \subseteq K \times K\) mit
+\(x < y :\Longleftrightarrow y-x \in P\)
+</li>
+<li>\(\leq \subseteq K \times K\) mit
+\(x \leq y :\Longleftrightarrow (y-x \in P) \vee (x = y)\)
+</li>
+<li>\(> \subseteq K \times K\) mit
+\(x > y :\Longleftrightarrow y < x \Longleftrightarrow x-y \in P\)
+</li>
+<li>\(\geq \subseteq K \times K\) mit
+\(x \geq y :\Longleftrightarrow y \leq x \Longleftrightarrow (x-y \in P) \vee (y=x)\)
+</li>
+</ul>
+</li>
+
+<li>Es gibt (bis auf Isomorphie) genau einen angeordneten vollständigen
+Körper, nämlich den sog. <i>Körper der reelen Zahlen</i>
+\((\mathbb{R}, +, \cdot)\).
+</li>
+<li>Der Körper der komplexen Zahlen \((\mathbb{C}, +, \cdot)\) ist <i>nicht</i>
+   angeordnet.
+</li>
+<li>Der Körper der rationalen Zahlen \((\mathbb{Q}, +, \cdot)\) ist
+angeordnet.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> vollständiger Körper</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Ein Körper heißt <i>vollständig</i>, wenn in ihm jede
+<i>Cauchy-Folgen</i> konvergiert.
+</p>
+
+<p>
+Das ist äquivalent zu der Aussage: Ein angeordneter Körper heißt
+<i>vollständig</i>, wenn in ihm jede nach obenen
+<i>beschränkte Menge</i> ein
+<i>Supremum</i> besitzt.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Es gibt (bis auf Isomorphie) genau einen angeordneten <i>und</i>
+   vollständigen Körper, nämlich den <i>Körper der reelen Zahlen</i>
+   \((\mathbb{R}, +, \cdot)\).
+</li>
+<li>Der Körper der komplexen Zahlen \((\mathbb{C}, +, \cdot)\) ist
+vollständig.
+</li>
+<li>Der Körper der rationalen Zahlen \((\mathbb{Q}, +,\cdot)\) ist <i>nicht</i>
+   vollständig.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Der Körper der rationalen Zahlen</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Der Körper der rationalen Zahlen \((\mathbb{Q},+,\cdot)\) mit den
+bekannten Verknüpfungen Addition und Multiplikation ist der kleinste
+angeordnete Körper (d.h. die rationalen Zahlen sind in jedem
+angeordneten Körper enthalten)
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>\((\mathbb{Q}, +, \cdot)\) ist angeordnet, aber <i>nicht</i> vollständig.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Der Körper der reellen Zahlen</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Es gibt (bis auf Isomorphie) genau einen angeordneten <i>und</i>
+vollständigen Körper, nämlich den sog. <i>Körper der reelen Zahlen</i>
+\((\mathbb{R}, +, \cdot)\) mit den geläufigen Verknüpfungen Addition und
+Multiplikation.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>Zu jeder reellen Zahl größer Null gibt es einen Bruch, der echt
+kleiner ist, d.h. zu jedem \(x \in \matbb{R}\) mit \(x > 0\), gibt es ein
+\(n \in \mathbb{N}\) mit \(0 < \frac{1}{n} < x\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Der Körper der komplexen Zahlen</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+\((\mathbb{C}, +, \cdot)\) mit der
+</p>
+
+<ul class="org-ul">
+<li><i><i>komplexe Addition</i></i>
+   \((x_1 , y_1) + (x_2, y_2) := (x_1 + x_2 , y_1 + y_2)\) und der
+</li>
+<li><i><i>komplexen Multiplikation</i></i>
+   \((x_1 , y_1) \cdot (x_2, y_2) := (x_1 x_2 − y_1 y_2 , x_1 y_2 + x_2 y_1)\)
+</li>
+</ul>
+
+<p>
+ist ein Körper.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>neutrales Element: \((1,0) = 1 + 0i\)
+</li>
+<li>inverses Element zu \((a,b) \in \mathbb{C}\) ist
+\((\frac{a}{(|(a,b)|)^2}, - \frac{b}{(|(a,b)|)^2})\)
+</li>
+<li>\((\mathbb{C}, +, \cdot)\) ist vollständig aber <i>nicht</i> angeordnet
+</li>
+</ul>
+</div>
+</div>

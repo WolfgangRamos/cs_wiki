@@ -1,0 +1,136 @@
+---
+layout: page
+title: Qualitaetssicherung
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Qualitätssicherung</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Qualitätssicherung besteht aus:
+</p>
+
+<ul class="org-ul">
+<li><i>Verifikation</i>: Prüfung, ob ein System die Anforderungen erfüllt
+(d.h. entsprechend der Anforderungsbeschreibungen arbeitet)
+</li>
+<li><i>Validierung</i>: Prüfung, ob ein System die <i>tatsächlichen</i>
+Anforderungen erfüllt, d.h. seinen Zweck valide erfüllt (kann durch
+Prototyping unterstütz werden)
+</li>
+</ul>
+
+<p>
+Man unterscheidet zwei Vorgehensweisen:
+</p>
+
+<ul class="org-ul">
+<li><i>analytische Qualitätssicherung</i>: Suche nach Fehlern und deren
+Verbesserung in einer bestehenden SW (z.B. durch Testen, Reviews,
+formale Verifikation)
+</li>
+<li><i>konstruktive Qualitätssicherung</i>: Durch gezielte Maßnahmen (z.B
+VOrgehensmodelle) wird versucht das Entstehen von Fehlern weit wie
+möglich zu verhindern
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Testen</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Komponententests: Tests einzelner Komponenten
+</li>
+<li>Integrationstests: gemeinsame Test abhängiger Komponenten
+</li>
+<li>Systemtest: Test des gesamten Systems
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> White-Box Tests</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+Tests mit Kenntniss der Implementierung. Für White-Box Tests gibt es die
+folgenden <i>Überdeckungskriterien</i> zur Bestimmung sinnvoller Testmengen
+für White-Box Tests:
+</p>
+
+<ul class="org-ul">
+<li><i>Anweisungsüberdeckung</i>: durch eine Testmenge wird jede Anweisung
+mindestens einmal durchlaufen
+</li>
+<li><i>Kantenüberdeckung</i>: durch eine Testmenge wird jede Kante des
+Kontrollflussgraphen mindestens einmal durchlaufen
+</li>
+<li><i>Bedingunsüberdeckung</i>: durch eine Testmenge wird jede mögliche
+Kombination von Teilbedingungen mindestens einmal durchlaufen
+</li>
+<li><i>Pfadüberdeckung</i>: durch eine Testmenge wird jeder Pfad (vom Start-
+bis zum Endknoten) des Kontrollflussgraphen mindestens einmal
+durchlaufen
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Black-Box Tests</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+Tests ohne Kenntnis der Implementierung. Zur Bestimmung geeigneter
+Testmengen können nur die Spezifikationen der Schnittstellen
+herangezogen werden. Bildung von Äquivalenzklassen.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Statische Analyse</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Peer Reviews</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+Die Implementierung wird andere Softwareentwickler (z.B. Kollegen) zur
+Fehleridentifikation vorgelegt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Kontroll- und Datenflussanalyse</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+Automatisiertes Auffinden von potentiellen Fehlern (z.B. unerreichbaren
+Anweisungen, nicht aufgerufene Funktionen, nicht benutzte Variablen)
+durch Fehleridentifikationssoftware (z.B.
+<a href="http://findbugs.sourceforge.net/">Findbugs</a>).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> Formale Korrektheitsbeweise</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<p>
+Verwendung von Struktorgrammen zur Darstellungen von Zusicherungen vor
+und nach Ausführung einzelner Anweisungen.
+</p>
+
+<ul class="org-ul">
+<li>Konsequenzregel: Vorbedingungen dürfen verschärft, Nachbedingungen
+dürfen abgeschwächt werden
+</li>
+<li>Sequenzregel: Programmstücke können zu einer Sequenz verbunden
+werden, wenn die Vorbedingung des zweiten Prgrammstücks zur
+Nachbedingung des ersten Stücks passt (Implikation genügt)
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>

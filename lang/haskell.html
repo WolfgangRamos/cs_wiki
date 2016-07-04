@@ -1,0 +1,273 @@
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Haskell</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Datentypen</a></li>
+<li><a href="#sec-1-2">1.2. Layoutregel</a></li>
+<li><a href="#sec-1-3">1.3. Pattern Matching</a></li>
+<li><a href="#sec-1-4">1.4. Guards</a></li>
+<li><a href="#sec-1-5">1.5. Listen</a></li>
+<li><a href="#sec-1-6">1.6. Lazy Evaluation</a></li>
+<li><a href="#sec-1-7">1.7. Typklassen</a></li>
+<li><a href="#sec-1-8">1.8. Ein- und Ausgabe (IO-Monaden)</a>
+<ul>
+<li><a href="#sec-1-8-1">1.8.1. Aktion</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-9">1.9. Nebenläufigkeit</a>
+<ul>
+<li><a href="#sec-1-9-1">1.9.1. Transaktionstyp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Haskell</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Datentypen</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Tupel <code>(x,y)</code>
+</li>
+<li>Listen <code>x:xs</code>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Layoutregel</h3>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Pattern Matching</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>Variable <code>x</code>
+</li>
+<li>Wildcard <code>_</code>
+</li>
+<li>Konstruktor mit Argumenten, z.B.
+</li>
+<li><i>as pattern</i> (\_@-Notation\_) <code>⟨Name⟩@⟨Pattern⟩</code>. Damit ist es
+möglich zugleich das gesamte Pattern, als auch dessen Bestandteile an
+Namen zu binden, z.B. <code>(x1: xs@(x2:_))</code>
+</li>
+</ul>
+
+<p>
+Pattern können auch in <code>where</code>- und <code>let</code>-Ausdrücken verwendet werden.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Guards</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Pattern können um boolesche Bedingungen erweitern werden, die <i>Guards</i>
+genannt werden:
+</p>
+
+<pre class="example">
+⟨Pattern⟩ | ⟨Bedingung 1⟩ = ⟨Ausdruck⟩
+          | ⟨...⟩         = ⟨Ausdruck⟩
+          | ⟨Bedingung n⟩ = ⟨Ausdruck⟩
+          | otherwise     = ⟨Ausdruck⟩ -- ein else-Fall
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Listen</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Indexoperator: <code>(!!) :: [a] index -&gt; a</code>
+</p>
+
+<p>
+Unednliche Liste von <code>a</code>: <code>repeat :: a -&gt; [a]</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Lazy Evaluation</h3>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Typklassen</h3>
+<div class="outline-text-3" id="text-1-7">
+<ul class="org-ul">
+<li><code>Eq a</code>: Funktionen <code>==</code> und <code>/=</code> sind definiert
+</li>
+<li><code>Ord a</code>: Funktionen <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>/=</code>, <code>&gt;=</code> und <code>&gt;</code> sind
+definiert
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> Ein- und Ausgabe (IO-Monaden)</h3>
+<div class="outline-text-3" id="text-1-8">
+</div><div id="outline-container-sec-1-8-1" class="outline-4">
+<h4 id="sec-1-8-1"><span class="section-number-4">1.8.1</span> Aktion</h4>
+<div class="outline-text-4" id="text-1-8-1">
+<p>
+Eine <i>Aktion</i> ist eine Funktion vom Typ <code>world -&gt; (a, world)</code>.
+</p>
+
+<p>
+Eine IO-Aktion ist ein <code>type IO a = world -&gt; (a, world)</code>
+</p>
+
+<p>
+vordefinierte Ausgabefunktionen:
+</p>
+
+<dl class="org-dl">
+<dt> =putStr </dt><dd>String -&gt; IO ()=: Ausgabe eines Strings
+</dd>
+<dt> =putChar </dt><dd>Char -&gt; IO ()=: Ausgabe eines Chars
+</dd>
+</dl>
+
+<p>
+Das Zusammensetzen von IO-Aktionen ist mit dem <i>Sequenzoperator</i>
+<code>(&gt;&gt;) :: IO () -&gt; IO () -&gt; IO ()</code> möglich.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> Nebenläufigkeit</h3>
+<div class="outline-text-3" id="text-1-9">
+<div class="org-src-container">
+
+<pre class="src src-haskell">import Control.Concurrent
+
+main :: IO ()
+main = do
+  putStrLn "Hallo"
+  putStrLn "liebe Studies"
+  str &lt;- getLine
+  putStr("Du hast \" ++ str ++ "\" eingegeben")
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell">module Phil () where
+
+import Control.Concurrent
+
+type Stick = MVar ()
+
+main :: IO ()
+main = do
+  s1 &lt;- newMVar () -- zwei Zustände: leer und voll
+  s2 &lt;- newMVar () -- zwei Zustände: leer und voll
+  s3 &lt;- newMVar () -- zwei Zustände: leer und voll
+  s4 &lt;- newMVar () -- zwei Zustände: leer und voll
+  s5 &lt;- newMVar () -- zwei Zustände: leer und voll
+  forkIO $ phil 1 s1 s2
+  forkIO $ phil 1 s2 s3
+  forkIO $ phil 1 s3 s4
+  forkIO $ phil 1 s4 s5
+  getLine
+  phil 1 s5 s1
+
+phil :: Int -&gt; Stick -&gt; Stick IO ()
+phil n sl sr = do
+  putStrLn (show n++" is thinking")
+  takeMVar sl ()
+  takeMVar sr ()
+  putStrLn (show n++" is eating")
+  putMVar sr ()
+  putMVar sl ()
+  phil n sl sr
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-9-1" class="outline-4">
+<h4 id="sec-1-9-1"><span class="section-number-4">1.9.1</span> Transaktionstyp</h4>
+<div class="outline-text-4" id="text-1-9-1">
+<p>
+Software Transaktionstyp (STM)
+</p>
+
+<p>
+Eigenschaften transaktionaler Programme:
+</p>
+
+<p>
+A: atomar
+C: consistant (Daten sind konsistent)
+I: isolation (isolieren einzelner Zugriffe, d.h. es kann so programmiert werden als gäbe es keine Nebenläufigkeit
+D: durability
+</p>
+
+<p>
+Datenbanktransaktionen:
+</p>
+
+<p>
+Bei Datenbanken sind Transaktionen pessimistisch implementiert. Transaktionen können leicht fehlschlagen.
+</p>
+
+<p>
+Softwaretransaktionen:
+</p>
+
+<ul class="org-ul">
+<li>optimistische implementierung
+</li>
+<li><b>writeset</b>: protioklliert die TVar-Änderungen
+</li>
+<li><b>readset</b>: protokolliert die gelesenen TVars
+</li>
+<li>Nach Ende der Transaktion:
+<ul class="org-ul">
+<li>Validierung des readsets durch
+<ul class="org-ul">
+<li>Wertevergleich
+</li>
+<li>Vergleich der Versionsnummern (jede Zustandsänderung erhält eine
+Versionsnummer)
+</li>
+</ul>
+</li>
+<li>bei Erfolg: <i>Commit</i> des writesets (Commits müssen
+sequentialisiert werden. Das geschieht durch locken von TVars.
+Gelockt werden die TVars der readsets und des writesets. Dabei
+muss eine Deadlock-Vermeidungsstrategie verwendet werden:
+<ul class="org-ul">
+<li><i>globale Ordnung</i>: die Locks werden von allen in einer festen
+Reihenfolge aufgenommen
+</li>
+<li><i>zurücklegen falls nicht verfügbar</i>: kann ein lock nicht
+aufgenommen werden, so werden alle bereits aufgenommenenn Lock
+zurückgelegt.
+</li>
+</ul>
+</li>
+<li>bei Misserfolg: <i>Rollback</i>, d.h. die Änderungen werden rückgängig
+gemacht.
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
