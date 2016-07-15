@@ -1,0 +1,163 @@
+#+TITLE: Kommunikationssysteme
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+
+* Kommunikationssysteme
+
+** Begriffe
+
+*Server:* Ein Server ist eine Software, die bestimmte Dienste anbietet.
+
+*triple play:* Dienste, die in Deutschland über die Telefonsteckdose
+angeboten werden: Telefonie, Internetzugang, Fernsehen
+
+*ISO*: International Organization for Standardization
+
+*OSI*: Open System Interconnection
+
+*ISDN*: Integrated Services Digital Network
+
+*GSM*: Global System for Mobile Communication
+
+*PSTN*: Public Switched Telephone Network
+
+*TCP*: Tranmission Control Protocol
+
+*UDP:* User Datagram Protocol
+
+*Netzwerkarchitektur:* Ein System aus Schichten und Protokollen heißt
+/Netzwerkarchitektur/. Das OSI-Referenzmodell ist eine
+Netzwerkarchitektur.
+
+*Protocol stack:* Die Liste von Protokollen (ein Protokoll pro
+Schicht!), die von /einem/ System genutzt wird nennt man /protocl
+stack/.
+
+*MAC*: Medium Access Control
+
+*ICT*: Information and Communication Technology
+
+*Routing*: Als /Routing/ bezeichnet man das Finden einer optimalen Route
+zum Transport von Paketen zwischen End-Systemen. Routing funktioniert
+über die Erstelleung und kontinuierliche Aktualisierung der *routing
+tables* mit *next hop* Einträgen in Transit- und Endsystemen.
+
+*ISP:* Internet Service Provider
+
+*Network Adress Translateion* (NAT): Network Adresstranslation findet
+statt, wenn Pakete über Netzwerkgrenzen hinaus transportiert werden.
+Z.B., wenn Pakete aus einem privaten Netzwerk (10.*.*.*) in ein
+öffentliches Netzwerk transportiert werden. Systeme, die NAT
+ausführen, werden im Allgmeinen als /Router/ bezeichnet.
+
+*Forwarding:* Forwarding bezeichnet das Weiterleiten von Paketen in
+Transitsystemen mit Hilfe von *forwarding tables*
+
+* Dienst
+
+Ein Dienst ist eine genau beschriebene Leistung, die ein Protokoll, eine
+Anwedung oder sonstiges erbrigt und für andere anbietet. Der Begriff
+/Dienst/ wird daher oft unscharf verwendet:
+
+- Jede Netzwerkanwendung kann als /Dienst/ (Service) bezeichnet werden,
+  z.B.:
+
+  - Domain Name Service (DNS): Auflösung von Domain Namen zu IP Adressen
+	(engl. /name resolution/)
+  - File Transfer (FTP, SFTP):
+  - File Sharing: z.B. Peer-to-peer Dienste (unterscheidet sich von
+    FTP und SFTP dadurch, dass die Rolle des Clients /und/ des Server
+    einnehmen kann)
+  - Network File System: Einbinden von Remote-Verzeichnissen in den
+	lokalen Verzeichnisbaum
+  - Terminal Emulation: Z.B. ssh
+  - E-Mail
+  - Voice over IP
+  - Webanwendungen
+
+- Jeder "Subdienst", den ein Protokoll (z.B. IP, TCP, UDP, HTTP)
+  erbringt kann als /Dienst/ bezeichnet werden, z.B.:
+
+  - in order packet delivery (ein Dienst von TCP)
+  - packet routing (
+  - /marshalling/unmarshalling/: packet coding/decoding
+
+* Protokolle
+
+Ein Protokoll ist die Umsetzung eines Standards in
+ausführbarer/anwendbarer Form (Protokolle können in Hard- oder
+Software implementiert werden). Zwischen einem Standard und einem
+Protokoll gibt es keine klare Trennung. Protokolle können zum Standard
+werden. Ein Standard kann in mehrerer Protokollen umgesetzt werden.
+
+Ein Protokoll besteht aus Regeln für:
+
+- *message encoding rules*
+- *message sematic rules*
+- *message exchange rules*
+
+Man unterscheidet (grob): *transportorientierte* Protokolle und
+*anwedungoreintierte* Protokolle
+
+Netzwerkservices werden i.d.R. durch das Zusammenspiel mehrerer
+Protokolle erbracht. Man spricht von einem *protokoll stack*. Der
+protocol stack für den E-Mail Dienst ist z.B:
+
+#+CAPTION: Protocol Stack für den E-Mail Dienst
+| SMTP            |
+| TCP             |
+| IP              |
+| Ethernet        |
+| Manchester Code |
+
+** Timeline Diagramme
+
+*Timeline Diagramme* sind eine informelle Art Protokolle darzustellen. In
+einem Timeline Diagram kann nur /ein/ konkreter Ablauf dargestellt
+werden (z.B. eine erfolgreicher Handshake). Bsp für ein Timelinediagramm
+eines TCP Handshake:
+
+#+CAPTION: Beispiel eines TCP Handshakes
+[[./gfx/tcp_handshake.png]]
+
+* IP-Adressen
+
+*IANA*: verwaltete den globalen Pool von IP-Adressen und AS Nummern und
+vergibt /8 IP-Adressblöcke an RIRs
+
+*Regional Internet Registrars* (RIRs): verwalten IP-Adressen und AS Nummern in ihrer Region:
+
+- AfriNIC: Afrika
+- APNIC: Asien/Pazifik
+- ARIN: Nordamerika
+- LACNIC: Lateinamerika, Karibik
+- RIPE NCC: Europa
+
+* Transport
+
+im Internet v.a.
+
+- UDP: unzuverlässige Übertragung von Daten zwischen Anwendungen auf Endsystemen
+- TCP: zuverlässige Übertragung von Daten zwischen Anwendungen auf Endsystemen
+
+Zur Erbringung dieses Service sind nötig:
+
+- *application multiplexing*: [[Ports]] werden verwendet, um die Quell und Ziel-Anwendung auf den
+  Endsystem zu identifizieren. Man spricht von application
+  multiplexing, da alle Applikationen auf einem host dieselbe
+  Netzwerverbindung nutzen.
+- *flow control*
+- *congestion control*
+- Fehlererkennung (über das =checksum= Feld des UDP und TCP headers)
+
+** Ports
+
+- Größe des port number space: $2^{16} = 65536$
+- Port 0 - 1023: von der IANA vergebene service ports. Bsp:
+  - 21 TCP: FTP
+  - 23 TCP: Telnet
+  - 25 TCP: SMTP
+  - 80 TCP: HTTP
+  - 430 TCP: HTTPS
+- Port 1024 - 65535: dynamisch vom OS vergeben

@@ -1,0 +1,156 @@
+#+TITLE: Data Link Layer
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+*Service:* Transfer von frames von einem Netzknoten zu einem adjazenten
+Netzknoten über eine einzelne Verbindung.
+
+Zur erbringung des Service sind nötig:
+
+- framing
+- link access
+- flow control
+- error detection
+
+Das Data Link Layer kann in zwei Schichten aufgeteilt werden:
+
+- *Logical Link Control* (LLC): Steuerung des Zugriffs auf ein direkte
+  Verbindung (link)
+- *Medium Access Control* (MAC): Steuerung des Zugriffs auf ein
+  geteiltes Medium
+
+* Begriffe
+
+- PDUs dieser Schicht heißen *frames* (IP-Pakete werden also in dieser
+  Schicht in frames gepackt)
+- Kommunikationskonäle heißten *links*
+- Host und Router heißen *nodes*
+
+* Error Detection
+
+Die Fehlererkennung erfolgt mittels eines *error detection correction*
+(EDC) Felds, welches an die PSU dieser Schicht angehängt wird (deshalb
+auch *data trail* genannt)
+
+- *source coding*: Entfernen redundanter Informationen aus der PSU
+- *channel coding*: Hinzufügen von Redundanz für die error detection,
+  z.B. durch:
+  - Hinzufügen eines *parity bits*, dass so gewählt wird, dass sich eine
+    gerade (*even parity*) oder ungerade (*odd parity*) Anzahl von Einsen
+    ergibt
+  - *block parity*: parity bits für jede Zeile und jede Spalte eines
+    blocks (mehr-bit-Fehler können immer noch übersehen werden)
+  - *cyclic redundancy check* (CRC)
+	1. Wahl eines *Generatorpolynoms* ($G$). Für Ethernet ist es z.B.
+       =0x82608EDB=
+	2. bilde $D'$ durch anhängen von $\deg(G)$ Nullen an die Nachricht
+       $D$
+	3. Bestimmen den Rest der Division $D'/G$ im Ring der Restklassen
+       $\mod 2$ (Multiplikation und Division entsprechen in diesem
+       Ring dem =XOR=)
+	4. bilde die zu übermittelnde Nachricht $D'' = D' \oplus R$
+  - *Hamming Code*: Angegeben in der Form (<Nachrichtenlänge>,
+    <Datenbits>)
+
+* Medium Access Control
+
+zentrale Methoden/Protokolle:
+
+- Knoten erhalten exklusiven Teil eines Übertragungskanals (z.B. einen
+  Frequenzbereiche). Bsp:
+  - *CDMA*:
+  - *TDMA*:
+  - *FDMA*:
+- Knoten erhalten abwechselnd exklusiven Zugriff auf den
+  Übertragungskanal. Bsp: Token ring
+- *Random Access MAC protocols*: Keine exklusiver Zugriff auf das
+  Übertragungsmedium. Alle Knoten können immer Übertragen.
+  - Kollisionen müssen erkannt und behoben werden
+  - Bsp: Ethernet, WLAN
+  - Bsp für Protokolle:
+	- *Aloha*:
+	  - erfolgreich übertragene frames werden durch =ACKs=
+		bestätigt
+	  - Erneutes Senden bei ausbleiben eines =ACK= nach einem zufälligen
+        Zeitintervall
+	- [[CSMA][Carrier Sense Multiple Access (CSMA)]]
+
+** CSMA
+
+- Syteme müssen duplex-fähig sein, um gleichzeitig zu senden und zu empfangen
+
+- es sind $2 \cdot t_{prop}$ (Propagation delay auf dem Medium) nötig,
+  um Kollisionen erkennen zu können. Diese Dauer wird als
+  Mindestsendezeit festgelegt. Die zu sendenden Daten ge-padded
+  werden, um die Mindestsendezeit zu erreichen
+
+*** non-persitent CSMA
+
+1. Prüfe vor dem Senden, ob auf dem Übertragungskanal gerade
+   übertragen wird
+   - wenn ja: warte ein zufällig gewähltes Zeitintervall, dann beginne
+     erneut bei 1.
+   - wenn nein: sende den gesamten frame
+2. wenn beim Senden eine Kollision auftritt warte ein zufällig
+   gewähltes Zeitintervall, danach beginne erneut bei 1.
+
+*** 1-persistent CSMA
+
+1. Prüfe vor dem Senden, ob auf dem Übertragungskanal gerade
+   übertragen wird
+   - wenn ja: warte, bis der Kanal frei ist, dann sende
+   - wenn nein: sende den gesamten frame
+2. wenn beim Senden eine Kollision auftritt warte ein zufällig
+   gewähltes Zeitintervall, danach beginne erneut bei 1.
+
+*** p-persistent CSMA
+
+1. Prüfe vor dem Senden, ob auf dem Übertragungskanal gerade
+   übertragen wird
+   - wenn ja: warte einen timeslot
+   - wenn nein: entscheide zufällig, ob der gesamte frame sofort oder
+     später gesendet werden soll. Mit Wahrscheinlichkeit $p$ wird der
+     frame sofort gesendet. Mit Wahrscheinlichkeit $1-p$ wird erst
+     einen slot gewartet und dann erneut bei 1. begonnen.
+2. wenn beim Senden eine Kollision auftritt warte ein zufällig
+   gewähltes Zeitintervall, danach beginne erneut bei 1.
+
+*** CSMA/CD
+
+CSMA mit *Collision detection* (CD) dient der frühzeitigen Erkennung von
+Kollisionen:
+
+Der Sender hört zur frühzeitigen Erkennung von Kollisionen das
+Übertragungsmedium während des Sendens ab (*duplex*) und prüfen, ob das
+Signal, dass er gesendet hat das gleiche ist, wie das, welches er auf
+dem Medium empfängt. Ist das nicht der Fall, gab es eine Kollision.
+
+Ablauf:
+
+1. Prüfe vor dem Senden, ob auf dem Übertragungskanal gerade
+   übertragen wird
+   - wenn ja: warte, bis der Kanal frei ist, dann sende
+   - wenn nein: sende den gesamten frame
+2. prüfe beim Senden kontinuierlich, ob das Signal auf dem
+   Übertragungskanal das gleich ist, wie das Sendesignal.
+   - wenn nein: Es gab eine Kollision. Brich die Übertragung ab und
+     sende ein 6 byte *jam* Signal an alle anderen Station, damit diese
+     auch aufhören zu senden. Warte ein zufällig gewähltes
+     Zeitintervall (*exponential backoff technique*), danach beginne
+     erneut bei 1.
+
+CSMA/CD ist in wireless Netzwerken nicht möglich, da in
+wireless-Netzwerken emfangene Signale viel viel schwächer sein können
+(Faktor 1.000.000) als das Sendesignal. Daher würde das Sendesignal
+diese verdecken. Dadurch ist keine Erkennung von Kollisionen möglich.
+
+
+
+** Adressierung
+
+- Länge: 48 bit
+  - 24 bit Manufacturer ID
+  - 24 bit station ID
+- broadcast Adresse: =FF-FF-FF-FF-FF-FF=

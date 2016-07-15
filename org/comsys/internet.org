@@ -1,0 +1,58 @@
+#+TITLE: Internet
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+* Internetarchitektur
+
+Die Netzwerkarchitektur des Internets wird auch als TCP/IP bezeichnet.
+Das hat historische Gründe: "Historically, IP was the connectionless
+datagram service in the original Transmission Control Program
+introduced by Vint Cerf and Bob Kahn in 1974; the other being the
+connection-oriented Transmission Control Protocol (TCP). The Internet
+protocol suite is therefore often referred to as TCP/IP" Quelle:
+[[https://en.wikipedia.org/wiki/Internet_Protocol][Wikipedia]].
+
+* Zentrale Prinzipien
+
+- *End-to-End (Übertragung)*
+  - Transitsysteme garantieren keine erfolgreiche Übermittlung von
+    Paketen
+  - End-Systeme müssen sich ggf. um die Fehlerbehandlung kümmern
+  - Vorteile: 
+	- Fehlerbehandlung ist bei unterschiedlichen Services unterschiedlich
+	  wichtig. Bei Datenübertragung sind fehlende Pakete fatal. Bei Voice
+	  over IP ist ein fehlendes Paket weniger schlimm, als der Overhead,
+	  der durch Fehlerkorrektur (wie bei TCP) entstehen würde.
+	- Routing von Paketen kann schneller erfolgen
+  - Nachteile:
+	- Fehlerbehebung zwischen Endknoten ist aufwendiger, als das Beheben
+	  von Fehlern zwischen adjazenten Netzknoten
+- *Separation of routing and transmission control*
+  - End-systeme routen nicht 
+  - Transitsysteme berechnen forwarding tables (routing tables)
+  - Forwarding erfolgt durch Nachschlagen des entsprechenden Eintrags
+    in der forwarding table
+- *Overlay Principle*
+  - alle Netzwerkfunktionen (routing, etc.) sind im internet layer
+    gebündelt, welches als zentrales Protokoll IP verwendet
+  - minimale Anforderungen an die Übertragung von Daten in der
+    darunterliegenden Schicht: unzuverlässige Übertragung von frames
+    genügt
+
+Netzwerktopologie der Internetkernarchitektur: Mesh
+
+Netzwerktopologie des Internets mesh (Kern) und star
+
+Switching-Technologie der Internetkernarchitektur: packet switching
+
+* Architektur
+
+#+CAPTION: Schichten der Internetarchitektur gemäß RFC 1122
+|   | Schicht           | Protokoll          |
+|---+-------------------+--------------------|
+| 4 | application layer | DNS, FTP           |
+| 3 | transport layer   | TCP, UDP           |
+| 2 | internet layer    | IP, ICMP           |
+| 1 | link layer        | Ethernet, ARP, MAC |

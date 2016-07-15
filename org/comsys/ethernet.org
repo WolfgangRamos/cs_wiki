@@ -1,0 +1,7 @@
+#+TITLE: Ethernet
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+maximale Größe eines /frames/: 1500 byte

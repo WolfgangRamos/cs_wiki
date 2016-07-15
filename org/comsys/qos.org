@@ -1,0 +1,79 @@
+#+TITLE: Quality of service
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+Als *Quality of Service* bezeichnet man Zusicherungen, z.B. für
+
+- *delay*: Dauer vom Senden des ersten bits bis zum Empfangen des
+  letzten bits eine Pakets
+  - $L_P$: Latenz des Packets
+  - $L_A$: Latenz des Acknowledge
+- *delay jitter*: Variation des Delays
+- *reliability:* Zuverlässigkeit der Übertragung in Prozent (Anteil, der
+  ohne Fehler übertragen wird), z.B.
+  - packet loss rate
+  - bit error rate
+- *availability* (Verfügbarbeit): prozentuale Up-time pro Zeiteinheit;
+  Berechnet sich als $\frac{MTBF}{MTBF + MTRR}$ mit
+  - $MTBF$: mittlere Zeit zwischen Ausfällen (mean time between failures) 
+  - $MTTR$: mittlere Zeit, die zum Reparieren benötigt wird (mean time to repair)
+- *error rate* (Fehlerrate): 
+
+Dienste ohne zugesicherte Quality of Service werden als *best effort* bezeichnet.
+
+* Kennwerte
+
+*Bandbreite* = Frequenzspektrum des Übertragungskanals. Z.B. für WLAN: 
+
+Trägerfrequenz: 2,4 GHz = 2400 MHz
+
+Bandbreite eines Kanals: 20 - 40 MHz
+
+#+CAPTION: Bsp. für Kanäle bei einer Trägerfrequenz von 2,4 GHz und einer Bandbreite von 20 - 40 MHz
+|         | Bandbreite      |
+|---------+-----------------|
+| Kanal 1 | 2400 - 2440 MHz |
+| Kanal 2 | 2440 - 2480 MHz |
+| ...     | ...             |
+
+*Datenrate* (data rate) $R$: Anzahl bits, die pro Zeiteinheit über das
+Medium gesendet werden könnten, gemessen in bit/s. Die Datenrate hängt
+u.a. von der Hardware des Senders ab. Bsp: 64 kb Modem kann $64 \cdot
+2^3 bit/s$ versenden.
+
+*propagation delay* (Übertragungsverzögerung) $D$: Die Dauer, die ein
+Signal auf der Leitung unterwegs ist; berechnet sich als $D =
+\frac{d}{v}$ mit Signalgeschwindigkeit $v$ in dem betreffenden Medium
+und $d$ Distanz zwischen Sender und Empfänger.
+
+*delay* $L_P: Dauer vom Senden des ersten bits bis zum Empfangen des
+letzten bits eine Pakets. Berechnet sich als $L_P = D + N/R$.
+
+- solle für Sprachanwendungen < 250 ms sein
+
+*(delay) jitter*: Variation des Delays
+
+*time for sending a packet* (Paketsendezeit) $T_S$: Die Zeit, die das
+Senden von $N$ bit benötigt berechnet sich als $T_S = \frac{N}{R}$.
+Auslastung
+
+*throughput* $TP$: erfolgreich übertragene bits (Datenrate + Overhead
+z.B durch Transportprotokoll) pro Zeiteinheit gemessen in bit/s. In
+einem idealen (fehlerfreien) Netzwerk könnte $TP=R$ realisiert werden.
+Bei Verwendung eine stop-and-wait Protokolls berechnet sich der
+throughput als: $TP = N_P/(L_P + L_A + T_{PP} + T_{PA}) \approx N_P/(2D + N_p/R)$
+wobei $N_P$ die Anzahl der bits des Pakets, $T_{PP}$ die Zeit zur
+Verarbeitung des Pakets und $T_{PA}$ die Zeit zur Verarbeitung des
+Acknowledge ist.
+
+*Datenrate-Verzögerung Produkt* *$BD$: Anzahl der bits, die zu jedem
+Zeitpunkt auf der Leitung liegen können. Berechnet sich als $BD = R
+\cdot D$.
+
+*utilization* $U$: Die ... Berechnet im Fall eines stop and wait
+Protokolls als $U \approx N_P/(N_P + 2BD)$
+
+
+großes $BD$:

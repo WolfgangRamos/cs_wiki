@@ -1,0 +1,30 @@
+#+TITLE: User Datagram Protocol
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+erbrachter Dienst: Pakete unzuverlässig zwischen Anwendungen auf
+Endsystemen übertragen
+
+- verbindungsloses Protokoll
+- Verwendet für Anwendungen, bei denen das Korrigieren von
+  Übertragungsfehlern schlechter ist, als das Vorhandensein von
+  Fehlern. Bsp: VOIP, Multimedia streaming
+
+
+Vorteile gegenüber TCP
+
+- keine Verzögerung durch Aufbau einer Verbindung
+- kleiner Header
+- keine congestion control (segments können so schnell wie möglich
+  gesendet werden)
+
+* Header
+
+#+CAPTION: UDP Header
+[[./gfx/udp_header.png]]
+
+Felder:
+
+- *udp segment length*: Länge inkl. UDP header

@@ -1,0 +1,28 @@
+#+TITLE: Traceroute
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+=traceroute= belegt das /time to live/ (TTL) Feld des IP-Headers mit
+Werten zwischen 1 und 30 (Maximalwert der Standardeinstellung). Für
+jeden TTL-Wert sendet =traceroute= in der Standardeinstellung 3 Pakete
+(UDP oder ICMP) an die angegebene Zieladresse. Die TTL gibt an
+wieviele Transitsysteme (hops) ein Paket auf dem Weg zum Zielsystem
+passieren darf. Bei jedem hop wird der TTL-Wert um 1 dekrementiert.
+Jedes System, welches ein IP-Paket mit TTL 0 empfängt verwirft das
+Paket und sendet als Antwort ein ICMP TIME EXCEEDED Paket mit seiner
+eigenen IP Adresse an das Quellsystem zurück. Erreicht ein Paket das
+Zielsystem, so sendet dieses ein ICMP DESTINATION UNREACHABLE (PORT
+UNREACHABLE) Paket an das Quellsystem zurück. Empfängt traceroute ein
+solches Paket von Zielsystem, so werden keine weiteren probes
+geschickt. Auf Basis der IP-Adressen in den von Quellsystem
+empfangenen UDP/ICMP Pakete kann somit die Route der Pakete nachvollzogen
+werden.
+
+Man unterscheidet
+
+- UDP basiertes traceroute (dabei wird ein Ziel-Port verwendet, der
+  mit hoher Wahrscheinlichkeit nicht verwendet wird)
+- ICMP basiertes traceroute (ICMP-basiertes Traceroute kann mit
+  =traceroute --icmp= ausgeführt werden)

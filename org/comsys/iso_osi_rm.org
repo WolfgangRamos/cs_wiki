@@ -1,0 +1,255 @@
+#+TITLE: ISO/OSI Referenzmodell
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: ISO/OSI Referenzmodell
+---
+#+END_HTML
+
+Das ISO/OSI Referenzmodell ist ein weltweit akzeptiertes
+(Referenz-)modell für Kommunikationssysteme. Es stellt eine gemeinsame
+Basis für die Entwicklung von Standards dar.
+
+Prinzipien des OSI Referenzmodells
+
+- /abstrakte Spezifikation/, d.h. Spezifikation der Funktionalität, nicht
+  der Implementierung
+- /hierarchischer Aufbau/, d.h. Aufteilung eines komplexen Systems in Schichten
+
+* Schichten
+
+Eine Schicht:
+
+- ist eine abstrakte Einteilungsebene, die festgelegte Dienste
+  erbringt
+- enthält *Instanzen* (es können mehrere sein) die diese Dienste
+  erbringen; z.B. enthält die Transportschicht (4) eine "TCP-Instanz"
+  und eine "UDP-Instanz".
+- erbringt (mittels ihrer Instanzen) Dienste ausschließlich für
+  Instanzen der direkt darüberliegenden Schicht
+- die Instanzen einer Schicht nutzen /ausschließlich/ die Dienste der
+  direkt darunterliegenden Schicht
+
+* Instanzen
+
+Eine Instanz:
+
+- erbringt einen Dienst einer Schicht
+- eine Instanz einer Schicht auf einem System kommuniziert mit einer
+  *peer-Instanz* (die gleichen Instanz in der gleichen Schicht auf einem
+  anderen System) über ein festgelegtes *Protokoll*. Daher werden
+  Protokolle oft mit Instanzen gleichgesetzt. Z.B. kommuniziert die
+  TCP Instanz auf einem System mit der TCP Instanz auf einem anderen
+  System ausschließlich unter Nutzung der Dienste des Network Layer.
+- Instanzen können verbindungsorientiert oder verbindungslos
+  miteinander kommunizieren
+
+** TODO Adressierung von Instanzen erklären
+
+- *Service access point* (SAP): die Schnittstelle, die eine Instanz den
+  Instanzen der direkt darüberliegenden Schicht anbietet, z.B. Port 80
+  als SAP zwischen TCP (Schicht 3 der Internetarchitektur) und HTTP
+  (Schicht 4 der Internetarchitektur).
+- *address*: identifiziert die zu nutzenden $N$-SAPs einer Verbindung, z.B.
+  IP Adresse mit mehreren Portangaben
+- *Connection endpoint identifier*: An einer SAP können einzelne
+  Verbindung durch connection endpoint identifier unterschieden
+  werden, z.B. ein TCP Socket
+
+** Datenverarbeitung innerhalb von Instanzen
+
+- *Protocol-data-unit* (PDU): die Daten, die eine Instanz von einer
+  Instanz der direkt darüberliegenden Schicht zur Verarbeitung
+  übergeben werden (Bezeichnung aus Sicht der Instanz, welche die
+  Daten übergibt)
+- *Service-data-unit* (SDU): die Daten, die eine Instanz von einer
+  Instanz der direkt darüberliegenden Schicht zur Verarbeitung
+  übergeben werden (Bezeichnung aus Sicht der Instanz, welche die
+  Daten erhält).
+- *Protocol control information* (PCI): Daten, die eine Instanz zur
+  Erbringung ihres Dienstes benötigt (ein /Header/). PCI und SDU bilden
+  zusammen die PDU einer Instanz.
+
+#+CAPTION: Sukzessive Verschachtelung von protocol-data-units in den Schichten des OSI Modells
+[[./gfx/padding_in_layers.png]]
+
+#+CAPTION: OSI Layer Data Units
+[[./gfx/osi_layer_data_units.png]]
+
+Arten der Verbindung/Aufteilung von SDUs zu PDUs:
+
+- *Neighter segmenting nor blocking*: aus einer SDU wird genau eine PDU
+  gebildet
+- *Blocking*: mehrere SDUs werden zu einer PDU zusammengefasst. Die
+  Umkehroperation heißt *Deblocking*.
+- *Segmenting*: eine SDU wird auf mehrere PDUs aufgeteilt. Die
+  Umkehroperation heißt *Reassembling*.
+- *Concatenation*: eine $N-1$-PDU wird gebildet, indem eine $N$-PDU als
+  PCI und eine zweite $N$-PDU als SDU verwendet werden. Die
+  Umkehroperation heißt *Separation*
+
+#+CAPTION: Verbindung/Aufteilung von SDUs zu PDUs 
+[[./gfx/osi_processing_of_data_units.png]]
+
+** Protokolle
+
+Ein Protokoll legt den Ablauf der Kommunikation zwischen zwei
+*peer-Instanzen* (dieselben Instanzen derselben Schicht, auf
+unterschiedlichen Systemen) fest. Ein Protokoll bildet somit eine
+logische Verbindung zwischen zwei Instanzen derselben Schicht.
+
+* Schichten des ISO/OSI RM
+
+Merksatz: /Please do not throw salami pizza away/
+
+#+CAPTION: Schichten des IOS/OSI Referenzmodells
+| Nr | Schicht            | bereitgestellter Dienst                                                                   | Einheiten (PDUs)    | Protokolle (Entitäten)          |
+|----+--------------------+-------------------------------------------------------------------------------------------+---------------------+---------------------------------|
+|  7 | *Application Layer*  | anwendungsspezifische Dienste                                                             |                     |                                 |
+|  6 | *Presentation Layer* | systemunabhängige, korrekte Darstellung der Daten, die Applikations-Instanzen austauschen |                     |                                 |
+|  5 | *Session Layer*      | Organisation und Synchronisation des (Daten-)Austauschs zwischen kooperierenden Instanzen | SOCKS               |                                 |
+|  4 | *Transport Layer*    | End-zu-End Transport von /segements/                                                        | segments, datagrams | TCP, UDP                        |
+|  3 | *Network Layer*      | Routing und Forwarding von packets zwischen Endsystemen über Transitsysteme               | packets             | IPv4, IPv6, ICMP                |
+|  2 | *Data Link Layer*    | Übertragung von /frames/ zwischen benachbarten Systemen über eine einzelne Verbindung       | frames              | Mac-Adressen, Ethernet, CSMA/CD |
+|  1 | *Physical Layer*     | unzuverlässige Übertragung von bits auf dem Übertragungsmedium                            | bits                | Ethernet, WLAN, 10 BaseT        |
+
+Schicht 1-4 sind /transportorientiert/, d.h. sie haben die Funktion
+Daten zu übertragen. Schicht 5-7 sind /anwendungsorientiert/.
+
+** Vorteile der Aufteilung in Schichten
+
+- Abstraktion: höhere Schichten abstrahieren von der Representation
+  der Daten in darunterliegenden Schichten
+- modularer Aufbau:
+  - Spezifikation der Instanzen/Protokolle einer Schicht kann
+    unabhängig von anderen Schichten verändert werden
+  - Implementierung/Realisierung von Instanzen/Protokollen kann
+    unabhängig von anderen Schichten und Instanzen verändert werden
+
+** Nachteile der Aufteilung in Schichten
+
+- Overhead im Netzwerk durch PCIs (Header) 
+- komplex: höherer Aufwand bei der Realisierung von Systemen, die
+  miteinander kommunizieren
+
+** Regeln zur Festlegung der Schichten
+
+Die Festlegung der Schichten im OSI Referenzmodell folgt folgenden
+Regeln:
+
+1.  Erzeuge keine unnötigen Schichten (um die Aufgabe Schichten zu
+    Beschreiben und miteinander in Beziehung zu stellen nicht unnötig
+    kompliziert zu machen).
+2.  Wähle Schichtgrenzen so, dass die Beschreibung von Diensten der
+    Schichten und die Beschreibung der Interaktionen zwischen den
+    Schichten kurz ist
+3.  Wähle Schichtgrenzen an den Stellen, wo Funktionen deutlich
+    unterschiedlich hinsichtlich der verwendeten Technologien oder der
+    Prozesse sind.
+4.  Bündele ähnliche FUnktionen in einer Schicht
+5.  Wähle Schichtgrenzen aufgrund von (bewährten) Erfahrungswerten
+6.  Wähle Schichten so, dass eine Schicht unabhängig von anderen
+    Schichten grundlegend verändert werden kann, ohne dass sich die
+    Services, die diese Schicht bereitstellt oder nutzt verändern.
+7.  Wähle Schichtengrenzen an Stellen, an denen in Zukunft ein
+    standardisierte Interface nützlich seien könnte
+8.  Wähle Schichtgrenzen an den Stellen, an denen die Verarbeitung von
+    Daten andere Abstraktionen erfordert
+9.  Die Protokolle/Funktionalität einer Schicht soll unabhängig von
+    anderen Schichten veränderbar sein.
+10. Jede Schicht soll nur mit ihren direkt angrenzenden Schichten
+    kommunizieren (die darüber und die darunter)
+
+** TODO Data Link Schicht
+
+Funktionen:
+
+- Fehlererkennung/-behandlung
+- Adressierung
+- Multiplexing
+- MAC
+- Routing zwischen verschiedenen LANs
+
+** Netzwerkschicht
+
+Der Netzwerkschicht liegt ein Netzwerkmodell zugrunde, das zwischen
+*Endsystemen* und *Transitsystemen* unterscheidet:
+
+- *Endsystem (host):* 
+
+  - Datenquelle oder -ziel; hosten Anwendungen
+
+- *Transitsystem:*
+
+  - Aufgabe: Weiterleitung von Daten von Quelle zum Ziel
+  - keine Verarbeitung der Daten, aber ggf. Reformattierung, Filterung,
+	Umcodierung
+  - z.B. Router, Switches, Reapeater, Hubs, Firewalls, Gateways, etc.
+
+#+CAPTION: Nutzung von Schichten in End- und Transitsystemen
+[[./gfx/network_layer.png]]
+
+zentrale Funktionen:
+
+- Addressierung in Netzwerken (Festlegung, wie Addressierung in
+  Netzwerken erfolgt)
+
+  - z.B. IPv4:
+
+	- Eine Adresse besteht aus 32 bit
+	- Eine Adresse unterteilt sich in ein /network prefix/ mit
+      variabler Länge (geschrieben z.B. als 200.13.67.91/17, wobei
+      die 17 anzeigt, dass das network prefix aus 17 bits besteht)
+      gefolgt von einem *host address part*
+
+- packet forwarding
+
+  - Weiterleitung von Paketen gemäß der aktuellen Routing Table des
+    Systems
+
+- Festlegung von routes (das erfolgt über die Aktualisierung von
+  Routing Tables)
+- Erkennung und Elimination von /circulating packages/ (z.B. Pakete,
+  die unter Transitsystemen "im Kreis" geschickt werden)
+- Paket Fragementierung und Reassembly
+
+optionale Funktionen:
+
+- Stauen und Verwerfen von Paketen
+- Festlegung von Grenzen für /delay/ und /delay jitter/
+- Transition zwischen Heterogenen Netzwerken, z.B. Transition von
+  Paketen aus einem Ethernet Netzwerk in ein WLAN Netzwerk und
+  umgekehrt.
+   
+** Transportschicht
+
+Funktionen:
+
+- Fehlererkennung und -behandlung in Endsystemen
+- End-zu-End Flusskontrolle (z.B. Festlegung des /sliding window/)
+- Segmentierung und Reassembly von Paketen
+- Ordnen empfangener Pakete anhand der Sequenznummer
+
+Im Internet wird der Service der Transprotschicht über die Socket API
+umgesetzt:
+
+#+CAPTION: Funktionen der Socket API
+[[./gfx/socket_api.png]]
+
+** Presentation Layer
+
+Funktionen:
+
+- Serialisierung ?
+- *Marshalling/Unmarshalling*: Codierung/Decodierung von Paketen
+- Nachrichtenencodierung: Übersetzung von Anwendungsdaten (z.B.
+  Objekte in einer Java-Anwendung) in das Austauschformat (z.B. XML)
+- Übersetzung vom Zeichensatz der Anwendung in den Zeichensatz des
+  Transfers
+
+
+

@@ -1,0 +1,65 @@
+#+TITLE: ICMPv6
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+Funktionen:
+
+- Übermittlung von Diagnoseinformationen an den Sender
+- Testen von Erreichbarkeit (ping)
+- *IPv6 Neighbor discovery protocol* (NDP)
+
+* IPv6 Neighbor discovery protocol
+
+Nachbarn sind Systeme im gleichen Netzwerk.
+
+NDP wird verwendet für
+
+- Autokonfiguration der Netzwerkeinstellungen (Zustandslos)
+  1. weise dir selbst eine link local Adresse zu
+  2. schieße dich der /multicast group/ (Präfix =FF02::1=) an
+  3. sende router solication message an all routers multicast group
+  4. warte auf router advertisement
+- Duplicate address detection (DAD)
+  1. generiere vorläufige (tentative) Adresse
+  2. lausche auf die Multicast Addressen für alle Knoten dieses
+     Netzwerks und die *solicited node* multicast Adresse der
+     vorläufigen Adresse
+  3. sende neighbor solicitation message mit:
+	 - target address: vorläufiger Adresse
+	 - source address: undefined address =::=
+	 - destination address: solicited node destination address
+  4. wenn eine Antwort (neighbor advertisement als multicast) kommt,
+     gehe zu manueller Konfiguration oder versuche es mit einer neuen
+     vorläufigen Adresse. Wenn keine Antwort kommt verwende die
+     vorläufige Adresse als link local Adresse
+- Adressauflösung (über *neighbor soliciation* und *neighbor advertisement*)
+  - source address: valide unicast Adresse
+
+#+CAPTION: NDP Funktionen
+[[./gfx/ndp.png]]
+
+
+* Header
+
+#+CAPTION: ICMPv6 header
+[[./gfx/icmpv6_header.png]]
+
+*Felder*:
+
+- type: Nachrichtentyp, z.B.
+  - 1 = destination unreachable
+  - 2 = packet too big
+  - 3 = time exceeded
+  - 128 = echo request
+  - 129 = echo response
+  - 133 = router solicitation (gesendet von einem host um einen Router
+    im lokalen Netzwerk zu finden)
+  - 134 = router advertisement (gesendet von einem router)
+  - 136 = neighbor advertisement
+- *code*:
+- *checksum*:
+- *message body*:
+
+

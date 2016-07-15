@@ -1,0 +1,20 @@
+#+TITLE: Reverse Address Resolution Protocol
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Reverse Address Resolution Protocol
+---
+#+END_HTML
+
+Mir RARP kann zu einer gegebenen MAC Adresse die zugehörige IP Adresse
+ermittelt werden.
+
+* Ablauf
+
+1. Sender sendet eine =RARPREQUEST= mit der eigenen MAC Adresse als broadcast
+2. RARP Server antwortet mit einem =RARPREPLY= an die die MAC Adresse des Senders
+   - der =RARPREPLY= enthält die gesuchte IP Adresse

@@ -1,0 +1,23 @@
+#+TITLE: Netzwerkarchitekturen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+Der Begriff der /Netzwerkarchitektur/ wird uneinheitlich verwendet.
+Gemeint sein kann:
+
+- die Spezifikation der Kommunikation in einem Netztwerk mit Schichten
+  und Protokollen, z.B.:
+
+  - ISO/OSI RM
+  - Internetarchitektur (RFC 1122)
+  - JAVA RMI
+
+- der Aufbau eines Netzwerks im Sinne von
+
+  - Topologie
+  - Abdeckung
+  - Vermittlung (connectionless oder connection-oriented switching)
+  - Übertragungsmedium
+  - etc.
