@@ -2,9 +2,35 @@
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
+#+BEGIN_HTML
+---
+layout: page
+title: Adress Resolution Protocol (ARP)
+---
+#+END_HTML
 
-* Adress Resolution Protocol
+Mit ARP kann zu einer gegebenen IP Adresse die zugehörige MAC Adresse ermittelt werden.
 
-ARP: IP -> MAC
+* Ablauf
 
-RARP: MAC -> IP
+1. Quellsystem sendet =ARPREQUEST= als MAC broadcast (Adresse =ff ff ff
+   ff ff ff=) an alle Systeme des lokalen Netzes
+   - der =ARPREQUEST= enthält die MAC und die IP Adresse des Senders als
+     source address
+   - da der Sender beim =ARPREQUEST= seine IP und MAC Adresse als
+     broadcast geschickt hat, können alle Systeme im lokalen Netz
+     ihren *arp cache* ggf. aktualisieren
+2. angesprochenes System antwortete mit einem =ARPREPLY= an die MAC Adresse des Senders
+3. Sender aktualisiert seinen ARP Cache (auch /arp table/) auf Basis der
+   ausgetauschten Daten
+
+* ARP Cache
+
+- Einträge verfallen nach 20 Minuten
+- Ausgabe unter Linux mit =sudo arp -a=
+
+* Probleme
+
+- Requests und Replies werden nicht autentifiziert, sie können manipuliert werden
+- Replies werden auch ohne vorangegangene Requests verarbeitet
+  - ermöglicht /ARP Spoofing / ARP Poisoning/ (z.B. mit Ettercap)

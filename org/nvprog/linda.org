@@ -3,25 +3,23 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 
-Kommunikation und Sychronisation über einen Tupelraum (eine
-Multimenge).
+Kommunikation und Sychronisation über eine Multimenge, den sog.
+*Tupelraum*. Wir gehen davon aus, dass die Werte im Tupelraum atomar
+sind, d.h. sie sind nicht veränderbar.
 
-Konzeptionell sind Werte im Tupelraum /Atome/, d.h. sie sind nicht
-veränderbar.
+zentrale Operationen:
 
-Operationen:
-
-- =out(<Tupel>)=: legt Tupel in den Tupelraum
-- =in(<Tupel>)=: holt Tupel aus dem Tupelraum
-  - Pattern matching in Tupel möglich (wenn mehrere Tupel auf das
-    Pattern passen, dann wird irgendeines davon genommen; welches ist
-    nicht spezifiziert)
+- =out(<Tupel>)=: legt ein Tupel in den Tupelraum
+- =in(<Tupel>)=: holt ein Tupel aus dem Tupelraum
+  - Pattern matching bei der Suche passender Tupel möglich (wenn
+    mehrere Tupel auf das Pattern passen, dann wird irgendeines davon
+    genommen; welches ist nicht spezifiziert)
   - blockiert, wenn kein passendes Tupel gefunden wird
 - =rd(<Tupel>)=: liest ein Tupel aus dem Tupelraum, ohne es daraus zu
   entfernen
 
 Modifikationen: Modellierung des Tupelraums als Key-Value-Store
-(effizienter, da effizient nach einem Key gesucht werden kann)
+(effizienter, da nach einem Key gesucht werden kann)
 
 #+BEGIN_SRC erlang
   -module(linda).
@@ -146,3 +144,6 @@ Modifikationen: Modellierung des Tupelraums als Key-Value-Store
 
 #+end_src
 
+*** TODO Implementierung von Queues mit amortisiert konstanter Laufzeit
+
+*** TODO Garbage Collection sollte realisiert werden, wenn wir auf die Datenstruktur zugreifen (ein neues Tupel eintragen)

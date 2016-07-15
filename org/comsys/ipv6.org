@@ -3,3 +3,144 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 
+Grund für Wechsel von IPv4 zu IPv6:
+
+Die Anzahl der freien Adressen im Adressraum von IPv4 wird allmählich
+knapp. Die IANA hat bereits 2011 die letzten freien =/8=
+IPv4-Adressblöcke an die Regional Internet Registrars (RIRs) vergeben.
+
+* Adressierungsmodell
+
+- Adresslänge: 128 bit
+- Adressnotation:
+  - =X:X:X:X:X:X:X:X=, wobei jede =X=-Gruppe aus 4 Hexzahlen besteht
+  - führenden Nullen sind in der Notation optional
+  - aufeinanderfolgende Gruppen von Nullen können abgekürzt werden zu =::=
+- jede IP-Adresse hat
+  - einen Adressierungstyp
+	- *unicast* (one-to-nearest):
+	- *multicast*:
+	- *anycast*:
+  - einen Scope, in dem sie geroutet wird
+  - eine lifetime
+- keine Unterteilung in private und öffentliche Adressen (NAT nicht
+  notwendig)
+- Verbesserte Autokonfiguration der Netzwerkeinstellungen (besser als
+  DHCP)
+- IPv6 Interfaces
+  - können mehrere Adressen vom Typ unicast, anycast und multicast
+    haben
+  - haben eine loopback-Adresse: =::1/128=
+  - eine link-local Adresse
+  - eine *solicited-node multicast address* für host autoconfiguration
+- eine unicast oder anycast IPv6 Adresse besteht aus
+  - einen Netzwerkpräfix (64 bit)
+  - einer interface ID (64 bit)
+- eine multicast IPv6 Adresse besteht aus
+  - einem 16 bit Präfix
+	- starten mit =FF=
+	- 4 bit *lifetime* (0 = permanent; 1 = temporary)
+	- 4 bit scope (1 = node; 2 = link; 5 = site; 8 = organization; E = global)
+  - einer 112 bit Group ID
+  - reserviert IPv6 multicast adressen:
+	- broadcast im lokalen Netzwerk: =FF02::1=
+	- broadcast an alle router (*all routers multicast group*): =FF02::1
+
+- Aggregation auf Basis der Prefixes (kleinere routing tables, weniger
+  Austausch von routing information en nötig)
+
+** Gültigkeitsbereiche (Scopes)
+
+- *link-local*: genutz zur Adressierung von direkt Verbundenen Systemen; werden von Routern nicht weitergeleitet
+  - starten mit =111111010=
+  - 64 bit interface ID
+- *unique-local*: nicht routbar im Internet, aber innerhalb innerhalb
+  und zwischen verbundenen sites
+  - starten mit =111110=
+  - 1 bit *L flag* (1 if prfix is locally assigned)
+  - 40 bit global ID
+  - 16 bit subnet ID
+  - 64 bit interface ID
+- *global*: global routbare Adressen
+  - aktuell vergibt die IANA nur global unicast Adressen mit Präfix
+    =001=
+  - Präfixe
+	- RIRs: =/12=
+	- ISP: =/32=
+	- Endverbraucher: =/48=
+	- LAN Präfix: =/64=
+  - Interface ID: 64 bit
+
+*** Generierung der 64 bit interface ID
+
+- autoconfiguration aus einer 64 bit *extended unique identifier* (EUI-64)
+  - bit 0-23: bit 0-23 der MAC Adresse (7. bit invertiert)
+  - bit 24-39: beleget mit =FFFE=
+  - bit 40-64: bit 24-47 der MAC Adresse
+- Zufallszahl
+- Vergabe via DHCP
+- manuell
+
+
+
+* IPv6 Header
+
+#+CAPTION: IPv6 Header
+[[./gfx/ipv6_header.png]]
+
+*Felder:*
+
+- version (4 bit):
+- traffic class: Prioritätsklassen für IP-Pakete
+- flow label: Identifikator für die Sequenz zusammengehöriger Pakete
+- payload length: Größe der Payload (max $2^{16} byte$)
+- next header (8 bit): identifiziert den Header, der dem aktuellen IP-Header
+  direkt folgt (z.B. 6 = TCP; 17 = UDP; 43 = Routing Header)
+  - das next header Feld ermöglicht ein feste header length, da
+    optionale Felder in extension header (/routing header/) ausgelagert werden können
+  - feste header Länge ermöglich schnelleres forwarding
+- hop limit: entspricht der TTL in IPv4
+- source address: 
+- destination address:
+
+Die Gesamtlänge eine IP Pakets (*maximum transmission unit*; MTU) ist
+$2^{16} byte$.
+
+** Extension headers
+
+#+CAPTION: Type-Length-Value Encoding eines extension headers
+[[./gfx/ipv6_next_header.png]]
+
+*Felder:*
+
+- hdr ext len (8 bit): Länge dieses extension headers in byte (max.
+  $2^{8} - 1 byte$)
+
+Arten von extension headers:
+
+- *Hop-by-Hop* (0): Informationen, die bei jedem Hop verarbeitet werden
+- *Destination 1* (?): Informationen, die vom Zielhost und vom Zielhost des
+  routing headers verarbeitet werden
+- *Routing* (43): zusätzliche routing Information
+- *Fragmentation* (44): Informationen zu Fragmentierung und Reassembly
+  von IP-Paketen
+- *Authentification* (51):
+- *Encapsulation *:
+- *Destination 2* (?): Informationen, die ausschließlich vom Zielhost
+  verarbeitet werden
+
+* Übergang von IPv4 zu IPv6
+
+Techniken:
+
+- *dual stack techniques*: Koexistenz von IPv4 und IPv6 in Systemen und
+  Netzwerken, z.B.:
+  - wenn ein DNS Eintrag einen =AAAA= oder =A6= record hat, dann
+    kommuniziere mit dem entsprechenden System über IPv6 ansonsten
+    über IPv4
+  - auf Basis des /version/ Felds des ersten IP-Pakets
+- *tunneling techniques*:
+  - Idee: kapsele IPv6 Paket in IPv4 Paket
+  - *6to4 tunneling*:
+- *translation techniques*: Kommunikation von IPv6 Systemen mit IPv4
+  Systemen

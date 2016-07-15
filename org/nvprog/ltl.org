@@ -6,16 +6,16 @@
 
 * Linearzeitlogik
 
-/Temporale Logik/ ist eine Erweiterung der Logik zur Erfassung
+*Temporale Logik* ist eine Erweiterung der Logik zur Erfassung
 zeitlicher Abläufe durch Aussagen über Vorher-Nachher-Beziehungen.
 
-/Linear Temporal Logic/ (LTL, dt. Linearzeitlogik) ist eine temporale
-Logik mit zeitlichen Modalitäten ("irgendwann gilt ...", "irgendwann
-gilt immer ..."). In LTL können Formeln über die Zukunft von Pfaden
-aufgestellt werden. Hier interessieren wir uns insbesondere für die
-Ausfühungspfade nebenläufiger Programme. Diese als unendlich
-angenommen, da nicht-terminierende (Hintergund-)prozesse (z.B. ein
-Serveranwendung oder ein Print-Loop) ein Bestandteil vieler
+*Linear Temporal Logic* (LTL, dt. Linearzeitlogik) ist eine temporale
+Logik mit zeitlichen Modalitäten (z.B. /irgendwann gilt .../,
+/irgendwann gilt immer .../, etc.). In LTL können Formeln über die
+Zukunft von Pfaden formuliert werden. Hier interessieren wir uns
+insbesondere für die Ausführungspfade nebenläufiger Programme. Diese werden
+als unendlich angenommen, da nicht-terminierende (Hintergund-)prozesse
+(z.B. ein Serveranwendung oder ein Print-Loop) ein Bestandteil vieler
 nebenläufiger Programme sind.
 
 ** Syntax
@@ -350,3 +350,12 @@ Wir wollen zeigen, dass Erlang unentscheidbar ist.
 #+END_SRC
 
 
+
+* TODO Erlang kann nicht verifiziert werden
+
+Gründe:
+
+- Programm muss nicht terminieren
+- es genügen:
+  - zwei int Variablen
+  - zwei Prozesse

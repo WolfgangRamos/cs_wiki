@@ -4,27 +4,29 @@
 #+STARTUP: inlineimages
 #+OPTIONS: toc:nil
 
-* Organisatorisches
+* Inhalt
 
-In der ersten Woche noch keine Übung
-
-Prüfung
-
--  Termine: 1. PZ, Sep, Okt
--  mündliche Prüfung (2 Personen: 40 Min., 1 Person: ?)
--  Prüfungsinhalte: schriflich Programmieren, Konzepte der VL sollen
-   verstanden sein und präzise beschrieben werden können.
+- Interprozesskommunikation (auf geteiltem Speicher)
+  - Semaphoren
+  - Monitore
+	- [[../os/monitors][Allgemeines zum Monitorkonzept]]
+	- [[../lang/java.org][Das Monitorkonzept in Java]]
+- MVar
+  - 
+- [[./linda.org][Linda-Modell]]
+- [[./ltl.org][LTL]]
 
 * Begriffe
 
-*Nebenläufigkeit* verwenden wir als Überbegriff für Nebenläufigkeit
-(Scheduling von Prozessen auf einem Prozessorkern) und echter
-Prallelität (auf Mehrkernprozessoren).
+*Nebenläufigkeit*: Nebenläufigkeit verwenden wir als Überbegriff für
 
-Ziel der Nebenläufigkeit:
+- Nebenläufigkeit (Scheduling von Prozessen) auf einem Prozessorkern und
+- echter Parallelität (auf Mehrkernprozessoren)
 
--  i.d.R. Performanzsteigerung
--  hohe Reaktivität des Systems gewährleisten
+mit der Zielsetzung:
+
+- Performanzsteigerung und
+- hohe Reaktivität des Systems zu gewährleisten.
 
 *Verteilte Systeme:* Verteilte Systeme haben i.d.R. nicht das Ziel der
 Performanzsteigerung. Meist haben die Systeme auf natürliche Weise
@@ -65,165 +67,86 @@ Beispiele:
 
 [[../os/monitors][Allgemeines zum Monitorkonzept]]
 
-[[../lang/java][Das Monitorkonzept in Java]]
+[[../lang/java.org][Das Monitorkonzept in Java]]
 
-* Dining Philosophers
+Implementierungen:
+
+- Philosophen
+- MVar
+
+* Datenstrukturen
+** MVar
+
+zentrale Operationen
+
+- =take=
+- =put=
+- =read=
+- =trytake=
+- ...
+
+** Channel
+
+Unterschied zwischen Mailbox eines Prozesses in Erlang und eines
+Channel:
+
+*** TODO isEmpty bug erklären können
+
+
+** TODO Aufbau
+
+zentrale Operationen:
+
+- =read=
+- =write=
+- =isEmpty=
+  - sicherer, wenn Füllstand über einen Semaphore erfasst wird
+
+* Erlang
+
+Implementierungen
+
+- MVar
+- Semaphore
+- Philosophen
+
+** TODO Wofür Prozesse registrieren und welche?
+
+** TODO Wie robust in Erlang programmieren?
+
+- linking von Prozessen
+- implementiert über Poll-Nachrichten für remote Knoten
+- lokale Prozesse die sterben benachrichtigen ihre verlinkten Prozesse
+
+** TODO Sematik von =receive= verstehen. Erklären anhand eines kleines Beispielprogramms
+
+* Andere Probleme
+
+** Dining Philosophers
 
 [[../os/dining_philosophers_problem][Das Dining Philosopher Problem]]
 
-* Linda-Modell
+** Chat
 
-Tupelspace
-
-Operationen:
-
-- =in=
-- =out=
-
-* Transaktionen
-
-Ziel von Transaktionen:
-
-- Deadlockfreiheit
-
-Funktionsweise:
-
-- Transaktionen werden auf einer lokaler Kopie der Daten ausgeführt.
-- Dabei wird ein *readset* (RS) und eine *writeset* (WS) angelegt.
-- Das readset enthält die Versionsnummer mit der die entsprechende
-  Variable gelesen wurde.
-- Bevor die Ergebnisse der Transaktion tatsächlich in die Daten
-  übertragen werden (*commit*), werden RS und WS *validiert*, d.h. die
-  gelesene Versionsnummern der Variablen werden mit den aktuellen
-  Versionnummern der Variablen verglichen. Dazu müssen RS und WS
-  gelockt werden.
-- Vorzeitiges *rollback* kann sich ergeben, wenn eine Variable erneut
-  mit anderer Versionsnummer gelesen wird.
-
-Komposition von Transaktionen
-
-- Sequentialisierung (=atomically=)
-- orElse
-- Invarianten (=always=, =alwaysSucceed=)
-
-*** TODO Wird die Versionsnummer auch im writeset protokolliert
-
-Alternative Implementierung in =stm2.erl=
-
-- =lock=-Nachricht muss dann auch durch den Hilfsprozess geschickt werden
-
-** Retry
-
-/busy waiting/ im =retry= kann verhindert werden durch: 
-
-- readset locken 
-- readset validieren (wenn nicht valide: rollback; wenn valide: bei
-  TVars im Readset registrieren); readset danach jeweils unlocken
-- suspendieren, bis eine Variable in meinem Readset verändert wird. 
-- TVAR führt eine Liste mit, mit Prozessen, die auf diese TVar warten.
-  Wenn write_tvar dieser TVar aufgerufen wird, werden alle wertenden
-  Prozesse gweckt.
-
-** Probleme von Transaktionen
-
-Beispiel:
-
-- TVars: =t1=, =t2=
-- Invariante: alle Transaktionen sollen gewährleisten, dass der Inhalt
-  von t1 und t2 identisch ist.
-
-Betrachte folgede Transaktion:
-
-#+BEGIN_EXAMPLE
-    do
-      v1 <- readTVar t1
-      v2 <- readTVar t2
-      if v1 /= v2 then loop
-                  else return()
-
-    loop = loop
-#+END_EXAMPLE
-
-Das Problem entsteht, wenn zwischen z.B. folgende Transaktion zwischen
-den =readTVar= Aufrufen ausgeführt wird
-
-#+BEGIN_EXAMPLE
-    do
-      writeTVar t1 42
-      writeTVar t2 42
-#+END_EXAMPLE
-
-Das die Transkation mit den readTVars dann invalid ist, kann erst am
-Ende der Transaktion erkannt werden (beim Validieren). Da das Programm
-aber in eine Endlosschleife läuft, kann das nicht passieren.
-
-Bei GHC ist das unkritisch, da dieser =loop= als Endlosschleife erkennen
-würde.
-
-** Invarianten
-
-Implementierung von Invarianten in Haskell =STM=
-
-#+BEGIN_EXAMPLE
-    alwaysSucceeds (do
-      v1 <- readTVar t1
-      v2 <- readTVar t2
-      if v1 /= v2 then retry
-                  else return ()
-#+END_EXAMPLE
-
-Jede Transaktion wird nur dann commited, wenn die Transaktion von
-=alwaysSucceeds= erfolgreich ist.
-
-Eine Invarianten sollten keine TVars schreiben, da im Allgmeinen nicht
-klar ist, was dann geschehen soll. Das könnte man natürlich konkreteiseren, aber GHC tut dies z.B. nicht.
-
-#+BEGIN_EXAMPLE
-    always (do
-      v1 <- readTVar t1
-      v2 <- readTVar t2
-      return (v1 /= v2))
-#+END_EXAMPLE
-
-Überprüfung von Invarianten:
-
--  überprüfe alle Invarianten am Ende jeder Transaktion auf Zustand,
-   welcher *nach* dem commit vorliegt. D.h. das /write set/ der
-   aktuellen Transaktion muss der Überprüfung der Invarianten mit
-   übergeben werden. Eigentlich nicht alle, sondern nur die, die
-   Invarianten, deren letztes RS betroffen ist (bei jeder Überprüfung
-   der Invariante kann sich ein anderes Readset ergeben.
-
-=always= und =alwaysSucceeds= prüfen die übergeben Invariante sofort,
-wenn diese Validierung fehl schlägt, dann wird die Invariante nicht
-übernommen, ansonsten wird sie übernommen und muss von da an am Ende
-jeder nachfolgenden Transaktion gelten. Insbesondere auch am Ende der
-Transaktion, in der die Invariante etabliert wird. Gilt die Invariante
-nicht am Ende der aktuellen Transaktion, dann wird die Invariante auch
-nicht übernommen.
-
-#+BEGIN_EXAMPLE
-    install = do
-      writeTVar t1 42
-      writeTVar t2 42
-      -- invariante
-#+END_EXAMPLE
-
-Invarianten können nicht wieder zurück genommen werden.
-
-Invarianten unterstützen kompositionelles Arbeiten, da sich andere
-Transaktionen nicht mehr um die Erfüllung dieser Invarianten kümmern
-müssen. Hier entsteht aber ein Trade-off zwischen Programmierarbeit und
-Performanz.
-
-** Grenzen von Transaktionen
-
--  die Wahrscheinlichkeit eines rollbacks steigt mit der Länge der
-   Transaktion. Sehr lange Transkationen können dadurch zu einem
-   livelock führen.
-
-   -  Bestimmte Datenstrukturen, z.B. verkettete Listen sind
-      problematisch für die Verwendung in Transaktionen, da beim
-      Durchlaufen der Liste viele Elemente gelesen werden
+Probleme im verteilten Chat erklären können.
 
 
+*** TODO Wo findet die Prüfung am 21.07. statt?
+* Algorithmen für Parallelisierung von Problemen
+
+Probleme bei der Aufteilung von Problemen:
+
+- rekursive Algorithmen sind problematisch, da i.d.R. erst zur
+  Laufzeit bekannt ist, in wie viele Teilprobleme ein Problem
+  aufzuteilen wird
+- Teilprobleme können unterschiedlich aufwendig sein
+  - Mögliche Lösungen
+	- Probleme zur Laufzeit verteilen (festlegen eines *Hypervisors*, der
+      ausschlißlich das Verteilen der Teilprobleme auf die übrigen
+      Knoten übernimmt)
+	- Knoten warten aufeinander
+	- Jobs werden in einer Kette weitergeschickt, d.h. jeder Knoten
+      kennt seinen Nachfolger und schickt Probleme, die er selbst
+      nicht bearbeiten kann an seinen Nachfolger weiter
+	  - Problem: im schlimmsten Fall wird der Job immer bis zum
+        letzten Knoten durchgereicht

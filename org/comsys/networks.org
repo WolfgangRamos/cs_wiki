@@ -3,8 +3,17 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 #+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Netzwerke
+---
+#+END_HTML
 
 * Netzwerke
+
+Ein Netzwerk besteht aus miteinander verbundenen *End-* und
+*Transitsystemen*.
 
 Man kann Netzwerke charakterisieren über
 
@@ -65,15 +74,14 @@ Netzwerk vermittelt wird/. Man unterscheidet: *Packet Switching* und
 
 *** Packet Switching
 
-Beim /packet switching/ (dt. Paketvermittlung) werden Nachrichten in
-einzelne /packets/ (dt. Packete) aufgeteilt. Jedes Paket enthält die
-notwenidgen Informationen um das Paket zur Zieladresse zu transportieren
-und kann einzeln übertragen werden. Jeder Netzknoten, den das Paket
-passiert speichert das Paket so lang zwischen bis er es weiter senden
-kann (engl. /store-and-forward switching/). D.h. Bandbreite im
-Datenkanal wird nur während der Übertragung eines Pakets zwischen zwei
-Knoten beansprucht. Nach Abschluss der Übertragung steht die Bandbreite
-wieder zur Verfügung.
+/packet switching/ (dt. Paketvermittlung):
+
+- Nachrichten werden in einzelne /packets/ (dt. Packete) aufgeteilt
+- jedes Paket enthält die notwendigen Informationen um das Paket zur
+  Zieladresse zu transportieren und kann daher einzeln übertragen werden
+- *store-and-forward switching*: jeder Netzknoten, den das Paket
+  passiert speichert das Paket so lang zwischen bis er es weiter
+  senden kann
 
 Ein Paket aus:
 
@@ -92,32 +100,34 @@ Man unterscheidet zwischen
 *Vorteile:*
 
 - Bandbreiten zwischen Netzwerkknoten können unabhängig voneinander
-  gewählt werden. Es besteht keine Notwendigkeit die Bandbreiten
-  zwischen den System zu verinheitlichen.
-- Bessere Ausnutzung der Netzwerkinfrastruktur. Insbesondere, wenn
-  starke Schwangungen bei der Datenübertragung zu erwarten sind, d.h.,
-  wenn man viel und mal wenig übertragen werden muss
+  gewählt werden. Bandbreiten zwischen den System müssen nicht
+  vereinheitlicht werden.
+- Bessere Ausnutzung der Bandbreite im Datenkanal, da nur während der
+  Übertragung eines Pakets zwischen zwei Knoten Bandbreite beansprucht
+  wird. Nach Abschluss der Übertragung steht wieder die gesamte
+  Bandbreite zur Verfügung.
 
 *Nachteile:*
 
 - Quality of Service kann nicht garantiert werden:
   - keine Obergrenze für Paket Delay
-  - Überlastung der Netzwerks möglich (Risiko des Datenverlusts)
+  - höheres Risikio für Datenverlust, da eine Überlastung der
+    Netzwerke möglich ist
 - Festlegung von Übertragungsraten aufwendig. Z.B. müssen Sender und
   Empfänger ein /sliding window/ aushandeln, welches dynamisch anpassbar
-  sein muss. Es muss beispielsweise verkleinert werden, wernn sich die
+  sein muss. Es muss beispielsweise verkleinert werden, wenn sich die
   Anzahl der eingehenden Verbindungen am Empfänger erhöht.
 
 **** Connectionless packet switching
 
-Jedes Paket enthält alle Addressinformationen und wird unabhängig von
-den anderen Paketen geroutet. D.h. Pakete können über unterschiedliche
-Netzknoten übertragen und somit mit unterschiedlicher Verzögerung
-übertragen werden. Insbesondere können Pakete daher in veränderter
-Reihenfolge ankommen. Im Zielsystem werden die Pakete entsprechend ihrer
-Laufnummern zusammengesetzt und die Nachricht extrahiert. Dadurch wird
-dem Nutzer ein virtueller Datenkanal (engl. /virtual circuit/)
-vorgegaukelt.
+- jedes Paket enthält alle Addressinformationen und wird unabhängig
+  von den anderen Paketen geroutet. D.h. Pakete können über
+  unterschiedliche Netzknoten übertragen und somit mit
+  unterschiedlicher Verzögerung übertragen werden (insbesondere können Pakete daher in veränderter Reihenfolge ankommen)
+- Im Zielsystem werden die Pakete entsprechend ihrer Laufnummern
+  zusammengesetzt und die Nachricht extrahiert. Dadurch wird dem
+  Nutzer ein virtueller Datenkanal (engl. /virtual circuit/)
+  vorgegaukelt.
 
 Im Fall von connectionless packet switching besteht der Header eines
 Pakets aus:
@@ -128,7 +138,7 @@ Pakets aus:
 - Paketlaufnummer,
 - Klassifizierung des Paketes
 
-Nachteile:
+Nachteile gegenüber conection-oriented packet switching:
 
 - größerer Header
 - Pakete können in veränderter Reihenfolge ankommen
@@ -136,18 +146,17 @@ Nachteile:
   ähnlich groß wie beim Verbindungsaufbau bei Verwendung von
   connection-oriented packet switching)
 
-Bspeispiele: UDP, IP
+Beispiele: UDP, IP
 
 **** Virtual circuit switching
 
-Vor Übermittlung der Pakete wird ein Verbindung ausgehandelt. Dazu wird
-in die /Switching tables/ jedes Netzwerkknotens der Verbindung die
-Adresse des jeweils nächsten Knotens geschrieben und der Verbingung ein
-eindeutiger *Identifier* (ID) zugeordnet. Beim Aufbau der Verbindung
-können die Parameter der Verbindung (z.B. ???, etc.) ausgehandelt
-werden. Adressinformationen werden nur während des Verbindgsaufbaus
-benötigt, wenn die Route festgelegt wird. Die einzelnen Pakete enthalten
-dieses Informationenn nicht mehr.
+- Datenübertragung erfolgt in 3 Phasen:
+
+  1. Verbindungsaufbau
+	 - Aushandlung der Parameter der Verbindung (z.B. sliding window, etc.)
+	 - zuordnung eines eindeutiger *Identifier* (ID) zu der Verbindung
+  2. Datenübertragung
+  3. Schließen der Verbindung
 
 Im Fall von connection-oriented packet switching besteht der Header
 eines Pakets aus:
@@ -156,31 +165,45 @@ eines Pakets aus:
 - Timestamp oder Laufnummer
 - Länge der Payload
 
-Die Datenübertragung erfolgt in 3 Phasen:
-
-1. Verbindungsaufbau (inkl. Aushandlung der Parameter der Verbindung)
-2. Datenübertragung
-3. Schließen der Verbindung
-
 Beispiele: TCP
+
+Vorteile:
+
+- kleiner Header, da Adressinformationen nur werden während des
+  Verbindgsaufbaus benötigt werden, wenn die Route festgelegt wird.
+  Die einzelnen Pakete müssen diese Informationen nicht mehr enthalten
+
+
 
 *** Circuit switching
 
-Beim /circuit switching/ (auch /line switching/; dt.
-Leitungsvermittlung) wird einer Nachrichtenverbindung zeitweilig ein
-durchgeschalteter Datenkanal mit fester Bandbreite zur exklusiven
-Nutzung zur Verfügung gestellt. Bsp: Telefonnetz.
+/circuit switching/ (auch /line switching/; dt. Leitungsvermittlung):
+
+- einer Nachrichtenverbindung wird zeitweilig ein durchgeschalteter
+  Datenkanal mit fester Bandbreite zur exklusiven Nutzung zur
+  Verfügung gestellt
+- Bsp: Telefonnetz
 
 ** Topologien
 
-*Bus:* Alle Knoten teilen sich eine Leitung.
+*Bus:* Alle Knoten teilen sich eine Leitung
 
-*Ring:* Alle Nodes sind in einem Ring zusammengeschaltet. Z.B. in
+- erforder Regelung des Zugriffs (z.B. über CSMA/CD)
 
-*Star:* Viele Knoten laufen in einem Knoten zusammen (z.B. DHCP Server)
+*Ring:* Alle Nodes sind in einem Ring zusammengeschaltet
 
-*Mesh:* Knoten sind direkt miteinander verbunden, es gibt keine
-zentralen Knoten (z.B. das Internet)
+- klassiche Topologie eines LANs mit einer Token MAC Prozedur
+
+*Star:* Viele Knoten laufen in einem Knoten zusammen
+
+- Bsp: Systeme, die mit einem Switch verbunden sind
+
+*Mesh:* vermaschte Netzwerke
+
+- Knoten sind direkt miteinander verbunden
+- in der Regel hat jeder Knoten Verbindungen zu mehreren anderen Knoten
+- es gibt keine zentralen Knoten
+- Bsp: internet core network
 
 Vorteile:
 
@@ -190,3 +213,33 @@ Vorteile:
 - Netzneutralität: zur Kontrolle eines mesh-Netzes müssten alle
   zentralen Knoten kontrolliert werden.
 - einfache Erweiterbarkeit
+
+*** sichtbare und logische Topologie
+
+Die *sichtbare Topologie* beschreibt die physische Verbindung der
+Netzknoten, also die Verbindung auf Hardwareebene z.B. durch
+Kupferkabel.
+
+Die *logische Topologie* beschreibt den Datenfluss in einem Netzwerk.
+Sie kann von von der sichtbaren Topologie abweichen. Dazu ein
+Beispiel:
+
+- *Netzwerk A*: mehrere Rechner sind in einem LAN sternförmig mit einem
+  Hub verbunden.
+- *Netzwerk B*: mehrere Rechner sind in einem LAN sternförmig mit einem
+  Switch verbunden.
+
+Beide Netzwerk haben dieselbe sichtbare Topologie; sie sind
+sternförmige Netzwerke. Die logische Topologie von Netzwerk A ist
+jedoch ein BUS ist, da ein HUB Nachrichten an alle angeschlossenen
+Geräte weiterleitet. Die logische Topologie von Netzwerk B ist
+hingegen sternförmig, da ein Switch Nachrichten auf Basis der IP
+Adresse gezielt an das entsprechende Gerät weiterleitet (abgesehen von
+*Broadcast*-Nachrichten, welche auch von einem Switch an alle
+angeschlossenen Geräte weitergeleitet werden).
+
+
+
+
+
+

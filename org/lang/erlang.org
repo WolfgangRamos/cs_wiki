@@ -13,9 +13,9 @@ title: Erlang
 
 * Erlang
 
--  Kommentare: =%=
--  Variablen groß schreiben
--  Atome klein schreiben
+- Kommentare: =%=
+- Variablen groß schreiben
+- Atome klein schreiben
 
 #+BEGIN_EXAMPLE
     -module().
@@ -290,3 +290,36 @@ Chat Client mit gen\_server
 lokales Dictionary mit Key-Value-Paaren:
 
 =put(42, hallo)= und =get(42)=
+** Behaviours
+
+In Anwendungen gibt es oft einen *supervision tree*, d.h.
+
+- Aufteilungen in worker- und supervisor-Processe
+- worker-Prozesse führen Berechnungen durch
+- supervisor-Prozesse kontrollieren das Verhalten der worker-Prozesse
+
+Die Idee von *Beheaviours* fußt auf der Beobachtung, dass im
+supervision-tree viele Prozesse ähnliche Aufgaben erfüllen. Behaviours
+dienen dazu die gemeinsamen Strukturen herauszuabstrahieren und den
+gesamten Code zu zerlegen in:
+
+- einen generischer Code-Teil (behaviour)
+- einen anwendungsspezifische Code-Teil (callback module)
+
+Beispiele:
+
+- gen_server: Implementierung von Client-Server-Kommunikation
+- gen_fsm: Implementierung von finit state machines (veraltete)
+- gen_statem: Implementierung von event-driven state machines (neu)
+- gen_event: Implementierung von event-handling
+- supervisor: Implementierung eines supervisors
+
+** Vorteile
+
+- Wiederverwendbarkeit
+- Kommunikationsprotokoll ist versteckt und kann ggf. leicht
+  ausgetauscht werden
+- bessere Wartbarkeit/Erweiterbarkeit
+- oftmals leichter verständlicherer Code
+
+** TODO Franks Stack implementierung in Erlang

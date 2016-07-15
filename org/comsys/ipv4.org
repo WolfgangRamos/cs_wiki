@@ -3,48 +3,184 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 
-* IPv4
+IPv4 ist das zentrale Protokoll der Netzwerkschicht in der
+Internetarchitektur (RFC 1122). Alle Protokolle der darüberliegenden
+Schichten und auch der Netzwerkschicht nutzen IPv4 (z.B. verschickt
+auch ICMP IP Pakete).
 
-IPv4 ist das zentrale Protokoll der Netzwerkschicht. Alle Protokolle
-der darüberliegenden Schichten und auch der Netzwerkschicht nutzen
-IPv4 (z.B. verschickt auch ICMP IP Pakete).
+* Adressierungstypen
 
-Adressierungstymen:
-
-- Unicast: 1 zu 1
+- *Unicast* (one-to-one)
   - Zieladresse gehört zu genau einem Interface
-- Broadcast: 1 zu alle
-  - z.B. DHCP und allgemein Service discovery
-- Multicast (benötigt IGMP): 1 zu viele
+- *Broadcast* (one-to-all)
+  - alle Interfaces des Netzwerks werden angesprochen
+  - z.B. DHCP und andere Formen des /service discovery/
+  - z.B. ist 255.255.255.255 die IPv4-Broadcast-Adresse
+- *Multicast* (one-to-many)
+  - mehrere Interfaces im Netzwerk werden angesprochen
   - z.B. IP-TV
-- Anycast: zum nächstliegenden interface aus einer Gruppe (z.B. relevant für Load-balancing)
+  - benötigt IGMP und multicast routing
+- *Anycast* (one-to-nearest)
+  - das nächstliegenden interface aus einer Gruppe wird angesprochen
+  - z.B. relevant für Load-balancing
+
+* IPv4 Header
 
 #+CAPTION: IP-Header
 [[./gfx/ip_header.png]]
 
 Header Felder:
 
-- Paketgröße max $2^{16}$ byte
-- Protocol: Protokoll der Payload, z.B. (6 = TCP, 17 = UDP)
-- Header Checksum:
+- version (4 bit): gibt die Version des IP Protokolls an (4 = IPv4; 6 = IPv6)
 - Header Length: Länge des Header als Vielfache von 4 byte
-- Identification: genutzt für fragmentation/reassembly
+- total length: Gesamtlänge (max $2^{16}$ byte)
+- protocol: Protokoll der Payload (1 =ICMP; 6 = TCP; 17 = UDP; 41 = IPv6 in IPv4 Paket)
+- Header Checksum: Prüfsumme des Header
+- Identification: datagram id (genutzt für fragmentation/reassembly)
 - DF: Do not fragment
 - MF: more fragments
+  - gesetzt bei allen Fragmenten, außer dem letzten
+  - wird benötigt, um festzustellen, wann alle Fragmente eines
+    Datagramms angekommen sind
+- destination IP address
+- source IP address
+- time to live (TTL): gibt an wieviele Transitsysteme (hops) ein Paket
+  auf dem Weg zum Zielsystem passieren darf. Bei jedem hop wird der
+  TTL-Wert um 1 dekrementiert. Bei einer TTL von 0 wird ein Paket
+  verworfen.
+  - das stellt sicher, dass Pakete nicht ewik in einem Netzwerk
+    zirkulieren
+- optionale Felder:
+  - timestamp: jeder Router, der das Paket verarbeitet kann seine IP
+    Adresse und einen Timestamp hinzufügen
+
+Die bytes eines Pakets werden in *network byte order* übermittelt: erst
+bit 0-7, dann bit 8-15, dann bit 16-23 und dann bit 24-31 einer
+"Zeile".
+
+Die Gesamtlänge eine IP Pakets (*maximum transmission unit*; MTU) ist
+$2^{16} byte$.
 
 ** TODO Warum kein Routing über MAC-Adressen?
 
 MAC-Adressen sind nicht sinnvoll hierarchisch aufgeteilt. Sie werden
 nach Hersteller vergeben, nicht nach Lokalisation des Systems. Daher
 würde Routing über MAC-Adressen zu großen Routing-Tables führen, da
-die Route zu jedem einzelnen System gegacht werden müsste.
+die Route zu jedem einzelnen System ge-cached werden müsste.
 
-** TODO Vorlesung IPv4
+* Adressierungsmodell
 
-- Reservieren von Adressen für private Netzwerke:
-  - private Adressen können im Internet nicht geroutet werden
-  - werden mehrfach genutzt (in verschiedenen privaten Netzwerken)
+- Addresslänge: 32 bit
+- hierarchisches Adressierungsmodell
+  - *network prefix* gibt das Netzwerk an
+  - *host address part* gibt den Host an
+- *Subnetzmaske*: durch bitweise Verundung mit der Subnetzmaske kann aus
+  einer IP-Adresse die Netzadresse gebildet werden
 
+** Classful Adressing
+
+Bei classfull addressing werden Adressen mit fester network prefix
+length verwendet. Die Länge des Netzwerkprefix (und damit die Klasse
+des Netzes und damit die Größe des Netzes) kann hier aus dem ersten
+Oktet bestimmt werden. Folgende Klassen sind festgelegt:
+
+- *Klasse A*
+  - 8 bit network prefix: =0XXX XXXX ...=
+  - Adressraum: 0.X.X.X - 126.X.X.X
+  - 16.000.000 Hosts
+  - 127.X.X.X wird als Adresse für den localhost verwendet (loopback interface)
+- *Klasse B*
+  - 16 bit network prefix: =10XX XXXX XXXX XXXX ...=
+  - Adressraum: 128.X.X.X - 191.X.X.X
+  - 65.000 Hosts
+- *Klasse C*
+  - 32 bit network prefix: =110X XXXX XXXX XXXX XXXX XXXX ...=
+  - Adressraum: 192.X.X.X - 223.X.X.X
+  - 255 Hosts
+- *Group* (für Multicast)
+  - 0 bit network prefix: =1110 XXXX ...=
+  - Adressraum: 224.X.X.X - 239.X.X.X
+  - Adresse ist nicht hierarchisch aufgebaut
+- *Experimental/Reserved*
+  - 0 bit network prefix: =1111 0XXX ...=
+  - Adressraum: 240.X.X.X - 255.X.X.X
+
+*** Vorteile
+
+- übersichtlicher Aufbau der Adressräume, da das network prefix fest ist
+
+*** Nachteile
+
+- "Verschwendung von Adressen", da der Adressraum der Netzwerke oft
+  nicht voll ausgenutzt wird
+- größere Routingtabellen, wenn Unternehmen mehrere Klasse C Netze
+  benötigen (aber ein Klasse B Netz zu groß wäre)
+- Bedarf an Netzwerken kann mit diesem Modell nicht gedeckt werden,
+  z.B. gibt es schon kaum noch freie Klasse B Netze
+
+** Classless Adressing
+
+Bei classless adressing auch *classless inter-domain routing* (CIDR)
+genannt, werden Adressen mit variabler network prefix length
+verwendet. Der network prefix muss hier in Suffixschreibweise
+angegeben werden, z.B. 134.245.0.0/16
+
+Classless addressing ermöglicht *Adressaggregation* in routing tables.
+Z.B. können die Einträge
+
+| 200.71.0.0 |
+| 200.71.1.0 |
+| 200.71.2.0 |
+| ...        |
+
+zusammengefasst werden zu 
+
+| 200.71.0.0/16 |
+
+Adressaggregation ist möglich, da Pakete an den Eintrag mit dem
+*longest prefix match* weitergleitet werden.
+
+*** Vorteile
+
+- kleiner routing tables durch *Adressaggregation* möglich
+  - effizienteres advertisement von routing informationen
+- weniger Verschwendung von IP-Adressen, da die Größe der vergebenen
+  Adressblöcke feiner gesteuert werden kann, als bei classfull
+  addressing
+
+* spezielle Adressen
+
+#+CAPTION: spezielle Adressen in IPv4
+| präfix | host address part | auftreten    | Bedeutung                           |
+|--------+-------------------+--------------+-------------------------------------|
+|      0 |                 0 | source       | dieses Interface in diesem Netzwerk |
+|      0 |                 X | source       | Interface X in diesem Netzwerk      |
+|      X |                 0 | source       | dieses Interface in Netzwerk X      |
+|      X |             1...1 | dest         | broadcast in Netz X                 |
+|  1...1 |             1...1 | dest         | broadcast in diesem Netz            |
+|    127 |             X.X.X | source, dest | loopback zum localhost              |
+
+
+* öffentliche und private Adressen
+
+Da nicht genug öffentliche IP Adressen verfügbar sind um jedem Client
+eine zuzuweisen (oder manche System nicht nur lokal erreichbar sein
+müssen), wurde der IP-Adressraum in private und öffentliche Adressen
+unterteilt.
+
+- öffentliche Adressen können weltweit geroutet werden
+- private Adresse werden nur innerhalb des Netzes geroutet (nicht im
+  Internet)
+  - =10.0.0.0/8= (Subnetzmaske: =255.0.0.0=)
+  - =172.16.0.0/12= (Subnetzmaske: =255.240.0.0=)
+  - =192.168.0.0./16= (Subnetzmaske: =255.255.0.0=)
+- Gründe für die Festlegung eines privaten Adressraums:
+  - Lösung des Problems der Verknappung von IPv4 Adressen
+  - Sicherheitsaspekte: Geräte mit privaten Adressen können nich ohne
+    weiteres von außen erreicht werden
+
+Um aus einem privaten Netz Daten in ein öffentliches Netz zu schicken,
+ist ein *Router* nötig, der *networt address translation* durchführt.
 
 ** NAT
 
@@ -53,58 +189,32 @@ Netzwerken ist *network address translation* (NAT) erforderlich.
 NAT bezeichnet: 
 
 - das Ersetzen von privaten durch öffentliche IP-Adressen im Header
-  von IP-Paketen,
+  von IP-Paketen auf Basis einer *NAT table*
+  - bei ausgehenden Paketen wird die source address (und port) ersetzt
+    durch die Adresse des routers im öffentlichen Netzwerk und eine
+    neue port nummern
+  - bei eingehenden Paketen wird die destination address (und port)
+    ersetzt durch die zugehörige Adresse (und port) im privaten
+    Netzwerk (diese wird anhand der NAT table ermittelt)
 - die Zuordnung von eingehenden Paketen zu Endsystemen im lokalen
-  Netzwerk auf Basis einer *NAT-Tabelle*
+  Netzwerk erfolgt auf Basis einer *NAT table*
+- da die Zuordnung auf Basis der Portnummer erfolgt, sind bis zu
+  $2^{16}$ simulane Verbindungen
 
-NAT kommt typischerweise in Routern zum Einsatz.
-
-#+CAPTION: NAT: Router ersetzen private Adressen im Header der IP-Pakete
+#+CAPTION: Router ersetzen private Adressen im Header der IP-Pakete (NAT)
 [[./gfx/nat.png]]
+
 
 
 NAT verstößt gegen das End-zu-End Prinzip, da von außen keine
 Verbindung mit einem System in einem privaten Netzwerk (LAN) hinter
-einem Router aufgebaut werden kann. Das kann mit *port-forwarding*
+einem Router aufgebaut werden kann, weil Einträge in der NAT table nur
+von ausgehenden Paketen gesetzt werden. Das kann mit *port-forwarding*
 erreicht werden.
 
 
-*loopback*-Adresse (127.0.0.1): Paket, die an diese Adresse versendet
- werden verbleiben auf dem System.
 
-** Adressierungsmodell
 
-- hierarchisch mit Network Prefix
 
-*** Classful Adressing
 
-- Klasse von Netzen:
-  - A: Präfix 8 bit
-  - B: Präfix: 16 bit
-  - C: Präfix 32 bit
-  - Group (für Multicast)
-  - Experimental (1111 0xxx)
 
-Vorteile:
-- Größe der vergebenen Adressblöcke (keine
-- evtl. größere Routingtabellen, wenn z.B. ein Unternehmen zwei Class C Netze benötigt
-
-*** Classless Adressing
-
-variabler Netzwerk prefix, der in Suffixschreibweise angegeben wird, z.B. 134.245.0.0/16
-
-Vorteile:
-
-- Größe der vergebenen Adressblöcke kann fein granularer gesteuert werden
-
-** öffentliche/private Adressen
-
-- öffentliche Adressen können weltweit geroutet werden
-- Gründe für die Festlegung eines privaten Adressraums:
-  - Lösung des Problems der Verknappung von IPv4 Adressen
-  - Sicherheitsaspekte: Geräte mit privaten Adressen können nich ohne
-    weiteres von außen erreicht werden
-
-ARP: IP -> MAC
-
-RARP: MAC -> IP

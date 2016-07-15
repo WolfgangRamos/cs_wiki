@@ -1,11 +1,11 @@
-#+TITLE: TCP
+#+TITLE: Transmission COntrol Protocol
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 
-* TCP
-
-- Port-Nummer: $2^{16} = 65536$
+erbrachter Dienst: Pakete zuverlässig, d.h. fehlerfrei, vollständig
+und in der richtigen Reihenfolge, zwischen Anwendungen auf
+Endsystemen übermitteln.
 
 TCP zerlegt die zu sendenden Daten in *Segmente*.
 

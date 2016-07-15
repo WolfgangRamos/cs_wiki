@@ -3,20 +3,56 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 
-* DHCP
+*Dynamic Host Configuration Protocol* (DHCP) ermöglicht die Zuweisung
+von Netzwerkkonfigurationen (IP-Adresse, DNS, Standard Gateway, etc.)
+an Clients durch Server. Der Vorläufer von DHCP war BOOTP.
 
-*Dynamic Host Configuration Protocol* (DHCP) ermöglicht die
-Zuweisung von Netzwerkkonfigurationen an Clients durch Server. Der Vorläufer von DHCP war BOOTP.
+- DHCP verwendet UDP Pakete
+  - Server verwendet UDP-Port 67
+  - Client verwendet UDP-Port 68
+- DHCP ist ein IP /und/ MAC-Broadcast
 
-Server UDP-Port: 67
+* Ablauf
 
-Client UDP-Port: 68
+1. Client sendet =DHCPDISCOVER= als broadcast (Zieladresse
+   =255.255.255.255=) mit Quelladresse =0.0.0.0=
+2. Server (es können mehrere sein) antworten mit =DHCPOFFER= welches ein
+   Vorschlag für eine geleaste IP Adresse enthält
+   - falls der Client sich keine vorläufige IP-Adresse gewählt hat
+     wird der DHCPOFFER als broadcast gesendet
+   - falls der Client sich eine vorläufige IP Adresse gewählt hat kann
+     der =DHCPOFFER= auch als Unicast gesendet werden an die vorläufige
+     IP und die MAC Adresse des CLients
+3. Client sammelt =DHCPOFFER= und wählt einen aus (z.B. auf Grund der
+   lease time)
+4. Client antwortet mit =DHCPREQUEST= als broadcast
+   - die Zuordnung des =DHCPREQUEST= zu einem DHCPOFFER erfolgt über einen
+     Server identifier
+5. der ausgewählte Server antwortet mit =DHCPPACK=, welches weitere
+   Netzwerkkonfigurationen enthält
 
-DHCPD ist ein IP /und/ MAC-Broadcast
+Erneuerung des *adress lease* nach der halben /lease time/.
+Abmelden einer IP-Adresse mit einem =DHCPRELEASE=
 
-DNS ist i.d.R auch Teil des =DHCPOffer=
+* DHCP Header
 
-*Vorteile:*
+#+CAPTION: DHCP-Header
+[[./gfx/dhcp_header.png]]
+
+Felder:
+
+- OpCode: 1 = Request; 2 = Reply
+- Hardware type: Netztyp (z.B. 1 = Ethernet)
+- xid (Transaction ID): ID der Verbindung zwischen Client und Server
+- Client IP address
+- your IP adress: vom Server vorgeschlagenen geleaste IP Adresse
+- server IP address: IP Adresse des Server
+- client hardware address: MAC Adresse des Client
+- optionale Felder:
+  - DNS
+  - Standard Gateway
+
+* Vorteile
 
 - Vermeidung manueller Konfiguration von Geräten für ein Netzwerk
   (z.B. manuelle Vergabe der IP-Adresse, etc.)
@@ -25,5 +61,7 @@ DNS ist i.d.R auch Teil des =DHCPOffer=
   sondern werden /on-demand/ an anfragende Geräten vergeben. IP-Adressen
   sind somit prinzipiell weder an Geräte noch an Personen gebunden.
 
-#+CAPTION: DHCP-Header
-[[./gfx/dhcp_header.png]]
+
+
+
+
