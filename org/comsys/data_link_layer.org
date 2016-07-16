@@ -71,10 +71,18 @@ zentrale Methoden/Protokolle:
   - Bsp: Ethernet, WLAN
   - Bsp für Protokolle:
 	- *Aloha*:
+	  - Setting: star Topologie (mehrere Knoten senden frames zu einem
+        zentralen Knoten)
+	  - Knoten können frames jederzeit schicken
 	  - erfolgreich übertragene frames werden durch =ACKs=
 		bestätigt
 	  - Erneutes Senden bei ausbleiben eines =ACK= nach einem zufälligen
         Zeitintervall
+	  - benötigte Zeit zur Erkennung einer Kollision: $2t$
+        (Transmissiondelay)
+	- *Slotted Aloha:*
+	  - Knoten können nicht immer schicken, sondern nur zu
+        festgelegten Zeitpunkten (timeslots)
 	- [[CSMA][Carrier Sense Multiple Access (CSMA)]]
 
 ** CSMA

@@ -2,6 +2,12 @@
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
+#+BEGIN_HTML
+---
+layout: page
+title: IPv6
+---
+#+END_HTML
 
 Grund für Wechsel von IPv4 zu IPv6:
 
@@ -17,12 +23,11 @@ IPv4-Adressblöcke an die Regional Internet Registrars (RIRs) vergeben.
   - führenden Nullen sind in der Notation optional
   - aufeinanderfolgende Gruppen von Nullen können abgekürzt werden zu =::=
 - jede IP-Adresse hat
-  - einen Adressierungstyp
-	- *unicast* (one-to-nearest):
-	- *multicast*:
-	- *anycast*:
+  - einen [[Adressierungstypen][Adressierungstyp]]
   - einen Scope, in dem sie geroutet wird
-  - eine lifetime
+  - eine lifetime (Gültigkeitsdauer). Diese ist standardmäßig
+    unendlich. Durch Router Advertisment (RA) wird die lifetime
+    resettet. Läuft die Zeit ab, wird Adresse ungültig.
 - keine Unterteilung in private und öffentliche Adressen (NAT nicht
   notwendig)
 - Verbesserte Autokonfiguration der Netzwerkeinstellungen (besser als
@@ -46,23 +51,43 @@ IPv4-Adressblöcke an die Regional Internet Registrars (RIRs) vergeben.
 	- broadcast im lokalen Netzwerk: =FF02::1=
 	- broadcast an alle router (*all routers multicast group*): =FF02::1
 
-- Aggregation auf Basis der Prefixes (kleinere routing tables, weniger
-  Austausch von routing information en nötig)
+- Aggregation von Adressen in routing tables erfolgt auf Basis der
+  Prefixes (Vorteile: kleinere routing tables, weniger Austausch von routing
+  informationen nötig)
+
+** Adressierungstypen
+
+- *unicast* (one-to-one): Adressierung genau eines Interfaces
+  - 64 bit Präfix
+  - 64 bit Interface ID
+- *multicast* (one-to-many): Adressierungung aller Interfaces mit
+  dieser multicast Adresse (z.B. alle Router im lokalen Netzwerk)
+  - 16 bit Präfix (startet mit =11111111=)
+  - 112 bit Group ID
+- *anycast* (one-to-nearest): Adressierung des nächstgelegenen
+  Interfaces aus der Gruppe von interfaces mit dieser anycast
+  Adresse
+  - 64 bit Präfix
+  - 64 bit Interface ID
 
 ** Gültigkeitsbereiche (Scopes)
 
-- *link-local*: genutz zur Adressierung von direkt Verbundenen Systemen; werden von Routern nicht weitergeleitet
-  - starten mit =111111010=
+- *link-local*: genutz zur Adressierung auf einem einzelnen link; werden
+  von Routern nicht weitergeleitet
+  - z.B. für host auto configuration, neighbor discovery
+  - starten mit =111111010= (die letzte 54 bit des 64 bit Präfix können frei gewählt werden)
   - 64 bit interface ID
-- *unique-local*: nicht routbar im Internet, aber innerhalb innerhalb
-  und zwischen verbundenen sites
+- *unique-local*: Adressierung von Systemen im lokalen Netzwerk und in
+  damit verbundenen sites; nicht routbar im
+  Internet
+  - z.B. Firmen VPNs
   - starten mit =111110=
-  - 1 bit *L flag* (1 if prfix is locally assigned)
+  - 1 bit *L flag* (1 if prefix is locally assigned)
   - 40 bit global ID
   - 16 bit subnet ID
   - 64 bit interface ID
 - *global*: global routbare Adressen
-  - aktuell vergibt die IANA nur global unicast Adressen mit Präfix
+  - aktuell vergibt die IANA nur globale unicast Adressen mit Präfix
     =001=
   - Präfixe
 	- RIRs: =/12=
@@ -71,17 +96,32 @@ IPv4-Adressblöcke an die Regional Internet Registrars (RIRs) vergeben.
 	- LAN Präfix: =/64=
   - Interface ID: 64 bit
 
-*** Generierung der 64 bit interface ID
+*** host auto configuration
 
-- autoconfiguration aus einer 64 bit *extended unique identifier* (EUI-64)
-  - bit 0-23: bit 0-23 der MAC Adresse (7. bit invertiert)
-  - bit 24-39: beleget mit =FFFE=
-  - bit 40-64: bit 24-47 der MAC Adresse
-- Zufallszahl
-- Vergabe via DHCP
-- manuell
+1. erfrage das Netzwerkpräfix bei einem Router über eine router
+   solicitation Nachricht
+2. generiere eine vorläufige IPv6 Adresse aus dem Netzwerkpräfix und
+   - einer Zufallszahl oder
+   - einem *64 bit extended unique identifier* (EUI-64) auf Basis der
+     MAC-Adresse des Interface
+	 - bit 0-23: bit 0-23 der MAC Adresse (7. bit invertiert)
+	 - bit 24-39: beleget mit =FFFE=
+	 - bit 40-64: bit 24-47 der MAC Adresse
+3. prüfe ob diese Adresse bereits im Netzwerk vergeben ist durch
+   Duplicate Address Detection; konkret: Sende neighbor solicitation
+   message mit:
+   1. target address: vorläufiger Adresse
+   2. source address: undefined address =::=
+   3. destination address: solicited node destination address
+4. wenn eine Antwort (neighbor advertisement als multicast) kommt,
+   gehe zu manueller Konfiguration oder versuche es mit einer neuen
+   vorläufigen Adresse. Wenn keine Antwort kommt verwende die
+   vorläufige Adresse als link local address
 
+** spezielle Adressen
 
+- *unspecified*: =::/128=
+- *loopback*: =::1/128=
 
 * IPv6 Header
 

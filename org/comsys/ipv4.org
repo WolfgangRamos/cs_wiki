@@ -125,8 +125,8 @@ genannt, werden Adressen mit variabler network prefix length
 verwendet. Der network prefix muss hier in Suffixschreibweise
 angegeben werden, z.B. 134.245.0.0/16
 
-Classless addressing ermöglicht *Adressaggregation* in routing tables.
-Z.B. können die Einträge
+Classless addressing ermöglicht bessere *Adressaggregation* in routing
+tables. Z.B. können die Einträge
 
 | 200.71.0.0 |
 | 200.71.1.0 |

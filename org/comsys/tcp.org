@@ -9,15 +9,142 @@ Endsystemen übermitteln.
 
 TCP zerlegt die zu sendenden Daten in *Segmente*.
 
-- Maximum segment size = 
+- Maximum segment size (MSS) = 
 
-Bevor dieselbe Verbindung erneut geöffnet wird muss 2MSL (2 x maximum
-segment livetime) gewartet werden, damit die Sequenznummern nicht mit
-den Sequenznummern der vorherigen Verbindung kollidieren. Während der
-Wartezeit werden die Sequenznummern durch einen timer hochgezählt.
+zentrale Elemente:
+
+- acknowledgements
+- Sequenznummern: für Pakete und für Acknowledgements
+  - Sequenznummern müssen endlich sein!
+  - Eine Sequenznummer $p$ kann ersetzt werden durch $p \mod SN$, wenn
+    $SN \geq 2w$ mit window size $w$ ist
+- verbindunsorientiertes switching
+- feedback vom receiver an den Sender für flow control
+  - sliding window (pipelining)
+- stream-orientiert: Daten werden als byte stream interpretiert
+- Erkennung von Übertragungsfehlern
+  - der Verlust eine Paketes kann angezieigt werden duch timout,
+    doppelte =ACKs=
+- congestion avoidance
+
+* Header
+
+*Felder:*
+
+- flags:
+  - URG: Daten sind dringend (sollten direkt von der
+    Empfängerapplikation verarbeitet werden), =urgend pointer= ist valide
+  - ACK: acknoledgement number ist valide
+  - PSH: reiche Daten direkt an den Empfänger weiter (kein buffering)
+  - RST: reset connection
+  - SYN: sequence number ist die initiale Sequenznummer (ISN) dieser Verbindung
+  - FIN: Verbindung schließen
+- sequence number: (initiale) Sequenznummer
+- acknowledgement number
+- window size: Größe des receiver windows in byte
+- timestamp: wird genutzt um die round trip time zu erfassen
+
+** initiale Sequenznummer
+
+Die *initiale Sequenznummer* (ISN) sollte von einem Zähler alle 4 ms
+inkrementiert werden. Bevor dieselbe Verbindung (selbes Socket Paar)
+erneut geöffnet wird daher 2 MSL (2 x maximum segment livetime)
+gewartet werden, damit die Sequenznummern nicht mit den Sequenznummern
+der vorherigen Verbindung kollidieren. Die MSL wird durch die TTL des
+IP Pakets begrenzt.
+
+** retransmission timeout
+
+** Congestion Control
+
+*Congestion control* (dt. Stausteuerung) ist nötig, wenn ein am
+Netzwerkknoten eintreffendes Paket nicht schnell genug
+verarbeiten/weiterleiten kann. Man spricht dann von Congestion (dt.
+Stau). Ein Stau kann sich z.B. ergeben, wenn ein Router Pakete aus
+einem schnellen Netzwerk in ein langsameres Netzwerk übertragen muss,
+oder Pakete von mehreren Eingangskanälen auf einen Ausgangskanal
+weiterleiten muss.
+
+Congestion control bei TCP basiert auf der Annahme, dass Datenpakete
+v.a. durch Congestion (Stau) verloren gehen und nicht aufgrund von
+Netzwerkschäden.
+
+*** Slow start
+
+- beginnt mit einem congestion window (=cwnd=) von 1, 2 oder 10
+  Segmenten
+- Bei Empfang eines ACK wird das cwnd verdoppelt (sofern das *receiver window* mindestens so groß ist wie das neue cwnd)
+- Empfängt der Sender kein ACK, so geht TCP direkt zum Verhalten des
+  gewählten congestion avoidance Algorithmus bei einem Timeout über
+- wird beim Vergößern des =cwnd= der slow start threshold (=ssthresh=)
+  überschritten, dann wechelt TCP zum linearen Wachstum in der
+  congestion avoidance Phase.
+
+*** Congestion avoidance
+
+In der Congestion Avoidance-Phase wächst das =cwnd= nur noch linear
+(i.d.R. um 1 Segement) pro empfangenen ACK. Kommt es zu einem Timeout
+dann wird der ssthresh auf die halbe aktuelle cwnd gesetzt und die
+cwnd wird wieder auf den intialen Wert (der Wert zu Beginn der slow
+start Phase) zurückgesetzt. Dann geht TCP wieder in die slow start
+Phase über.
+
+** Sliding window
+
+Sender sendet, solang $i_S - i_A \leq w$ gilt mit $i_A$ Sequenznummer
+des zuletzt bestätigten Pakets, $i_S$ Sequenznummer des zuletzt
+gesendeten Pakets und $w$ Windowsize.
+
+- wenn das window ausgereizt ist, muss der Sender auf =ACKs= warten
+- bei jedem =ACK= wird das sliding window weiter geschoben
+- timeout timer für jedes Paket, danach retransmission des Pakets
+- Sender speichert Pakete bis sie bestätigt wurden
+
+Strategien zur Fehlerbehandlung bei falsch übertragenen Paketen:
+
+- *Go-back-N*: Bei dieser Strategie bestätigt der Empfänger nur Paket
+  die er "in der richtigen Reihenfolge" erhält.
+  - es wird immer nur das Paket mit der jeweils nächsten Sequenznummer
+	bestätigt
+  - empfängt der Empfänger ein Paket mit einer höheren
+	Sequenznummer, so wird es nicht bestätigt und der Empfänger wartet
+	unverändert weiter auf dieselbe Sequenznummer wie vorher. Das "aus
+	der Reihe" empfangene Paket kann vom Empfänger verworfen werden.
+  - Kommt es beim Warten auf die =ACKs= für die Pakete, welche innerhalb
+	des aktuellen windows gesendet wurden zu einem Timeout beim Sender,
+	so übermittelt der Sender /alle/ Pakete dieses windows neu.
+  - Bei dieser Strategie der Fehlerbehandlung könnte der Empfänger
+    auch kumulative ACKs verschicken.
+- *Selective Repeat*: Bei dieser Strategie bestätgt der Empfänger alle
+  Pakete die er empfängt, auch solche, die nicht in der korrekten
+  Reihenfolge ankommen
+  - Um die Pakete wieder in die korrekte Reihenfolge zu bringen müssen
+    die empfangen Pakete in einem Puffer zwischengespeichert werden
+  - der Sender kümmert sich um das erneute Senden einzelner nicht
+    bestätigter Pakete, d.h. bei einem Übertragungsfehler muss nur das
+    fehlerhafte Paket erneut übertragen werden. Wie bei der go-back-N
+    Strategie kann auch hier der Sender das sliding window nur dann
+    verschieben, wenn das Paket mit der niedrigsten Sequenznummer im
+    window bestätigt wurde.
 
 ** Congestion Control
 
 - duplicate ACKs: Erneutes versenden eines alten ACKs um den Sender
   nach einem bestimmten timeout darpber zu informiern, dass der
   Empfänger nichts erhält.
+
+** stop and wait protocol
+
+Nachteil:
+
+Bei einem stop-and-wait-Protokoll ist die utilization geringer als bei
+Verwendung eines sliding window, da nach dem Senden eines Pakets immer
+auf ein ACK gewartet wird, bevor das nächste Paket gesendet wird.
+
+* Schließen der Verbindung
+
+Arten des SChließens einer Verbindung:
+
+- *TCP half close*: jede Seite Schließt die Verbindung einzeln
+- *active close*: Client schließt die TCP Verbindung
+- *passive close*: Server schließt die TCP Verbindung

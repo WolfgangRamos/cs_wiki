@@ -1,0 +1,38 @@
+#+TITLE: Autonome Systeme
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+
+Ein *Autonomes System* (AS) ist eine Gruppe von IP Netzen, die gemeinsam
+verwaltet werden. AS sind untereinander verbunden und bilden so das
+Internet. AS werden über eine 16-Bit (RFC1930) oder eine 32-Bit Zahl
+(RFC6996) identifiziert, welche von der IANA vergeben wird.
+
+* Arten
+
+- *Stub-AS* sind mit /genau/ einem anderen AS über eine direkte Leitung
+  verbunden. Sie können nur über diese Direktverbindung Daten mit dem
+  anderen AS und dem Rest des Internets austauschen
+- *Multihomed AS* sind mit mindestens zwei anderen AS über eine direkte
+  Leitung verbunden
+- *Transit-AS* sind mit mindestens zwei andere AS angebunden und
+  fungieren als Verbindung zwischen den angeschlossenen AS, d.h. sie
+  leiten Daten von den angeschlossenen AS an andere angeschlossene AS
+  weiter. Die Internet-Backbone-Netzwerke sind typische Beispiele für
+  Transit-AS.
+
+* Gründe für die Verwendung von AS
+
+1. *Administrative Autonomität*: Jeder Administrator kann das Routing in
+   seinem eigenen Netzwerk kontrollieren, da das Internet mit ASen ein
+   Netzwerk von Netzwerken ist.
+2. *Skalierung*:
+   - verglichen mit einer Strukturierung ohne AS werden für Inter- und
+     Intra-Routing kleinere Routing-Tabellen benötigt, denn beim
+     Inter-Routing wird nur gespeichert, zu welchem AS eine IP
+     zugehörig ist, das dann die genaue Zustellung übernimmt. Mit
+     flachem Netzwerk müsste jeder Router für jedes IP-Netz einen
+     Eintrag haben, der angibt, wo genau hingeleitet werden soll, was
+     zu großen Kapazitätsproblemem beim Routing führen würde.

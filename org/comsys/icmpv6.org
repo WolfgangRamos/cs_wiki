@@ -3,12 +3,19 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 #+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: ICMPv6
+---
+#+END_HTML
 
 Funktionen:
 
 - Übermittlung von Diagnoseinformationen an den Sender
 - Testen von Erreichbarkeit (ping)
-- *IPv6 Neighbor discovery protocol* (NDP)
+- Unterstützung von Routing, z.B. mit
+  - *IPv6 Neighbor discovery protocol* (NDP)
 
 * IPv6 Neighbor discovery protocol
 
@@ -40,6 +47,12 @@ NDP wird verwendet für
 #+CAPTION: NDP Funktionen
 [[./gfx/ndp.png]]
 
+Funktionen:
+
+- Host-Router discovery:
+- Host-Host Communication:
+- Redirect: von einem Router an Hosts gesendet, um diesen eine bessere
+  Route zu eine Zieladdresse mitzuteilen.
 
 * Header
 
@@ -61,5 +74,8 @@ NDP wird verwendet für
 - *code*:
 - *checksum*:
 - *message body*:
+
+
+
 
 
