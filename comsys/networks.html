@@ -1,7 +1,16 @@
+---
+layout: page
+title: Netzwerke
+---
 
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Netzwerke</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+Ein Netzwerk besteht aus miteinander verbundenen <b>End-</b> und
+<b>Transitsystemen</b>.
+</p>
+
 <p>
 Man kann Netzwerke charakterisieren über
 </p>
@@ -255,16 +264,20 @@ Netzwerk vermittelt wird</i>. Man unterscheidet: <b>Packet Switching</b> und
 <h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Packet Switching</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
-Beim <i>packet switching</i> (dt. Paketvermittlung) werden Nachrichten in
-einzelne <i>packets</i> (dt. Packete) aufgeteilt. Jedes Paket enthält die
-notwenidgen Informationen um das Paket zur Zieladresse zu transportieren
-und kann einzeln übertragen werden. Jeder Netzknoten, den das Paket
-passiert speichert das Paket so lang zwischen bis er es weiter senden
-kann (engl. <i>store-and-forward switching</i>). D.h. Bandbreite im
-Datenkanal wird nur während der Übertragung eines Pakets zwischen zwei
-Knoten beansprucht. Nach Abschluss der Übertragung steht die Bandbreite
-wieder zur Verfügung.
+<i>packet switching</i> (dt. Paketvermittlung):
 </p>
+
+<ul class="org-ul">
+<li>Nachrichten werden in einzelne <i>packets</i> (dt. Packete) aufgeteilt
+</li>
+<li>jedes Paket enthält die notwendigen Informationen um das Paket zur
+Zieladresse zu transportieren und kann daher einzeln übertragen werden
+</li>
+<li><b>store-and-forward switching</b>: jeder Netzknoten, den das Paket
+passiert speichert das Paket so lang zwischen bis er es weiter
+senden kann
+</li>
+</ul>
 
 <p>
 Ein Paket aus:
@@ -298,12 +311,13 @@ switching</i>; dt. virtuelle verbindungsorientierte Paketvermittlung):
 
 <ul class="org-ul">
 <li>Bandbreiten zwischen Netzwerkknoten können unabhängig voneinander
-gewählt werden. Es besteht keine Notwendigkeit die Bandbreiten
-zwischen den System zu verinheitlichen.
+gewählt werden. Bandbreiten zwischen den System müssen nicht
+vereinheitlicht werden.
 </li>
-<li>Bessere Ausnutzung der Netzwerkinfrastruktur. Insbesondere, wenn
-starke Schwangungen bei der Datenübertragung zu erwarten sind, d.h.,
-wenn man viel und mal wenig übertragen werden muss
+<li>Bessere Ausnutzung der Bandbreite im Datenkanal, da nur während der
+Übertragung eines Pakets zwischen zwei Knoten Bandbreite beansprucht
+wird. Nach Abschluss der Übertragung steht wieder die gesamte
+Bandbreite zur Verfügung.
 </li>
 </ul>
 
@@ -316,13 +330,14 @@ wenn man viel und mal wenig übertragen werden muss
 <ul class="org-ul">
 <li>keine Obergrenze für Paket Delay
 </li>
-<li>Überlastung der Netzwerks möglich (Risiko des Datenverlusts)
+<li>höheres Risikio für Datenverlust, da eine Überlastung der
+Netzwerke möglich ist
 </li>
 </ul>
 </li>
 <li>Festlegung von Übertragungsraten aufwendig. Z.B. müssen Sender und
 Empfänger ein <i>sliding window</i> aushandeln, welches dynamisch anpassbar
-sein muss. Es muss beispielsweise verkleinert werden, wernn sich die
+sein muss. Es muss beispielsweise verkleinert werden, wenn sich die
 Anzahl der eingehenden Verbindungen am Empfänger erhöht.
 </li>
 </ul>
@@ -331,16 +346,18 @@ Anzahl der eingehenden Verbindungen am Empfänger erhöht.
 <div id="outline-container-sec-1-1-1-1" class="outline-5">
 <h5 id="sec-1-1-1-1"><span class="section-number-5">1.1.1.1</span> Connectionless packet switching</h5>
 <div class="outline-text-5" id="text-1-1-1-1">
-<p>
-Jedes Paket enthält alle Addressinformationen und wird unabhängig von
-den anderen Paketen geroutet. D.h. Pakete können über unterschiedliche
-Netzknoten übertragen und somit mit unterschiedlicher Verzögerung
-übertragen werden. Insbesondere können Pakete daher in veränderter
-Reihenfolge ankommen. Im Zielsystem werden die Pakete entsprechend ihrer
-Laufnummern zusammengesetzt und die Nachricht extrahiert. Dadurch wird
-dem Nutzer ein virtueller Datenkanal (engl. <i>virtual circuit</i>)
+<ul class="org-ul">
+<li>jedes Paket enthält alle Addressinformationen und wird unabhängig
+von den anderen Paketen geroutet. D.h. Pakete können über
+unterschiedliche Netzknoten übertragen und somit mit
+unterschiedlicher Verzögerung übertragen werden (insbesondere können Pakete daher in veränderter Reihenfolge ankommen)
+</li>
+<li>Im Zielsystem werden die Pakete entsprechend ihrer Laufnummern
+zusammengesetzt und die Nachricht extrahiert. Dadurch wird dem
+Nutzer ein virtueller Datenkanal (engl. <i>virtual circuit</i>)
 vorgegaukelt.
-</p>
+</li>
+</ul>
 
 <p>
 Im Fall von connectionless packet switching besteht der Header eines
@@ -361,7 +378,7 @@ Pakets aus:
 </ul>
 
 <p>
-Nachteile:
+Nachteile gegenüber conection-oriented packet switching:
 </p>
 
 <ul class="org-ul">
@@ -376,7 +393,7 @@ connection-oriented packet switching)
 </ul>
 
 <p>
-Bspeispiele: UDP, IP
+Beispiele: UDP, IP
 </p>
 </div>
 </div>
@@ -384,16 +401,25 @@ Bspeispiele: UDP, IP
 <div id="outline-container-sec-1-1-1-2" class="outline-5">
 <h5 id="sec-1-1-1-2"><span class="section-number-5">1.1.1.2</span> Virtual circuit switching</h5>
 <div class="outline-text-5" id="text-1-1-1-2">
-<p>
-Vor Übermittlung der Pakete wird ein Verbindung ausgehandelt. Dazu wird
-in die <i>Switching tables</i> jedes Netzwerkknotens der Verbindung die
-Adresse des jeweils nächsten Knotens geschrieben und der Verbingung ein
-eindeutiger <b>Identifier</b> (ID) zugeordnet. Beim Aufbau der Verbindung
-können die Parameter der Verbindung (z.B. ???, etc.) ausgehandelt
-werden. Adressinformationen werden nur während des Verbindgsaufbaus
-benötigt, wenn die Route festgelegt wird. Die einzelnen Pakete enthalten
-dieses Informationenn nicht mehr.
-</p>
+<ul class="org-ul">
+<li>Datenübertragung erfolgt in 3 Phasen:
+
+<ol class="org-ol">
+<li>Verbindungsaufbau
+<ul class="org-ul">
+<li>Aushandlung der Parameter der Verbindung (z.B. sliding window, etc.)
+</li>
+<li>zuordnung eines eindeutiger <b>Identifier</b> (ID) zu der Verbindung
+</li>
+</ul>
+</li>
+<li>Datenübertragung
+</li>
+<li>Schließen der Verbindung
+</li>
+</ol>
+</li>
+</ul>
 
 <p>
 Im Fall von connection-oriented packet switching besteht der Header
@@ -410,34 +436,40 @@ eines Pakets aus:
 </ul>
 
 <p>
-Die Datenübertragung erfolgt in 3 Phasen:
-</p>
-
-<ol class="org-ol">
-<li>Verbindungsaufbau (inkl. Aushandlung der Parameter der Verbindung)
-</li>
-<li>Datenübertragung
-</li>
-<li>Schließen der Verbindung
-</li>
-</ol>
-
-<p>
 Beispiele: TCP
 </p>
+
+<p>
+Vorteile:
+</p>
+
+<ul class="org-ul">
+<li>kleiner Header, da Adressinformationen nur werden während des
+Verbindgsaufbaus benötigt werden, wenn die Route festgelegt wird.
+Die einzelnen Pakete müssen diese Informationen nicht mehr enthalten
+</li>
+</ul>
 </div>
 </div>
 </div>
+
+
 
 <div id="outline-container-sec-1-1-2" class="outline-4">
 <h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Circuit switching</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
-Beim <i>circuit switching</i> (auch <i>line switching</i>; dt.
-Leitungsvermittlung) wird einer Nachrichtenverbindung zeitweilig ein
-durchgeschalteter Datenkanal mit fester Bandbreite zur exklusiven
-Nutzung zur Verfügung gestellt. Bsp: Telefonnetz.
+<i>circuit switching</i> (auch <i>line switching</i>; dt. Leitungsvermittlung):
 </p>
+
+<ul class="org-ul">
+<li>einer Nachrichtenverbindung wird zeitweilig ein durchgeschalteter
+Datenkanal mit fester Bandbreite zur exklusiven Nutzung zur
+Verfügung gestellt
+</li>
+<li>Bsp: Telefonnetz
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -446,21 +478,46 @@ Nutzung zur Verfügung gestellt. Bsp: Telefonnetz.
 <h3 id="sec-1-2"><span class="section-number-3">1.2</span> Topologien</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
-<b>Bus:</b> Alle Knoten teilen sich eine Leitung.
+<b>Bus:</b> Alle Knoten teilen sich eine Leitung
 </p>
 
-<p>
-<b>Ring:</b> Alle Nodes sind in einem Ring zusammengeschaltet. Z.B. in
-</p>
+<ul class="org-ul">
+<li>erforder Regelung des Zugriffs (z.B. über CSMA/CD)
+</li>
+</ul>
 
 <p>
-<b>Star:</b> Viele Knoten laufen in einem Knoten zusammen (z.B. DHCP Server)
+<b>Ring:</b> Alle Nodes sind in einem Ring zusammengeschaltet
 </p>
 
+<ul class="org-ul">
+<li>klassiche Topologie eines LANs mit einer Token MAC Prozedur
+</li>
+</ul>
+
 <p>
-<b>Mesh:</b> Knoten sind direkt miteinander verbunden, es gibt keine
-zentralen Knoten (z.B. das Internet)
+<b>Star:</b> Viele Knoten laufen in einem Knoten zusammen
 </p>
+
+<ul class="org-ul">
+<li>Bsp: Systeme, die mit einem Switch verbunden sind
+</li>
+</ul>
+
+<p>
+<b>Mesh:</b> vermaschte Netzwerke
+</p>
+
+<ul class="org-ul">
+<li>Knoten sind direkt miteinander verbunden
+</li>
+<li>in der Regel hat jeder Knoten Verbindungen zu mehreren anderen Knoten
+</li>
+<li>es gibt keine zentralen Knoten
+</li>
+<li>Bsp: internet core network
+</li>
+</ul>
 
 <p>
 Vorteile:
@@ -479,6 +536,43 @@ zentralen Knoten kontrolliert werden.
 <li>einfache Erweiterbarkeit
 </li>
 </ul>
+</div>
+
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> sichtbare und logische Topologie</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+Die <b>sichtbare Topologie</b> beschreibt die physische Verbindung der
+Netzknoten, also die Verbindung auf Hardwareebene z.B. durch
+Kupferkabel.
+</p>
+
+<p>
+Die <b>logische Topologie</b> beschreibt den Datenfluss in einem Netzwerk.
+Sie kann von von der sichtbaren Topologie abweichen. Dazu ein
+Beispiel:
+</p>
+
+<ul class="org-ul">
+<li><b>Netzwerk A</b>: mehrere Rechner sind in einem LAN sternförmig mit einem
+Hub verbunden.
+</li>
+<li><b>Netzwerk B</b>: mehrere Rechner sind in einem LAN sternförmig mit einem
+Switch verbunden.
+</li>
+</ul>
+
+<p>
+Beide Netzwerk haben dieselbe sichtbare Topologie; sie sind
+sternförmige Netzwerke. Die logische Topologie von Netzwerk A ist
+jedoch ein BUS ist, da ein HUB Nachrichten an alle angeschlossenen
+Geräte weiterleitet. Die logische Topologie von Netzwerk B ist
+hingegen sternförmig, da ein Switch Nachrichten auf Basis der IP
+Adresse gezielt an das entsprechende Gerät weiterleitet (abgesehen von
+<b>Broadcast</b>-Nachrichten, welche auch von einem Switch an alle
+angeschlossenen Geräte weitergeleitet werden).
+</p>
+</div>
 </div>
 </div>
 </div>

@@ -2,60 +2,88 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. IPv4</a>
+<li><a href="#sec-1">1. Adressierungstypen</a></li>
+<li><a href="#sec-2">2. IPv4 Header</a>
 <ul>
-<li><a href="#sec-1-1">1.1. <span class="todo TODO">TODO</span> Warum kein Routing über MAC-Adressen?</a></li>
-<li><a href="#sec-1-2">1.2. <span class="todo TODO">TODO</span> Vorlesung IPv4</a></li>
-<li><a href="#sec-1-3">1.3. NAT</a></li>
-<li><a href="#sec-1-4">1.4. Adressierungsmodell</a>
-<ul>
-<li><a href="#sec-1-4-1">1.4.1. Classful Adressing</a></li>
-<li><a href="#sec-1-4-2">1.4.2. Classless Adressing</a></li>
+<li><a href="#sec-2-1">2.1. <span class="todo TODO">TODO</span> Warum kein Routing über MAC-Adressen?</a></li>
 </ul>
 </li>
-<li><a href="#sec-1-5">1.5. öffentliche/private Adressen</a></li>
+<li><a href="#sec-3">3. Adressierungsmodell</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Classful Adressing</a>
+<ul>
+<li><a href="#sec-3-1-1">3.1.1. Vorteile</a></li>
+<li><a href="#sec-3-1-2">3.1.2. Nachteile</a></li>
+</ul>
+</li>
+<li><a href="#sec-3-2">3.2. Classless Adressing</a>
+<ul>
+<li><a href="#sec-3-2-1">3.2.1. Vorteile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-4">4. spezielle Adressen</a></li>
+<li><a href="#sec-5">5. öffentliche und private Adressen</a>
+<ul>
+<li><a href="#sec-5-1">5.1. NAT</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
+<p>
+IPv4 ist das zentrale Protokoll der Netzwerkschicht in der
+Internetarchitektur (RFC 1122). Alle Protokolle der darüberliegenden
+Schichten und auch der Netzwerkschicht nutzen IPv4 (z.B. verschickt
+auch ICMP IP Pakete).
+</p>
 
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> IPv4</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> Adressierungstypen</h2>
 <div class="outline-text-2" id="text-1">
-<p>
-IPv4 ist das zentrale Protokoll der Netzwerkschicht. Alle Protokolle
-der darüberliegenden Schichten und auch der Netzwerkschicht nutzen
-IPv4 (z.B. verschickt auch ICMP IP Pakete).
-</p>
-
-<p>
-Adressierungstymen:
-</p>
-
 <ul class="org-ul">
-<li>Unicast: 1 zu 1
+<li><b>Unicast</b> (one-to-one)
 <ul class="org-ul">
 <li>Zieladresse gehört zu genau einem Interface
 </li>
 </ul>
 </li>
-<li>Broadcast: 1 zu alle
+<li><b>Broadcast</b> (one-to-all)
 <ul class="org-ul">
-<li>z.B. DHCP und allgemein Service discovery
+<li>alle Interfaces des Netzwerks werden angesprochen
+</li>
+<li>z.B. DHCP und andere Formen des <i>service discovery</i>
+</li>
+<li>z.B. ist 255.255.255.255 die IPv4-Broadcast-Adresse
 </li>
 </ul>
 </li>
-<li>Multicast (benötigt IGMP): 1 zu viele
+<li><b>Multicast</b> (one-to-many)
 <ul class="org-ul">
+<li>mehrere Interfaces im Netzwerk werden angesprochen
+</li>
 <li>z.B. IP-TV
 </li>
-</ul>
-</li>
-<li>Anycast: zum nächstliegenden interface aus einer Gruppe (z.B. relevant für Load-balancing)
+<li>benötigt IGMP und multicast routing
 </li>
 </ul>
+</li>
+<li><b>Anycast</b> (one-to-nearest)
+<ul class="org-ul">
+<li>das nächstliegenden interface aus einer Gruppe wird angesprochen
+</li>
+<li>z.B. relevant für Load-balancing
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> IPv4 Header</h2>
+<div class="outline-text-2" id="text-2">
 
 <div class="figure">
 <p><img src="./gfx/ip_header.png" alt="ip_header.png" />
@@ -68,162 +96,366 @@ Header Felder:
 </p>
 
 <ul class="org-ul">
-<li>Paketgröße max \(2^{16}\) byte
-</li>
-<li>Protocol: Protokoll der Payload, z.B. (6 = TCP, 17 = UDP)
-</li>
-<li>Header Checksum:
+<li>version (4 bit): gibt die Version des IP Protokolls an (4 = IPv4; 6 = IPv6)
 </li>
 <li>Header Length: Länge des Header als Vielfache von 4 byte
 </li>
-<li>Identification: genutzt für fragmentation/reassembly
+<li>total length: Gesamtlänge (max \(2^{16}\) byte)
+</li>
+<li>protocol: Protokoll der Payload (1 =ICMP; 6 = TCP; 17 = UDP; 41 = IPv6 in IPv4 Paket)
+</li>
+<li>Header Checksum: Prüfsumme des Header
+</li>
+<li>Identification: datagram id (genutzt für fragmentation/reassembly)
 </li>
 <li>DF: Do not fragment
 </li>
 <li>MF: more fragments
+<ul class="org-ul">
+<li>gesetzt bei allen Fragmenten, außer dem letzten
+</li>
+<li>wird benötigt, um festzustellen, wann alle Fragmente eines
+Datagramms angekommen sind
 </li>
 </ul>
+</li>
+<li>destination IP address
+</li>
+<li>source IP address
+</li>
+<li>time to live (TTL): gibt an wieviele Transitsysteme (hops) ein Paket
+auf dem Weg zum Zielsystem passieren darf. Bei jedem hop wird der
+TTL-Wert um 1 dekrementiert. Bei einer TTL von 0 wird ein Paket
+verworfen.
+<ul class="org-ul">
+<li>das stellt sicher, dass Pakete nicht ewik in einem Netzwerk
+zirkulieren
+</li>
+</ul>
+</li>
+<li>optionale Felder:
+<ul class="org-ul">
+<li>timestamp: jeder Router, der das Paket verarbeitet kann seine IP
+Adresse und einen Timestamp hinzufügen
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Die bytes eines Pakets werden in <b>network byte order</b> übermittelt: erst
+bit 0-7, dann bit 8-15, dann bit 16-23 und dann bit 24-31 einer
+"Zeile".
+</p>
+
+<p>
+Die Gesamtlänge eine IP Pakets (<b>maximum transmission unit</b>; MTU) ist
+\(2^{16} byte\).
+</p>
 </div>
 
-<div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> <span class="todo TODO">TODO</span> Warum kein Routing über MAC-Adressen?</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> <span class="todo TODO">TODO</span> Warum kein Routing über MAC-Adressen?</h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
 MAC-Adressen sind nicht sinnvoll hierarchisch aufgeteilt. Sie werden
 nach Hersteller vergeben, nicht nach Lokalisation des Systems. Daher
 würde Routing über MAC-Adressen zu großen Routing-Tables führen, da
-die Route zu jedem einzelnen System gegacht werden müsste.
+die Route zu jedem einzelnen System ge-cached werden müsste.
 </p>
 </div>
 </div>
+</div>
 
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> <span class="todo TODO">TODO</span> Vorlesung IPv4</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Adressierungsmodell</h2>
+<div class="outline-text-2" id="text-3">
 <ul class="org-ul">
-<li>Reservieren von Adressen für private Netzwerke:
-<ul class="org-ul">
-<li>private Adressen können im Internet nicht geroutet werden
+<li>Addresslänge: 32 bit
 </li>
-<li>werden mehrfach genutzt (in verschiedenen privaten Netzwerken)
+<li>hierarchisches Adressierungsmodell
+<ul class="org-ul">
+<li><b>network prefix</b> gibt das Netzwerk an
+</li>
+<li><b>host address part</b> gibt den Host an
 </li>
 </ul>
 </li>
+<li><b>Subnetzmaske</b>: durch bitweise Verundung mit der Subnetzmaske kann aus
+einer IP-Adresse die Netzadresse gebildet werden
+</li>
 </ul>
 </div>
-</div>
 
-
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> NAT</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Classful Adressing</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
-Beim Übergang von Paketen zwischen privaten und öffentlichen
-Netzwerken ist <b>network address translation</b> (NAT) erforderlich.
-NAT bezeichnet: 
+Bei classfull addressing werden Adressen mit fester network prefix
+length verwendet. Die Länge des Netzwerkprefix (und damit die Klasse
+des Netzes und damit die Größe des Netzes) kann hier aus dem ersten
+Oktet bestimmt werden. Folgende Klassen sind festgelegt:
 </p>
 
 <ul class="org-ul">
-<li>das Ersetzen von privaten durch öffentliche IP-Adressen im Header
-von IP-Paketen,
+<li><b>Klasse A</b>
+<ul class="org-ul">
+<li>8 bit network prefix: <code>0XXX XXXX ...</code>
 </li>
-<li>die Zuordnung von eingehenden Paketen zu Endsystemen im lokalen
-Netzwerk auf Basis einer <b>NAT-Tabelle</b>
+<li>Adressraum: 0.X.X.X - 126.X.X.X
+</li>
+<li>16.000.000 Hosts
+</li>
+<li>127.X.X.X wird als Adresse für den localhost verwendet (loopback interface)
 </li>
 </ul>
-
-<p>
-NAT kommt typischerweise in Routern zum Einsatz.
-</p>
-
-
-<div class="figure">
-<p><img src="./gfx/nat.png" alt="nat.png" />
-</p>
-<p><span class="figure-number">Figure 2:</span> NAT: Router ersetzen private Adressen im Header der IP-Pakete</p>
-</div>
-
-
-<p>
-NAT verstößt gegen das End-zu-End Prinzip, da von außen keine
-Verbindung mit einem System in einem privaten Netzwerk (LAN) hinter
-einem Router aufgebaut werden kann. Das kann mit <b>port-forwarding</b>
-erreicht werden.
-</p>
-
-
-<p>
-<b>loopback</b>-Adresse (127.0.0.1): Paket, die an diese Adresse versendet
- werden verbleiben auf dem System.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Adressierungsmodell</h3>
-<div class="outline-text-3" id="text-1-4">
+</li>
+<li><b>Klasse B</b>
 <ul class="org-ul">
-<li>hierarchisch mit Network Prefix
+<li>16 bit network prefix: <code>10XX XXXX XXXX XXXX ...</code>
+</li>
+<li>Adressraum: 128.X.X.X - 191.X.X.X
+</li>
+<li>65.000 Hosts
 </li>
 </ul>
-</div>
-
-<div id="outline-container-sec-1-4-1" class="outline-4">
-<h4 id="sec-1-4-1"><span class="section-number-4">1.4.1</span> Classful Adressing</h4>
-<div class="outline-text-4" id="text-1-4-1">
+</li>
+<li><b>Klasse C</b>
 <ul class="org-ul">
-<li>Klasse von Netzen:
+<li>32 bit network prefix: <code>110X XXXX XXXX XXXX XXXX XXXX ...</code>
+</li>
+<li>Adressraum: 192.X.X.X - 223.X.X.X
+</li>
+<li>255 Hosts
+</li>
+</ul>
+</li>
+<li><b>Group</b> (für Multicast)
 <ul class="org-ul">
-<li>A: Präfix 8 bit
+<li>0 bit network prefix: <code>1110 XXXX ...</code>
 </li>
-<li>B: Präfix: 16 bit
+<li>Adressraum: 224.X.X.X - 239.X.X.X
 </li>
-<li>C: Präfix 32 bit
+<li>Adresse ist nicht hierarchisch aufgebaut
 </li>
-<li>Group (für Multicast)
+</ul>
 </li>
-<li>Experimental (1111 0xxx)
+<li><b>Experimental/Reserved</b>
+<ul class="org-ul">
+<li>0 bit network prefix: <code>1111 0XXX ...</code>
+</li>
+<li>Adressraum: 240.X.X.X - 255.X.X.X
 </li>
 </ul>
 </li>
 </ul>
+</div>
 
-<p>
-Vorteile:
-</p>
+<div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> Vorteile</h4>
+<div class="outline-text-4" id="text-3-1-1">
 <ul class="org-ul">
-<li>Größe der vergebenen Adressblöcke (keine
-</li>
-<li>evtl. größere Routingtabellen, wenn z.B. ein Unternehmen zwei Class C Netze benötigt
+<li>übersichtlicher Aufbau der Adressräume, da das network prefix fest ist
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1-4-2" class="outline-4">
-<h4 id="sec-1-4-2"><span class="section-number-4">1.4.2</span> Classless Adressing</h4>
-<div class="outline-text-4" id="text-1-4-2">
-<p>
-variabler Netzwerk prefix, der in Suffixschreibweise angegeben wird, z.B. 134.245.0.0/16
-</p>
-
-<p>
-Vorteile:
-</p>
-
+<div id="outline-container-sec-3-1-2" class="outline-4">
+<h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> Nachteile</h4>
+<div class="outline-text-4" id="text-3-1-2">
 <ul class="org-ul">
-<li>Größe der vergebenen Adressblöcke kann fein granularer gesteuert werden
+<li>"Verschwendung von Adressen", da der Adressraum der Netzwerke oft
+nicht voll ausgenutzt wird
+</li>
+<li>größere Routingtabellen, wenn Unternehmen mehrere Klasse C Netze
+benötigen (aber ein Klasse B Netz zu groß wäre)
+</li>
+<li>Bedarf an Netzwerken kann mit diesem Modell nicht gedeckt werden,
+z.B. gibt es schon kaum noch freie Klasse B Netze
 </li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> öffentliche/private Adressen</h3>
-<div class="outline-text-3" id="text-1-5">
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Classless Adressing</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Bei classless adressing auch <b>classless inter-domain routing</b> (CIDR)
+genannt, werden Adressen mit variabler network prefix length
+verwendet. Der network prefix muss hier in Suffixschreibweise
+angegeben werden, z.B. 134.245.0.0/16
+</p>
+
+<p>
+Classless addressing ermöglicht bessere <b>Adressaggregation</b> in routing
+tables. Z.B. können die Einträge
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="right">200.71.0.0</td>
+</tr>
+
+<tr>
+<td class="right">200.71.1.0</td>
+</tr>
+
+<tr>
+<td class="right">200.71.2.0</td>
+</tr>
+
+<tr>
+<td class="right">&#x2026;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+zusammengefasst werden zu 
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">200.71.0.0/16</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Adressaggregation ist möglich, da Pakete an den Eintrag mit dem
+<b>longest prefix match</b> weitergleitet werden.
+</p>
+</div>
+
+<div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> Vorteile</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<ul class="org-ul">
+<li>kleiner routing tables durch <b>Adressaggregation</b> möglich
+<ul class="org-ul">
+<li>effizienteres advertisement von routing informationen
+</li>
+</ul>
+</li>
+<li>weniger Verschwendung von IP-Adressen, da die Größe der vergebenen
+Adressblöcke feiner gesteuert werden kann, als bei classfull
+addressing
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> spezielle Adressen</h2>
+<div class="outline-text-2" id="text-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> spezielle Adressen in IPv4</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">präfix</th>
+<th scope="col" class="left">host address part</th>
+<th scope="col" class="left">auftreten</th>
+<th scope="col" class="left">Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">0</td>
+<td class="left">0</td>
+<td class="left">source</td>
+<td class="left">dieses Interface in diesem Netzwerk</td>
+</tr>
+
+<tr>
+<td class="left">0</td>
+<td class="left">X</td>
+<td class="left">source</td>
+<td class="left">Interface X in diesem Netzwerk</td>
+</tr>
+
+<tr>
+<td class="left">X</td>
+<td class="left">0</td>
+<td class="left">source</td>
+<td class="left">dieses Interface in Netzwerk X</td>
+</tr>
+
+<tr>
+<td class="left">X</td>
+<td class="left">1&#x2026;1</td>
+<td class="left">dest</td>
+<td class="left">broadcast in Netz X</td>
+</tr>
+
+<tr>
+<td class="left">1&#x2026;1</td>
+<td class="left">1&#x2026;1</td>
+<td class="left">dest</td>
+<td class="left">broadcast in diesem Netz</td>
+</tr>
+
+<tr>
+<td class="left">127</td>
+<td class="left">X.X.X</td>
+<td class="left">source, dest</td>
+<td class="left">loopback zum localhost</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> öffentliche und private Adressen</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Da nicht genug öffentliche IP Adressen verfügbar sind um jedem Client
+eine zuzuweisen (oder manche System nicht nur lokal erreichbar sein
+müssen), wurde der IP-Adressraum in private und öffentliche Adressen
+unterteilt.
+</p>
+
 <ul class="org-ul">
 <li>öffentliche Adressen können weltweit geroutet werden
+</li>
+<li>private Adresse werden nur innerhalb des Netzes geroutet (nicht im
+Internet)
+<ul class="org-ul">
+<li><code>10.0.0.0/8</code> (Subnetzmaske: <code>255.0.0.0</code>)
+</li>
+<li><code>172.16.0.0/12</code> (Subnetzmaske: <code>255.240.0.0</code>)
+</li>
+<li><code>192.168.0.0./16</code> (Subnetzmaske: <code>255.255.0.0</code>)
+</li>
+</ul>
 </li>
 <li>Gründe für die Festlegung eines privaten Adressraums:
 <ul class="org-ul">
@@ -237,11 +469,57 @@ weiteres von außen erreicht werden
 </ul>
 
 <p>
-ARP: IP -&gt; MAC
+Um aus einem privaten Netz Daten in ein öffentliches Netz zu schicken,
+ist ein <b>Router</b> nötig, der <b>networt address translation</b> durchführt.
+</p>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> NAT</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Beim Übergang von Paketen zwischen privaten und öffentlichen
+Netzwerken ist <b>network address translation</b> (NAT) erforderlich.
+NAT bezeichnet: 
 </p>
 
+<ul class="org-ul">
+<li>das Ersetzen von privaten durch öffentliche IP-Adressen im Header
+von IP-Paketen auf Basis einer <b>NAT table</b>
+<ul class="org-ul">
+<li>bei ausgehenden Paketen wird die source address (und port) ersetzt
+durch die Adresse des routers im öffentlichen Netzwerk und eine
+neue port nummern
+</li>
+<li>bei eingehenden Paketen wird die destination address (und port)
+ersetzt durch die zugehörige Adresse (und port) im privaten
+Netzwerk (diese wird anhand der NAT table ermittelt)
+</li>
+</ul>
+</li>
+<li>die Zuordnung von eingehenden Paketen zu Endsystemen im lokalen
+Netzwerk erfolgt auf Basis einer <b>NAT table</b>
+</li>
+<li>da die Zuordnung auf Basis der Portnummer erfolgt, sind bis zu
+\(2^{16}\) simulane Verbindungen
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./gfx/nat.png" alt="nat.png" />
+</p>
+<p><span class="figure-number">Figure 2:</span> Router ersetzen private Adressen im Header der IP-Pakete (NAT)</p>
+</div>
+
+
+
 <p>
-RARP: MAC -&gt; IP
+NAT verstößt gegen das End-zu-End Prinzip, da von außen keine
+Verbindung mit einem System in einem privaten Netzwerk (LAN) hinter
+einem Router aufgebaut werden kann, weil Einträge in der NAT table nur
+von ausgehenden Paketen gesetzt werden. Das kann mit <b>port-forwarding</b>
+erreicht werden.
 </p>
 </div>
 </div>

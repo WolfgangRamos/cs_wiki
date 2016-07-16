@@ -1,0 +1,133 @@
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Internetarchitektur</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Die Netzwerkarchitektur des Internets wird auch als TCP/IP bezeichnet.
+Das hat historische Gründe: "Historically, IP was the connectionless
+datagram service in the original Transmission Control Program
+introduced by Vint Cerf and Bob Kahn in 1974; the other being the
+connection-oriented Transmission Control Protocol (TCP). The Internet
+protocol suite is therefore often referred to as TCP/IP" Quelle:
+<a href="https://en.wikipedia.org/wiki/Internet_Protocol">Wikipedia</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Zentrale Prinzipien</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li><b>End-to-End (Übertragung)</b>
+<ul class="org-ul">
+<li>Transitsysteme garantieren keine erfolgreiche Übermittlung von
+Paketen
+</li>
+<li>End-Systeme müssen sich ggf. um die Fehlerbehandlung kümmern
+</li>
+<li>Vorteile: 
+<ul class="org-ul">
+<li>Fehlerbehandlung ist bei unterschiedlichen Services unterschiedlich
+wichtig. Bei Datenübertragung sind fehlende Pakete fatal. Bei Voice
+over IP ist ein fehlendes Paket weniger schlimm, als der Overhead,
+der durch Fehlerkorrektur (wie bei TCP) entstehen würde.
+</li>
+<li>Routing von Paketen kann schneller erfolgen
+</li>
+</ul>
+</li>
+<li>Nachteile:
+<ul class="org-ul">
+<li>Fehlerbehebung zwischen Endknoten ist aufwendiger, als das Beheben
+von Fehlern zwischen adjazenten Netzknoten
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><b>Separation of routing and transmission control</b>
+<ul class="org-ul">
+<li>End-systeme routen nicht 
+</li>
+<li>Transitsysteme berechnen forwarding tables (routing tables)
+</li>
+<li>Forwarding erfolgt durch Nachschlagen des entsprechenden Eintrags
+in der forwarding table
+</li>
+</ul>
+</li>
+<li><b>Overlay Principle</b>
+<ul class="org-ul">
+<li>alle Netzwerkfunktionen (routing, etc.) sind im internet layer
+gebündelt, welches als zentrales Protokoll IP verwendet
+</li>
+<li>minimale Anforderungen an die Übertragung von Daten in der
+darunterliegenden Schicht: unzuverlässige Übertragung von frames
+genügt
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Netzwerktopologie der Internetkernarchitektur: Mesh
+</p>
+
+<p>
+Netzwerktopologie des Internets mesh (Kern) und star
+</p>
+
+<p>
+Switching-Technologie der Internetkernarchitektur: packet switching
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Architektur</h2>
+<div class="outline-text-2" id="text-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Schichten der Internetarchitektur gemäß RFC 1122</caption>
+
+<colgroup>
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">&#xa0;</th>
+<th scope="col" class="left">Schicht</th>
+<th scope="col" class="left">Protokoll</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">4</td>
+<td class="left">application layer</td>
+<td class="left">DNS, FTP</td>
+</tr>
+
+<tr>
+<td class="right">3</td>
+<td class="left">transport layer</td>
+<td class="left">TCP, UDP</td>
+</tr>
+
+<tr>
+<td class="right">2</td>
+<td class="left">internet layer</td>
+<td class="left">IP, ICMP</td>
+</tr>
+
+<tr>
+<td class="right">1</td>
+<td class="left">link layer</td>
+<td class="left">Ethernet, ARP, MAC</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>

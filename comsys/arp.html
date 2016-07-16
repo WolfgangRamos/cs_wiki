@@ -2,20 +2,70 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Adress Resolution Protocol</a></li>
+<li><a href="#sec-1">1. Ablauf</a></li>
+<li><a href="#sec-2">2. ARP Cache</a></li>
+<li><a href="#sec-3">3. Probleme</a></li>
+</ul>
+</div>
+</div>
+---
+layout: page
+title: Adress Resolution Protocol (ARP)
+---
+
+<p>
+Mit ARP kann zu einer gegebenen IP Adresse die zugehörige MAC Adresse ermittelt werden.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Ablauf</h2>
+<div class="outline-text-2" id="text-1">
+<ol class="org-ol">
+<li>Quellsystem sendet <code>ARPREQUEST</code> als MAC broadcast (Adresse <code>ff ff ff
+   ff ff ff</code>) an alle Systeme des lokalen Netzes
+<ul class="org-ul">
+<li>der <code>ARPREQUEST</code> enthält die MAC und die IP Adresse des Senders als
+source address
+</li>
+<li>da der Sender beim <code>ARPREQUEST</code> seine IP und MAC Adresse als
+broadcast geschickt hat, können alle Systeme im lokalen Netz
+ihren <b>arp cache</b> ggf. aktualisieren
+</li>
+</ul>
+</li>
+<li>angesprochenes System antwortete mit einem <code>ARPREPLY</code> an die MAC Adresse des Senders
+</li>
+<li>Sender aktualisiert seinen ARP Cache (auch <i>arp table</i>) auf Basis der
+ausgetauschten Daten
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> ARP Cache</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>Einträge verfallen nach 20 Minuten
+</li>
+<li>Ausgabe unter Linux mit <code>sudo arp -a</code>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Adress Resolution Protocol</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-ARP: IP -&gt; MAC
-</p>
-
-<p>
-RARP: MAC -&gt; IP
-</p>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Probleme</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>Requests und Replies werden nicht autentifiziert, sie können manipuliert werden
+</li>
+<li>Replies werden auch ohne vorangegangene Requests verarbeitet
+<ul class="org-ul">
+<li>ermöglicht <i>ARP Spoofing / ARP Poisoning</i> (z.B. mit Ettercap)
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>

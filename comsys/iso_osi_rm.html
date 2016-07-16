@@ -1,0 +1,515 @@
+---
+layout: page
+title: ISO/OSI Referenzmodell
+---
+
+<p>
+Das ISO/OSI Referenzmodell ist ein weltweit akzeptiertes
+(Referenz-)modell für Kommunikationssysteme. Es stellt eine gemeinsame
+Basis für die Entwicklung von Standards dar.
+</p>
+
+<p>
+Prinzipien des OSI Referenzmodells
+</p>
+
+<ul class="org-ul">
+<li><i>abstrakte Spezifikation</i>, d.h. Spezifikation der Funktionalität, nicht
+der Implementierung
+</li>
+<li><i>hierarchischer Aufbau</i>, d.h. Aufteilung eines komplexen Systems in Schichten
+</li>
+</ul>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Schichten</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Eine Schicht:
+</p>
+
+<ul class="org-ul">
+<li>ist eine abstrakte Einteilungsebene, die festgelegte Dienste
+erbringt
+</li>
+<li>enthält <b>Instanzen</b> (es können mehrere sein) die diese Dienste
+erbringen; z.B. enthält die Transportschicht (4) eine "TCP-Instanz"
+und eine "UDP-Instanz".
+</li>
+<li>erbringt (mittels ihrer Instanzen) Dienste ausschließlich für
+Instanzen der direkt darüberliegenden Schicht
+</li>
+<li>die Instanzen einer Schicht nutzen <i>ausschließlich</i> die Dienste der
+direkt darunterliegenden Schicht
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Instanzen</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Eine Instanz:
+</p>
+
+<ul class="org-ul">
+<li>erbringt einen Dienst einer Schicht
+</li>
+<li>eine Instanz einer Schicht auf einem System kommuniziert mit einer
+<b>peer-Instanz</b> (die gleichen Instanz in der gleichen Schicht auf einem
+anderen System) über ein festgelegtes <b>Protokoll</b>. Daher werden
+Protokolle oft mit Instanzen gleichgesetzt. Z.B. kommuniziert die
+TCP Instanz auf einem System mit der TCP Instanz auf einem anderen
+System ausschließlich unter Nutzung der Dienste des Network Layer.
+</li>
+<li>Instanzen können verbindungsorientiert oder verbindungslos
+miteinander kommunizieren
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> <span class="todo TODO">TODO</span> Adressierung von Instanzen erklären</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li><b>Service access point</b> (SAP): die Schnittstelle, die eine Instanz den
+Instanzen der direkt darüberliegenden Schicht anbietet, z.B. Port 80
+als SAP zwischen TCP (Schicht 3 der Internetarchitektur) und HTTP
+(Schicht 4 der Internetarchitektur).
+</li>
+<li><b>address</b>: identifiziert die zu nutzenden \(N\)-SAPs einer Verbindung, z.B.
+IP Adresse mit mehreren Portangaben
+</li>
+<li><b>Connection endpoint identifier</b>: An einer SAP können einzelne
+Verbindung durch connection endpoint identifier unterschieden
+werden, z.B. ein TCP Socket
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Datenverarbeitung innerhalb von Instanzen</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li><b>Protocol-data-unit</b> (PDU): die Daten, die eine Instanz von einer
+Instanz der direkt darüberliegenden Schicht zur Verarbeitung
+übergeben werden (Bezeichnung aus Sicht der Instanz, welche die
+Daten übergibt)
+</li>
+<li><b>Service-data-unit</b> (SDU): die Daten, die eine Instanz von einer
+Instanz der direkt darüberliegenden Schicht zur Verarbeitung
+übergeben werden (Bezeichnung aus Sicht der Instanz, welche die
+Daten erhält).
+</li>
+<li><b>Protocol control information</b> (PCI): Daten, die eine Instanz zur
+Erbringung ihres Dienstes benötigt (ein <i>Header</i>). PCI und SDU bilden
+zusammen die PDU einer Instanz.
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./gfx/padding_in_layers.png" alt="padding_in_layers.png" />
+</p>
+<p><span class="figure-number">Figure 1:</span> Sukzessive Verschachtelung von protocol-data-units in den Schichten des OSI Modells</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./gfx/osi_layer_data_units.png" alt="osi_layer_data_units.png" />
+</p>
+<p><span class="figure-number">Figure 2:</span> OSI Layer Data Units</p>
+</div>
+
+<p>
+Arten der Verbindung/Aufteilung von SDUs zu PDUs:
+</p>
+
+<ul class="org-ul">
+<li><b>Neighter segmenting nor blocking</b>: aus einer SDU wird genau eine PDU
+gebildet
+</li>
+<li><b>Blocking</b>: mehrere SDUs werden zu einer PDU zusammengefasst. Die
+Umkehroperation heißt <b>Deblocking</b>.
+</li>
+<li><b>Segmenting</b>: eine SDU wird auf mehrere PDUs aufgeteilt. Die
+Umkehroperation heißt <b>Reassembling</b>.
+</li>
+<li><b>Concatenation</b>: eine \(N-1\)-PDU wird gebildet, indem eine \(N\)-PDU als
+PCI und eine zweite \(N\)-PDU als SDU verwendet werden. Die
+Umkehroperation heißt <b>Separation</b>
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./gfx/osi_processing_of_data_units.png" alt="osi_processing_of_data_units.png" />
+</p>
+<p><span class="figure-number">Figure 3:</span> Verbindung/Aufteilung von SDUs zu PDUs</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Protokolle</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Ein Protokoll legt den Ablauf der Kommunikation zwischen zwei
+<b>peer-Instanzen</b> (dieselben Instanzen derselben Schicht, auf
+unterschiedlichen Systemen) fest. Ein Protokoll bildet somit eine
+logische Verbindung zwischen zwei Instanzen derselben Schicht.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Schichten des ISO/OSI RM</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Merksatz: <i>Please do not throw salami pizza away</i>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Schichten des IOS/OSI Referenzmodells</caption>
+
+<colgroup>
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">Nr</th>
+<th scope="col" class="left">Schicht</th>
+<th scope="col" class="left">bereitgestellter Dienst</th>
+<th scope="col" class="left">Einheiten (PDUs)</th>
+<th scope="col" class="left">Protokolle (Entitäten)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">7</td>
+<td class="left"><b>Application Layer</b></td>
+<td class="left">anwendungsspezifische Dienste</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="right">6</td>
+<td class="left"><b>Presentation Layer</b></td>
+<td class="left">systemunabhängige, korrekte Darstellung der Daten, die Applikations-Instanzen austauschen</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="right">5</td>
+<td class="left"><b>Session Layer</b></td>
+<td class="left">Organisation und Synchronisation des (Daten-)Austauschs zwischen kooperierenden Instanzen</td>
+<td class="left">SOCKS</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="right">4</td>
+<td class="left"><b>Transport Layer</b></td>
+<td class="left">End-zu-End Transport von <i>segements</i></td>
+<td class="left">segments, datagrams</td>
+<td class="left">TCP, UDP</td>
+</tr>
+
+<tr>
+<td class="right">3</td>
+<td class="left"><b>Network Layer</b></td>
+<td class="left">Routing und Forwarding von packets zwischen Endsystemen über Transitsysteme</td>
+<td class="left">packets</td>
+<td class="left">IPv4, IPv6, ICMP</td>
+</tr>
+
+<tr>
+<td class="right">2</td>
+<td class="left"><b>Data Link Layer</b></td>
+<td class="left">Übertragung von <i>frames</i> zwischen benachbarten Systemen über eine einzelne Verbindung</td>
+<td class="left">frames</td>
+<td class="left">Mac-Adressen, Ethernet, CSMA/CD</td>
+</tr>
+
+<tr>
+<td class="right">1</td>
+<td class="left"><b>Physical Layer</b></td>
+<td class="left">unzuverlässige Übertragung von bits auf dem Übertragungsmedium</td>
+<td class="left">bits</td>
+<td class="left">Ethernet, WLAN, 10 BaseT</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Schicht 1-4 sind <i>transportorientiert</i>, d.h. sie haben die Funktion
+Daten zu übertragen. Schicht 5-7 sind <i>anwendungsorientiert</i>.
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Vorteile der Aufteilung in Schichten</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>Abstraktion: höhere Schichten abstrahieren von der Representation
+der Daten in darunterliegenden Schichten
+</li>
+<li>modularer Aufbau:
+<ul class="org-ul">
+<li>Spezifikation der Instanzen/Protokolle einer Schicht kann
+unabhängig von anderen Schichten verändert werden
+</li>
+<li>Implementierung/Realisierung von Instanzen/Protokollen kann
+unabhängig von anderen Schichten und Instanzen verändert werden
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Nachteile der Aufteilung in Schichten</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>Overhead im Netzwerk durch PCIs (Header) 
+</li>
+<li>komplex: höherer Aufwand bei der Realisierung von Systemen, die
+miteinander kommunizieren
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Regeln zur Festlegung der Schichten</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Die Festlegung der Schichten im OSI Referenzmodell folgt folgenden
+Regeln:
+</p>
+
+<ol class="org-ol">
+<li>Erzeuge keine unnötigen Schichten (um die Aufgabe Schichten zu
+Beschreiben und miteinander in Beziehung zu stellen nicht unnötig
+kompliziert zu machen).
+</li>
+<li>Wähle Schichtgrenzen so, dass die Beschreibung von Diensten der
+Schichten und die Beschreibung der Interaktionen zwischen den
+Schichten kurz ist
+</li>
+<li>Wähle Schichtgrenzen an den Stellen, wo Funktionen deutlich
+unterschiedlich hinsichtlich der verwendeten Technologien oder der
+Prozesse sind.
+</li>
+<li>Bündele ähnliche FUnktionen in einer Schicht
+</li>
+<li>Wähle Schichtgrenzen aufgrund von (bewährten) Erfahrungswerten
+</li>
+<li>Wähle Schichten so, dass eine Schicht unabhängig von anderen
+Schichten grundlegend verändert werden kann, ohne dass sich die
+Services, die diese Schicht bereitstellt oder nutzt verändern.
+</li>
+<li>Wähle Schichtengrenzen an Stellen, an denen in Zukunft ein
+standardisierte Interface nützlich seien könnte
+</li>
+<li>Wähle Schichtgrenzen an den Stellen, an denen die Verarbeitung von
+Daten andere Abstraktionen erfordert
+</li>
+<li>Die Protokolle/Funktionalität einer Schicht soll unabhängig von
+anderen Schichten veränderbar sein.
+</li>
+<li>Jede Schicht soll nur mit ihren direkt angrenzenden Schichten
+kommunizieren (die darüber und die darunter)
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> <span class="todo TODO">TODO</span> Data Link Schicht</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Funktionen:
+</p>
+
+<ul class="org-ul">
+<li>Fehlererkennung/-behandlung
+</li>
+<li>Adressierung
+</li>
+<li>Multiplexing
+</li>
+<li>MAC
+</li>
+<li>Routing zwischen verschiedenen LANs
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Netzwerkschicht</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+Der Netzwerkschicht liegt ein Netzwerkmodell zugrunde, das zwischen
+<b>Endsystemen</b> und <b>Transitsystemen</b> unterscheidet:
+</p>
+
+<ul class="org-ul">
+<li><b>Endsystem (host):</b> 
+
+<ul class="org-ul">
+<li>Datenquelle oder -ziel; hosten Anwendungen
+</li>
+</ul>
+</li>
+
+<li><b>Transitsystem:</b>
+
+<ul class="org-ul">
+<li>Aufgabe: Weiterleitung von Daten von Quelle zum Ziel
+</li>
+<li>keine Verarbeitung der Daten, aber ggf. Reformattierung, Filterung,
+Umcodierung
+</li>
+<li>z.B. Router, Switches, Reapeater, Hubs, Firewalls, Gateways, etc.
+</li>
+</ul>
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./gfx/network_layer.png" alt="network_layer.png" />
+</p>
+<p><span class="figure-number">Figure 4:</span> Nutzung von Schichten in End- und Transitsystemen</p>
+</div>
+
+<p>
+zentrale Funktionen:
+</p>
+
+<ul class="org-ul">
+<li>Addressierung in Netzwerken (Festlegung, wie Addressierung in
+Netzwerken erfolgt)
+
+<ul class="org-ul">
+<li>z.B. IPv4:
+
+<ul class="org-ul">
+<li>Eine Adresse besteht aus 32 bit
+</li>
+<li>Eine Adresse unterteilt sich in ein <i>network prefix</i> mit
+variabler Länge (geschrieben z.B. als 200.13.67.91/17, wobei
+die 17 anzeigt, dass das network prefix aus 17 bits besteht)
+gefolgt von einem <b>host address part</b>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li>packet forwarding
+
+<ul class="org-ul">
+<li>Weiterleitung von Paketen gemäß der aktuellen Routing Table des
+Systems
+</li>
+</ul>
+</li>
+
+<li>Festlegung von routes (das erfolgt über die Aktualisierung von
+Routing Tables)
+</li>
+<li>Erkennung und Elimination von <i>circulating packages</i> (z.B. Pakete,
+die unter Transitsystemen "im Kreis" geschickt werden)
+</li>
+<li>Paket Fragementierung und Reassembly
+</li>
+</ul>
+
+<p>
+optionale Funktionen:
+</p>
+
+<ul class="org-ul">
+<li>Stauen und Verwerfen von Paketen
+</li>
+<li>Festlegung von Grenzen für <i>delay</i> und <i>delay jitter</i>
+</li>
+<li>Transition zwischen Heterogenen Netzwerken, z.B. Transition von
+Paketen aus einem Ethernet Netzwerk in ein WLAN Netzwerk und
+umgekehrt.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Transportschicht</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+Funktionen:
+</p>
+
+<ul class="org-ul">
+<li>Fehlererkennung und -behandlung in Endsystemen
+</li>
+<li>End-zu-End Flusskontrolle (z.B. Festlegung des <i>sliding window</i>)
+</li>
+<li>Segmentierung und Reassembly von Paketen
+</li>
+<li>Ordnen empfangener Pakete anhand der Sequenznummer
+</li>
+</ul>
+
+<p>
+Im Internet wird der Service der Transprotschicht über die Socket API
+umgesetzt:
+</p>
+
+
+<div class="figure">
+<p><img src="./gfx/socket_api.png" alt="socket_api.png" />
+</p>
+<p><span class="figure-number">Figure 5:</span> Funktionen der Socket API</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Presentation Layer</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+Funktionen:
+</p>
+
+<ul class="org-ul">
+<li>Serialisierung ?
+</li>
+<li><b>Marshalling/Unmarshalling</b>: Codierung/Decodierung von Paketen
+</li>
+<li>Nachrichtenencodierung: Übersetzung von Anwendungsdaten (z.B.
+Objekte in einer Java-Anwendung) in das Austauschformat (z.B. XML)
+</li>
+<li>Übersetzung vom Zeichensatz der Anwendung in den Zeichensatz des
+Transfers
+</li>
+</ul>
+</div>
+</div>
+</div>

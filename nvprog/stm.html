@@ -1,0 +1,281 @@
+---
+layout: page
+title: Software Transactional Memory (STM)
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Locking Ansätze</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>optimistische Ansatz: Vor dem Commit wird geprüft, ob die Transaktion noch valide ist.
+</li>
+<li>pessimistischer Ansatz: Ressourcen werden direkt gelockt
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> STM</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Ziel von Transaktionen:
+</p>
+
+<ul class="org-ul">
+<li>Deadlockfreiheit
+</li>
+</ul>
+
+<p>
+Funktionsweise:
+</p>
+
+<ul class="org-ul">
+<li>Transaktionen werden auf einer lokaler Kopie der Daten ausgeführt.
+</li>
+<li>Dabei wird ein <b>readset</b> (RS) und eine <b>writeset</b> (WS) angelegt.
+</li>
+<li>Das readset enthält die Versionsnummer mit der die entsprechende
+Variable gelesen wurde.
+</li>
+<li>Bevor die Ergebnisse der Transaktion tatsächlich in die Daten
+übertragen werden (<b>commit</b>), werden RS und WS <b>validiert</b>, d.h. die
+gelesene Versionsnummern der Variablen werden mit den aktuellen
+Versionnummern der Variablen verglichen. Dazu müssen RS und WS
+gelockt werden.
+</li>
+<li>Vorzeitiges <b>rollback</b> kann sich ergeben, wenn eine Variable erneut
+mit anderer Versionsnummer gelesen wird.
+</li>
+</ul>
+
+<p>
+Komposition von Transaktionen
+</p>
+
+<ul class="org-ul">
+<li>Sequentialisierung (<code>atomically</code>)
+</li>
+<li>orElse
+<ul class="org-ul">
+<li>wenn der zweite Fall in ein <code>retry</code> läuft, dann wird die gesamte
+Transaktion erneut durchgeführt
+</li>
+</ul>
+</li>
+<li>Verzweigung (if &#x2026; else)
+</li>
+<li>Invarianten (<code>always</code>, <code>alwaysSucceed</code>)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-0-1" class="outline-4">
+<h4 id="sec-2-0-1"><span class="section-number-4">2.0.1</span> <span class="todo TODO">TODO</span> Wird die Versionsnummer auch im writeset protokolliert</h4>
+<div class="outline-text-4" id="text-2-0-1">
+<p>
+Alternative Implementierung in <code>stm2.erl</code>
+</p>
+
+<ul class="org-ul">
+<li><code>lock</code>-Nachricht muss dann auch durch den Hilfsprozess geschickt werden
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Retry</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<i>busy waiting</i> im <code>retry</code> kann verhindert werden durch: 
+</p>
+
+<ul class="org-ul">
+<li>readset locken 
+</li>
+<li>readset validieren (wenn nicht valide: rollback; wenn valide: bei
+TVars im Readset registrieren); readset danach jeweils unlocken
+</li>
+<li>suspendieren, bis eine Variable in meinem Readset verändert wird. 
+</li>
+<li>TVAR führt eine Liste mit, mit Prozessen, die auf diese TVar warten.
+Wenn write<sub>tvar</sub> dieser TVar aufgerufen wird, werden alle wertenden
+Prozesse gweckt.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Probleme von Transaktionen</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Beispiel:
+</p>
+
+<ul class="org-ul">
+<li>TVars: <code>t1</code>, <code>t2</code>
+</li>
+<li>Invariante: alle Transaktionen sollen gewährleisten, dass der Inhalt
+von t1 und t2 identisch ist.
+</li>
+</ul>
+
+<p>
+Betrachte folgede Transaktion:
+</p>
+
+<pre class="example">
+do
+  v1 &lt;- readTVar t1
+  v2 &lt;- readTVar t2
+  if v1 /= v2 then loop
+              else return()
+
+loop = loop
+</pre>
+
+<p>
+Das Problem entsteht, wenn zwischen z.B. folgende Transaktion zwischen
+den <code>readTVar</code> Aufrufen ausgeführt wird
+</p>
+
+<pre class="example">
+do
+  writeTVar t1 42
+  writeTVar t2 42
+</pre>
+
+<p>
+Das die Transkation mit den readTVars dann invalid ist, kann erst am
+Ende der Transaktion erkannt werden (beim Validieren). Da das Programm
+aber in eine Endlosschleife läuft, kann das nicht passieren.
+</p>
+
+<p>
+Bei GHC ist das unkritisch, da dieser <code>loop</code> als Endlosschleife erkennen
+würde.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Invarianten</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Implementierung von Invarianten in Haskell <code>STM</code>
+</p>
+
+<pre class="example">
+alwaysSucceeds (do
+  v1 &lt;- readTVar t1
+  v2 &lt;- readTVar t2
+  if v1 /= v2 then retry
+              else return ()
+</pre>
+
+<p>
+Jede Transaktion wird nur dann commited, wenn die Transaktion von
+<code>alwaysSucceeds</code> erfolgreich ist.
+</p>
+
+<p>
+Eine Invarianten sollten keine TVars schreiben, da im Allgmeinen nicht
+klar ist, was dann geschehen soll. Das könnte man natürlich konkreteiseren, aber GHC tut dies z.B. nicht.
+</p>
+
+<pre class="example">
+always (do
+  v1 &lt;- readTVar t1
+  v2 &lt;- readTVar t2
+  return (v1 /= v2))
+</pre>
+
+<p>
+Überprüfung von Invarianten:
+</p>
+
+<ul class="org-ul">
+<li>überprüfe alle Invarianten am Ende jeder Transaktion auf Zustand,
+welcher <b>nach</b> dem commit vorliegt. D.h. das <i>write set</i> der
+aktuellen Transaktion muss der Überprüfung der Invarianten mit
+übergeben werden. Eigentlich nicht alle, sondern nur die, die
+Invarianten, deren letztes RS betroffen ist (bei jeder Überprüfung
+der Invariante kann sich ein anderes Readset ergeben.
+</li>
+</ul>
+
+<p>
+<code>always</code> und <code>alwaysSucceeds</code> prüfen die übergeben Invariante sofort,
+wenn diese Validierung fehl schlägt, dann wird die Invariante nicht
+übernommen, ansonsten wird sie übernommen und muss von da an am Ende
+jeder nachfolgenden Transaktion gelten. Insbesondere auch am Ende der
+Transaktion, in der die Invariante etabliert wird. Gilt die Invariante
+nicht am Ende der aktuellen Transaktion, dann wird die Invariante auch
+nicht übernommen.
+</p>
+
+<pre class="example">
+install = do
+  writeTVar t1 42
+  writeTVar t2 42
+  -- invariante
+</pre>
+
+<p>
+Invarianten können nicht wieder zurück genommen werden.
+</p>
+
+<p>
+Invarianten unterstützen kompositionelles Arbeiten, da sich andere
+Transaktionen nicht mehr um die Erfüllung dieser Invarianten kümmern
+müssen. Hier entsteht aber ein Trade-off zwischen Programmierarbeit und
+Performanz.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Grenzen von Transaktionen</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>die Wahrscheinlichkeit eines rollbacks steigt mit der Länge der
+Transaktion. Sehr lange Transkationen können dadurch zu einem
+livelock führen.
+
+<ul class="org-ul">
+<li>Bestimmte Datenstrukturen, z.B. verkettete Listen sind
+problematisch für die Verwendung in Transaktionen, da beim
+Durchlaufen der Liste viele Elemente gelesen werden
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> <span class="todo TODO">TODO</span> Transaktinsbasierten Channel zu einer Queue umwandeln können</h3>
+</div>
+
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> <span class="todo TODO">TODO</span> Idee der zweiten Version der STM implementierung erklären können</h3>
+</div>
+
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> <span class="todo TODO">TODO</span> erkären, wie retry ohne busy waiting möglich ist</h3>
+</div>
+
+<div id="outline-container-sec-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> <span class="todo TODO">TODO</span> pessimistische Implementierung von STM in Erlang (siehe Übung)</h3>
+</div>
+
+<div id="outline-container-sec-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="section-number-3">2.9</span> <span class="todo TODO">TODO</span> Web-Anwendungen von STM</h3>
+</div>
+</div>

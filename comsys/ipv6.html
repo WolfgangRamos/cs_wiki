@@ -1,1 +1,404 @@
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Adressierungsmodell</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Adressierungstypen</a></li>
+<li><a href="#sec-1-2">1.2. Gültigkeitsbereiche (Scopes)</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1. host auto configuration</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3. spezielle Adressen</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. IPv6 Header</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Extension headers</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Übergang von IPv4 zu IPv6</a></li>
+</ul>
+</div>
+</div>
+---
+layout: page
+title: IPv6
+---
 
+<p>
+Grund für Wechsel von IPv4 zu IPv6:
+</p>
+
+<p>
+Die Anzahl der freien Adressen im Adressraum von IPv4 wird allmählich
+knapp. Die IANA hat bereits 2011 die letzten freien <code>/8</code>
+IPv4-Adressblöcke an die Regional Internet Registrars (RIRs) vergeben.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Adressierungsmodell</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Adresslänge: 128 bit
+</li>
+<li>Adressnotation:
+<ul class="org-ul">
+<li><code>X:X:X:X:X:X:X:X</code>, wobei jede <code>X</code>-Gruppe aus 4 Hexzahlen besteht
+</li>
+<li>führenden Nullen sind in der Notation optional
+</li>
+<li>aufeinanderfolgende Gruppen von Nullen können abgekürzt werden zu <code>::</code>
+</li>
+</ul>
+</li>
+<li>jede IP-Adresse hat
+<ul class="org-ul">
+<li>einen <a href="#sec-1-1">Adressierungstyp</a>
+</li>
+<li>einen Scope, in dem sie geroutet wird
+</li>
+<li>eine lifetime (Gültigkeitsdauer). Diese ist standardmäßig
+unendlich. Durch Router Advertisment (RA) wird die lifetime
+resettet. Läuft die Zeit ab, wird Adresse ungültig.
+</li>
+</ul>
+</li>
+<li>keine Unterteilung in private und öffentliche Adressen (NAT nicht
+notwendig)
+</li>
+<li>Verbesserte Autokonfiguration der Netzwerkeinstellungen (besser als
+DHCP)
+</li>
+<li>IPv6 Interfaces
+<ul class="org-ul">
+<li>können mehrere Adressen vom Typ unicast, anycast und multicast
+haben
+</li>
+<li>haben eine loopback-Adresse: <code>::1/128</code>
+</li>
+<li>eine link-local Adresse
+</li>
+<li>eine <b>solicited-node multicast address</b> für host autoconfiguration
+</li>
+</ul>
+</li>
+<li>eine unicast oder anycast IPv6 Adresse besteht aus
+<ul class="org-ul">
+<li>einen Netzwerkpräfix (64 bit)
+</li>
+<li>einer interface ID (64 bit)
+</li>
+</ul>
+</li>
+<li>eine multicast IPv6 Adresse besteht aus
+<ul class="org-ul">
+<li>einem 16 bit Präfix
+<ul class="org-ul">
+<li>starten mit <code>FF</code>
+</li>
+<li>4 bit <b>lifetime</b> (0 = permanent; 1 = temporary)
+</li>
+<li>4 bit scope (1 = node; 2 = link; 5 = site; 8 = organization; E = global)
+</li>
+</ul>
+</li>
+<li>einer 112 bit Group ID
+</li>
+<li>reserviert IPv6 multicast adressen:
+<ul class="org-ul">
+<li>broadcast im lokalen Netzwerk: <code>FF02::1</code>
+</li>
+<li>broadcast an alle router (<b>all routers multicast group</b>): =FF02::1
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li>Aggregation von Adressen in routing tables erfolgt auf Basis der
+Prefixes (Vorteile: kleinere routing tables, weniger Austausch von routing
+informationen nötig)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Adressierungstypen</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li><b>unicast</b> (one-to-one): Adressierung genau eines Interfaces
+<ul class="org-ul">
+<li>64 bit Präfix
+</li>
+<li>64 bit Interface ID
+</li>
+</ul>
+</li>
+<li><b>multicast</b> (one-to-many): Adressierungung aller Interfaces mit
+dieser multicast Adresse (z.B. alle Router im lokalen Netzwerk)
+<ul class="org-ul">
+<li>16 bit Präfix (startet mit <code>11111111</code>)
+</li>
+<li>112 bit Group ID
+</li>
+</ul>
+</li>
+<li><b>anycast</b> (one-to-nearest): Adressierung des nächstgelegenen
+Interfaces aus der Gruppe von interfaces mit dieser anycast
+Adresse
+<ul class="org-ul">
+<li>64 bit Präfix
+</li>
+<li>64 bit Interface ID
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Gültigkeitsbereiche (Scopes)</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li><b>link-local</b>: genutz zur Adressierung auf einem einzelnen link; werden
+von Routern nicht weitergeleitet
+<ul class="org-ul">
+<li>z.B. für host auto configuration, neighbor discovery
+</li>
+<li>starten mit <code>111111010</code> (die letzte 54 bit des 64 bit Präfix können frei gewählt werden)
+</li>
+<li>64 bit interface ID
+</li>
+</ul>
+</li>
+<li><b>unique-local</b>: Adressierung von Systemen im lokalen Netzwerk und in
+damit verbundenen sites; nicht routbar im
+Internet
+<ul class="org-ul">
+<li>z.B. Firmen VPNs
+</li>
+<li>starten mit <code>111110</code>
+</li>
+<li>1 bit <b>L flag</b> (1 if prefix is locally assigned)
+</li>
+<li>40 bit global ID
+</li>
+<li>16 bit subnet ID
+</li>
+<li>64 bit interface ID
+</li>
+</ul>
+</li>
+<li><b>global</b>: global routbare Adressen
+<ul class="org-ul">
+<li>aktuell vergibt die IANA nur globale unicast Adressen mit Präfix
+<code>001</code>
+</li>
+<li>Präfixe
+<ul class="org-ul">
+<li>RIRs: <code>/12</code>
+</li>
+<li>ISP: <code>/32</code>
+</li>
+<li>Endverbraucher: <code>/48</code>
+</li>
+<li>LAN Präfix: <code>/64</code>
+</li>
+</ul>
+</li>
+<li>Interface ID: 64 bit
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> host auto configuration</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<ol class="org-ol">
+<li>erfrage das Netzwerkpräfix bei einem Router über eine router
+solicitation Nachricht
+</li>
+<li>generiere eine vorläufige IPv6 Adresse aus dem Netzwerkpräfix und
+<ul class="org-ul">
+<li>einer Zufallszahl oder
+</li>
+<li>einem <b>64 bit extended unique identifier</b> (EUI-64) auf Basis der
+MAC-Adresse des Interface
+<ul class="org-ul">
+<li>bit 0-23: bit 0-23 der MAC Adresse (7. bit invertiert)
+</li>
+<li>bit 24-39: beleget mit <code>FFFE</code>
+</li>
+<li>bit 40-64: bit 24-47 der MAC Adresse
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>prüfe ob diese Adresse bereits im Netzwerk vergeben ist durch
+Duplicate Address Detection; konkret: Sende neighbor solicitation
+message mit:
+<ol class="org-ol">
+<li>target address: vorläufiger Adresse
+</li>
+<li>source address: undefined address <code>::</code>
+</li>
+<li>destination address: solicited node destination address
+</li>
+</ol>
+</li>
+<li>wenn eine Antwort (neighbor advertisement als multicast) kommt,
+gehe zu manueller Konfiguration oder versuche es mit einer neuen
+vorläufigen Adresse. Wenn keine Antwort kommt verwende die
+vorläufige Adresse als link local address
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> spezielle Adressen</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li><b>unspecified</b>: <code>::/128</code>
+</li>
+<li><b>loopback</b>: <code>::1/128</code>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> IPv6 Header</h2>
+<div class="outline-text-2" id="text-2">
+
+<div class="figure">
+<p><img src="./gfx/ipv6_header.png" alt="ipv6_header.png" />
+</p>
+<p><span class="figure-number">Figure 1:</span> IPv6 Header</p>
+</div>
+
+<p>
+<b>Felder:</b>
+</p>
+
+<ul class="org-ul">
+<li>version (4 bit):
+</li>
+<li>traffic class: Prioritätsklassen für IP-Pakete
+</li>
+<li>flow label: Identifikator für die Sequenz zusammengehöriger Pakete
+</li>
+<li>payload length: Größe der Payload (max \(2^{16} byte\))
+</li>
+<li>next header (8 bit): identifiziert den Header, der dem aktuellen IP-Header
+direkt folgt (z.B. 6 = TCP; 17 = UDP; 43 = Routing Header)
+<ul class="org-ul">
+<li>das next header Feld ermöglicht ein feste header length, da
+optionale Felder in extension header (<i>routing header</i>) ausgelagert werden können
+</li>
+<li>feste header Länge ermöglich schnelleres forwarding
+</li>
+</ul>
+</li>
+<li>hop limit: entspricht der TTL in IPv4
+</li>
+<li>source address: 
+</li>
+<li>destination address:
+</li>
+</ul>
+
+<p>
+Die Gesamtlänge eine IP Pakets (<b>maximum transmission unit</b>; MTU) ist
+\(2^{16} byte\).
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Extension headers</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<div class="figure">
+<p><img src="./gfx/ipv6_next_header.png" alt="ipv6_next_header.png" />
+</p>
+<p><span class="figure-number">Figure 2:</span> Type-Length-Value Encoding eines extension headers</p>
+</div>
+
+<p>
+<b>Felder:</b>
+</p>
+
+<ul class="org-ul">
+<li>hdr ext len (8 bit): Länge dieses extension headers in byte (max.
+\(2^{8} - 1 byte\))
+</li>
+</ul>
+
+<p>
+Arten von extension headers:
+</p>
+
+<ul class="org-ul">
+<li><b>Hop-by-Hop</b> (0): Informationen, die bei jedem Hop verarbeitet werden
+</li>
+<li><b>Destination 1</b> (?): Informationen, die vom Zielhost und vom Zielhost des
+routing headers verarbeitet werden
+</li>
+<li><b>Routing</b> (43): zusätzliche routing Information
+</li>
+<li><b>Fragmentation</b> (44): Informationen zu Fragmentierung und Reassembly
+von IP-Paketen
+</li>
+<li><b>Authentification</b> (51):
+</li>
+<li>*Encapsulation *:
+</li>
+<li><b>Destination 2</b> (?): Informationen, die ausschließlich vom Zielhost
+verarbeitet werden
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Übergang von IPv4 zu IPv6</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Techniken:
+</p>
+
+<ul class="org-ul">
+<li><b>dual stack techniques</b>: Koexistenz von IPv4 und IPv6 in Systemen und
+Netzwerken, z.B.:
+<ul class="org-ul">
+<li>wenn ein DNS Eintrag einen <code>AAAA</code> oder <code>A6</code> record hat, dann
+kommuniziere mit dem entsprechenden System über IPv6 ansonsten
+über IPv4
+</li>
+<li>auf Basis des <i>version</i> Felds des ersten IP-Pakets
+</li>
+</ul>
+</li>
+<li><b>tunneling techniques</b>:
+<ul class="org-ul">
+<li>Idee: kapsele IPv6 Paket in IPv4 Paket
+</li>
+<li><b>6to4 tunneling</b>:
+</li>
+</ul>
+</li>
+<li><b>translation techniques</b>: Kommunikation von IPv6 Systemen mit IPv4
+Systemen
+</li>
+</ul>
+</div>
+</div>

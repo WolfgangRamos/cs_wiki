@@ -1,0 +1,151 @@
+<p>
+Als <b>Quality of Service</b> bezeichnet man Zusicherungen, z.B. für
+</p>
+
+<ul class="org-ul">
+<li><b>delay</b>: Dauer vom Senden des ersten bits bis zum Empfangen des
+letzten bits eine Pakets
+<ul class="org-ul">
+<li>\(L_P\): Latenz des Packets
+</li>
+<li>\(L_A\): Latenz des Acknowledge
+</li>
+</ul>
+</li>
+<li><b>delay jitter</b>: Variation des Delays
+</li>
+<li><b>reliability:</b> Zuverlässigkeit der Übertragung in Prozent (Anteil, der
+ohne Fehler übertragen wird), z.B.
+<ul class="org-ul">
+<li>packet loss rate
+</li>
+<li>bit error rate
+</li>
+</ul>
+</li>
+<li><b>availability</b> (Verfügbarbeit): prozentuale Up-time pro Zeiteinheit;
+Berechnet sich als \(\frac{MTBF}{MTBF + MTRR}\) mit
+<ul class="org-ul">
+<li>\(MTBF\): mittlere Zeit zwischen Ausfällen (mean time between failures) 
+</li>
+<li>\(MTTR\): mittlere Zeit, die zum Reparieren benötigt wird (mean time to repair)
+</li>
+</ul>
+</li>
+<li><b>error rate</b> (Fehlerrate): 
+</li>
+</ul>
+
+<p>
+Dienste ohne zugesicherte Quality of Service werden als <b>best effort</b> bezeichnet.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Kennwerte</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>Bandbreite</b> = Frequenzspektrum des Übertragungskanals. Z.B. für WLAN: 
+</p>
+
+<p>
+Trägerfrequenz: 2,4 GHz = 2400 MHz
+</p>
+
+<p>
+Bandbreite eines Kanals: 20 - 40 MHz
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Bsp. für Kanäle bei einer Trägerfrequenz von 2,4 GHz und einer Bandbreite von 20 - 40 MHz</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Bandbreite</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Kanal 1</td>
+<td class="left">2400 - 2440 MHz</td>
+</tr>
+
+<tr>
+<td class="left">Kanal 2</td>
+<td class="left">2440 - 2480 MHz</td>
+</tr>
+
+<tr>
+<td class="left">&#x2026;</td>
+<td class="left">&#x2026;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>Datenrate</b> (data rate) \(R\): Anzahl bits, die pro Zeiteinheit über das
+Medium gesendet werden könnten, gemessen in bit/s. Die Datenrate hängt
+u.a. von der Hardware des Senders ab. Bsp: 64 kb Modem kann \(64 \cdot
+2^3 bit/s\) versenden.
+</p>
+
+<p>
+<b>propagation delay</b> (Übertragungsverzögerung) \(D\): Die Dauer, die ein
+Signal auf der Leitung unterwegs ist; berechnet sich als \(D =
+\frac{d}{v}\) mit Signalgeschwindigkeit \(v\) in dem betreffenden Medium
+und \(d\) Distanz zwischen Sender und Empfänger.
+</p>
+
+<p>
+<b>delay</b> $L<sub>P</sub>: Dauer vom Senden des ersten bits bis zum Empfangen des
+letzten bits eine Pakets. Berechnet sich als \(L_P = D + N/R\).
+</p>
+
+<ul class="org-ul">
+<li>solle für Sprachanwendungen &lt; 250 ms sein
+</li>
+</ul>
+
+<p>
+<b>(delay) jitter</b>: Variation des Delays
+</p>
+
+<p>
+<b>time for sending a packet</b> (Paketsendezeit) \(T_S\): Die Zeit, die das
+Senden von \(N\) bit benötigt berechnet sich als \(T_S = \frac{N}{R}\).
+Auslastung
+</p>
+
+<p>
+<b>throughput</b> \(TP\): erfolgreich übertragene bits (Datenrate + Overhead
+z.B durch Transportprotokoll) pro Zeiteinheit gemessen in bit/s. In
+einem idealen (fehlerfreien) Netzwerk könnte \(TP=R\) realisiert werden.
+Bei Verwendung eine stop-and-wait Protokolls berechnet sich der
+throughput als: \(TP = N_P/(L_P + L_A + T_{PP} + T_{PA}) \approx N_P/(2D + N_p/R)\)
+wobei \(N_P\) die Anzahl der bits des Pakets, \(T_{PP}\) die Zeit zur
+Verarbeitung des Pakets und \(T_{PA}\) die Zeit zur Verarbeitung des
+Acknowledge ist.
+</p>
+
+<p>
+<b>Datenrate-Verzögerung Produkt</b> *\(BD\): Anzahl der bits, die zu jedem
+Zeitpunkt auf der Leitung liegen können. Berechnet sich als \(BD = R
+\cdot D\).
+</p>
+
+<p>
+<b>utilization</b> \(U\): Die &#x2026; Berechnet im Fall eines stop and wait
+Protokolls als \(U \approx N_P/(N_P + 2BD)\)
+</p>
+
+
+<p>
+großes \(BD\):
+</p>
+</div>
+</div>

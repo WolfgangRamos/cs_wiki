@@ -1,0 +1,311 @@
+<p>
+<b>Service:</b> Transfer von frames von einem Netzknoten zu einem adjazenten
+Netzknoten über eine einzelne Verbindung.
+</p>
+
+<p>
+Zur erbringung des Service sind nötig:
+</p>
+
+<ul class="org-ul">
+<li>framing
+</li>
+<li>link access
+</li>
+<li>flow control
+</li>
+<li>error detection
+</li>
+</ul>
+
+<p>
+Das Data Link Layer kann in zwei Schichten aufgeteilt werden:
+</p>
+
+<ul class="org-ul">
+<li><b>Logical Link Control</b> (LLC): Steuerung des Zugriffs auf ein direkte
+Verbindung (link)
+</li>
+<li><b>Medium Access Control</b> (MAC): Steuerung des Zugriffs auf ein
+geteiltes Medium
+</li>
+</ul>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Begriffe</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>PDUs dieser Schicht heißen <b>frames</b> (IP-Pakete werden also in dieser
+Schicht in frames gepackt)
+</li>
+<li>Kommunikationskonäle heißten <b>links</b>
+</li>
+<li>Host und Router heißen <b>nodes</b>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Error Detection</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Die Fehlererkennung erfolgt mittels eines <b>error detection correction</b>
+(EDC) Felds, welches an die PSU dieser Schicht angehängt wird (deshalb
+auch <b>data trail</b> genannt)
+</p>
+
+<ul class="org-ul">
+<li><b>source coding</b>: Entfernen redundanter Informationen aus der PSU
+</li>
+<li><b>channel coding</b>: Hinzufügen von Redundanz für die error detection,
+z.B. durch:
+<ul class="org-ul">
+<li>Hinzufügen eines <b>parity bits</b>, dass so gewählt wird, dass sich eine
+gerade (<b>even parity</b>) oder ungerade (<b>odd parity</b>) Anzahl von Einsen
+ergibt
+</li>
+<li><b>block parity</b>: parity bits für jede Zeile und jede Spalte eines
+blocks (mehr-bit-Fehler können immer noch übersehen werden)
+</li>
+<li><b>cyclic redundancy check</b> (CRC)
+<ol class="org-ol">
+<li>Wahl eines <b>Generatorpolynoms</b> (\(G\)). Für Ethernet ist es z.B.
+<code>0x82608EDB</code>
+</li>
+<li>bilde \(D'\) durch anhängen von \(\deg(G)\) Nullen an die Nachricht
+\(D\)
+</li>
+<li>Bestimmen den Rest der Division \(D'/G\) im Ring der Restklassen
+\(\mod 2\) (Multiplikation und Division entsprechen in diesem
+Ring dem <code>XOR</code>)
+</li>
+<li>bilde die zu übermittelnde Nachricht \(D'' = D' \oplus R\)
+</li>
+</ol>
+</li>
+<li><b>Hamming Code</b>: Angegeben in der Form (&lt;Nachrichtenlänge&gt;,
+&lt;Datenbits&gt;)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Medium Access Control</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+zentrale Methoden/Protokolle:
+</p>
+
+<ul class="org-ul">
+<li>Knoten erhalten exklusiven Teil eines Übertragungskanals (z.B. einen
+Frequenzbereiche). Bsp:
+<ul class="org-ul">
+<li><b>CDMA</b>:
+</li>
+<li><b>TDMA</b>:
+</li>
+<li><b>FDMA</b>:
+</li>
+</ul>
+</li>
+<li>Knoten erhalten abwechselnd exklusiven Zugriff auf den
+Übertragungskanal. Bsp: Token ring
+</li>
+<li><b>Random Access MAC protocols</b>: Keine exklusiver Zugriff auf das
+Übertragungsmedium. Alle Knoten können immer Übertragen.
+<ul class="org-ul">
+<li>Kollisionen müssen erkannt und behoben werden
+</li>
+<li>Bsp: Ethernet, WLAN
+</li>
+<li>Bsp für Protokolle:
+<ul class="org-ul">
+<li><b>Aloha</b>:
+<ul class="org-ul">
+<li>Setting: star Topologie (mehrere Knoten senden frames zu einem
+zentralen Knoten)
+</li>
+<li>Knoten können frames jederzeit schicken
+</li>
+<li>erfolgreich übertragene frames werden durch <code>ACKs</code>
+        bestätigt
+</li>
+<li>Erneutes Senden bei ausbleiben eines <code>ACK</code> nach einem zufälligen
+Zeitintervall
+</li>
+<li>benötigte Zeit zur Erkennung einer Kollision: \(2t\)
+        (Transmissiondelay)
+</li>
+</ul>
+</li>
+<li><b>Slotted Aloha:</b>
+<ul class="org-ul">
+<li>Knoten können nicht immer schicken, sondern nur zu
+festgelegten Zeitpunkten (timeslots)
+</li>
+</ul>
+</li>
+<li><a href="#sec-3-1">Carrier Sense Multiple Access (CSMA)</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> CSMA</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>Syteme müssen duplex-fähig sein, um gleichzeitig zu senden und zu empfangen
+</li>
+
+<li>es sind \(2 \cdot t_{prop}\) (Propagation delay auf dem Medium) nötig,
+um Kollisionen erkennen zu können. Diese Dauer wird als
+Mindestsendezeit festgelegt. Die zu sendenden Daten ge-padded
+werden, um die Mindestsendezeit zu erreichen
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> non-persitent CSMA</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<ol class="org-ol">
+<li>Prüfe vor dem Senden, ob auf dem Übertragungskanal gerade
+übertragen wird
+<ul class="org-ul">
+<li>wenn ja: warte ein zufällig gewähltes Zeitintervall, dann beginne
+erneut bei 1.
+</li>
+<li>wenn nein: sende den gesamten frame
+</li>
+</ul>
+</li>
+<li>wenn beim Senden eine Kollision auftritt warte ein zufällig
+gewähltes Zeitintervall, danach beginne erneut bei 1.
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-2" class="outline-4">
+<h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> 1-persistent CSMA</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<ol class="org-ol">
+<li>Prüfe vor dem Senden, ob auf dem Übertragungskanal gerade
+übertragen wird
+<ul class="org-ul">
+<li>wenn ja: warte, bis der Kanal frei ist, dann sende
+</li>
+<li>wenn nein: sende den gesamten frame
+</li>
+</ul>
+</li>
+<li>wenn beim Senden eine Kollision auftritt warte ein zufällig
+gewähltes Zeitintervall, danach beginne erneut bei 1.
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-3" class="outline-4">
+<h4 id="sec-3-1-3"><span class="section-number-4">3.1.3</span> p-persistent CSMA</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<ol class="org-ol">
+<li>Prüfe vor dem Senden, ob auf dem Übertragungskanal gerade
+übertragen wird
+<ul class="org-ul">
+<li>wenn ja: warte einen timeslot
+</li>
+<li>wenn nein: entscheide zufällig, ob der gesamte frame sofort oder
+später gesendet werden soll. Mit Wahrscheinlichkeit \(p\) wird der
+frame sofort gesendet. Mit Wahrscheinlichkeit \(1-p\) wird erst
+einen slot gewartet und dann erneut bei 1. begonnen.
+</li>
+</ul>
+</li>
+<li>wenn beim Senden eine Kollision auftritt warte ein zufällig
+gewähltes Zeitintervall, danach beginne erneut bei 1.
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-4" class="outline-4">
+<h4 id="sec-3-1-4"><span class="section-number-4">3.1.4</span> CSMA/CD</h4>
+<div class="outline-text-4" id="text-3-1-4">
+<p>
+CSMA mit <b>Collision detection</b> (CD) dient der frühzeitigen Erkennung von
+Kollisionen:
+</p>
+
+<p>
+Der Sender hört zur frühzeitigen Erkennung von Kollisionen das
+Übertragungsmedium während des Sendens ab (<b>duplex</b>) und prüfen, ob das
+Signal, dass er gesendet hat das gleiche ist, wie das, welches er auf
+dem Medium empfängt. Ist das nicht der Fall, gab es eine Kollision.
+</p>
+
+<p>
+Ablauf:
+</p>
+
+<ol class="org-ol">
+<li>Prüfe vor dem Senden, ob auf dem Übertragungskanal gerade
+übertragen wird
+<ul class="org-ul">
+<li>wenn ja: warte, bis der Kanal frei ist, dann sende
+</li>
+<li>wenn nein: sende den gesamten frame
+</li>
+</ul>
+</li>
+<li>prüfe beim Senden kontinuierlich, ob das Signal auf dem
+Übertragungskanal das gleich ist, wie das Sendesignal.
+<ul class="org-ul">
+<li>wenn nein: Es gab eine Kollision. Brich die Übertragung ab und
+sende ein 6 byte <b>jam</b> Signal an alle anderen Station, damit diese
+auch aufhören zu senden. Warte ein zufällig gewähltes
+Zeitintervall (<b>exponential backoff technique</b>), danach beginne
+erneut bei 1.
+</li>
+</ul>
+</li>
+</ol>
+
+<p>
+CSMA/CD ist in wireless Netzwerken nicht möglich, da in
+wireless-Netzwerken emfangene Signale viel viel schwächer sein können
+(Faktor 1.000.000) als das Sendesignal. Daher würde das Sendesignal
+diese verdecken. Dadurch ist keine Erkennung von Kollisionen möglich.
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Adressierung</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>Länge: 48 bit
+<ul class="org-ul">
+<li>24 bit Manufacturer ID
+</li>
+<li>24 bit station ID
+</li>
+</ul>
+</li>
+<li>broadcast Adresse: <code>FF-FF-FF-FF-FF-FF</code>
+</li>
+</ul>
+</div>
+</div>
+</div>

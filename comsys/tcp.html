@@ -2,43 +2,254 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. TCP</a>
+<li><a href="#sec-1">1. Header</a>
 <ul>
-<li><a href="#sec-1-1">1.1. Congestion Control</a></li>
+<li><a href="#sec-1-1">1.1. initiale Sequenznummer</a></li>
+<li><a href="#sec-1-2">1.2. retransmission timeout</a></li>
+<li><a href="#sec-1-3">1.3. Congestion Control</a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1. Slow start</a></li>
+<li><a href="#sec-1-3-2">1.3.2. Congestion avoidance</a></li>
 </ul>
 </li>
+<li><a href="#sec-1-4">1.4. Sliding window</a></li>
+<li><a href="#sec-1-5">1.5. Congestion Control</a></li>
+<li><a href="#sec-1-6">1.6. stop and wait protocol</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Schließen der Verbindung</a></li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> TCP</h2>
-<div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li>Port-Nummer: \(2^{16} = 65536\)
-</li>
-</ul>
+<p>
+erbrachter Dienst: Pakete zuverlässig, d.h. fehlerfrei, vollständig
+und in der richtigen Reihenfolge, zwischen Anwendungen auf
+Endsystemen übermitteln.
+</p>
 
 <p>
 TCP zerlegt die zu sendenden Daten in <b>Segmente</b>.
 </p>
 
 <ul class="org-ul">
-<li>Maximum segment size = 
+<li>Maximum segment size (MSS) = 
 </li>
 </ul>
 
 <p>
-Bevor dieselbe Verbindung erneut geöffnet wird muss 2MSL (2 x maximum
-segment livetime) gewartet werden, damit die Sequenznummern nicht mit
-den Sequenznummern der vorherigen Verbindung kollidieren. Während der
-Wartezeit werden die Sequenznummern durch einen timer hochgezählt.
+zentrale Elemente:
 </p>
+
+<ul class="org-ul">
+<li>acknowledgements
+</li>
+<li>Sequenznummern: für Pakete und für Acknowledgements
+<ul class="org-ul">
+<li>Sequenznummern müssen endlich sein!
+</li>
+<li>Eine Sequenznummer \(p\) kann ersetzt werden durch \(p \mod SN\), wenn
+\(SN \geq 2w\) mit window size \(w\) ist
+</li>
+</ul>
+</li>
+<li>verbindunsorientiertes switching
+</li>
+<li>feedback vom receiver an den Sender für flow control
+<ul class="org-ul">
+<li>sliding window (pipelining)
+</li>
+</ul>
+</li>
+<li>stream-orientiert: Daten werden als byte stream interpretiert
+</li>
+<li>Erkennung von Übertragungsfehlern
+<ul class="org-ul">
+<li>der Verlust eine Paketes kann angezieigt werden duch timout,
+doppelte <code>ACKs</code>
+</li>
+</ul>
+</li>
+<li>congestion avoidance
+</li>
+</ul>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Header</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>Felder:</b>
+</p>
+
+<ul class="org-ul">
+<li>flags:
+<ul class="org-ul">
+<li>URG: Daten sind dringend (sollten direkt von der
+Empfängerapplikation verarbeitet werden), <code>urgend pointer</code> ist valide
+</li>
+<li>ACK: acknoledgement number ist valide
+</li>
+<li>PSH: reiche Daten direkt an den Empfänger weiter (kein buffering)
+</li>
+<li>RST: reset connection
+</li>
+<li>SYN: sequence number ist die initiale Sequenznummer (ISN) dieser Verbindung
+</li>
+<li>FIN: Verbindung schließen
+</li>
+</ul>
+</li>
+<li>sequence number: (initiale) Sequenznummer
+</li>
+<li>acknowledgement number
+</li>
+<li>window size: Größe des receiver windows in byte
+</li>
+<li>timestamp: wird genutzt um die round trip time zu erfassen
+</li>
+</ul>
 </div>
 
 <div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Congestion Control</h3>
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> initiale Sequenznummer</h3>
 <div class="outline-text-3" id="text-1-1">
+<p>
+Die <b>initiale Sequenznummer</b> (ISN) sollte von einem Zähler alle 4 ms
+inkrementiert werden. Bevor dieselbe Verbindung (selbes Socket Paar)
+erneut geöffnet wird daher 2 MSL (2 x maximum segment livetime)
+gewartet werden, damit die Sequenznummern nicht mit den Sequenznummern
+der vorherigen Verbindung kollidieren. Die MSL wird durch die TTL des
+IP Pakets begrenzt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> retransmission timeout</h3>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Congestion Control</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<b>Congestion control</b> (dt. Stausteuerung) ist nötig, wenn ein am
+Netzwerkknoten eintreffendes Paket nicht schnell genug
+verarbeiten/weiterleiten kann. Man spricht dann von Congestion (dt.
+Stau). Ein Stau kann sich z.B. ergeben, wenn ein Router Pakete aus
+einem schnellen Netzwerk in ein langsameres Netzwerk übertragen muss,
+oder Pakete von mehreren Eingangskanälen auf einen Ausgangskanal
+weiterleiten muss.
+</p>
+
+<p>
+Congestion control bei TCP basiert auf der Annahme, dass Datenpakete
+v.a. durch Congestion (Stau) verloren gehen und nicht aufgrund von
+Netzwerkschäden.
+</p>
+</div>
+
+<div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> Slow start</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<ul class="org-ul">
+<li>beginnt mit einem congestion window (<code>cwnd</code>) von 1, 2 oder 10
+Segmenten
+</li>
+<li>Bei Empfang eines ACK wird das cwnd verdoppelt (sofern das <b>receiver window</b> mindestens so groß ist wie das neue cwnd)
+</li>
+<li>Empfängt der Sender kein ACK, so geht TCP direkt zum Verhalten des
+gewählten congestion avoidance Algorithmus bei einem Timeout über
+</li>
+<li>wird beim Vergößern des <code>cwnd</code> der slow start threshold (<code>ssthresh</code>)
+überschritten, dann wechelt TCP zum linearen Wachstum in der
+congestion avoidance Phase.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> Congestion avoidance</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+In der Congestion Avoidance-Phase wächst das <code>cwnd</code> nur noch linear
+(i.d.R. um 1 Segement) pro empfangenen ACK. Kommt es zu einem Timeout
+dann wird der ssthresh auf die halbe aktuelle cwnd gesetzt und die
+cwnd wird wieder auf den intialen Wert (der Wert zu Beginn der slow
+start Phase) zurückgesetzt. Dann geht TCP wieder in die slow start
+Phase über.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Sliding window</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Sender sendet, solang \(i_S - i_A \leq w\) gilt mit \(i_A\) Sequenznummer
+des zuletzt bestätigten Pakets, \(i_S\) Sequenznummer des zuletzt
+gesendeten Pakets und \(w\) Windowsize.
+</p>
+
+<ul class="org-ul">
+<li>wenn das window ausgereizt ist, muss der Sender auf <code>ACKs</code> warten
+</li>
+<li>bei jedem <code>ACK</code> wird das sliding window weiter geschoben
+</li>
+<li>timeout timer für jedes Paket, danach retransmission des Pakets
+</li>
+<li>Sender speichert Pakete bis sie bestätigt wurden
+</li>
+</ul>
+
+<p>
+Strategien zur Fehlerbehandlung bei falsch übertragenen Paketen:
+</p>
+
+<ul class="org-ul">
+<li><b>Go-back-N</b>: Bei dieser Strategie bestätigt der Empfänger nur Paket
+die er "in der richtigen Reihenfolge" erhält.
+<ul class="org-ul">
+<li>es wird immer nur das Paket mit der jeweils nächsten Sequenznummer
+bestätigt
+</li>
+<li>empfängt der Empfänger ein Paket mit einer höheren
+Sequenznummer, so wird es nicht bestätigt und der Empfänger wartet
+unverändert weiter auf dieselbe Sequenznummer wie vorher. Das "aus
+der Reihe" empfangene Paket kann vom Empfänger verworfen werden.
+</li>
+<li>Kommt es beim Warten auf die <code>ACKs</code> für die Pakete, welche innerhalb
+des aktuellen windows gesendet wurden zu einem Timeout beim Sender,
+so übermittelt der Sender <i>alle</i> Pakete dieses windows neu.
+</li>
+<li>Bei dieser Strategie der Fehlerbehandlung könnte der Empfänger
+auch kumulative ACKs verschicken.
+</li>
+</ul>
+</li>
+<li><b>Selective Repeat</b>: Bei dieser Strategie bestätgt der Empfänger alle
+Pakete die er empfängt, auch solche, die nicht in der korrekten
+Reihenfolge ankommen
+<ul class="org-ul">
+<li>Um die Pakete wieder in die korrekte Reihenfolge zu bringen müssen
+die empfangen Pakete in einem Puffer zwischengespeichert werden
+</li>
+<li>der Sender kümmert sich um das erneute Senden einzelner nicht
+bestätigter Pakete, d.h. bei einem Übertragungsfehler muss nur das
+fehlerhafte Paket erneut übertragen werden. Wie bei der go-back-N
+Strategie kann auch hier der Sender das sliding window nur dann
+verschieben, wenn das Paket mit der niedrigsten Sequenznummer im
+window bestätigt wurde.
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Congestion Control</h3>
+<div class="outline-text-3" id="text-1-5">
 <ul class="org-ul">
 <li>duplicate ACKs: Erneutes versenden eines alten ACKs um den Sender
 nach einem bestimmten timeout darpber zu informiern, dass der
@@ -46,5 +257,38 @@ Empfänger nichts erhält.
 </li>
 </ul>
 </div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> stop and wait protocol</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Nachteil:
+</p>
+
+<p>
+Bei einem stop-and-wait-Protokoll ist die utilization geringer als bei
+Verwendung eines sliding window, da nach dem Senden eines Pakets immer
+auf ein ACK gewartet wird, bevor das nächste Paket gesendet wird.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Schließen der Verbindung</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Arten des SChließens einer Verbindung:
+</p>
+
+<ul class="org-ul">
+<li><b>TCP half close</b>: jede Seite Schließt die Verbindung einzeln
+</li>
+<li><b>active close</b>: Client schließt die TCP Verbindung
+</li>
+<li><b>passive close</b>: Server schließt die TCP Verbindung
+</li>
+</ul>
 </div>
 </div>

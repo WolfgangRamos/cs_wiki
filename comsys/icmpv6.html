@@ -1,0 +1,147 @@
+---
+layout: page
+title: ICMPv6
+---
+
+<p>
+Funktionen:
+</p>
+
+<ul class="org-ul">
+<li>Übermittlung von Diagnoseinformationen an den Sender
+</li>
+<li>Testen von Erreichbarkeit (ping)
+</li>
+<li>Unterstützung von Routing, z.B. mit
+<ul class="org-ul">
+<li><b>IPv6 Neighbor discovery protocol</b> (NDP)
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> IPv6 Neighbor discovery protocol</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Nachbarn sind Systeme im gleichen Netzwerk.
+</p>
+
+<p>
+NDP wird verwendet für
+</p>
+
+<ul class="org-ul">
+<li>Autokonfiguration der Netzwerkeinstellungen (Zustandslos)
+<ol class="org-ol">
+<li>weise dir selbst eine link local Adresse zu
+</li>
+<li>schieße dich der <i>multicast group</i> (Präfix <code>FF02::1</code>) an
+</li>
+<li>sende router solication message an all routers multicast group
+</li>
+<li>warte auf router advertisement
+</li>
+</ol>
+</li>
+<li>Duplicate address detection (DAD)
+<ol class="org-ol">
+<li>generiere vorläufige (tentative) Adresse
+</li>
+<li>lausche auf die Multicast Addressen für alle Knoten dieses
+Netzwerks und die <b>solicited node</b> multicast Adresse der
+vorläufigen Adresse
+</li>
+<li>sende neighbor solicitation message mit:
+<ul class="org-ul">
+<li>target address: vorläufiger Adresse
+</li>
+<li>source address: undefined address <code>::</code>
+</li>
+<li>destination address: solicited node destination address
+</li>
+</ul>
+</li>
+<li>wenn eine Antwort (neighbor advertisement als multicast) kommt,
+gehe zu manueller Konfiguration oder versuche es mit einer neuen
+vorläufigen Adresse. Wenn keine Antwort kommt verwende die
+vorläufige Adresse als link local Adresse
+</li>
+</ol>
+</li>
+<li>Adressauflösung (über <b>neighbor soliciation</b> und <b>neighbor advertisement</b>)
+<ul class="org-ul">
+<li>source address: valide unicast Adresse
+</li>
+</ul>
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./gfx/ndp.png" alt="ndp.png" />
+</p>
+<p><span class="figure-number">Figure 1:</span> NDP Funktionen</p>
+</div>
+
+<p>
+Funktionen:
+</p>
+
+<ul class="org-ul">
+<li>Host-Router discovery:
+</li>
+<li>Host-Host Communication:
+</li>
+<li>Redirect: von einem Router an Hosts gesendet, um diesen eine bessere
+Route zu eine Zieladdresse mitzuteilen.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Header</h2>
+<div class="outline-text-2" id="text-2">
+
+<div class="figure">
+<p><img src="./gfx/icmpv6_header.png" alt="icmpv6_header.png" />
+</p>
+<p><span class="figure-number">Figure 2:</span> ICMPv6 header</p>
+</div>
+
+<p>
+<b>Felder</b>:
+</p>
+
+<ul class="org-ul">
+<li>type: Nachrichtentyp, z.B.
+<ul class="org-ul">
+<li>1 = destination unreachable
+</li>
+<li>2 = packet too big
+</li>
+<li>3 = time exceeded
+</li>
+<li>128 = echo request
+</li>
+<li>129 = echo response
+</li>
+<li>133 = router solicitation (gesendet von einem host um einen Router
+im lokalen Netzwerk zu finden)
+</li>
+<li>134 = router advertisement (gesendet von einem router)
+</li>
+<li>136 = neighbor advertisement
+</li>
+</ul>
+</li>
+<li><b>code</b>:
+</li>
+<li><b>checksum</b>:
+</li>
+<li><b>message body</b>:
+</li>
+</ul>
+</div>
+</div>

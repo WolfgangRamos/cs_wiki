@@ -2,39 +2,116 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. DHCP</a></li>
+<li><a href="#sec-1">1. Ablauf</a></li>
+<li><a href="#sec-2">2. DHCP Header</a></li>
+<li><a href="#sec-3">3. Vorteile</a></li>
+</ul>
+</div>
+</div>
+<p>
+<b>Dynamic Host Configuration Protocol</b> (DHCP) ermöglicht die Zuweisung
+von Netzwerkkonfigurationen (IP-Adresse, DNS, Standard Gateway, etc.)
+an Clients durch Server. Der Vorläufer von DHCP war BOOTP.
+</p>
+
+<ul class="org-ul">
+<li>DHCP verwendet UDP Pakete
+<ul class="org-ul">
+<li>Server verwendet UDP-Port 67
+</li>
+<li>Client verwendet UDP-Port 68
+</li>
+</ul>
+</li>
+<li>DHCP ist ein IP <i>und</i> MAC-Broadcast
+</li>
+</ul>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Ablauf</h2>
+<div class="outline-text-2" id="text-1">
+<ol class="org-ol">
+<li>Client sendet <code>DHCPDISCOVER</code> als broadcast (Zieladresse
+<code>255.255.255.255</code>) mit Quelladresse <code>0.0.0.0</code>
+</li>
+<li>Server (es können mehrere sein) antworten mit <code>DHCPOFFER</code> welches ein
+Vorschlag für eine geleaste IP Adresse enthält
+<ul class="org-ul">
+<li>falls der Client sich keine vorläufige IP-Adresse gewählt hat
+wird der DHCPOFFER als broadcast gesendet
+</li>
+<li>falls der Client sich eine vorläufige IP Adresse gewählt hat kann
+der <code>DHCPOFFER</code> auch als Unicast gesendet werden an die vorläufige
+IP und die MAC Adresse des CLients
+</li>
+</ul>
+</li>
+<li>Client sammelt <code>DHCPOFFER</code> und wählt einen aus (z.B. auf Grund der
+lease time)
+</li>
+<li>Client antwortet mit <code>DHCPREQUEST</code> als broadcast
+<ul class="org-ul">
+<li>die Zuordnung des <code>DHCPREQUEST</code> zu einem DHCPOFFER erfolgt über einen
+Server identifier
+</li>
+</ul>
+</li>
+<li>der ausgewählte Server antwortet mit <code>DHCPPACK</code>, welches weitere
+Netzwerkkonfigurationen enthält
+</li>
+</ol>
+
+<p>
+Erneuerung des <b>adress lease</b> nach der halben <i>lease time</i>.
+Abmelden einer IP-Adresse mit einem <code>DHCPRELEASE</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> DHCP Header</h2>
+<div class="outline-text-2" id="text-2">
+
+<div class="figure">
+<p><img src="./gfx/dhcp_header.png" alt="dhcp_header.png" />
+</p>
+<p><span class="figure-number">Figure 1:</span> DHCP-Header</p>
+</div>
+
+<p>
+Felder:
+</p>
+
+<ul class="org-ul">
+<li>OpCode: 1 = Request; 2 = Reply
+</li>
+<li>Hardware type: Netztyp (z.B. 1 = Ethernet)
+</li>
+<li>xid (Transaction ID): ID der Verbindung zwischen Client und Server
+</li>
+<li>Client IP address
+</li>
+<li>your IP adress: vom Server vorgeschlagenen geleaste IP Adresse
+</li>
+<li>server IP address: IP Adresse des Server
+</li>
+<li>client hardware address: MAC Adresse des Client
+</li>
+<li>optionale Felder:
+<ul class="org-ul">
+<li>DNS
+</li>
+<li>Standard Gateway
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> DHCP</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-<b>Dynamic Host Configuration Protocol</b> (DHCP) ermöglicht die
-Zuweisung von Netzwerkkonfigurationen an Clients durch Server. Der Vorläufer von DHCP war BOOTP.
-</p>
-
-<p>
-Server UDP-Port: 67
-</p>
-
-<p>
-Client UDP-Port: 68
-</p>
-
-<p>
-DHCPD ist ein IP <i>und</i> MAC-Broadcast
-</p>
-
-<p>
-DNS ist i.d.R auch Teil des <code>DHCPOffer</code>
-</p>
-
-<p>
-<b>Vorteile:</b>
-</p>
-
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Vorteile</h2>
+<div class="outline-text-2" id="text-3">
 <ul class="org-ul">
 <li>Vermeidung manueller Konfiguration von Geräten für ein Netzwerk
 (z.B. manuelle Vergabe der IP-Adresse, etc.)
@@ -46,12 +123,5 @@ sondern werden <i>on-demand</i> an anfragende Geräten vergeben. IP-Adressen
 sind somit prinzipiell weder an Geräte noch an Personen gebunden.
 </li>
 </ul>
-
-
-<div class="figure">
-<p><img src="./gfx/dhcp_header.png" alt="dhcp_header.png" />
-</p>
-<p><span class="figure-number">Figure 1:</span> DHCP-Header</p>
-</div>
 </div>
 </div>

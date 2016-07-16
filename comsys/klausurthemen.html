@@ -3,6 +3,7 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1. Klausurthemen ComSys</a></li>
+<li><a href="#sec-2">2. <span class="todo TODO">TODO</span> Fragen</a></li>
 </ul>
 </div>
 </div>
@@ -15,199 +16,228 @@
 </p>
 
 <ul class="org-ul">
-<li>Netzwerke
+<li>Netzwerke <code>[1/2]</code>
 <ul class="org-ul">
-<li><i>paket-</i> und <i>circuit-switched</i> Netzwerke
-<ul class="org-ul">
-<li>Vor- und Nachteile der verschiedenen Netzwerke
+<li><code>[X]</code> <i>paket-</i> und <i>circuit-switched</i> Netzwerke (inkl. Vor- und Nachteile der verschiedenen Netzwerke)
 </li>
-</ul>
-</li>
-<li>Topologien (BUS, Star, Mesh, Ring; internet core Netzwerk ist mesh)
+<li><code>[&#xa0;]</code> Topologien (BUS, Star, Mesh, Ring; internet core Netzwerk ist mesh)
 <ul class="org-ul">
-<li>Einschätzung der Topologien bzgl. QoS Paramtern
+<li><code>[&#xa0;]</code> Einschätzung der Topologien bzgl. QoS Paramtern
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li>ISO/OSI-Referenzmodell
+<li>ISO/OSI-Referenzmodell <code>[3/4]</code>
 <ul class="org-ul">
-<li>Bereiche
+<li><code>[&#xa0;]</code> Bereiche (Schicht 1-4 transportorientiert; Schicht 5-7 anwendungsorientiert)
 </li>
-<li>Schichten (Namen, Funktion/Dienst und Beispielprotokolle)
+<li><code>[X]</code> Schichten (Namen, Funktion/Dienst und Beispielprotokolle)
 </li>
-<li>Gründe für Einteilung in Schichten (vs. monolithischer Ansatz)
+<li><code>[X]</code> Gründe für Einteilung in Schichten (vs. monolithischer Ansatz)
 </li>
-<li>Nachteile der Einteilung in Schichten (z.B. Overhaed durch Header)
+<li><code>[X]</code> Nachteile der Einteilung in Schichten (z.B. Overhaed durch Header)
 </li>
 </ul>
 </li>
-<li>Internetarchitektur
+<li>Internetarchitektur <code>[2/2]</code>
 <ul class="org-ul">
-<li>Transit- und Endsysteme (Welche Schichten des ISO/OSI-RM müssen in
+<li><code>[X]</code> Transit- und Endsysteme (Welche Schichten des ISO/OSI-RM müssen in
 einem Transitsystem abgedeckt sein?)
 </li>
-<li>Prinzipien der Internetarchitektur (&#x2026;)
+<li><code>[X]</code> Prinzipien der Internetarchitektur (&#x2026;)
 </li>
 </ul>
 </li>
-<li>Quality of Service
+<li><code>[X]</code> Quality of Service
 <ul class="org-ul">
-<li>Parameter (bandwidth, throughput, delay, jitter, reliability)
+<li><code>[X]</code> Parameter (bandwidth, throughput, delay, jitter, reliability, availability)
 </li>
-<li>Jitter-Buffer in VOIP-Anwendung (auch Größe berechnen)
+<li><code>[X]</code> Jitter-Buffer in VOIP-Anwendung (auch Größe berechnen)
 </li>
 </ul>
 </li>
-<li>IPv4
+<li>IPv4 <code>[9/12]</code>
 <ul class="org-ul">
-<li>Welchen Dienst erbringt IPv4
+<li><code>[X]</code> Welchen Dienst erbringt IPv4
 </li>
-<li>Arten der Nachrichtenübertragung (broadcast, unicast, multicast,
+<li><code>[X]</code> Arten der Nachrichtenübertragung (broadcast, unicast, multicast,
 anycast)
 </li>
-<li>Aufbau einer IPv4 Adresse (Adressgröße, etc.)
+<li><code>[X]</code> Aufbau einer IPv4 Adresse (Adressgröße, etc.)
 </li>
-<li>Aufbau eines IPv4 Header (&#x2026;)
+<li><code>[X]</code> Aufbau eines IPv4 Header (&#x2026;)
 </li>
-<li>Hierarchische Adressierung in IPv4 (Networkprefix, host)
+<li><code>[X]</code> Hierarchische Adressierung in IPv4 (Networkprefix, host)
 </li>
-<li>private und öffentliche Adressen (warum werden sie unterschieden)
+<li><code>[X]</code> private und öffentliche Adressen (warum werden sie unterschieden)
 </li>
-<li>classful und classless adressing (Vor- und Nachteile)
+<li><code>[X]</code> classful und classless adressing (Vor- und Nachteile)
 </li>
-<li>(Port-)NAT (auch NAT-Tabelle erstellen können)
+<li><code>[X]</code> (Port-)NAT (auch NAT-Tabelle erstellen können)
 </li>
-<li>adress scopes (<i>link-local</i>, <i>unique-local</i>, <i>global</i>)
+<li><code>[&#xa0;]</code> adress scopes (<i>link-local</i>, <i>unique-local</i>, <i>global</i>)
 </li>
-<li>Unterschiede zwischen IPv4 und IPv6 Header
+<li><code>[&#xa0;]</code> Unterschiede zwischen IPv4 und IPv6 Header
 </li>
-<li>IPv6-in-IPv4-Tunnel
+<li><code>[&#xa0;]</code> IPv6-in-IPv4-Tunnel
 </li>
-<li>Prinzip von <i>Traceroute</i> mit ICMP
-</li>
-</ul>
-</li>
-<li>IPv6
-<ul class="org-ul">
-<li>Grund für die Umstellung auf IPv6
-</li>
-<li>Unterschiede zu IPv4 (Was hat sich bei Adressierung und Protokoll verändert?)
-</li>
-<li>Aufbau einer IPv6-Adresse (Adressgröße, unicast, anycast, &#x2026;)
-</li>
-<li>Bestandteile eines IPv4 Headers (type, next hdr, header length,
-checksum, source address, dest addresse, flow label, &#x2026;)
-</li>
-<li>adress scopes
-</li>
-<li>Bestandteile einer IPv6 Adresse
-</li>
-<li>adress autoconfiguration (auf Basis der MAC-Adresse)
+<li><code>[X]</code> Prinzip von <i>Traceroute</i> mit ICMP
 </li>
 </ul>
 </li>
-<li>DNS
+<li><code>[-]</code> IPv6
 <ul class="org-ul">
-<li>Was leistet DNS
+<li><code>[X]</code> Grund für die Umstellung auf IPv6
+</li>
+<li><code>[&#xa0;]</code> Was hat sich bei Adressierung und Protokoll zwischen IPv4 und IPv6 verändert?
+<ul class="org-ul">
+<li>Adressen sind länger (128 statt 32 bit)
+</li>
+<li>ein Interface kann mehr als eine Adresse haben (genau 1 link
+local Adresse, eine solicited node multicast address für host
+autoconfiguration, mehrere Adressen vom typ unicast, anycast und
+multicast)
+</li>
+<li>feste header Länge; Auslagerung der optionalen Felder von IPv4
+(und anderer nicht-optionaler Felder) in extension headern
 </li>
 </ul>
 </li>
-<li>SMTP
-<ul class="org-ul">
-<li>Beschreibung des Ablaufs beim Versenden einer Email per SMTP
+<li><code>[&#xa0;]</code> Aufbau einer IPv6-Adresse (Adressgröße, unicast, anycast, &#x2026;)
+</li>
+<li><code>[&#xa0;]</code> Bestandteile eines IPv4 Headers (version, traffic class, flow
+label, payload length, next header, hop limit, source address,
+destination address)
+</li>
+<li><code>[&#xa0;]</code> adress scopes (link local, unique local, global)
+</li>
+<li><code>[&#xa0;]</code> Bestandteile einer IPv6 Adresse
+</li>
+<li><code>[&#xa0;]</code> adress autoconfiguration (auf Basis der MAC-Adresse)
 </li>
 </ul>
 </li>
-<li>Transport(-schicht)
+<li><code>[&#xa0;]</code> DNS
 <ul class="org-ul">
-<li>TCP und UDP (Vorteile von UDP gegenüber TCP und umgekehrt,
+<li><code>[&#xa0;]</code> Was leistet DNS
+</li>
+</ul>
+</li>
+<li><code>[&#xa0;]</code> SMTP
+<ul class="org-ul">
+<li><code>[&#xa0;]</code> Beschreibung des Ablaufs beim Versenden einer Email per SMTP
+</li>
+</ul>
+</li>
+<li>Transport(-schicht) <code>[0/13]</code>
+<ul class="org-ul">
+<li><code>[&#xa0;]</code> TCP und UDP (Vorteile von UDP gegenüber TCP und umgekehrt,
 Unterschiede, 2 Einsatzbereiche nennen können) 
 </li>
-<li>Abgrenzung von Verbindungsorientierten und verbindungslosen Protokollen
+<li><code>[&#xa0;]</code> Abgrenzung von Verbindungsorientierten und verbindungslosen Protokollen
 </li>
-<li>Zuordnung von Protokollen zur Familie der verbindungsorientierten oder verbindungslosen Protokolle
+<li><code>[&#xa0;]</code> Zuordnung von Protokollen zur Familie der verbindungsorientierten oder verbindungslosen Protokolle
 <ul class="org-ul">
-<li>verbindungsorientiert: HTTP1.1, TCP
+<li><code>[&#xa0;]</code> verbindungsorientiert: HTTP1.1, TCP
 </li>
-<li>verbindungslos: HTTP1.0, UDP
+<li><code>[&#xa0;]</code> verbindungslos: HTTP1.0, UDP
 </li>
 </ul>
 </li>
-<li>3 Phasen des Kommunikationsverlaufs bei verbindungsorientierte
+<li><code>[&#xa0;]</code> 3 Phasen des Kommunikationsverlaufs bei verbindungsorientierte
 Kommunikation (Verbingungsaufbau, Datenübertragung, Schließen der
 Verbindung)
 </li>
-<li>Zuordnung von Protokollen zur Famile der zuverlässigen oder unzuverlässigen (Transport-)Protokolle
+<li><code>[&#xa0;]</code> Zuordnung von Protokollen zur Famile der zuverlässigen oder unzuverlässigen (Transport-)Protokolle
 <ul class="org-ul">
-<li>zuverlässig: TCP
+<li><code>[&#xa0;]</code> zuverlässig: TCP
 </li>
-<li>unzuverlässig: IP, UDP
+<li><code>[&#xa0;]</code> unzuverlässig: IP, UDP
 </li>
 </ul>
 </li>
-<li>TCP-(Three-Way-)Handshake
+<li><code>[&#xa0;]</code> TCP-(Three-Way-)Handshake
 <ul class="org-ul">
-<li>Welche Parameter werden beim Aufbau einer TCP-Verbindung ausgetauscht (sliding window größe?, &#x2026;)
+<li><code>[&#xa0;]</code> Welche Parameter werden beim Aufbau einer TCP-Verbindung ausgetauscht (sliding window größe?, &#x2026;)
 </li>
 </ul>
 </li>
-<li>Sliding Window Verfahren (Begrenzung der Window Größe)
+<li><code>[&#xa0;]</code> Sliding Window Verfahren (Begrenzung der Window Größe)
 </li>
-<li>Congestion Control (Slow Start, Congestion Avoidance)
+<li><code>[&#xa0;]</code> Congestion Control (Slow Start, Congestion Avoidance)
 </li>
-<li>Routing und Forwarding
+<li><code>[&#xa0;]</code> Routing und Forwarding
 <ul class="org-ul">
-<li>Aktionen eines Routers beim Forwarding eines Pakets nennen und beschreiben
+<li><code>[&#xa0;]</code> Aktionen eines Routers beim Forwarding eines Pakets nennen und beschreiben
 </li>
 </ul>
 </li>
-<li>Hierarchische Routing über Autonome Systeme (<i>stub AS</i>, <i>multihomed AS</i>, <i>transit AS</i>)
+<li><code>[&#xa0;]</code> Hierarchische Routing über Autonome Systeme (<i>stub AS</i>, <i>multihomed AS</i>, <i>transit AS</i>)
 </li>
-<li><i>link-state-routing</i> und <i>distance-vector-routing</i>
+<li><code>[&#xa0;]</code> <i>link-state-routing</i> und <i>distance-vector-routing</i>
 </li>
-<li>Routing-Tabellen erstellen
+<li><code>[&#xa0;]</code> Routing-Tabellen erstellen
 </li>
-<li>OSPF Protokoll (Funktionsweise erkären)
+<li><code>[&#xa0;]</code> OSPF Protokoll (Funktionsweise erkären)
 </li>
 </ul>
 </li>
-<li>Ethernet (LAN und WLAN)
+<li>Ethernet (LAN und WLAN) <code>[/]</code>
 <ul class="org-ul">
-<li>deterministische und probabilistische MAC-Verfahren zur Vermeidung von Kollisionen bei Nutzung eines gemeinsamen Mediums
+<li><code>[&#xa0;]</code> deterministische und probabilistische MAC-Verfahren zur Vermeidung von Kollisionen bei Nutzung eines gemeinsamen Mediums
 <ul class="org-ul">
-<li>probabilistisch: Collision Detection mit <i>CSMA/CD</i> und <i>CSMA/CA</i> (Funktionsweise erläutern können)
+<li><code>[&#xa0;]</code> probabilistisch: Collision Detection mit <i>CSMA/CD</i> und <i>CSMA/CA</i> (Funktionsweise erläutern können)
 </li>
-<li>deterministisch: Token Ring
+<li><code>[&#xa0;]</code> deterministisch: Token Ring
 </li>
 </ul>
 </li>
-<li>Detektieren von Übertragungsfehlern mit <i>Cyclic Redundancy Check</i> (inkl. Anwendung von CRC)
+<li><code>[X]</code> Detektieren von Übertragungsfehlern mit <i>Cyclic Redundancy Check</i> (inkl. Anwendung von CRC)
 </li>
-<li>WLAN
+<li><code>[&#xa0;]</code> WLAN
 <ul class="org-ul">
-<li>hidden terminal problem
+<li><code>[&#xa0;]</code> hidden terminal problem
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li>MAC-Verfahren
+<li><code>[&#xa0;]</code> MAC-Verfahren
 </li>
-<li>Email
+<li><code>[&#xa0;]</code> Email
 <ul class="org-ul">
-<li>Multipurpose Internet Mail Extension (MIME)
+<li><code>[&#xa0;]</code> Multipurpose Internet Mail Extension (MIME)
 <ul class="org-ul">
-<li>2 MIME Parameter nennen
+<li><code>[&#xa0;]</code> 2 MIME Parameter nennen
 </li>
-<li>content types
+<li><code>[&#xa0;]</code> content types
+</li>
+</ul>
+</li>
+<li><code>[&#xa0;]</code> Unterschied zwischen POP3 und IMAP
 </li>
 </ul>
 </li>
-<li>Unterschied zwischen POP3 und IMAP
-</li>
 </ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> <span class="todo TODO">TODO</span> Fragen</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>Funktion des Sessionlayer erklären (am liebsten am Beispiel eines TCP Socket)
+</li>
+<li>Unterschied zwischen Service access point, address und connection endpoint identifier
+</li>
+<li>bei Rechenaufgaben: \(1 kbyte = 2^{10} byte\) oder \(1 kbyte = 1000 byte\)
+</li>
+<li>Unterschied zwischen routing table und forwarding table
+</li>
+<li>overlay principle erklären
+</li>
+<li>Serie 06 Aufgabe 3: Was ist der ARP Server? So was gibt es galube ich nicht
 </li>
 </ul>
 </div>
