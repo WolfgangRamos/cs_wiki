@@ -3,6 +3,12 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 #+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Netzwerkarchitektur
+---
+#+END_HTML
 
 Der Begriff der /Netzwerkarchitektur/ wird uneinheitlich verwendet.
 Gemeint sein kann:

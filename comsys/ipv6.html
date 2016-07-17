@@ -168,7 +168,7 @@ von Routern nicht weitergeleitet
 <ul class="org-ul">
 <li>z.B. für host auto configuration, neighbor discovery
 </li>
-<li>starten mit <code>111111010</code> (die letzte 54 bit des 64 bit Präfix können frei gewählt werden)
+<li>starten mit <code>1111 1110 10</code> (die letzte 54 bit des 64 bit Präfix können frei gewählt werden)
 </li>
 <li>64 bit interface ID
 </li>
@@ -232,7 +232,7 @@ MAC-Adresse des Interface
 <ul class="org-ul">
 <li>bit 0-23: bit 0-23 der MAC Adresse (7. bit invertiert)
 </li>
-<li>bit 24-39: beleget mit <code>FFFE</code>
+<li>bit 24-39: beleget mit <code>0xFFFE</code>
 </li>
 <li>bit 40-64: bit 24-47 der MAC Adresse
 </li>
@@ -292,9 +292,9 @@ vorläufige Adresse als link local address
 <ul class="org-ul">
 <li>version (4 bit):
 </li>
-<li>traffic class: Prioritätsklassen für IP-Pakete
+<li>traffic class (8 bit): Prioritätsklassen für IP-Pakete
 </li>
-<li>flow label: Identifikator für die Sequenz zusammengehöriger Pakete
+<li>flow label (20 bit): Identifikator für die Sequenz zusammengehöriger Pakete
 </li>
 <li>payload length: Größe der Payload (max \(2^{16} byte\))
 </li>

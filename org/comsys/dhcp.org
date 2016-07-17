@@ -2,6 +2,12 @@
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
+#+BEGIN_HTML
+---
+layout: page
+title: Dynamic Host Configuration Protocol
+---
+#+END_HTML
 
 *Dynamic Host Configuration Protocol* (DHCP) ermöglicht die Zuweisung
 von Netzwerkkonfigurationen (IP-Adresse, DNS, Standard Gateway, etc.)
@@ -21,17 +27,17 @@ an Clients durch Server. Der Vorläufer von DHCP war BOOTP.
    - falls der Client sich keine vorläufige IP-Adresse gewählt hat
      wird der DHCPOFFER als broadcast gesendet
    - falls der Client sich eine vorläufige IP Adresse gewählt hat kann
-     der =DHCPOFFER= auch als Unicast gesendet werden an die vorläufige
-     IP und die MAC Adresse des CLients
+     der =DHCPOFFER= auch als unicast an die vorläufige IP-Adresse
+     gesendet werden.
 3. Client sammelt =DHCPOFFER= und wählt einen aus (z.B. auf Grund der
    lease time)
 4. Client antwortet mit =DHCPREQUEST= als broadcast
-   - die Zuordnung des =DHCPREQUEST= zu einem DHCPOFFER erfolgt über einen
+   - die Zuordnung des =DHCPREQUEST= zu einem =DHCPOFFER= erfolgt über einen
      Server identifier
 5. der ausgewählte Server antwortet mit =DHCPPACK=, welches weitere
    Netzwerkkonfigurationen enthält
 
-Erneuerung des *adress lease* nach der halben /lease time/.
+Erneuerung des *address lease* nach der halben /lease time/.
 Abmelden einer IP-Adresse mit einem =DHCPRELEASE=
 
 * DHCP Header

@@ -3,7 +3,12 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 #+OPTIONS: toc:nil
-
+#+BEGIN_HTML
+---
+layout: page
+title: Autonome Systeme
+---
+#+END_HTML
 
 Ein *Autonomes System* (AS) ist eine Gruppe von IP Netzen, die gemeinsam
 verwaltet werden. AS sind untereinander verbunden und bilden so das
@@ -25,14 +30,13 @@ Internet. AS werden über eine 16-Bit (RFC1930) oder eine 32-Bit Zahl
 
 * Gründe für die Verwendung von AS
 
-1. *Administrative Autonomität*: Jeder Administrator kann das Routing in
-   seinem eigenen Netzwerk kontrollieren, da das Internet mit ASen ein
-   Netzwerk von Netzwerken ist.
-2. *Skalierung*:
-   - verglichen mit einer Strukturierung ohne AS werden für Inter- und
-     Intra-Routing kleinere Routing-Tabellen benötigt, denn beim
-     Inter-Routing wird nur gespeichert, zu welchem AS eine IP
-     zugehörig ist, das dann die genaue Zustellung übernimmt. Mit
-     flachem Netzwerk müsste jeder Router für jedes IP-Netz einen
-     Eintrag haben, der angibt, wo genau hingeleitet werden soll, was
-     zu großen Kapazitätsproblemem beim Routing führen würde.
+1. *Administrative Autonomität*:
+   - Routing Policies können individuell für jedes AS festgelegt werden
+   - Protokolle können individuell für jedes AS festgelegt werden
+2. *Skalierung*: AS ermöglichen weitere Aggregation von Routing
+   Information (d.h. kleine routing tabellen), da beim interdomain
+   routing nur gespeichert werden muss, zu welchem AS eine IP Adresse
+   gehört. Die Weiterleitung des IP-Pakets an den Host übernimmt dann
+   das AS. Bei einem flachem Netzwerk müsste jeder Router für jedes
+   IP-Netz einen Eintrag haben, der angibt, wohin ein IP-Paket zu
+   senden ist.

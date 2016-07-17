@@ -1,0 +1,53 @@
+---
+layout: page
+title: Domain Name Service
+---
+
+<p>
+<b>erbrachter Dienst</b>: Auflösung von Domainnamen zu IP-Adressen, z.B. wird
+ <code>ramosarhuis.de</code> aufgelöst zu <code>192.30.252.153</code>
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Domainnamen</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Domainnamen sind hierarchisch aufgebaut
+</li>
+<li>geben in Lesereichtung den Pfad von einem Blatt zur Wurzel (oder zu einer parent domain) an
+</li>
+<li>partiell qualifierte Domainnamen geben von links nach rechts den
+Pfad von einem Blatt zu einer parent Domain an
+</li>
+<li>vollqualifizierte Domainname geben ein Leserichtung den Pfad von
+einem Blatt zur Wurzel (der leeren Domain) an
+<ul class="org-ul">
+<li>daher enden vollqualifizierte Domainnamen auf einen Punkt, z.B.
+<ul class="org-ul">
+<li>partiell qualifizierter Domainname (im Bezug auf die <code>de</code> Domain):
+<code>ramosarhuis</code>
+</li>
+<li>vollqualifizierte Domainname: <code>ramosarhuis.de.</code>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Subdomain: eine Domain ist immer <b>Subdomain</b> ihrer parent Domains, z.B. ist <code>ramosarhuis.de</code> Subdomain von <code>de</code> und von der leeren Wurzeldomain <code>.</code>
+</li>
+</ul>
+
+<p>
+DNS Server speichern u.a. Informationen über
+</p>
+
+<ul class="org-ul">
+<li>die Hostadressen, die zu einer Domain gehören (Aliases)
+</li>
+<li>den Mailserver, der den Mailverkehr der Domain übernimmt
+</li>
+<li>Zonen in der Domain und DNS Server, die diese Zonen verwalten
+</li>
+</ul>
+</div>
+</div>

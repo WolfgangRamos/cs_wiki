@@ -1,0 +1,25 @@
+#+TITLE: URI
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Uniform Resource Identifier
+---
+#+END_HTML
+
+* Aufbau
+
+=scheme ":" hierarchical-part ["?" query] ["#" fragment]=
+
+- Schema: legt die Interpretation des folgenden Teils fest, z.B. =http=,
+  =ftp=, =doi=
+- hierarchical part: ="//" [Benutzerinformation "@"] [authority] "/" path=
+  - Benutzerinformation (sollte nicht mehr verwendet werden, da URIs
+    als Klartext übertragen werden)
+  - *authority*, z.B. angegeben durch =host:port=
+  - *path*
+- query: ermöglicht zusätzliche parametrisierung des Identifiers
+- fragment: identifiziert eine Stelle innerhalb einer Ressource

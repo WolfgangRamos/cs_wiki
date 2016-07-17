@@ -75,7 +75,7 @@ IPv4-Adressblöcke an die Regional Internet Registrars (RIRs) vergeben.
 - *link-local*: genutz zur Adressierung auf einem einzelnen link; werden
   von Routern nicht weitergeleitet
   - z.B. für host auto configuration, neighbor discovery
-  - starten mit =111111010= (die letzte 54 bit des 64 bit Präfix können frei gewählt werden)
+  - starten mit =1111 1110 10= (die letzte 54 bit des 64 bit Präfix können frei gewählt werden)
   - 64 bit interface ID
 - *unique-local*: Adressierung von Systemen im lokalen Netzwerk und in
   damit verbundenen sites; nicht routbar im
@@ -105,7 +105,7 @@ IPv4-Adressblöcke an die Regional Internet Registrars (RIRs) vergeben.
    - einem *64 bit extended unique identifier* (EUI-64) auf Basis der
      MAC-Adresse des Interface
 	 - bit 0-23: bit 0-23 der MAC Adresse (7. bit invertiert)
-	 - bit 24-39: beleget mit =FFFE=
+	 - bit 24-39: beleget mit =0xFFFE=
 	 - bit 40-64: bit 24-47 der MAC Adresse
 3. prüfe ob diese Adresse bereits im Netzwerk vergeben ist durch
    Duplicate Address Detection; konkret: Sende neighbor solicitation
@@ -131,8 +131,8 @@ IPv4-Adressblöcke an die Regional Internet Registrars (RIRs) vergeben.
 *Felder:*
 
 - version (4 bit):
-- traffic class: Prioritätsklassen für IP-Pakete
-- flow label: Identifikator für die Sequenz zusammengehöriger Pakete
+- traffic class (8 bit): Prioritätsklassen für IP-Pakete
+- flow label (20 bit): Identifikator für die Sequenz zusammengehöriger Pakete
 - payload length: Größe der Payload (max $2^{16} byte$)
 - next header (8 bit): identifiziert den Header, der dem aktuellen IP-Header
   direkt folgt (z.B. 6 = TCP; 17 = UDP; 43 = Routing Header)

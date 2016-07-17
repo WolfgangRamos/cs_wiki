@@ -3,6 +3,12 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 #+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Data Link Layer
+---
+#+END_HTML
 
 *Service:* Transfer von frames von einem Netzknoten zu einem adjazenten
 Netzknoten über eine einzelne Verbindung.
@@ -140,7 +146,7 @@ Ablauf:
 1. Prüfe vor dem Senden, ob auf dem Übertragungskanal gerade
    übertragen wird
    - wenn ja: warte, bis der Kanal frei ist, dann sende
-   - wenn nein: sende den gesamten frame
+   - wenn nein: beginne mit dem Senden des frames
 2. prüfe beim Senden kontinuierlich, ob das Signal auf dem
    Übertragungskanal das gleich ist, wie das Sendesignal.
    - wenn nein: Es gab eine Kollision. Brich die Übertragung ab und

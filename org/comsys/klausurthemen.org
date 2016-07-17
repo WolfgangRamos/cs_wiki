@@ -2,6 +2,12 @@
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
+#+BEGIN_HTML
+---
+layout: page
+title: Klausurthemen
+---
+#+END_HTML
 
 * Klausurthemen ComSys
 
@@ -10,9 +16,10 @@
 - Netzwerke [1/2]
   - [X] /paket-/ und /circuit-switched/ Netzwerke (inkl. Vor- und Nachteile der verschiedenen Netzwerke)
   - [ ] Topologien (BUS, Star, Mesh, Ring; internet core Netzwerk ist mesh)
-	- [ ] Einschätzung der Topologien bzgl. QoS Paramtern
-- ISO/OSI-Referenzmodell [3/4]
-  - [ ] Bereiche (Schicht 1-4 transportorientiert; Schicht 5-7 anwendungsorientiert)
+	- [ ] Einschätzung der Topologien bzgl. QoS Paramtern (throughput,
+      delay, jitter, reliabiliy, availability)
+- ISO/OSI-Referenzmodell [4/4]
+  - [X] Bereiche (Schicht 1-4 transportorientiert; Schicht 5-7 anwendungsorientiert)
   - [X] Schichten (Namen, Funktion/Dienst und Beispielprotokolle)
   - [X] Gründe für Einteilung in Schichten (vs. monolithischer Ansatz)
   - [X] Nachteile der Einteilung in Schichten (z.B. Overhaed durch Header)
@@ -20,26 +27,46 @@
   - [X] Transit- und Endsysteme (Welche Schichten des ISO/OSI-RM müssen in
     einem Transitsystem abgedeckt sein?)
   - [X] Prinzipien der Internetarchitektur (...)
-- [X] Quality of Service
-  - [X] Parameter (bandwidth, throughput, delay, jitter, reliability, availability)
+- Quality of Service [2/2]
+  - [X] Parameter:
+    + datarate: Anzahl der bits, die pro Zeiteinheit über das Medium
+      gesendet werden können in bit/s.
+	+ throughput: Anzahl der erfolgreich übertragen bits (Daten +
+      Overhead) pro Zeiteinheit in bit/s.
+	+ delay: Dauer vom Senden des ersten bis zum Emfpang des letzen
+      bits einer Nachricht
+	+ jitter: mittlere Abweichung des Delay
+	+ reliability: Zuverlässigkeit der Übertragung in Prozent (Anteil
+      der Einheiten, die fehlerfrei übertragen wird an der Gesamtzahl
+      der übertragenen Einheiten)
+	+ availability: uptime eines Systems in Prozent
   - [X] Jitter-Buffer in VOIP-Anwendung (auch Größe berechnen)
-- IPv4 [9/12]
+- IPv4 [10/11]
   - [X] Welchen Dienst erbringt IPv4
   - [X] Arten der Nachrichtenübertragung (broadcast, unicast, multicast,
     anycast)
-  - [X] Aufbau einer IPv4 Adresse (Adressgröße, etc.)
-  - [X] Aufbau eines IPv4 Header (...)
+  - [X] Aufbau einer IPv4 Adresse
+	- Adressgröße, etc.)
+  - [ ] Aufbau eines IPv4 Header
+	- version
+	- header length
+	- ...
   - [X] Hierarchische Adressierung in IPv4 (Networkprefix, host)
   - [X] private und öffentliche Adressen (warum werden sie unterschieden)
   - [X] classful und classless adressing (Vor- und Nachteile)
+	- classful adressing
+	- classless addressing (CIDR)
   - [X] (Port-)NAT (auch NAT-Tabelle erstellen können)
-  - [ ] adress scopes (/link-local/, /unique-local/, /global/)
-  - [ ] Unterschiede zwischen IPv4 und IPv6 Header
-  - [ ] IPv6-in-IPv4-Tunnel
+  - [X] Unterschiede zwischen IPv4 und IPv6 Header
+  - [X] IPv6-in-IPv4-Tunnel
   - [X] Prinzip von /Traceroute/ mit ICMP
-- [-] IPv6
+- IPv6 [5/6]
   - [X] Grund für die Umstellung auf IPv6
-  - [ ] Was hat sich bei Adressierung und Protokoll zwischen IPv4 und IPv6 verändert?
+	- die Anzahl der freien IP Adressen im Adressraum von IPv4 wird
+      immer knapper. Die IANA hat bereits 2011 die letzten freien
+      Adressen mit 8-bit Netzwerkpräfix an die Regionla Registrars
+      vergeben.
+  - [X] Was hat sich bei Adressierung und Protokoll zwischen IPv4 und IPv6 verändert?
 	- Adressen sind länger (128 statt 32 bit)
 	- ein Interface kann mehr als eine Adresse haben (genau 1 link
       local Adresse, eine solicited node multicast address für host
@@ -47,13 +74,24 @@
       multicast)
 	- feste header Länge; Auslagerung der optionalen Felder von IPv4
       (und anderer nicht-optionaler Felder) in extension headern
-  - [ ] Aufbau einer IPv6-Adresse (Adressgröße, unicast, anycast, ...)
-  - [ ] Bestandteile eines IPv4 Headers (version, traffic class, flow
-    label, payload length, next header, hop limit, source address,
-    destination address)
-  - [ ] adress scopes (link local, unique local, global)
-  - [ ] Bestandteile einer IPv6 Adresse
-  - [ ] adress autoconfiguration (auf Basis der MAC-Adresse)
+  - [X] Aufbau einer IPv6-Adresse
+	- Länge: 128 bit
+	- unicast, anycast: 64 bit Präfix, 64 bit Interface ID
+	- multicast: 16 bit Präfix, 112 bit Group ID
+  - [X] Bestandteile eines IPv6 Headers
+	- version
+	- traffic class
+	- flow label
+	- payload length
+	- next header
+	- hop limit
+	- source address
+	- destination address
+  - [X] adress scopes
+	- link local
+	- unique local
+	- global
+  - [ ] host autoconfiguration (auf Basis der MAC-Adresse)
 - [ ] DNS
   - [ ] Was leistet DNS
 - [ ] SMTP
@@ -81,7 +119,7 @@
   - [ ] /link-state-routing/ und /distance-vector-routing/
   - [ ] Routing-Tabellen erstellen
   - [ ] OSPF Protokoll (Funktionsweise erkären)
-- Ethernet (LAN und WLAN) [/]
+- Ethernet (LAN und WLAN) [1/3]
   - [ ] deterministische und probabilistische MAC-Verfahren zur Vermeidung von Kollisionen bei Nutzung eines gemeinsamen Mediums
 	- [ ] probabilistisch: Collision Detection mit /CSMA/CD/ und /CSMA/CA/ (Funktionsweise erläutern können)
 	- [ ] deterministisch: Token Ring

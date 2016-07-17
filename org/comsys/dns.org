@@ -1,0 +1,35 @@
+#+TITLE: DNS
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Domain Name Service
+---
+#+END_HTML
+
+*erbrachter Dienst*: Auflösung von Domainnamen zu IP-Adressen, z.B. wird
+ =ramosarhuis.de= aufgelöst zu =192.30.252.153=
+
+* Domainnamen
+
+- Domainnamen sind hierarchisch aufgebaut
+- geben in Lesereichtung den Pfad von einem Blatt zur Wurzel (oder zu einer parent domain) an
+- partiell qualifierte Domainnamen geben von links nach rechts den
+  Pfad von einem Blatt zu einer parent Domain an
+- vollqualifizierte Domainname geben ein Leserichtung den Pfad von
+  einem Blatt zur Wurzel (der leeren Domain) an
+  - daher enden vollqualifizierte Domainnamen auf einen Punkt, z.B.
+	- partiell qualifizierter Domainname (im Bezug auf die =de= Domain):
+      =ramosarhuis=
+	- vollqualifizierte Domainname: =ramosarhuis.de.=
+- Subdomain: eine Domain ist immer *Subdomain* ihrer parent Domains, z.B. ist =ramosarhuis.de= Subdomain von =de= und von der leeren Wurzeldomain =.=
+
+DNS Server speichern u.a. Informationen über
+
+- die Hostadressen, die zu einer Domain gehören (Aliases)
+- den Mailserver, der den Mailverkehr der Domain übernimmt
+- Zonen in der Domain und DNS Server, die diese Zonen verwalten
+

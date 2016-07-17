@@ -2,6 +2,13 @@
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Kommunikationssysteme
+---
+#+END_HTML
 
 * Inhalt
 
@@ -10,6 +17,7 @@
   - [[./networks.org][Netzwerke]]
   - [[./qos.org][Quality of Service]]
   - [[./standards.org][Standards]]
+  - [[./uri.org][Uniform Resource Identifier]]
 - Netzwerkarchitekturen
   - [[./iso_osi_rm.org][ISO/OSI Referenzmodell]]
   - [[./internet.org][Internet]]
@@ -36,6 +44,17 @@
 
 
 * Begriffe
+
+*Bandbreite*: Frequenzspektrum eines Übertragungskanals. Z.B. ergeben
+ sich für WLAN mit einer Trägerfrequenz von 2400 MHz und einer
+ Bandbreite von 20 - 40 MHz folgende Kanäle:
+
+#+CAPTION: Bsp. für Kanäle bei einer Trägerfrequenz von 2,4 GHz und einer Bandbreite von 20 - 40 MHz
+|         | Bandbreite      |
+|---------+-----------------|
+| Kanal 1 | 2400 - 2440 MHz |
+| Kanal 2 | 2440 - 2480 MHz |
+| ...     | ...             |
 
 *Server:* Ein Server ist eine Software, die bestimmte Dienste anbietet.
 
@@ -197,6 +216,11 @@ Zur Erbringung dieses Service sind nötig:
 
 * Routing und Forwarding
 
+Zwei Methoden zur Bestimmung von Routen (Routing):
+
+- [[Distance Vector Routing]]
+- [[Link State Routing]]
+
 ** Routing Tabellen
 
 routing tables enthalten u.a.:
@@ -242,6 +266,24 @@ Routing Tabellen sind veränderbar durch:
 
 *** Distance Vector Routing
 
-- jeder Router vergibt *Costs* an die 
+- Router senden Distanzvektoren an adjazente Knoten 
+- Bestimmung der routing table mit dem
+  [[../ads/kuerzeste_wege.org::*Algorithmus von
+  Bellman-Ford][Algorithmus von Bellman-Ford]]
+- Protokoll: *Routing Information Protokoll* (RIP)
 
 *** Link State Routing
+
+- Router senden Informationen (up/down, cost) über ihre direkten links
+  an alle anderen Router
+- jeder Router bildet daraus eine "Karte des Netzwerks"
+- Bestimmung des kürzesten Wegs mit dem
+  [[../ads/kuerzeste_wege.org::*Algorithmus von Dijkstra][Algorithmus von Dijkstra]]
+- Protokoll: *Open Shortest Path First* (OSPF)
+
+* Email
+
+Komponenten
+
+- Mail User Agent (MUA):
+- Mail Server:

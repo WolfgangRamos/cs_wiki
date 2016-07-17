@@ -1,7 +1,13 @@
-#+TITLE: Transmission COntrol Protocol
+#+TITLE: Transmission Control Protocol
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
+#+BEGIN_HTML
+---
+layout: page
+title: Transmission Control Protocol
+---
+#+END_HTML
 
 erbrachter Dienst: Pakete zuverlässig, d.h. fehlerfrei, vollständig
 und in der richtigen Reihenfolge, zwischen Anwendungen auf
@@ -73,7 +79,8 @@ Netzwerkschäden.
 
 - beginnt mit einem congestion window (=cwnd=) von 1, 2 oder 10
   Segmenten
-- Bei Empfang eines ACK wird das cwnd verdoppelt (sofern das *receiver window* mindestens so groß ist wie das neue cwnd)
+- Bei Empfang eines ACK wird das cwnd verdoppelt (sofern das *receiver
+  window* mindestens so groß ist wie das neue cwnd)
 - Empfängt der Sender kein ACK, so geht TCP direkt zum Verhalten des
   gewählten congestion avoidance Algorithmus bei einem Timeout über
 - wird beim Vergößern des =cwnd= der slow start threshold (=ssthresh=)
@@ -84,7 +91,7 @@ Netzwerkschäden.
 
 In der Congestion Avoidance-Phase wächst das =cwnd= nur noch linear
 (i.d.R. um 1 Segement) pro empfangenen ACK. Kommt es zu einem Timeout
-dann wird der ssthresh auf die halbe aktuelle cwnd gesetzt und die
+dann wird der =ssthresh= auf die halbe aktuelle =cwnd= gesetzt und die
 cwnd wird wieder auf den intialen Wert (der Wert zu Beginn der slow
 start Phase) zurückgesetzt. Dann geht TCP wieder in die slow start
 Phase über.
@@ -141,10 +148,19 @@ Bei einem stop-and-wait-Protokoll ist die utilization geringer als bei
 Verwendung eines sliding window, da nach dem Senden eines Pakets immer
 auf ein ACK gewartet wird, bevor das nächste Paket gesendet wird.
 
+* Aufbau der Verbindung
+
+#+CAPTION: Beispiel eines TCP Handshakes
+[[./gfx/tcp_handshake.png]]
+
 * Schließen der Verbindung
 
-Arten des SChließens einer Verbindung:
+Eine TCP-Verbindung kann auf mehrere Arten geschlossen werden:
 
 - *TCP half close*: jede Seite Schließt die Verbindung einzeln
 - *active close*: Client schließt die TCP Verbindung
 - *passive close*: Server schließt die TCP Verbindung
+
+#+CAPTION: TCP Teardown
+[[./gfx/tcp_teardown.png]]
+

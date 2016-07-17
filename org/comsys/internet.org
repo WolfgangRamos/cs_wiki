@@ -3,6 +3,12 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 #+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Internet
+---
+#+END_HTML
 
 * Internetarchitektur
 

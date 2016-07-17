@@ -8,6 +8,11 @@
 </ul>
 </div>
 </div>
+---
+layout: page
+title: Dynamic Host Configuration Protocol
+---
+
 <p>
 <b>Dynamic Host Configuration Protocol</b> (DHCP) ermöglicht die Zuweisung
 von Netzwerkkonfigurationen (IP-Adresse, DNS, Standard Gateway, etc.)
@@ -41,8 +46,8 @@ Vorschlag für eine geleaste IP Adresse enthält
 wird der DHCPOFFER als broadcast gesendet
 </li>
 <li>falls der Client sich eine vorläufige IP Adresse gewählt hat kann
-der <code>DHCPOFFER</code> auch als Unicast gesendet werden an die vorläufige
-IP und die MAC Adresse des CLients
+der <code>DHCPOFFER</code> auch als unicast an die vorläufige IP-Adresse
+gesendet werden.
 </li>
 </ul>
 </li>
@@ -51,7 +56,7 @@ lease time)
 </li>
 <li>Client antwortet mit <code>DHCPREQUEST</code> als broadcast
 <ul class="org-ul">
-<li>die Zuordnung des <code>DHCPREQUEST</code> zu einem DHCPOFFER erfolgt über einen
+<li>die Zuordnung des <code>DHCPREQUEST</code> zu einem <code>DHCPOFFER</code> erfolgt über einen
 Server identifier
 </li>
 </ul>
@@ -62,7 +67,7 @@ Netzwerkkonfigurationen enthält
 </ol>
 
 <p>
-Erneuerung des <b>adress lease</b> nach der halben <i>lease time</i>.
+Erneuerung des <b>address lease</b> nach der halben <i>lease time</i>.
 Abmelden einer IP-Adresse mit einem <code>DHCPRELEASE</code>
 </p>
 </div>

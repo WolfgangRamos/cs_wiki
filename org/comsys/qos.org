@@ -3,6 +3,12 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 #+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Quality of Service
+---
+#+END_HTML
 
 Als *Quality of Service* bezeichnet man Zusicherungen, z.B. für
 
@@ -24,19 +30,6 @@ Als *Quality of Service* bezeichnet man Zusicherungen, z.B. für
 Dienste ohne zugesicherte Quality of Service werden als *best effort* bezeichnet.
 
 * Kennwerte
-
-*Bandbreite* = Frequenzspektrum des Übertragungskanals. Z.B. für WLAN: 
-
-Trägerfrequenz: 2,4 GHz = 2400 MHz
-
-Bandbreite eines Kanals: 20 - 40 MHz
-
-#+CAPTION: Bsp. für Kanäle bei einer Trägerfrequenz von 2,4 GHz und einer Bandbreite von 20 - 40 MHz
-|         | Bandbreite      |
-|---------+-----------------|
-| Kanal 1 | 2400 - 2440 MHz |
-| Kanal 2 | 2440 - 2480 MHz |
-| ...     | ...             |
 
 *Datenrate* (data rate) $R$: Anzahl bits, die pro Zeiteinheit über das
 Medium gesendet werden könnten, gemessen in bit/s. Die Datenrate hängt

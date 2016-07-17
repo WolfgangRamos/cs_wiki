@@ -3,6 +3,12 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 #+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: User Datagram Protocol
+---
+#+END_HTML
 
 erbrachter Dienst: Pakete unzuverlässig zwischen Anwendungen auf
 Endsystemen übertragen

@@ -32,6 +32,11 @@
 </ul>
 </div>
 </div>
+---
+layout: page
+title: IPv4
+---
+
 <p>
 IPv4 ist das zentrale Protokoll der Netzwerkschicht in der
 Internetarchitektur (RFC 1122). Alle Protokolle der darüberliegenden
@@ -100,13 +105,18 @@ Header Felder:
 </li>
 <li>Header Length: Länge des Header als Vielfache von 4 byte
 </li>
+<li>DS
+</li>
+<li>ECN
+</li>
 <li>total length: Gesamtlänge (max \(2^{16}\) byte)
 </li>
 <li>protocol: Protokoll der Payload (1 =ICMP; 6 = TCP; 17 = UDP; 41 = IPv6 in IPv4 Paket)
 </li>
 <li>Header Checksum: Prüfsumme des Header
 </li>
-<li>Identification: datagram id (genutzt für fragmentation/reassembly)
+<li>Identification: genutzt zur Identifikation einer Sequenz von
+IP-Paketen
 </li>
 <li>DF: Do not fragment
 </li>
@@ -175,9 +185,18 @@ die Route zu jedem einzelnen System ge-cached werden müsste.
 </li>
 <li>hierarchisches Adressierungsmodell
 <ul class="org-ul">
+<li>Unterteilung einer Adresse in
+<ul class="org-ul">
 <li><b>network prefix</b> gibt das Netzwerk an
 </li>
 <li><b>host address part</b> gibt den Host an
+</li>
+</ul>
+</li>
+<li>beim Routing wird die Adresse von links nach rechts ausgewertet
+</li>
+<li>Blöcke von IP-Adressen befinden sich am gleichen Ort, daher können
+alle Pakete zu diesem Adressen an diesen Ort weitergeleitet werden
 </li>
 </ul>
 </li>
@@ -222,7 +241,7 @@ Oktet bestimmt werden. Folgende Klassen sind festgelegt:
 </li>
 <li><b>Klasse C</b>
 <ul class="org-ul">
-<li>32 bit network prefix: <code>110X XXXX XXXX XXXX XXXX XXXX ...</code>
+<li>24 bit network prefix: <code>110X XXXX XXXX XXXX XXXX XXXX ...</code>
 </li>
 <li>Adressraum: 192.X.X.X - 223.X.X.X
 </li>

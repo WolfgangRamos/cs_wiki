@@ -2,6 +2,12 @@
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
+#+BEGIN_HTML
+---
+layout: page
+title: IPv4
+---
+#+END_HTML
 
 IPv4 ist das zentrale Protokoll der Netzwerkschicht in der
 Internetarchitektur (RFC 1122). Alle Protokolle der darüberliegenden
@@ -33,10 +39,13 @@ Header Felder:
 
 - version (4 bit): gibt die Version des IP Protokolls an (4 = IPv4; 6 = IPv6)
 - Header Length: Länge des Header als Vielfache von 4 byte
+- DS
+- ECN
 - total length: Gesamtlänge (max $2^{16}$ byte)
 - protocol: Protokoll der Payload (1 =ICMP; 6 = TCP; 17 = UDP; 41 = IPv6 in IPv4 Paket)
 - Header Checksum: Prüfsumme des Header
-- Identification: datagram id (genutzt für fragmentation/reassembly)
+- Identification: genutzt zur Identifikation einer Sequenz von
+  IP-Paketen
 - DF: Do not fragment
 - MF: more fragments
   - gesetzt bei allen Fragmenten, außer dem letzten
@@ -72,8 +81,12 @@ die Route zu jedem einzelnen System ge-cached werden müsste.
 
 - Addresslänge: 32 bit
 - hierarchisches Adressierungsmodell
-  - *network prefix* gibt das Netzwerk an
-  - *host address part* gibt den Host an
+  - Unterteilung einer Adresse in
+	- *network prefix* gibt das Netzwerk an
+	- *host address part* gibt den Host an
+  - beim Routing wird die Adresse von links nach rechts ausgewertet
+  - Blöcke von IP-Adressen befinden sich am gleichen Ort, daher können
+    alle Pakete zu diesem Adressen an diesen Ort weitergeleitet werden
 - *Subnetzmaske*: durch bitweise Verundung mit der Subnetzmaske kann aus
   einer IP-Adresse die Netzadresse gebildet werden
 
@@ -94,7 +107,7 @@ Oktet bestimmt werden. Folgende Klassen sind festgelegt:
   - Adressraum: 128.X.X.X - 191.X.X.X
   - 65.000 Hosts
 - *Klasse C*
-  - 32 bit network prefix: =110X XXXX XXXX XXXX XXXX XXXX ...=
+  - 24 bit network prefix: =110X XXXX XXXX XXXX XXXX XXXX ...=
   - Adressraum: 192.X.X.X - 223.X.X.X
   - 255 Hosts
 - *Group* (für Multicast)

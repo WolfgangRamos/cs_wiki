@@ -1,0 +1,32 @@
+#+TITLE: MIME
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Multipurpose Internt Mail Extension
+---
+#+END_HTML
+
+diskrete *content types*:
+
+- text
+- image
+- video
+- audio
+- application
+
+Kompositionstypen:
+
+- multipart: Eine Nachricht kann in mehrere Teile aufgeteilt werden
+- message: Nachrichten können selbst Nachrichten enthalten
+
+Subtypen, z.B.:
+
+- image/jpeg
+- image/png
+- ...
+
+

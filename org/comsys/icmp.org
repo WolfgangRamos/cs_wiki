@@ -2,8 +2,12 @@
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
-
-* ICMP
+#+BEGIN_HTML
+---
+layout: page
+title: Internet Control Message Protocol
+---
+#+END_HTML
 
 *Router Solicitation* (dt. Router Anfrage): Werden von Hosts gesendet, um
 die lokalen Router zu finden.

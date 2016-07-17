@@ -1,4 +1,4 @@
-#+TITLE: Ethernet
+#+TITLE: SMTP
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
@@ -6,8 +6,8 @@
 #+BEGIN_HTML
 ---
 layout: page
-title: Ethernet
+title: Simple Mail Protocol
 ---
 #+END_HTML
 
-maximale Größe eines /frames/: 1500 byte
+- verwendet TCP Verbindung

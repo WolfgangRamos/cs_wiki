@@ -36,7 +36,7 @@ NDP wird verwendet für
   3. sende neighbor solicitation message mit:
 	 - target address: vorläufiger Adresse
 	 - source address: undefined address =::=
-	 - destination address: solicited node destination address
+	 - destination address: solicited node multicast address
   4. wenn eine Antwort (neighbor advertisement als multicast) kommt,
      gehe zu manueller Konfiguration oder versuche es mit einer neuen
      vorläufigen Adresse. Wenn keine Antwort kommt verwende die

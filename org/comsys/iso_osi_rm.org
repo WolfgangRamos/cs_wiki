@@ -107,15 +107,15 @@ logische Verbindung zwischen zwei Instanzen derselben Schicht.
 Merksatz: /Please do not throw salami pizza away/
 
 #+CAPTION: Schichten des IOS/OSI Referenzmodells
-| Nr | Schicht            | bereitgestellter Dienst                                                                   | Einheiten (PDUs)    | Protokolle (Entitäten)          |
-|----+--------------------+-------------------------------------------------------------------------------------------+---------------------+---------------------------------|
-|  7 | *Application Layer*  | anwendungsspezifische Dienste                                                             |                     |                                 |
-|  6 | *Presentation Layer* | systemunabhängige, korrekte Darstellung der Daten, die Applikations-Instanzen austauschen |                     |                                 |
-|  5 | *Session Layer*      | Organisation und Synchronisation des (Daten-)Austauschs zwischen kooperierenden Instanzen | SOCKS               |                                 |
-|  4 | *Transport Layer*    | End-zu-End Transport von /segements/                                                        | segments, datagrams | TCP, UDP                        |
-|  3 | *Network Layer*      | Routing und Forwarding von packets zwischen Endsystemen über Transitsysteme               | packets             | IPv4, IPv6, ICMP                |
-|  2 | *Data Link Layer*    | Übertragung von /frames/ zwischen benachbarten Systemen über eine einzelne Verbindung       | frames              | Mac-Adressen, Ethernet, CSMA/CD |
-|  1 | *Physical Layer*     | unzuverlässige Übertragung von bits auf dem Übertragungsmedium                            | bits                | Ethernet, WLAN, 10 BaseT        |
+| Nr | Schicht            | bereitgestellter Dienst                                                                                    | Einheiten (PDUs)    | Protokolle (Entitäten)   |
+|----+--------------------+------------------------------------------------------------------------------------------------------------+---------------------+--------------------------|
+|  7 | *Application Layer*  | anwendungsspezifische Dienste                                                                              |                     | HTTP, FTP, SMTP, DNS     |
+|  6 | *Presentation Layer* | systemunabhängige, korrekte Darstellung der Daten, die Application-Layer-Instanzen austauschen             |                     | MIME                     |
+|  5 | *Session Layer*      | Öffnen, Schließen und Verwalten/Aufrechterhalten von Verbindungen zwischen End-User Anwendungen (Sessions) |                     | SOCKS, NetBIOS           |
+|  4 | *Transport Layer*    | zuverlässige/unzuverlässige End-zu-End Übertragung von /segments/                                            | segments, datagrams | TCP, UDP                 |
+|  3 | *Network Layer*      | Routing und Forwarding von /packets/ zwischen Endsystemen über Transitsysteme                                | packets             | IPv4, IPv6, ICMP         |
+|  2 | *Data Link Layer*    | Übertragung von /frames/ zwischen benachbarten Systemen über eine einzelne Direktverbindung                  | frames              | ARP, MAC                 |
+|  1 | *Physical Layer*     | unzuverlässige Übertragung von bits auf dem Übertragungsmedium                                             | bits                | Ethernet, WLAN, 10 BaseT |
 
 Schicht 1-4 sind /transportorientiert/, d.h. sie haben die Funktion
 Daten zu übertragen. Schicht 5-7 sind /anwendungsorientiert/.
@@ -164,27 +164,24 @@ Regeln:
 10. Jede Schicht soll nur mit ihren direkt angrenzenden Schichten
     kommunizieren (die darüber und die darunter)
 
-** TODO Data Link Schicht
+** Physical Layer
+** Data Link Layer
 
-Funktionen:
+zentrale Funktionen:
 
-- Fehlererkennung/-behandlung
-- Adressierung
-- Multiplexing
-- MAC
-- Routing zwischen verschiedenen LANs
+- Fehlererkennung/-behandlung (CRC)
+- Adressierung adjazenter Knoten
+- Medium Access Control
 
-** Netzwerkschicht
+** Network Layer
 
 Der Netzwerkschicht liegt ein Netzwerkmodell zugrunde, das zwischen
 *Endsystemen* und *Transitsystemen* unterscheidet:
 
 - *Endsystem (host):* 
-
-  - Datenquelle oder -ziel; hosten Anwendungen
-
+  - Datenquelle oder -ziel
+  - hosten Anwendungen
 - *Transitsystem:*
-
   - Aufgabe: Weiterleitung von Daten von Quelle zum Ziel
   - keine Verarbeitung der Daten, aber ggf. Reformattierung, Filterung,
 	Umcodierung
@@ -197,59 +194,44 @@ zentrale Funktionen:
 
 - Addressierung in Netzwerken (Festlegung, wie Addressierung in
   Netzwerken erfolgt)
-
-  - z.B. IPv4:
-
-	- Eine Adresse besteht aus 32 bit
-	- Eine Adresse unterteilt sich in ein /network prefix/ mit
-      variabler Länge (geschrieben z.B. als 200.13.67.91/17, wobei
-      die 17 anzeigt, dass das network prefix aus 17 bits besteht)
-      gefolgt von einem *host address part*
-
-- packet forwarding
-
-  - Weiterleitung von Paketen gemäß der aktuellen Routing Table des
-    Systems
-
-- Festlegung von routes (das erfolgt über die Aktualisierung von
-  Routing Tables)
+- Forwarding: Weiterleitung von Paketen gemäß der aktuellen Routing
+  Table des Systems
+- Routing: Bestimmen optimaler Routen zu Endsystemen (erfolgt über die
+  Aktualisierung von Routing Tables)
 - Erkennung und Elimination von /circulating packages/ (z.B. Pakete,
   die unter Transitsystemen "im Kreis" geschickt werden)
 - Paket Fragementierung und Reassembly
-
-optionale Funktionen:
-
-- Stauen und Verwerfen von Paketen
-- Festlegung von Grenzen für /delay/ und /delay jitter/
-- Transition zwischen Heterogenen Netzwerken, z.B. Transition von
-  Paketen aus einem Ethernet Netzwerk in ein WLAN Netzwerk und
-  umgekehrt.
    
-** Transportschicht
+** Transport Layer
 
-Funktionen:
+zentrale Funktionen:
 
 - Fehlererkennung und -behandlung in Endsystemen
 - End-zu-End Flusskontrolle (z.B. Festlegung des /sliding window/)
 - Segmentierung und Reassembly von Paketen
 - Ordnen empfangener Pakete anhand der Sequenznummer
+- zuverlässige Übertragung von Paketen zwischen Endsystemen (d.h.
+  vollständig und in der richtigen Reihenfolge)
 
-Im Internet wird der Service der Transprotschicht über die Socket API
-umgesetzt:
+** TODO Session Layer
+
+zentrale Dienste:
 
 #+CAPTION: Funktionen der Socket API
 [[./gfx/socket_api.png]]
 
 ** Presentation Layer
 
-Funktionen:
+zentrale Dienste:
 
-- Serialisierung ?
-- *Marshalling/Unmarshalling*: Codierung/Decodierung von Paketen
-- Nachrichtenencodierung: Übersetzung von Anwendungsdaten (z.B.
-  Objekte in einer Java-Anwendung) in das Austauschformat (z.B. XML)
+- Übersetzung von Anwendungsdaten (z.B. Objekte in einer
+  Java-Anwendung) in das Austauschformat (z.B. XML)
 - Übersetzung vom Zeichensatz der Anwendung in den Zeichensatz des
   Transfers
+
+** TODO Application Layer
+
+zentrale Dienste:
 
 
 
