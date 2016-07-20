@@ -1,0 +1,198 @@
+---
+layout: page
+title: Linda-Modell
+---
+
+<p>
+Kommunikation und Sychronisation über eine Multimenge, den sog.
+<b>Tupelraum</b>. Wir gehen davon aus, dass die Werte im Tupelraum atomar
+sind, d.h. sie sind nicht veränderbar.
+</p>
+
+<p>
+Modifikationen: Modellierung des Tupelraums als Key-Value-Store
+(effizienter, da nach einem Key gesucht werden kann).
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> zentrale Operationen:</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> out</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<code>out(&lt;Tupel&gt;)</code> legt ein Tupel in den Tupelraum. Blockiert nicht.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> in</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<code>in(&lt;Tupel&gt;)</code> holt ein Tupel aus dem Tupelraum. Wichtige Eigenschaften:
+</p>
+
+<ul class="org-ul">
+<li>Suche nach passendem Tupel über pattern matching realisiert (wenn
+mehrere Tupel auf das Pattern passen, dann wird irgendeines davon
+genommen; welches ist nicht spezifiziert)
+</li>
+<li>blockiert, wenn kein passendes Tupel gefunden wird
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> rd</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<code>rd(&lt;Tupel&gt;)</code> liest ein Tupel aus dem Tupelraum, ohne es daraus zu
+entfernen. Wichtige Eigenschaften:
+</p>
+
+<ul class="org-ul">
+<li>suspendiert, wenn das Tupel nicht im Tupelspace ist
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Linda Implementierung</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-erlang">-module(linda).
+-export([start/0, in/2, out/2, rd/2]).
+
+start() -&gt;
+	S = spawn(fun() -&gt; space([], []) end),
+	register(linda, S),
+	S.
+
+space(Ts, Reqs) -&gt;
+	receive
+		{out, T} -&gt;
+			{Reqs1, KeepT} = findMatchingReq(T,Reqs),
+			case KeepT of
+				true -&gt;
+					space([T|Ts], Reqs1);
+				false -&gt;
+					space(Ts, Reqs1)
+			end;
+		{InRd, F, P} -&gt;
+			case findMatchingTuple(F, Ts, InRd) of
+				nothing -&gt;
+					space(Ts,[{F,P,InRd}|Reqs]);
+				{just, {Match, Ts1}} -&gt;
+					P!{tupleMatch, Match},
+					space(Ts1, Reqs)
+			end
+	end.
+
+findMatchingTuple(_,[],_) -&gt;
+	nothing;
+findMatchingTuple(F, [T|Ts], InRd) -&gt;
+	case catch F(T) of
+		{'EXIT', _} -&gt;
+			case findMatchingTuple(F, Ts, InRd) of
+				nothing -&gt;
+					nothing;
+				{just, {M1, Ts1}} -&gt;
+					{just, {M1, [T|Ts1]}}
+			end;
+		Match -&gt;
+			case InRd of
+				in -&gt;
+					{just, {Match, Ts}};
+				rd -&gt;
+					{just, {Match, [T|Ts]}}
+			end
+	end.
+
+out(Space, T) -&gt;
+	Space!{out,T}.
+
+in_rd(Space, F, InRd) when is_function(F) -&gt;
+	Space!{InRd,F,self()},
+	receive
+		{tupleMatch, Match} -&gt;
+			Match
+	end;
+in_rd(Space, V, InRd) -&gt;
+	in_rd(Space,fun(X) -&gt; V=X end, InRd).
+
+in(Space, X) -&gt;
+	in_rd(Space, X, in).
+
+rd(Space,F) -&gt;
+	in_rd(Space, X, rd).
+
+findMatchingReq(_,[]) -&gt;    
+	{[], true};
+findMatchingReq(T,[Req|Reqs]) -&gt;
+	{F,P,InRd} = Req,
+	case catch F(T) of
+		{'EXIT', _} -&gt;
+			{Reqs1, KeepT} = findMatchingReq(T,Reqs),
+			{[Req|Reqs1], KeepT};
+		Match -&gt; 
+			P!{tupleMatch, Match},
+			case InRd of
+				in -&gt;
+					{Reqs,false};
+				rd -&gt;
+					findMatchingReq(T,Reqs)
+			end
+	end.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Implementierung des Philosophenproblems mit Linda</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+
+<pre class="src src-erlang">-module(philLinda).
+-export([start/0]).
+
+start() -&gt;
+	TS = linda:start(),
+	linda:out(TS,{stick,1}),
+	linda:out(TS,{stick,2}),
+	linda:out(TS,{stick,3}),
+	linda:out(TS,{stick,4}),
+	linda:out(TS,{stick,5}),
+	spawn(fun() -&gt; phil(1, TS, {stick, 1}, {stick,2}) end),
+	spawn(fun() -&gt; phil(2, TS, {stick, 2}, {stick,3}) end),
+	spawn(fun() -&gt; phil(3, TS, {stick, 3}, {stick,4}) end),
+	spawn(fun() -&gt; phil(4, TS, {stick, 4}, {stick,5}) end),
+	base:getLn(),
+	phil(5, TS, {stick, 5}, {stick,1}).
+
+phil(N,TS,SL,SR) -&gt;
+	base:printLn(base:show(N)++" thinks"),
+	linda:in(TS,SL),
+	linda:in(TS,SR),
+	base:printLn(base:show(N)++" eats"),
+	linda:out(SL),
+	linda:out(SR),
+	phil(N,TS,SL,SR).
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-0-1" class="outline-4">
+<h4 id="sec-3-0-1"><span class="section-number-4">3.0.1</span> <span class="todo TODO">TODO</span> Implementierung von Queues mit amortisiert konstanter Laufzeit</h4>
+</div>
+
+<div id="outline-container-sec-3-0-2" class="outline-4">
+<h4 id="sec-3-0-2"><span class="section-number-4">3.0.2</span> <span class="todo TODO">TODO</span> Garbage Collection sollte realisiert werden, wenn wir auf die Datenstruktur zugreifen (ein neues Tupel eintragen)</h4>
+</div>
+</div>

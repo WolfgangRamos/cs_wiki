@@ -1,0 +1,28 @@
+#+TITLE: Parallelisierung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Parallelisierung von Problemen
+---
+#+END_HTML
+
+Probleme bei der Aufteilung von Problemen:
+
+- rekursive Algorithmen sind problematisch, da i.d.R. erst zur
+  Laufzeit bekannt ist, in wie viele Teilprobleme ein Problem
+  aufzuteilen wird
+- Teilprobleme können unterschiedlich aufwendig sein
+  - Mögliche Lösungen
+	- Probleme zur Laufzeit verteilen (festlegen eines *Hypervisors*, der
+      ausschlißlich das Verteilen der Teilprobleme auf die übrigen
+      Knoten übernimmt)
+	- Knoten warten aufeinander
+	- Jobs werden in einer Kette weitergeschickt, d.h. jeder Knoten
+      kennt seinen Nachfolger und schickt Probleme, die er selbst
+      nicht bearbeiten kann an seinen Nachfolger weiter
+	  - Problem: im schlimmsten Fall wird der Job immer bis zum
+        letzten Knoten durchgereicht

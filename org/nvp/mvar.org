@@ -1,0 +1,76 @@
+#+TITLE: MVar
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: MVar
+---
+#+END_HTML
+
+Eine *MVar* ist ein 1-elementiger Puffer. Man kann also eine MVar
+auffassen als eine Variable, die /höchtens/ einen Wert enthalten kann.
+
+* zentrale Operationen
+
+** take
+
+Leert die MVar und gibt den Wert zurück. Wichtige Eigenschaften:
+
+- suspendiert auf leerer MVar
+- sequentialisiert die Zugriffe von Readern auf die MVar
+- weckt einen Writer
+
+** put
+
+Legt einen Wert in die MVar. Wichtige Eigenschaften:
+
+- suspendiert auf einer vollen MVar
+- sequentialisiert die Zugriffe von Writern auf die MVar
+- weckt einen Reader
+
+** read
+
+Liest Wert aus der MVar *ohne* die MVar zu leeren. Wichtige
+Eigenschaften:
+
+- suspendiert auf einer leeren MVar
+- sequentialisiert die Zugriffe von Readern auf die MVar
+- weckt einen Reader
+
+** tryTake
+
+Versucht einen Wert aus der MVar zu lesen. Wichtige Eigenschaften:
+
+- suspendiert /nicht/ auf einer leeren MVar, sondern gibt dann einen
+  "leeren" Wert zurück (z.B. =nothing= eines Maybe-Typs)
+- sequentialisiert mit den Zugriffen der Reader
+- weckt einen Writer, wenn die MVar geleert wurde
+
+** tryPut
+
+Versuche einen Wert in die MVar zu legen. Gibt =tre= zurück, wenn die
+Operation erfolgreich war, ansonsten =false=. Wichtige Eigeschaften:
+
+- suspendiert *nicht* auf einer vollen MVar, sondern gibt dann =false= zurück
+- sequentialisiert mit den Zugriffen der Writer
+- weckt einen Reader, wenn die MVar gefüllt wurde
+
+** swap
+
+Tauscht den Wert in der MVar gegen den übergeben Wert aus. Wichtige
+Eigenschaften:
+
+- suspendiert auf einer leeren MVar
+- sequentialisiert mit den Zugriffen der *Reader*
+- weckt einen Reader, wenn der Wert ausgetauscht wurde
+
+** clear
+
+Leert die MVar ohne den Wert zurück zu geben. Wichtige Eigenschaften:
+
+- suspendiert *nicht* auf einer leeren MVar
+- sequentialisiert mit den Zugriffen der Reader
+- weckt einen Writer, wenn die MVar geleert wurde

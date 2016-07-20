@@ -3,22 +3,39 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 #+STARTUP: hideblocks
-
-* Linearzeitlogik
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Linearzeitlogik
+---
+#+END_HTML
 
 *Temporale Logik* ist eine Erweiterung der Logik zur Erfassung
 zeitlicher Abläufe durch Aussagen über Vorher-Nachher-Beziehungen.
 
 *Linear Temporal Logic* (LTL, dt. Linearzeitlogik) ist eine temporale
-Logik mit zeitlichen Modalitäten (z.B. /irgendwann gilt .../,
-/irgendwann gilt immer .../, etc.). In LTL können Formeln über die
-Zukunft von Pfaden formuliert werden. Hier interessieren wir uns
-insbesondere für die Ausführungspfade nebenläufiger Programme. Diese werden
-als unendlich angenommen, da nicht-terminierende (Hintergund-)prozesse
+Logik mit zeitlichen Modalitäten (z.B. /irgendwann gilt .../, /irgendwann
+gilt immer .../, etc.). In LTL können Formeln über die Zukunft von
+Pfaden formuliert werden. Hier interessieren wir uns insbesondere für
+die Ausführungspfade nebenläufiger Programme. Diese werden als
+unendlich angenommen, da nicht-terminierende (Hintergund-)prozesse
 (z.B. ein Serveranwendung oder ein Print-Loop) ein Bestandteil vieler
-nebenläufiger Programme sind.
+nebenläufiger Programme sind. Ein Ausführungsgraph wird durch eine
+[[Kripkestruktur]] modelliert.
 
-** Syntax
+Mit Hilfe der LTL lassen sich z.B. zentrale Qualitätskriterien
+nebenläufiger Programme formulieren, z.B.:
+
+- *Sicherheitseigenschaften* (Safety): "Bestimmte Situationen treten nie
+  auf", z.B. $G\neg(cs_1 \wedge cs_2)$
+- *Lebendigkeitseigenschaften* (Liveness): "eine erwünschte Eigenschaft
+  tritt rigendwann auf (das Programm macht Fortschritte)" z.B.
+  $G(request \Rightarrow F response)$
+- *Fairness:* "ein Prozess wird vom Scheduler unendlich oft
+  Prozessorzeit zugeteilt", z.B. $F^{\infty} executing$
+
+* Syntax
 
 $Prop$ ist eine Menge von aussagelogischen Variablen
 (*Zustandpropositionen*) $\{p_0, p_1, \dots\}$ mit $p_i \in Prop$ für
@@ -35,19 +52,22 @@ Die Menge der LTL-Aussagen $LTL$ ist induktiv definiert:
 - $\neg\varphi \in LTL$
 - $\varphi \rightarrow \psi \in LTL$
 - $X\varphi \in LTL$: /Next-Operator/, d.h. im nächsten Schritt gilt $\varphi$
-- $\varphi U \psi \in LTL$: /Until-Operator/, d.h. es gilt $\varphi$, bis irgendwann $\psi$ gilt
-- $\varphi R \psi \in LTL$: /Release-Operator/, d.h. $\varphi$ gilt immer bis zur ersten Position, an der $\psi$ gilt 
-
-*** TODO Ist $\varphi \rightarrow \psi$ auch eine LTL-Aussage? Laut Wikipedia schon... :nvprog:
+- $\varphi U \psi \in LTL$: /Until-Operator/, d.h. es gilt $\varphi$,
+  bis irgendwann $\psi$ gilt
+- $\varphi R \psi \in LTL$: /Release-Operator/, d.h. $\varphi$ gilt
+  immer bis zur ersten Position, an der $\psi$ gilt, oder für immer,
+  wenn eine solche Position nicht existiert
 
 Wir definieren außerdem folgende Abkürzungen/Operatoren
 
 - $F\varphi \equiv true U \varphi$: /Finally-Operator/, d.h. irgendwann gilt $\varphi$
-- $G\varphi \equiv \neg F\neg$: /Globally-Operator/, d.h. immer gilt $\varphi$
-- $F^{\infty} \equiv GF\varphi$: unendlich oft gilt $\varphi$
-- $G^{\infty} \equiv FG\varphi$: $\varphi$ gilt fast immer, d.h. bis auf endlich viele Ausnahmen
+- $G\varphi \equiv \neg F\neg\varphi$: /Globally-Operator/, d.h. immer gilt $\varphi$
+- $F^{\infty} \equiv GF\varphi$: unendlich oft gilt $\varphi$ (aus
+  jedem Zustand heraus gilt immer irgendwann $\varphi$)
+- $G^{\infty} \equiv FG\varphi$: $\varphi$ gilt /fast immer/, d.h.
+  $\neg\varphi$ gilt nur endlich oft
 
-** Semantik
+* Semantik
 
 Ein *Zustand* $s$ ist eine Menge von Zustandspropositionen, d.h. es gilt
 $s \in\mathcal{P}(Prop)$.
@@ -76,45 +96,52 @@ $\pi\models\varphi$. Sie ist induktiv definiert:
 
 *Eigenschaften:*
 
-- Es gilt $\varphi U \psi \equiv \psi \vee (\varphi \wedge X\varphi U \psi)$
-- $F\varphi \equiv \varphi \vee X F \varphi$
+- Es gilt $\varphi U \psi \equiv \psi \vee (\varphi \wedge X(\varphi U \psi))$
+- $F\varphi \equiv \varphi \vee X (F \varphi)$
 - $G\varphi \equiv \varphi \wedge X G \varphi$
-- $\pi\models F\varphi$ gdw. $\exists i\in \mathbb{N}: \pi = s_0:\dots :s_n:\pi' \wedge \pi'\models\varphi$
-- $\pi\models G \varphi$ gdw. $\forall i \in \mathbb{N}: \pi=s_0:\dots:s_n:\pi' \wedge \pi'\models\varphi$
+- $\pi\models F\varphi$ gdw. $\exists i\in \mathbb{N}: (\pi = s_0:\dots :s_i:\pi') \wedge \pi'\models\varphi$
+- $\pi\models G \varphi$ gdw. $\forall i \in \mathbb{N}: (\pi=s_0:\dots:s_i:\pi') \wedge \pi'\models\varphi$
 
-
-*** TODO Kripkestruktur $\mathcal{K}$. 
-
-Es gilt $\mathcal{K}\models \varphi$ genau dann, wenn für alle Pfade $\pi \in \mathcal{P}(Prop)^{\omega}$
-
-Es gilt:
 
 - $s_0:\pi\models \neg P$ mit $P\in Prop$ gilt gdw. $P\not\in s_0$
 - $\neg F \varphi \equiv G \neg\varphi$
 - $\neg G \varphi \equiv F \neg \varphi$
 - $\neg X \varphi \equiv X\neg\varphi$
 
-$\neg \varphi U \psi \equiv \neg \varphi R \neg \psi$
+- $\neg \varphi U \psi \equiv \neg \varphi R \neg \psi$
 
-$\neg \varphi R \psi \equiv \neg \varphi U \neg \psi$
+- $\neg \varphi R \psi \equiv \neg \varphi U \neg \psi$
 
-$X \varphi R \psi \equiv \psi \wedge (\varphi \vee X \varphi R \psi)$
+- $X \varphi R \psi \equiv \psi \wedge (\varphi \vee X \varphi R \psi)$
 
-- *Sicherheitseigenschaften* (Safety): "Bestimmte Situationen treten nie auf", z.B. $G\neg(cs_1 \wedge cs_2)$
-- *Lebendigkeiteigenschaften* (Liveness): "" z.B. $F supi$, $G(request \Rightarrow F response)$
-- *Fairness:* $F^{\infty} supi$
+* Kripkestruktur $\mathcal{K}$. 
 
-* LTL in Erlang
+Eine Kripkestruktur $\mathcal{K}$ ist ein 5-Tupel $\mathcal{K} = (S,
+Props, \longrightarrow, \tau, s_0)$ mit:
+
+- Zustandmenge $S$
+- Propositionsmenge $Prop$
+- Transitionsrelation $\longrightarrow \subset S \times S$
+- Beschriftungsfunktion für Zustände $\tau: S \rightarrow \mathcal{P}(Prop)$
+- Startzustand $s_0 \in S$
+
+Es gilt $\mathcal{K}\models \varphi$ genau dann, wenn für alle Pfade
+$\pi$ von $\mathcal{K}$ gilt $\pi \in \mathcal{P}(Prop)^{\omega}$
+
+* LTL Implementierung in Erlang
 
 #+BEGIN_SRC erlang
 -module(ltl).
 -export([prop/1, neg/1,conj/2,disj/2,x/1,f/1,g/1,start/0,assert/1,newProp/1,releaseProp/1,status/0]).
 
-% Zuständer werden durch Veränderung von Propositionen definiert, d.h. wenn eine Proposition gesetzt oder freigegeben wird.
+% Zuständer werden durch Veränderung von Propositionen definiert, d.h.
+% wenn eine Proposition gesetzt oder freigegeben wird, wird implizit
+% eine neuer Zustand angenommen. 
+
 % Zustand in Prozess gespeichert
 start() -> 
-  LTL = spawn(fun() -> ltl([],[],[]) end),
-  register(ltl,LTL).
+LTL = spawn(fun() -> ltl([],[],[]) end),
+register(ltl,LTL).
 
 ltl(Phis,Asserts,Props) -> % Asserts speichert Formelnamen für eine sinnvolle Ausgabe
   receive
@@ -245,8 +272,12 @@ step({conj,Phi,Psi}) -> conj(step(Phi),step(Psi));
 step({disj,Phi,Psi}) -> disj(step(Phi),step(Psi));
 step(Phi) -> base:putStrLn("Unexpected fomula in check: "++showLTL(Phi)).
 
-
 #+END_SRC erlang
+
+Nun verwenden wir diese Implementierung, um exemplarisch einen
+Eigenschafte eines Erlang-Programms zu verifizieren:
+
+#+INCLUDE: "./src/critical.erl" src erlang
 
 #+BEGIN_SRC erlang 
   -module(critical).
@@ -278,11 +309,14 @@ step(Phi) -> base:putStrLn("Unexpected fomula in check: "++showLTL(Phi)).
       dec(S).     
 #+END_SRC erlang
 
-*** TODO neue Version des base Moduls holen
-	
-* Unentscheidbarkeit
+* Verifikation von Erlang-Programmen
 
-Wir wollen zeigen, dass Erlang unentscheidbar ist.
+Da (im Allgemeinen) nicht entschieden werden kann, ob eine
+Erlang-Programm terminiert, kann ein Erlang Programm (im Allgemeinen)
+auch nicht mit LTL verifiziert werden.
+
+Wir zeigen durch Implementierung einer Turing Machine in Erlang, dass
+unentscheidbar ist, ob ein Erlang Programm terminiert:
 
 #+NAME: Implementierung einer Turing Machine mit Laufzeitkeller
 #+BEGIN_SRC erlang
@@ -349,13 +383,3 @@ Wir wollen zeigen, dass Erlang unentscheidbar ist.
 
 #+END_SRC
 
-
-
-* TODO Erlang kann nicht verifiziert werden
-
-Gründe:
-
-- Programm muss nicht terminieren
-- es genügen:
-  - zwei int Variablen
-  - zwei Prozesse

@@ -11,6 +11,16 @@ title: Channel
 ---
 #+END_HTML
 
+* TODO Unterschied zwischen Mailbox eines Prozesses in Erlang und eines Channel erklären können
+
+* zentrale Operationen:
+
+** read
+** write
+** isEmpty
+
+* TODO isEmpty bug erklären können; Lösung für isEmpty bug: Füllstand über einen Semaphore erfassen
+
 #+BEGIN_EXAMPLE
     class Chan<T> {
 

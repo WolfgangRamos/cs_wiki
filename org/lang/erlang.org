@@ -13,46 +13,45 @@ title: Erlang
 
 * Erlang
 
-- Kommentare: =%=
+- Kommentare: =%= (keine multiline Kommentare)
 - Variablen groß schreiben
-- Atome klein schreiben
+- Atome klein schreiben, z.B. =nothing=
+- Variablen werden groß geschrieben, z.B. =X=
+- Variable können nur einmal gebunden werden. Mit =f(X)= kann man sie
+  danach wieder frei geben
 
-#+BEGIN_EXAMPLE
-    -module().
-    -export([fac/1, lookup/2]).
+* Erlang
 
-    fac(0) -> 1;
-    fac(N) when N > 0 -> N * fac(N-1).
+** TODO Wofür Prozesse registrieren und welche?
 
-    % lookup :: a -> [(a,b)] -> Maybe b
-    lookup(_,[]) ->
+** Robust programmieren in Erlang
 
-    map(_,[]) -> [];
-    map(Fun,[X,Xs]) -> [Fun(X)|map(Fun,Xs)].
+Robust Programmierung in Erlang folgt dem Prizip: /die easy and
+often/ und erfolgt über *linking* von Prozessen:
 
-    map2(Fun, Xs) ->
-      case Xs of
-        [] -> [];
-        [Y|Ys] -> [Fun(Y)|map2(Fun, Ys)]; ???
-      end.
-#+END_EXAMPLE
+- für lokale Prozesse übernimmt die Erlang Virtual Machine das
+  Benachrichten der verlinkten Prozess, wenn ein Prozess stirbt.
+- für remote Prozesse auf andereren Knoten wird über regelmäßige
+  Poll-Nachrichten geprüft, ob diese noch am Leben sind
 
--  Kompilieren mit =c(Modulname)=
+** TODO Sematik von =receive= verstehen. Erklären anhand eines kleines Beispielprogramms
 
-** Nebenläufigkeit
+- Kompilieren von Erlang Quellcode
+  - in der Erlang Shell: =c(⟨Modulname⟩).=
+  - in der Bash: =erlc (⟨Modulname⟩)=
 
-Jeder Prozess hat eine Mailbox. Diese ist eine Queue (FIFO). Die
-Reihenfolge der Pattern im =receive= Aufruf hat keinen Einfluss auf die
-Reihenfolge der Verarbeitung der Nachrichten.
+** Prozesse
 
-Jeder Prozess hat eine /Pit/. Die /Pit/ des laufenden Prozesses erhält
-man mit =self()=.
-
-Nachricht senden: =self()!hallo=
-
-Nachricht empfangen: `receive 42 -> bla; X -> X
-
-Variable freigeben (free) =f(X)=
+- jeder Prozess hat eine *mailbox*
+- Nachricht werden mit =receive= aus der mailbox entnommen
+  - die Nachrichten in der mailbox werden dabei nach dem FIFO Prinzip
+	abgearbeitet (nicht gematchte Nachrichten verbleiben dabei jedoch
+	in der Queue)
+  - die pattern werden dabei von oben nach unte abgearbeitet. Das erst
+    matchende Pattern wird verwendet.
+- Jeder Prozess hat eine *PID*. Die *PID* des laufenden Prozesses
+  erhält man mit =self()=
+- Prozessen kann man mit =!= Nachrichten senden, z.B. =self()!hallo=
 
 #+BEGIN_EXAMPLE
     -module(database).
@@ -75,7 +74,7 @@ Variable freigeben (free) =f(X)=
       end.
 #+END_EXAMPLE
 
-=spawn(Funktion)= geniert einen Prozess und gitb den Pit des Prozesse
+=spawn(Funktion)= geniert einen Prozess und gitb den PID des Prozesse
 zurück
 
 #+BEGIN_EXAMPLE
@@ -162,7 +161,7 @@ Prozesse auf dem Server registrieren: =register(<Name>, <pit>).=
 
 Danach können Nachrichten an den registierten Service geschickt werden:
 ={<Name>, <Knoten>}!<Nachricht>=. Für Antworten kann der Sender seine
-Pit mitschicken.
+PID mitschicken.
 
 chatServer:
 
@@ -298,7 +297,7 @@ In Anwendungen gibt es oft einen *supervision tree*, d.h.
 - worker-Prozesse führen Berechnungen durch
 - supervisor-Prozesse kontrollieren das Verhalten der worker-Prozesse
 
-Die Idee von *Beheaviours* fußt auf der Beobachtung, dass im
+Die Idee von *Behaviours* fußt auf der Beobachtung, dass im
 supervision-tree viele Prozesse ähnliche Aufgaben erfüllen. Behaviours
 dienen dazu die gemeinsamen Strukturen herauszuabstrahieren und den
 gesamten Code zu zerlegen in:
@@ -314,7 +313,7 @@ Beispiele:
 - gen_event: Implementierung von event-handling
 - supervisor: Implementierung eines supervisors
 
-** Vorteile
+*** Vorteile
 
 - Wiederverwendbarkeit
 - Kommunikationsprotokoll ist versteckt und kann ggf. leicht

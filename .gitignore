@@ -10,3 +10,5 @@ _site
 .sass-cache
 .jekyll-metadata
 
+/.bundle/config
+/Gemfile.lock

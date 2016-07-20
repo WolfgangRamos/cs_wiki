@@ -9,9 +9,15 @@ title: Kommunikationssysteme
 <ul class="org-ul">
 <li>Allgemeines
 <ul class="org-ul">
+<li><a href="./service">Dienst</a>
+</li>
+<li><a href="./protocol.html">Protokoll</a>
+</li>
 <li><a href="./networkarchitecture.html">Netzwerkarchitektur</a>
 </li>
 <li><a href="./networks.html">Netzwerke</a>
+</li>
+<li><a href="./routing.html">Routing und Forwarding</a>
 </li>
 <li><a href="./qos.html">Quality of Service</a>
 </li>
@@ -128,6 +134,14 @@ title: Kommunikationssysteme
 </p>
 
 <p>
+<b>Dienst</b>: s. <a href="./service.html">Dienst</a>
+</p>
+
+<p>
+<b>Protokoll</b>: s. <a href="./protocol.html">Protokoll</a>
+</p>
+
+<p>
 <b>triple play:</b> Dienste, die in Deutschland über die Telefonsteckdose
 angeboten werden: Telefonie, Internetzugang, Fernsehen
 </p>
@@ -208,380 +222,18 @@ Transitsystemen mit Hilfe von <b>forwarding tables</b>
 <b>Maximum Transmission Unit</b> (MTU): maximale Größe einer
  Übertragungseinheit (packet, frame, sequence, etc.)
 </p>
-</div>
-</div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Dienst</h2>
-<div class="outline-text-2" id="text-3">
 <p>
-Ein Dienst ist eine genau beschriebene Leistung, die ein Protokoll, eine
-Anwedung oder sonstiges erbrigt und für andere anbietet. Der Begriff
-<i>Dienst</i> wird daher oft unscharf verwendet:
-</p>
-
-<ul class="org-ul">
-<li>Jede Netzwerkanwendung kann als <i>Dienst</i> (Service) bezeichnet werden,
-z.B.:
-
-<ul class="org-ul">
-<li>Domain Name Service (DNS): Auflösung von Domain Namen zu IP Adressen
-(engl. <i>name resolution</i>)
-</li>
-<li>File Transfer (FTP, SFTP):
-</li>
-<li>File Sharing: z.B. Peer-to-peer Dienste (unterscheidet sich von
-FTP und SFTP dadurch, dass die Rolle des Clients <i>und</i> des Server
-einnehmen kann)
-</li>
-<li>Network File System: Einbinden von Remote-Verzeichnissen in den
-lokalen Verzeichnisbaum
-</li>
-<li>Terminal Emulation: Z.B. ssh
-</li>
-<li>E-Mail
-</li>
-<li>Voice over IP
-</li>
-<li>Webanwendungen
-</li>
-</ul>
-</li>
-
-<li>Jeder "Subdienst", den ein Protokoll (z.B. IP, TCP, UDP, HTTP)
-erbringt kann als <i>Dienst</i> bezeichnet werden, z.B.:
-
-<ul class="org-ul">
-<li>in order packet delivery (ein Dienst von TCP)
-</li>
-<li>packet routing (
-</li>
-<li><i>marshalling/unmarshalling</i>: packet coding/decoding
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Protokolle</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-Ein Protokoll ist die Umsetzung eines Standards in
-ausführbarer/anwendbarer Form (Protokolle können in Hard- oder
-Software implementiert werden). Zwischen einem Standard und einem
-Protokoll gibt es keine klare Trennung. Protokolle können zum Standard
-werden. Ein Standard kann in mehrerer Protokollen umgesetzt werden.
+<b>Internet Assigned Number Authority</b> (IANA): Die IANA verwaltete den
+globalen Pool von IP-Adressen und AS Nummern und vergibt
+IP-Adressblöcke an RIRs.
 </p>
 
 <p>
-Ein Protokoll besteht aus Regeln für:
+<b>Regional Internet Registrars</b> (RIRs): verwalten IP-Adressen und AS
+Nummern in ihrer Region. Die RIRs sind: <i>AfriNIC</i> (Afrika), <i>APNIC</i>
+(Asien/Pazifik), <i>ARIN</i> (Nordamerika), <i>LACNIC</i> (Lateinamerika, Karibik),
+<i>RIPE NCC</i> (Europa).
 </p>
-
-<ul class="org-ul">
-<li><b>message encoding rules</b>
-</li>
-<li><b>message sematic rules</b>
-</li>
-<li><b>message exchange rules</b>
-</li>
-</ul>
-
-<p>
-Man unterscheidet (grob): <b>transportorientierte</b> Protokolle und
-<b>anwedungoreintierte</b> Protokolle
-</p>
-
-<p>
-Netzwerkservices werden i.d.R. durch das Zusammenspiel mehrerer
-Protokolle erbracht. Man spricht von einem <b>protokoll stack</b>. Der
-protocol stack für den E-Mail Dienst ist z.B:
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption class="t-above"><span class="table-number">Table 2:</span> Protocol Stack für den E-Mail Dienst</caption>
-
-<colgroup>
-<col  class="left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="left">SMTP</td>
-</tr>
-
-<tr>
-<td class="left">TCP</td>
-</tr>
-
-<tr>
-<td class="left">IP</td>
-</tr>
-
-<tr>
-<td class="left">Ethernet</td>
-</tr>
-
-<tr>
-<td class="left">Manchester Code</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-<div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Timeline Diagramme</h3>
-<div class="outline-text-3" id="text-4-1">
-<p>
-<b>Timeline Diagramme</b> sind eine informelle Art Protokolle darzustellen. In
-einem Timeline Diagram kann nur <i>ein</i> konkreter Ablauf dargestellt
-werden (z.B. eine erfolgreicher Handshake). Bsp für ein Timelinediagramm
-eines TCP Handshake:
-</p>
-
-
-<div class="figure">
-<p><img src="./gfx/tcp_handshake.png" alt="tcp_handshake.png" />
-</p>
-<p><span class="figure-number">Figure 1:</span> Beispiel eines TCP Handshakes</p>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> IP-Adressen</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-<b>IANA</b>: verwaltete den globalen Pool von IP-Adressen und AS Nummern und
-vergibt /8 IP-Adressblöcke an RIRs
-</p>
-
-<p>
-<b>Regional Internet Registrars</b> (RIRs): verwalten IP-Adressen und AS Nummern in ihrer Region:
-</p>
-
-<ul class="org-ul">
-<li>AfriNIC: Afrika
-</li>
-<li>APNIC: Asien/Pazifik
-</li>
-<li>ARIN: Nordamerika
-</li>
-<li>LACNIC: Lateinamerika, Karibik
-</li>
-<li>RIPE NCC: Europa
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Transport</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-im Internet v.a.
-</p>
-
-<ul class="org-ul">
-<li>UDP: unzuverlässige Übertragung von Daten zwischen Anwendungen auf Endsystemen
-</li>
-<li>TCP: zuverlässige Übertragung von Daten zwischen Anwendungen auf Endsystemen
-</li>
-</ul>
-
-<p>
-Zur Erbringung dieses Service sind nötig:
-</p>
-
-<ul class="org-ul">
-<li><b>application multiplexing</b>: <a href="#sec-6-1">6.1</a> werden verwendet, um die Quell und Ziel-Anwendung auf den
-Endsystem zu identifizieren. Man spricht von application
-multiplexing, da alle Applikationen auf einem host dieselbe
-Netzwerverbindung nutzen.
-</li>
-<li><b>flow control</b>
-</li>
-<li><b>congestion control</b>
-</li>
-<li>Fehlererkennung (über das <code>checksum</code> Feld des UDP und TCP headers)
-</li>
-</ul>
-</div>
-
-<div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Ports</h3>
-<div class="outline-text-3" id="text-6-1">
-<ul class="org-ul">
-<li>Größe des port number space: \(2^{16} = 65536\)
-</li>
-<li>Port 0 - 1023: von der IANA vergebene service ports. Bsp:
-<ul class="org-ul">
-<li>21 TCP: FTP
-</li>
-<li>23 TCP: Telnet
-</li>
-<li>25 TCP: SMTP
-</li>
-<li>80 TCP: HTTP
-</li>
-<li>430 TCP: HTTPS
-</li>
-</ul>
-</li>
-<li>Port 1024 - 65535: dynamisch vom OS vergeben
-</li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Routing und Forwarding</h2>
-<div class="outline-text-2" id="text-7">
-<p>
-Zwei Methoden zur Bestimmung von Routen (Routing):
-</p>
-
-<ul class="org-ul">
-<li><a href="#sec-7-2-1">7.2.1</a>
-</li>
-<li><a href="#sec-7-2-2">7.2.2</a>
-</li>
-</ul>
-</div>
-
-<div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Routing Tabellen</h3>
-<div class="outline-text-3" id="text-7-1">
-<p>
-routing tables enthalten u.a.:
-</p>
-
-<ul class="org-ul">
-<li>destination address
-</li>
-<li>next hp
-</li>
-<li>interface
-</li>
-</ul>
-
-<p>
-Arten von Einträgen
-</p>
-
-<ul class="org-ul">
-<li><b>network route</b>: destination address ist Adresse eines Netzwerks (z.B.
-10.0.2.0/24)
-</li>
-<li><b>host route</b>: destination adress ist Adresse eines Hosts (z.B. 10.0.2.2/32)
-</li>
-<li><b>default route</b>: destination address ist die ungültige Adresse
-0.0.0.0/0
-<ul class="org-ul">
-<li>durch die Verwendung einer 0-bit Präfix wird dafür gesorgt, dass
-alle Pakete, deren Zieladdresse zu keinem anderen Eintrag in der
-routing table passt an die default route weitergeleitet werden
-</li>
-<li>genutzt für das <b>standardgateway</b>
-</li>
-</ul>
-</li>
-<li><b>loopback address</b>:
-<ul class="org-ul">
-<li>unter Linux existiert kein Eintrag für die loopback address in der
-routing table. ein loopback wird durch den Kernel erkannt und
-behandelt (und nicht an ein Interfaceweitergeleitet)
-</li>
-</ul>
-</li>
-</ul>
-
-<p>
-Das Nachschlagen einer destination address in einer routing table
-erfolgt mit Hilfe des <b>longest prefix match</b>. D.h. ein Paket wird an den
-Eintrag in der routing table, dessen Netzwerkpräfix die längsten
-Übereinstimmung mit der Zieladresse aufweist. Das ermöglich die
-Aggregation Adressen in routing tables und führt somit zu kleineren
-routing tables. 
-</p>
-
-<ul class="org-ul">
-<li>um das longest prefix match effizient bestimmen zu können werden
-die Präfix der Einträge der routing table als Baum repräsentiert
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Aktualisierung von Routing Tabellen</h3>
-<div class="outline-text-3" id="text-7-2">
-<p>
-Routing Tabellen sind veränderbar durch:
-</p>
-
-<ul class="org-ul">
-<li>manuelle Konfiguration von routen
-</li>
-<li>ICMP Nachrichten
-</li>
-<li>Hinzufügen eines Interface zum lokalen Knoten
-</li>
-<li>Aktualisierungen durch Routing Protokolle
-</li>
-</ul>
-</div>
-
-<div id="outline-container-sec-7-2-1" class="outline-4">
-<h4 id="sec-7-2-1"><span class="section-number-4">7.2.1</span> Distance Vector Routing</h4>
-<div class="outline-text-4" id="text-7-2-1">
-<ul class="org-ul">
-<li>Router senden Distanzvektoren an adjazente Knoten 
-</li>
-<li>Bestimmung der routing table mit dem
-<a href="../ads/kuerzeste_wege.org::*Algorithmus von
-  Bellman-Ford">Algorithmus von Bellman-Ford</a>
-</li>
-<li>Protokoll: <b>Routing Information Protokoll</b> (RIP)
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-7-2-2" class="outline-4">
-<h4 id="sec-7-2-2"><span class="section-number-4">7.2.2</span> Link State Routing</h4>
-<div class="outline-text-4" id="text-7-2-2">
-<ul class="org-ul">
-<li>Router senden Informationen (up/down, cost) über ihre direkten links
-an alle anderen Router
-</li>
-<li>jeder Router bildet daraus eine "Karte des Netzwerks"
-</li>
-<li>Bestimmung des kürzesten Wegs mit dem
-<a href="../ads/kuerzeste_wege.html#sec-1-2">Algorithmus von Dijkstra</a>
-</li>
-<li>Protokoll: <b>Open Shortest Path First</b> (OSPF)
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Email</h2>
-<div class="outline-text-2" id="text-8">
-<p>
-Komponenten
-</p>
-
-<ul class="org-ul">
-<li>Mail User Agent (MUA):
-</li>
-<li>Mail Server:
-</li>
-</ul>
 </div>
 </div>

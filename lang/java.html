@@ -155,19 +155,34 @@ MyClass&lt;Integer&gt; = new MyClass&lt;&gt;();
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> Nebenläufigkeit</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Threads</h3>
-<div class="outline-text-3" id="text-2-1">
 <p>
-<b>Klasse</b> <code>Thread</code>: Bsp: <code>MyThreadClass extends Thread</code>
-</p>
-
-<p>
-<b>Interface</b> <code>Runable</code>: Bsp: <code>MyThreadClass implements Runable</code> (aktuelle
-Thread Objekt erreichbar über: <code>Thread.currentThread()</code>)
+Jedes Objekt in Java hat
 </p>
 
 <ul class="org-ul">
+<li>ein <b>intrinsic lock</b>
+</li>
+<li>ein <b>waiting set</b> mit Threads die blockiert sind und auf ein <code>notify()</code>
+  oder <code>notifiyAll()</code> auf diesem Objekt warten
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Threads</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<b>Klasse</b> <code>Thread</code>: z.B. <code>MyThreadClass extends Thread</code>
+</p>
+
+<p>
+<b>Interface</b> <code>Runable</code>: z.B. <code>MyThreadClass implements Runable</code>
+</p>
+
+<ul class="org-ul">
+<li>das aktuelles Thread Objekt erreichbar über: <code>Thread.currentThread()</code>)
+</li>
+
 <li>Methode <code>public void run()</code>: Code, der beim Aufruf von <code>start()</code>
    ausgeführt wird
 </li>
@@ -176,20 +191,56 @@ Thread Objekt erreichbar über: <code>Thread.currentThread()</code>)
 </ul>
 
 <p>
-Threads freiwillig unterbrechen:
+Methoden um Threads freiwillig zu unterbrechen:
 </p>
 
 <ul class="org-ul">
-<li><code>yield</code>: synchronized Methode wird nicht verlassen
+<li><code>yield()</code>: synchronized Methode wird nicht verlassen
 </li>
-<li><code>suspend</code>
+<li><code>suspend()</code>:
 </li>
 <li><code>sleep(⟨Millisekunden⟩)</code>, <code>Thread.sleep(⟨Millisekunden⟩)</code>:
 suspendiert Thread, synchronized Methode wird nicht verlassen
 </li>
+</ul>
+</div>
 
+<div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> Zustände</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<ul class="org-ul">
+<li><code>NEW</code>
+</li>
+<li><code>RUNABLE</code>: Thread ist in ausführung (d.h. jedoch nicht zwangsläufig,
+dass der Thread zu jedem Zeitpunkt wirklich ausgeführt wird, also
+ihm die CPU zugeteilt ist)
+</li>
+<li><code>BLOCKED</code>: Thread ist ausführbereit und wartet auf das lock eines
+Objekts
+</li>
+<li><code>WAITING</code>: Thread wartet darauf durch ein <code>notify()</code> oder
+<code>notifyAll()</code> geweckt zu werden
+</li>
+<li><code>TIMED_WAITING</code>: Thread wartet darauf durch ein <code>notify()</code> oder
+<code>notifyAll()</code> oder durch Ablauf einer spezifizierten Zeit geweckt zu
+werden.
+</li>
+<li><code>TERMINATED</code>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> synchronized Methoden und Blöcke</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Methoden:
+</p>
+
+<ul class="org-ul">
 <li><code>wait()</code>, <code>⟨object⟩.wait()</code>:
-
 <ul class="org-ul">
 <li>Methode der Klasse <code>Object</code>
 </li>
@@ -205,26 +256,25 @@ time has elapsed.
 </li>
 </ul>
 </li>
-
-<li><code>notify()</code>, <code>⟨object⟩.notify()</code>: deblockiert irgendeinen Thread aus
-dem waiting set von ⟨object⟩
-
+<li><code>notify()</code>, <code>⟨object⟩.notify()</code>:
 <ul class="org-ul">
-<li>Deblockiert irgendeinen Thread aus dem waiting set von <code>⟨object⟩</code>
-(der Thread wird in die <i>waiting queue</i> des Objekts verschoben).
-Wenn kein Thread auf das lock wartet geht das Signal verloren.
+<li>weckt irgendeinen Thread aus dem <b>waiting set</b> von <code>⟨object⟩</code> (der
+Thread wird in die <b>waiting queue</b> des Objekts verschoben). Der
+aufgeweckte Thread muss sich neu um das lock bewerben (ein neuer
+Thread könnte ihm dabei z.B. zuvor kommen)
+</li>
+<li>wenn kein Thread auf das lock wartet geht das Signal verloren.
 </li>
 </ul>
 </li>
-
 <li><code>notifyAll()</code>, <code>⟨object⟩.notifyAll()</code>:
-
+Threads aus dem <b>waiting set</b> von <code>object</code> deblockiert
 <ul class="org-ul">
 <li>kann nur innerhalb eines <code>synchronized</code>-Blocks des Objekts
 <code>⟨object⟩</code> aufgerufen werden
 </li>
-<li>Deblockiert alle Threads aus dem waiting set von <code>⟨object⟩</code>. Wenn
-kein Thread auf das lock wartet geht das Signal verloren. Die
+<li>weckt <i>alle</i> Threads aus dem <b>waiting set</b> von <code>⟨object⟩</code>. Wenn kein
+Thread auf das lock wartet geht das Signal verloren. Die
 aufgeweckten Threads müssen sich neu um das lock bewerben.
 </li>
 </ul>
@@ -232,9 +282,9 @@ aufgeweckten Threads müssen sich neu um das lock bewerben.
 </ul>
 
 <p>
-<code>wait()</code>, <code>notify()</code> und <code>notifyAll()</code> dürfen nur in <code>synchronized</code>
-Methoden oder <code>synchronized</code>-Blöcken verwendet werden. Ansonsten ergibt
-sich zur Laufzeit eine <code>IllegalMoitorStateException</code>.
+<code>wait()</code>, <code>notify()</code> und <code>notifyAll()</code> dürfen nur in <code>synchronized</code> Methoden
+oder <code>synchronized</code>-Blöcken verwendet werden. Ansonsten ergibt sich zur
+Laufzeit eine <code>IllegalMonitorStateException</code>.
 </p>
 
 <p>
@@ -242,34 +292,20 @@ Semantik des Monitorskonzepts in Java: EQ = WQ &lt; SQ;
 </p>
 
 <p>
-<b>Zustände von Threads:</b>
+Ruft ein Thread \(T_1\) <code>synchronized(o)</code> auf ein Objekt <code>o</code> auf, dessen
+lock von einem anderen Thread \(T_2\) gehalten wird, so wird der Thread
+\(T_1\) <b>nicht</b> suspendiert! Er wird lediglich in den Zustand <code>BLOCKED</code>
+versetzt. Der Unterschied ist, dass eine Thread im Zustand <code>BLOCKED</code>
+<b>nicht</b> durch ein <code>notify()</code> oder <code>notifyAll()</code> geweckt werden muss! Er muss
+lediglich darauf warten, dass das Lock von <code>o</code> wieder freigegeben wird
+und bewirbt sich dann erneut um dieses lock.
 </p>
-
-<ul class="org-ul">
-<li><code>NEW</code>
-</li>
-<li><code>RUNABLE</code>: Thread ist in ausführung (d.h. jedoch nicht zwangsläufig,
-dass der Thread sich zu jedem Zeitpunkt in Ausführung befindet)
-</li>
-<li><code>WAITING</code>: Thread ist ausführbereit und wartet auf das lock eines
-Objekts
-</li>
-<li><code>BLOCKED</code>: Thread wartet darauf durch ein <code>notify()</code> oder
-<code>notifyAll()</code> geweckt zu werden.
-</li>
-<li><code>TIMED_WAITING</code>: Thread wartet darauf durch ein <code>notify()</code> oder
-<code>notifyAll()</code> oder durch Ablauf einer spezifizierten Zeit geweckt zu
-werden.
-</li>
-<li><code>TERMINATED</code>:
-</li>
-</ul>
 </div>
 </div>
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Semaphoren</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Semaphoren</h3>
+<div class="outline-text-3" id="text-2-3">
 <p>
 Klasse: <code>java.util.concurrent.Semaphore</code>
 </p>
@@ -283,9 +319,9 @@ Klasse: <code>java.util.concurrent.Semaphore</code>
 </div>
 </div>
 
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Synchronized</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Synchronized</h3>
+<div class="outline-text-3" id="text-2-4">
 <p>
 Das Monitor-Konzept für Codeblöcke, Klassen- und Instanzmethoden wird in
 Java wird mit Hilfe des Schlüsselworts <code>synchronized</code> realisiert.

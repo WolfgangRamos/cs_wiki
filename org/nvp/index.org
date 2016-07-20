@@ -1,0 +1,110 @@
+#+TITLE: Nebenläufige und verteilte Programmierung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Nebenläufige und verteilte Programmierung
+---
+#+END_HTML
+
+* Inhalt
+
+- Klassische Probleme
+  - [[../os/dining_philosophers_problem.org][Dining Philosopher Problem]]
+  - Readers/Writers
+  - Producer/Consumer
+  - [[./chat.org][Chat]]
+- Allgemeine Konstrukte des Arbeitens auf geteiltem Speicher
+  - [[../os/semaphore.org][Semaphoren]]
+  - Monitore
+	- [[../os/monitors.org][Allgemeines zum Monitorkonzept]]
+	- [[../lang/java.org][Das Monitorkonzept in Java]]
+- weitere Konstrukte der Interprozesskommunikation
+  - [[./mvar.org][MVar]]
+  - [[./channel.org][Channel]]
+  - [[./linda.org][Linda-Modell]] (Tupelspace)
+  - [[./stm.org][Software Transactional Memory]] (STM)
+	- [[./stm.org][TVar]]
+- Testen nebenläufiger Programme
+  - [[./ltl.org][Linear Time Logic]] (LTL)
+- [[./parallelisierung.org][Paralellisierung von Problemen]]
+
+* Begriffe
+
+*Nebenläufigkeit*: Nebenläufigkeit verwenden wir als Überbegriff für
+
+- Nebenläufigkeit (Scheduling von Prozessen) auf einem Prozessorkern und
+- echter Parallelität (auf Mehrkernprozessoren)
+
+Nebenläufigkeit hat das Ziel:
+
+- Performanzsteigerung und
+- hohe Reaktivität des Systems gewährleisten
+
+*Verteilte Systeme:* Verteilte Systeme haben i.d.R. nicht das Ziel der
+Performanzsteigerung. Meist haben solche Systeme auf natürliche Weise
+verteilten Charakter (z.B. Mobiltelefone, Bankautomaten, etc.)
+
+*Deadlock*: 
+
+* Zentrales Problem nebenläufier Programme
+
+Das zentrale Problem nebenläufiger Programme ist, dass das Ergebnis
+der Programmausführung vom Scheduling bei der Ausführung abhängt.
+Diesen Nicht-determininismus muss man bei nebenläufiger Programmierung
+vermeiden.
+
+#+CAPTION: 1. Beispiel für ein nicht-deterministisches nebenläufiges Programm
+#+BEGIN_EXAMPLE
+i = 0;
+{i = i+1;} || {i=2*i;} // nebenläufig ausgeführt
+puts(i); // das Ergebnis kann 0, 1 oder 2 sein (je nach Scheduling)
+#+END_EXAMPLE
+
+Auch die Verwendung von Semaphoren führt nicht zwangsläufig zu einem
+deterministischen Programm:
+
+#+CAPTION: 2. Beispiel für ein nicht-deterministisches nebenläufiges Programm
+#+BEGIN_EXAMPLE
+i = 0;
+sem = 1;
+
+// nebenläufig ausgeführt
+{           || {
+  p(sem);   ||   p(sem);
+  i = i+1;  ||   i=2*i;
+  v(sem);   ||   v(sem);
+}           || }
+
+puts(i); // das Ergebnis kann 1 oder 2 sein (je nach Scheduling)
+#+END_EXAMPLE
+
+* TODO Implementierungen
+
+Übersicht über Implementierungen:
+
+|                                           | Java      | Erlang           | Haskell        |
+|-------------------------------------------+-----------+------------------+----------------|
+| Philosophen                               | -         | [[./src/phil.erl][phil.erl]]         | -              |
+| MVar                                      | X         | [[./src/mvar.erl][mvar.erl]]         | (vordefiniert) |
+| Philosophen mit MVars                     | -         | -                | [[./src/Phil.hs][Phil.hs]]        |
+| Channel mit MVar                          | [[./src/Chan.java][Chan.java]] | -                | X              |
+| remote Channel                            | -         | X                | -              |
+| Semaphore                                 | -         | X                | -              |
+| Linda (mit Stacks für Tupel und Requests) | -         | X                | -              |
+| Linda (mit Queues für Tupel und Requests) | -         | [[./src/queueLinda.erl][queueLinda.erl]]   | -              |
+| Philosophen mit Linda                     | -         | [[./src/philLinda.erl][philLinda.erl]]    | -              |
+| STM                                       | -         | [[./src/stm.erl][stm.erl]]          | (vordefiniert) |
+| Philosophen mit STM                       | -         | [[./src/philSTM.erl][philSTM.erl]]      | [[./src/PhilSTM.hs][PhilSTM.hs]]     |
+| MVar mit STM                              | -         | -                | [[./src/MVarSTM.hs][MVarSTM.hs]]     |
+| Channel mit STM                           | -         | -                | [[./src/ChanSTM.hs][ChanSTM.hs]]     |
+| Key-Value Store (Database)                | -         | [[./src/database.erl][database.erl]]     | -              |
+| LTL                                       | -         | [[./src/ltl.erl][ltl.erl]]          | -              |
+| Chat                                      | -         | X                | -              |
+| verteilter Chat                           | -         | X                | -              |
+| Laufzeitkeller                            | -         | [[./src/runtimeStack.erl][runtimeStack.erl]] | -              |
+| Turing Machine mit Laufzeitkeller         | -         | [[./src/tm.erl][tm.erl]]           | -              |
+| Queue mit amortisiert linearer Laufzeit   | -         | [[./src/effQueue.erl][effQueue.erl]]     | -              |

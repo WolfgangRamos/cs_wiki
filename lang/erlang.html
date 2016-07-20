@@ -7,65 +7,86 @@ title: Erlang
 <h2 id="sec-1"><span class="section-number-2">1</span> Erlang</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
-<li>Kommentare: <code>%</code>
+<li>Kommentare: <code>%</code> (keine multiline Kommentare)
 </li>
 <li>Variablen groß schreiben
 </li>
-<li>Atome klein schreiben
+<li>Atome klein schreiben, z.B. <code>nothing</code>
 </li>
-</ul>
-
-<pre class="example">
--module().
--export([fac/1, lookup/2]).
-
-fac(0) -&gt; 1;
-fac(N) when N &gt; 0 -&gt; N * fac(N-1).
-
-% lookup :: a -&gt; [(a,b)] -&gt; Maybe b
-lookup(_,[]) -&gt;
-
-map(_,[]) -&gt; [];
-map(Fun,[X,Xs]) -&gt; [Fun(X)|map(Fun,Xs)].
-
-map2(Fun, Xs) -&gt;
-  case Xs of
-    [] -&gt; [];
-    [Y|Ys] -&gt; [Fun(Y)|map2(Fun, Ys)]; ???
-  end.
-</pre>
-
-<ul class="org-ul">
-<li>Kompilieren mit <code>c(Modulname)</code>
+<li>Variablen werden groß geschrieben, z.B. <code>X</code>
+</li>
+<li>Variable können nur einmal gebunden werden. Mit <code>f(X)</code> kann man sie
+danach wieder frei geben
 </li>
 </ul>
 </div>
+</div>
 
-<div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Nebenläufigkeit</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Erlang</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> <span class="todo TODO">TODO</span> Wofür Prozesse registrieren und welche?</h3>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Robust programmieren in Erlang</h3>
+<div class="outline-text-3" id="text-2-2">
 <p>
-Jeder Prozess hat eine Mailbox. Diese ist eine Queue (FIFO). Die
-Reihenfolge der Pattern im <code>receive</code> Aufruf hat keinen Einfluss auf die
-Reihenfolge der Verarbeitung der Nachrichten.
+Robust Programmierung in Erlang folgt dem Prizip: <i>die easy and
+often</i> und erfolgt über <b>linking</b> von Prozessen:
 </p>
 
-<p>
-Jeder Prozess hat eine <i>Pit</i>. Die <i>Pit</i> des laufenden Prozesses erhält
-man mit <code>self()</code>.
-</p>
+<ul class="org-ul">
+<li>für lokale Prozesse übernimmt die Erlang Virtual Machine das
+Benachrichten der verlinkten Prozess, wenn ein Prozess stirbt.
+</li>
+<li>für remote Prozesse auf andereren Knoten wird über regelmäßige
+Poll-Nachrichten geprüft, ob diese noch am Leben sind
+</li>
+</ul>
+</div>
+</div>
 
-<p>
-Nachricht senden: <code>self()!hallo</code>
-</p>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> <span class="todo TODO">TODO</span> Sematik von <code>receive</code> verstehen. Erklären anhand eines kleines Beispielprogramms</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>Kompilieren von Erlang Quellcode
+<ul class="org-ul">
+<li>in der Erlang Shell: <code>c(⟨Modulname⟩).</code>
+</li>
+<li>in der Bash: <code>erlc (⟨Modulname⟩)</code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 
-<p>
-Nachricht empfangen: `receive 42 -&gt; bla; X -&gt; X
-</p>
-
-<p>
-Variable freigeben (free) <code>f(X)</code>
-</p>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Prozesse</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>jeder Prozess hat eine <b>mailbox</b>
+</li>
+<li>Nachricht werden mit <code>receive</code> aus der mailbox entnommen
+<ul class="org-ul">
+<li>die Nachrichten in der mailbox werden dabei nach dem FIFO Prinzip
+abgearbeitet (nicht gematchte Nachrichten verbleiben dabei jedoch
+in der Queue)
+</li>
+<li>die pattern werden dabei von oben nach unte abgearbeitet. Das erst
+matchende Pattern wird verwendet.
+</li>
+</ul>
+</li>
+<li>Jeder Prozess hat eine <b>PID</b>. Die <b>PID</b> des laufenden Prozesses
+erhält man mit <code>self()</code>
+</li>
+<li>Prozessen kann man mit <code>!</code> Nachrichten senden, z.B. <code>self()!hallo</code>
+</li>
+</ul>
 
 <pre class="example">
 -module(database).
@@ -89,7 +110,7 @@ database(KVs) -&gt;
 </pre>
 
 <p>
-<code>spawn(Funktion)</code> geniert einen Prozess und gitb den Pit des Prozesse
+<code>spawn(Funktion)</code> geniert einen Prozess und gitb den PID des Prozesse
 zurück
 </p>
 
@@ -181,7 +202,7 @@ Prozesse auf dem Server registrieren: <code>register(&lt;Name&gt;, &lt;pit&gt;).
 <p>
 Danach können Nachrichten an den registierten Service geschickt werden:
 <code>{&lt;Name&gt;, &lt;Knoten&gt;}!&lt;Nachricht&gt;</code>. Für Antworten kann der Sender seine
-Pit mitschicken.
+PID mitschicken.
 </p>
 
 <p>
@@ -271,9 +292,9 @@ der verlinkte Prozess stirbt.
 </div>
 </div>
 
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Generic Server</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Generic Server</h3>
+<div class="outline-text-3" id="text-2-5">
 <p>
 Modul <code>gen_server</code>.
 </p>
@@ -334,9 +355,9 @@ lokales Dictionary mit Key-Value-Paaren:
 </p>
 </div>
 </div>
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Behaviours</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Behaviours</h3>
+<div class="outline-text-3" id="text-2-6">
 <p>
 In Anwendungen gibt es oft einen <b>supervision tree</b>, d.h.
 </p>
@@ -351,7 +372,7 @@ In Anwendungen gibt es oft einen <b>supervision tree</b>, d.h.
 </ul>
 
 <p>
-Die Idee von <b>Beheaviours</b> fußt auf der Beobachtung, dass im
+Die Idee von <b>Behaviours</b> fußt auf der Beobachtung, dass im
 supervision-tree viele Prozesse ähnliche Aufgaben erfüllen. Behaviours
 dienen dazu die gemeinsamen Strukturen herauszuabstrahieren und den
 gesamten Code zu zerlegen in:
@@ -381,11 +402,10 @@ Beispiele:
 </li>
 </ul>
 </div>
-</div>
 
-<div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Vorteile</h3>
-<div class="outline-text-3" id="text-1-4">
+<div id="outline-container-sec-2-6-1" class="outline-4">
+<h4 id="sec-2-6-1"><span class="section-number-4">2.6.1</span> Vorteile</h4>
+<div class="outline-text-4" id="text-2-6-1">
 <ul class="org-ul">
 <li>Wiederverwendbarkeit
 </li>
@@ -399,8 +419,9 @@ ausgetauscht werden
 </ul>
 </div>
 </div>
+</div>
 
-<div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> <span class="todo TODO">TODO</span> Franks Stack implementierung in Erlang</h3>
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> <span class="todo TODO">TODO</span> Franks Stack implementierung in Erlang</h3>
 </div>
 </div>

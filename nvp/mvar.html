@@ -1,0 +1,143 @@
+---
+layout: page
+title: MVar
+---
+
+<p>
+Eine <b>MVar</b> ist ein 1-elementiger Puffer. Man kann also eine MVar
+auffassen als eine Variable, die <i>höchtens</i> einen Wert enthalten kann.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> zentrale Operationen</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> take</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Leert die MVar und gibt den Wert zurück. Wichtige Eigenschaften:
+</p>
+
+<ul class="org-ul">
+<li>suspendiert auf leerer MVar
+</li>
+<li>sequentialisiert die Zugriffe von Readern auf die MVar
+</li>
+<li>weckt einen Writer
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> put</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Legt einen Wert in die MVar. Wichtige Eigenschaften:
+</p>
+
+<ul class="org-ul">
+<li>suspendiert auf einer vollen MVar
+</li>
+<li>sequentialisiert die Zugriffe von Writern auf die MVar
+</li>
+<li>weckt einen Reader
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> read</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Liest Wert aus der MVar <b>ohne</b> die MVar zu leeren. Wichtige
+Eigenschaften:
+</p>
+
+<ul class="org-ul">
+<li>suspendiert auf einer leeren MVar
+</li>
+<li>sequentialisiert die Zugriffe von Readern auf die MVar
+</li>
+<li>weckt einen Reader
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> tryTake</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Versucht einen Wert aus der MVar zu lesen. Wichtige Eigenschaften:
+</p>
+
+<ul class="org-ul">
+<li>suspendiert <i>nicht</i> auf einer leeren MVar, sondern gibt dann einen
+"leeren" Wert zurück (z.B. <code>nothing</code> eines Maybe-Typs)
+</li>
+<li>sequentialisiert mit den Zugriffen der Reader
+</li>
+<li>weckt einen Writer, wenn die MVar geleert wurde
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> tryPut</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Versuche einen Wert in die MVar zu legen. Gibt <code>tre</code> zurück, wenn die
+Operation erfolgreich war, ansonsten <code>false</code>. Wichtige Eigeschaften:
+</p>
+
+<ul class="org-ul">
+<li>suspendiert <b>nicht</b> auf einer vollen MVar, sondern gibt dann <code>false</code> zurück
+</li>
+<li>sequentialisiert mit den Zugriffen der Writer
+</li>
+<li>weckt einen Reader, wenn die MVar gefüllt wurde
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> swap</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Tauscht den Wert in der MVar gegen den übergeben Wert aus. Wichtige
+Eigenschaften:
+</p>
+
+<ul class="org-ul">
+<li>suspendiert auf einer leeren MVar
+</li>
+<li>sequentialisiert mit den Zugriffen der <b>Reader</b>
+</li>
+<li>weckt einen Reader, wenn der Wert ausgetauscht wurde
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> clear</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Leert die MVar ohne den Wert zurück zu geben. Wichtige Eigenschaften:
+</p>
+
+<ul class="org-ul">
+<li>suspendiert <b>nicht</b> auf einer leeren MVar
+</li>
+<li>sequentialisiert mit den Zugriffen der Reader
+</li>
+<li>weckt einen Writer, wenn die MVar geleert wurde
+</li>
+</ul>
+</div>
+</div>
+</div>

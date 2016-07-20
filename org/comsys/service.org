@@ -1,0 +1,38 @@
+#+TITLE: Service
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Dienst
+---
+#+END_HTML
+
+Ein *Dienst* ist eine genau beschriebene Leistung, die ein Protokoll, eine
+Anwedung oder sonstiges erbrigt und für andere anbietet. Der Begriff
+/Dienst/ wird daher oft unscharf verwendet:
+
+- Jede Netzwerkanwendung kann als /Dienst/ (Service) bezeichnet werden,
+  z.B.:
+
+  - Domain Name Service (DNS): Auflösung von Domain Namen zu IP Adressen
+	(engl. /name resolution/)
+  - File Transfer (FTP, SFTP):
+  - File Sharing: z.B. Peer-to-peer Dienste (unterscheidet sich von
+    FTP und SFTP dadurch, dass die Rolle des Clients /und/ des Server
+    einnehmen kann)
+  - Network File System: Einbinden von Remote-Verzeichnissen in den
+	lokalen Verzeichnisbaum
+  - Terminal Emulation: Z.B. ssh
+  - E-Mail
+  - Voice over IP
+  - Webanwendungen
+
+- Jeder "Subdienst", den ein Protokoll (z.B. IP, TCP, UDP, HTTP)
+  erbringt kann als /Dienst/ bezeichnet werden, z.B.:
+
+  - in order packet delivery (ein Dienst von TCP)
+  - packet routing (
+  - /marshalling/unmarshalling/: packet coding/decoding

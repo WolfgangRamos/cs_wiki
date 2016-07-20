@@ -25,30 +25,65 @@ Funktionsweise:
 
 - Transaktionen werden auf einer lokaler Kopie der Daten ausgeführt.
 - Dabei wird ein *readset* (RS) und eine *writeset* (WS) angelegt.
-- Das readset enthält die Versionsnummer mit der die entsprechende
-  Variable gelesen wurde.
-- Bevor die Ergebnisse der Transaktion tatsächlich in die Daten
-  übertragen werden (*commit*), werden RS und WS *validiert*, d.h. die
-  gelesene Versionsnummern der Variablen werden mit den aktuellen
-  Versionnummern der Variablen verglichen. Dazu müssen RS und WS
-  gelockt werden.
+- Das readset enthält eine Referenz auf jede gelesene TVar und die
+  Versionsnummer mit der die entsprechende TVar gelesen wurde.
+- Das writeset enthält eine Referenz auf jede geschriebene TVar und
+  den Wert, der in diese TVar geschrieben wurde, z.B. als Paare der
+  Form ={⟨Ref⟩, ⟨Value⟩}=
+- Ablauf des *commit*:
+  1. locken von RS und WS
+  2. validieren des RS, d.h. die gelesene Versionsnummern der
+     Variablen werden mit den aktuellen Versionnummern der Variablen
+     verglichen (das WS muss nicht validiert werden, weil die
+     Werte dieser TVars in keine Berechnung der Transaktion
+     eingeflossen sind)
+  3. war die Validierung erfolgreich übertrage die Ergebnisse in die
+     Daten, wenn nicht führe die Transaktion erneut aus
 - Vorzeitiges *rollback* kann sich ergeben, wenn eine Variable erneut
   mit anderer Versionsnummer gelesen wird.
 
-Komposition von Transaktionen
+Komposition von Transaktionen:
 
-- Sequentialisierung (=atomically=)
-- orElse
-  - wenn der zweite Fall in ein =retry= läuft, dann wird die gesamte
+- Sequentialisierung (in =atomically=)
+  - Basisoperationen sind: =read_tvar=, =write_tvar=
+- =⟨Trans 1⟩ orElse ⟨Trans 2⟩=:
+  - wenn =⟨Trans 1⟩= in ein =retry= läuft, wird =⟨Trans 2⟩= ausgeführt
+  - wenn =⟨Trans 1⟩= in ein =rollback= läuft, wird ein rollback ausgeführt
+  - wenn =⟨Trans 2⟩= in ein =retry= läuft, dann wird die /gesamte/
     Transaktion erneut durchgeführt
+  - wenn =⟨Trans 2⟩= in ein =rollback= läuft, wird ein rollback für die
+    /gesamte/ Transaktion ausgeführt
 - Verzweigung (if ... else)
 - Invarianten (=always=, =alwaysSucceed=)
 
-*** TODO Wird die Versionsnummer auch im writeset protokolliert
-
-Alternative Implementierung in =stm2.erl=
+*** TODO Alternative Implementierung in =stm2.erl=
 
 - =lock=-Nachricht muss dann auch durch den Hilfsprozess geschickt werden
+
+** TVar
+
+Eine TVar besteht aus:
+
+- einen Wert (eine TVar kann nicht leer sein!)
+- eine Version (diese wird in der Validierungsphase einer Transaktion
+  mit der Versionsnummer, mit der die TVar in der Transaktion gelesen
+  wurde verglichen)
+- einen Zustand (*locked/unlocked*)
+- (optional) eine Liste von Prozessen, die auf eine Veränderung der
+  TVar warten (dadurch kann busy waiting bei einem =retry= vermieden
+  werden)
+
+Operationen:
+
+- =read=: liest den Wert einer TVar (die TVar wird dabei nicht geleert)
+  - suspendiert weder auf gelockter noch auf unlockter TVar
+- =write=: schreibt einen Wert in die TVar
+  - suspendiert auf einer nicht gelockten TVar
+- =getVersion=: gibt die Versionsnummer der TVAr zurück
+  - suspendiert auf einer nicht gelockten TVar
+- =lock=: lockt die TVar
+  - suspendiert auf einer fremd-gelockten TVar
+- =unlock=: unlockt die TVar
 
 ** Retry
 

@@ -440,6 +440,63 @@ zentrale Funktionen:
 vollständig und in der richtigen Reihenfolge)
 </li>
 </ul>
+
+<p>
+Im Internet sind vor allem folgende Protokolle wichtig:
+</p>
+
+<ul class="org-ul">
+<li>UDP: unzuverlässige Übertragung von Daten zwischen Anwendungen auf
+Endsystemen
+</li>
+<li>TCP: zuverlässige Übertragung von Daten zwischen Anwendungen auf
+Endsystemen
+</li>
+</ul>
+
+<p>
+Diese Protokolle erbringen folgende Dienste:
+</p>
+
+<ul class="org-ul">
+<li><b>application multiplexing</b>: <a href="#sec-3-7-1">3.7.1</a> werden verwendet, um die Quell und Ziel-Anwendung auf den
+Endsystem zu identifizieren. Man spricht von application
+multiplexing, da alle Applikationen auf einem host dieselbe
+Netzwerverbindung nutzen.
+</li>
+<li><b>flow control</b>
+</li>
+<li><b>congestion control</b>
+</li>
+<li>Fehlererkennung (über das <code>checksum</code> Feld des UDP und TCP headers)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-3-7-1" class="outline-4">
+<h4 id="sec-3-7-1"><span class="section-number-4">3.7.1</span> Ports</h4>
+<div class="outline-text-4" id="text-3-7-1">
+<ul class="org-ul">
+<li>Größe des port number space: \(2^{16} = 65536\)
+</li>
+<li>Port 0 - 1023: von der IANA vergebene service ports. Bsp:
+<ul class="org-ul">
+<li>21 TCP: FTP
+</li>
+<li>23 TCP: Telnet
+</li>
+<li>25 TCP: SMTP
+</li>
+<li>80 TCP: HTTP
+</li>
+<li>430 TCP: HTTPS
+</li>
+</ul>
+</li>
+<li>Port 1024 - 65535: dynamisch vom OS vergeben
+</li>
+</ul>
+</div>
 </div>
 </div>
 

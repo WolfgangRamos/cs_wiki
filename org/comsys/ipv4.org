@@ -2,6 +2,7 @@
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
+#+OPTIONS: toc:nil
 #+BEGIN_HTML
 ---
 layout: page

@@ -1,0 +1,53 @@
+#+TITLE: Das Linda-Modell
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Linda-Modell
+---
+#+END_HTML
+
+Kommunikation und Sychronisation über eine Multimenge, den sog.
+*Tupelraum*. Wir gehen davon aus, dass die Werte im Tupelraum atomar
+sind, d.h. sie sind nicht veränderbar.
+
+Modifikationen: Modellierung des Tupelraums als Key-Value-Store
+(effizienter, da nach einem Key gesucht werden kann).
+
+* zentrale Operationen:
+
+** out
+
+=out(<Tupel>)= legt ein Tupel in den Tupelraum. Blockiert nicht.
+
+
+** in
+
+=in(<Tupel>)= holt ein Tupel aus dem Tupelraum. Wichtige Eigenschaften:
+
+- Suche nach passendem Tupel über pattern matching realisiert (wenn
+  mehrere Tupel auf das Pattern passen, dann wird irgendeines davon
+  genommen; welches ist nicht spezifiziert)
+- blockiert, wenn kein passendes Tupel gefunden wird
+
+** rd
+
+=rd(<Tupel>)= liest ein Tupel aus dem Tupelraum, ohne es daraus zu
+entfernen. Wichtige Eigenschaften:
+
+- suspendiert, wenn das Tupel nicht im Tupelspace ist
+
+* Linda Implementierung
+
+#+INCLUDE: "./src/linda.erl" src erlang
+
+* Implementierung des Philosophenproblems mit Linda
+
+#+INCLUDE: "./src/philLinda.erl" src erlang
+
+*** TODO Implementierung von Queues mit amortisiert konstanter Laufzeit
+
+*** TODO Garbage Collection sollte realisiert werden, wenn wir auf die Datenstruktur zugreifen (ein neues Tupel eintragen)

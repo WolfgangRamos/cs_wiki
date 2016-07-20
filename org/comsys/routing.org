@@ -1,0 +1,78 @@
+#+TITLE: Routing und Forwarding
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Routing und Forwarding
+---
+#+END_HTML
+
+
+Zwei Methoden zur Bestimmung von Routen (Routing):
+
+- [[Distance Vector Routing]]
+- [[Link State Routing]]
+
+* Routing Tabellen
+
+routing tables enthalten u.a.:
+
+- destination address
+- next hp
+- interface
+
+Arten von Einträgen
+
+- *network route*: destination address ist Adresse eines Netzwerks (z.B.
+  10.0.2.0/24)
+- *host route*: destination adress ist Adresse eines Hosts (z.B. 10.0.2.2/32)
+- *default route*: destination address ist die ungültige Adresse
+  0.0.0.0/0
+  - durch die Verwendung einer 0-bit Präfix wird dafür gesorgt, dass
+    alle Pakete, deren Zieladdresse zu keinem anderen Eintrag in der
+    routing table passt an die default route weitergeleitet werden
+  - genutzt für das *standardgateway*
+- *loopback address*:
+  - unter Linux existiert kein Eintrag für die loopback address in der
+    routing table. ein loopback wird durch den Kernel erkannt und
+    behandelt (und nicht an ein Interfaceweitergeleitet)
+
+Das Nachschlagen einer destination address in einer routing table
+erfolgt mit Hilfe des *longest prefix match*. D.h. ein Paket wird an den
+Eintrag in der routing table, dessen Netzwerkpräfix die längsten
+Übereinstimmung mit der Zieladresse aufweist. Das ermöglich die
+Aggregation Adressen in routing tables und führt somit zu kleineren
+routing tables. 
+
+- um das longest prefix match effizient bestimmen zu können werden
+  die Präfix der Einträge der routing table als Baum repräsentiert
+
+
+* Aktualisierung von Routing Tabellen
+
+Routing Tabellen sind veränderbar durch:
+
+- manuelle Konfiguration von routen
+- ICMP Nachrichten
+- Hinzufügen eines Interface zum lokalen Knoten
+- Aktualisierungen durch Routing Protokolle
+
+** Distance Vector Routing
+
+- Router senden Distanzvektoren an adjazente Knoten 
+- Bestimmung der routing table mit dem
+  [[../ads/kuerzeste_wege.org::*Algorithmus von
+  Bellman-Ford][Algorithmus von Bellman-Ford]]
+- Protokoll: *Routing Information Protokoll* (RIP)
+
+** Link State Routing
+
+- Router senden Informationen (up/down, cost) über ihre direkten links
+  an alle anderen Router
+- jeder Router bildet daraus eine "Karte des Netzwerks"
+- Bestimmung des kürzesten Wegs mit dem
+  [[../ads/kuerzeste_wege.org::*Algorithmus von Dijkstra][Algorithmus von Dijkstra]]
+- Protokoll: *Open Shortest Path First* (OSPF)

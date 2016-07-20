@@ -1,0 +1,7 @@
+#+TITLE: Chat
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+
+* TODO Probleme im verteilten Chat erklären können, wenn sich zwei neue Knoten an unterschiedlichen Knoten anmelden

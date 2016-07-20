@@ -104,69 +104,86 @@ abgeleitet:
 
 * Nebenläufigkeit
 
+Jedes Objekt in Java hat
+
+- ein *intrinsic lock*
+- ein *waiting set* mit Threads die blockiert sind und auf ein =notify()=
+  oder =notifiyAll()= auf diesem Objekt warten
+
 ** Threads
 
-*Klasse* =Thread=: Bsp: =MyThreadClass extends Thread=
+*Klasse* =Thread=: z.B. =MyThreadClass extends Thread=
 
-*Interface* =Runable=: Bsp: =MyThreadClass implements Runable= (aktuelle
-Thread Objekt erreichbar über: =Thread.currentThread()=)
+*Interface* =Runable=: z.B. =MyThreadClass implements Runable=
+
+- das aktuelles Thread Objekt erreichbar über: =Thread.currentThread()=)
 
 -  Methode =public void run()=: Code, der beim Aufruf von =start()=
    ausgeführt wird
 -  =start()=: startet einen Thread
 
-Threads freiwillig unterbrechen:
+Methoden um Threads freiwillig zu unterbrechen:
 
--  =yield=: synchronized Methode wird nicht verlassen
--  =suspend=
+-  =yield()=: synchronized Methode wird nicht verlassen
+-  =suspend()=:
 -  =sleep(⟨Millisekunden⟩)=, =Thread.sleep(⟨Millisekunden⟩)=:
    suspendiert Thread, synchronized Methode wird nicht verlassen
 
--  =wait()=, =⟨object⟩.wait()=:
+*** Zustände
 
-   -  Methode der Klasse =Object=
-   -  kann nur innerhalb eines =synchronized=-Blocks des Objekts
-      =⟨object⟩= aufgerufen werden
-   -  suspendiert den Thread und gibt das /lock/ von =⟨object⟩= frei
-   -  =wait(⟨ms⟩)=, =wait(⟨ms⟩, ⟨ns⟩)=: Causes the current thread to
-      wait until either another thread invokes the notify() method or
-      the notifyAll() method for this object, or a specified amount of
-      time has elapsed.
+- =NEW=
+- =RUNABLE=: Thread ist in ausführung (d.h. jedoch nicht zwangsläufig,
+  dass der Thread zu jedem Zeitpunkt wirklich ausgeführt wird, also
+  ihm die CPU zugeteilt ist)
+- =BLOCKED=: Thread ist ausführbereit und wartet auf das lock eines
+  Objekts
+- =WAITING=: Thread wartet darauf durch ein =notify()= oder
+  =notifyAll()= geweckt zu werden
+- =TIMED_WAITING=: Thread wartet darauf durch ein =notify()= oder
+  =notifyAll()= oder durch Ablauf einer spezifizierten Zeit geweckt zu
+  werden.
+- =TERMINATED=
 
--  =notify()=, =⟨object⟩.notify()=: deblockiert irgendeinen Thread aus
-   dem waiting set von ⟨object⟩
+** synchronized Methoden und Blöcke
 
-   -  Deblockiert irgendeinen Thread aus dem waiting set von =⟨object⟩=
-      (der Thread wird in die /waiting queue/ des Objekts verschoben).
-      Wenn kein Thread auf das lock wartet geht das Signal verloren.
+Methoden:
 
--  =notifyAll()=, =⟨object⟩.notifyAll()=:
+- =wait()=, =⟨object⟩.wait()=:
+  - Methode der Klasse =Object=
+  - kann nur innerhalb eines =synchronized=-Blocks des Objekts
+    =⟨object⟩= aufgerufen werden
+  - suspendiert den Thread und gibt das /lock/ von =⟨object⟩= frei
+  - =wait(⟨ms⟩)=, =wait(⟨ms⟩, ⟨ns⟩)=: Causes the current thread to
+    wait until either another thread invokes the notify() method or
+    the notifyAll() method for this object, or a specified amount of
+    time has elapsed.
+- =notify()=, =⟨object⟩.notify()=:
+  - weckt irgendeinen Thread aus dem *waiting set* von =⟨object⟩= (der
+    Thread wird in die *waiting queue* des Objekts verschoben). Der
+    aufgeweckte Thread muss sich neu um das lock bewerben (ein neuer
+    Thread könnte ihm dabei z.B. zuvor kommen)
+  - wenn kein Thread auf das lock wartet geht das Signal verloren.
+- =notifyAll()=, =⟨object⟩.notifyAll()=:
+  Threads aus dem *waiting set* von =object= deblockiert
+  - kann nur innerhalb eines =synchronized=-Blocks des Objekts
+    =⟨object⟩= aufgerufen werden
+  - weckt /alle/ Threads aus dem *waiting set* von =⟨object⟩=. Wenn kein
+    Thread auf das lock wartet geht das Signal verloren. Die
+    aufgeweckten Threads müssen sich neu um das lock bewerben.
 
-   -  kann nur innerhalb eines =synchronized=-Blocks des Objekts
-      =⟨object⟩= aufgerufen werden
-   -  Deblockiert alle Threads aus dem waiting set von =⟨object⟩=. Wenn
-      kein Thread auf das lock wartet geht das Signal verloren. Die
-      aufgeweckten Threads müssen sich neu um das lock bewerben.
-
-=wait()=, =notify()= und =notifyAll()= dürfen nur in =synchronized=
-Methoden oder =synchronized=-Blöcken verwendet werden. Ansonsten ergibt
-sich zur Laufzeit eine =IllegalMoitorStateException=.
+=wait()=, =notify()= und =notifyAll()= dürfen nur in =synchronized= Methoden
+oder =synchronized=-Blöcken verwendet werden. Ansonsten ergibt sich zur
+Laufzeit eine =IllegalMonitorStateException=.
 
 Semantik des Monitorskonzepts in Java: EQ = WQ < SQ;
 
-*Zustände von Threads:*
-
--  =NEW=
--  =RUNABLE=: Thread ist in ausführung (d.h. jedoch nicht zwangsläufig,
-   dass der Thread sich zu jedem Zeitpunkt in Ausführung befindet)
--  =WAITING=: Thread ist ausführbereit und wartet auf das lock eines
-   Objekts
--  =BLOCKED=: Thread wartet darauf durch ein =notify()= oder
-   =notifyAll()= geweckt zu werden.
--  =TIMED_WAITING=: Thread wartet darauf durch ein =notify()= oder
-   =notifyAll()= oder durch Ablauf einer spezifizierten Zeit geweckt zu
-   werden.
--  =TERMINATED=:
+Ruft ein Thread $T_1$ =synchronized(o)= auf ein Objekt =o= auf, dessen
+lock von einem anderen Thread $T_2$ gehalten wird, so wird der Thread
+$T_1$ *nicht* suspendiert! Er wird lediglich in den Zustand =BLOCKED=
+versetzt. Der Unterschied ist, dass eine Thread im Zustand =BLOCKED=
+*nicht* durch ein =notify()= oder =notifyAll()= geweckt werden muss! Er muss
+lediglich darauf warten, dass das Lock von =o= wieder freigegeben wird
+und bewirbt sich dann erneut um dieses lock.
 
 ** Semaphoren
 

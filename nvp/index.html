@@ -1,0 +1,308 @@
+---
+layout: page
+title: Nebenläufige und verteilte Programmierung
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Inhalt</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Klassische Probleme
+<ul class="org-ul">
+<li><a href="../os/dining_philosophers_problem.html">Dining Philosopher Problem</a>
+</li>
+<li>Readers/Writers
+</li>
+<li>Producer/Consumer
+</li>
+<li><a href="./chat.html">Chat</a>
+</li>
+</ul>
+</li>
+<li>Allgemeine Konstrukte des Arbeitens auf geteiltem Speicher
+<ul class="org-ul">
+<li><a href="../os/semaphore.html">Semaphoren</a>
+</li>
+<li>Monitore
+<ul class="org-ul">
+<li><a href="../os/monitors.html">Allgemeines zum Monitorkonzept</a>
+</li>
+<li><a href="../lang/java.html">Das Monitorkonzept in Java</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>weitere Konstrukte der Interprozesskommunikation
+<ul class="org-ul">
+<li><a href="./mvar.html">MVar</a>
+</li>
+<li><a href="./channel.html">Channel</a>
+</li>
+<li><a href="./linda.html">Linda-Modell</a> (Tupelspace)
+</li>
+<li><a href="./stm.html">Software Transactional Memory</a> (STM)
+<ul class="org-ul">
+<li><a href="./stm.html">TVar</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Testen nebenläufiger Programme
+<ul class="org-ul">
+<li><a href="./ltl.html">Linear Time Logic</a> (LTL)
+</li>
+</ul>
+</li>
+<li><a href="./parallelisierung.html">Paralellisierung von Problemen</a>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Begriffe</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<b>Nebenläufigkeit</b>: Nebenläufigkeit verwenden wir als Überbegriff für
+</p>
+
+<ul class="org-ul">
+<li>Nebenläufigkeit (Scheduling von Prozessen) auf einem Prozessorkern und
+</li>
+<li>echter Parallelität (auf Mehrkernprozessoren)
+</li>
+</ul>
+
+<p>
+Nebenläufigkeit hat das Ziel:
+</p>
+
+<ul class="org-ul">
+<li>Performanzsteigerung und
+</li>
+<li>hohe Reaktivität des Systems gewährleisten
+</li>
+</ul>
+
+<p>
+<b>Verteilte Systeme:</b> Verteilte Systeme haben i.d.R. nicht das Ziel der
+Performanzsteigerung. Meist haben solche Systeme auf natürliche Weise
+verteilten Charakter (z.B. Mobiltelefone, Bankautomaten, etc.)
+</p>
+
+<p>
+<b>Deadlock</b>: 
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Zentrales Problem nebenläufier Programme</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Das zentrale Problem nebenläufiger Programme ist, dass das Ergebnis
+der Programmausführung vom Scheduling bei der Ausführung abhängt.
+Diesen Nicht-determininismus muss man bei nebenläufiger Programmierung
+vermeiden.
+</p>
+
+<pre class="example">
+i = 0;
+{i = i+1;} || {i=2*i;} // nebenläufig ausgeführt
+puts(i); // das Ergebnis kann 0, 1 oder 2 sein (je nach Scheduling)
+</pre>
+
+<p>
+Auch die Verwendung von Semaphoren führt nicht zwangsläufig zu einem
+deterministischen Programm:
+</p>
+
+<pre class="example">
+i = 0;
+sem = 1;
+
+// nebenläufig ausgeführt
+{           || {
+  p(sem);   ||   p(sem);
+  i = i+1;  ||   i=2*i;
+  v(sem);   ||   v(sem);
+}           || }
+
+puts(i); // das Ergebnis kann 1 oder 2 sein (je nach Scheduling)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> Implementierungen</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Übersicht über Implementierungen:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Java</th>
+<th scope="col" class="left">Erlang</th>
+<th scope="col" class="left">Haskell</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Philosophen</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/phil.erl">phil.erl</a></td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">MVar</td>
+<td class="left">X</td>
+<td class="left"><a href="./src/mvar.erl">mvar.erl</a></td>
+<td class="left">(vordefiniert)</td>
+</tr>
+
+<tr>
+<td class="left">Philosophen mit MVars</td>
+<td class="left">-</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/Phil.hs">Phil.hs</a></td>
+</tr>
+
+<tr>
+<td class="left">Channel mit MVar</td>
+<td class="left"><a href="./src/Chan.java">Chan.java</a></td>
+<td class="left">-</td>
+<td class="left">X</td>
+</tr>
+
+<tr>
+<td class="left">remote Channel</td>
+<td class="left">-</td>
+<td class="left">X</td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">Semaphore</td>
+<td class="left">-</td>
+<td class="left">X</td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">Linda (mit Stacks für Tupel und Requests)</td>
+<td class="left">-</td>
+<td class="left">X</td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">Linda (mit Queues für Tupel und Requests)</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/queueLinda.erl">queueLinda.erl</a></td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">Philosophen mit Linda</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/philLinda.erl">philLinda.erl</a></td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">STM</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/stm.erl">stm.erl</a></td>
+<td class="left">(vordefiniert)</td>
+</tr>
+
+<tr>
+<td class="left">Philosophen mit STM</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/philSTM.erl">philSTM.erl</a></td>
+<td class="left"><a href="./src/PhilSTM.hs">PhilSTM.hs</a></td>
+</tr>
+
+<tr>
+<td class="left">MVar mit STM</td>
+<td class="left">-</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/MVarSTM.hs">MVarSTM.hs</a></td>
+</tr>
+
+<tr>
+<td class="left">Channel mit STM</td>
+<td class="left">-</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/ChanSTM.hs">ChanSTM.hs</a></td>
+</tr>
+
+<tr>
+<td class="left">Key-Value Store (Database)</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/database.erl">database.erl</a></td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">LTL</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/ltl.erl">ltl.erl</a></td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">Chat</td>
+<td class="left">-</td>
+<td class="left">X</td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">verteilter Chat</td>
+<td class="left">-</td>
+<td class="left">X</td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">Laufzeitkeller</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/runtimeStack.erl">runtimeStack.erl</a></td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">Turing Machine mit Laufzeitkeller</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/tm.erl">tm.erl</a></td>
+<td class="left">-</td>
+</tr>
+
+<tr>
+<td class="left">Queue mit amortisiert linearer Laufzeit</td>
+<td class="left">-</td>
+<td class="left"><a href="./src/effQueue.erl">effQueue.erl</a></td>
+<td class="left">-</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>

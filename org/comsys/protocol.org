@@ -1,0 +1,47 @@
+#+TITLE: Protocol
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Protokoll
+---
+#+END_HTML
+
+Ein *Protokoll* ist die Umsetzung eines Standards in
+ausführbarer/anwendbarer Form (Protokolle können in Hard- oder
+Software implementiert werden). Zwischen einem Standard und einem
+Protokoll gibt es keine klare Trennung. Protokolle können zum Standard
+werden. Ein Standard kann in mehrerer Protokollen umgesetzt werden.
+
+Ein Protokoll besteht aus Regeln für:
+
+- *message encoding rules*
+- *message sematic rules*
+- *message exchange rules*
+
+Man unterscheidet (grob): *transportorientierte* Protokolle und
+*anwedungoreintierte* Protokolle
+
+Netzwerkservices werden i.d.R. durch das Zusammenspiel mehrerer
+Protokolle erbracht. Man spricht von einem *protokoll stack*. Der
+protocol stack für den E-Mail Dienst ist z.B:
+
+#+CAPTION: Protocol Stack für den E-Mail Dienst
+| SMTP            |
+| TCP             |
+| IP              |
+| Ethernet        |
+| Manchester Code |
+
+* Timeline Diagramme
+
+*Timeline Diagramme* sind eine informelle Art Protokolle darzustellen. In
+einem Timeline Diagram kann nur /ein/ konkreter Ablauf dargestellt
+werden (z.B. eine erfolgreicher Handshake). Bsp für ein Timelinediagramm
+eines TCP Handshake:
+
+#+CAPTION: Beispiel eines TCP Handshakes
+[[./gfx/tcp_handshake.png]]

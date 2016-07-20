@@ -213,6 +213,34 @@ zentrale Funktionen:
 - zuverlässige Übertragung von Paketen zwischen Endsystemen (d.h.
   vollständig und in der richtigen Reihenfolge)
 
+Im Internet sind vor allem folgende Protokolle wichtig:
+
+- UDP: unzuverlässige Übertragung von Daten zwischen Anwendungen auf
+  Endsystemen
+- TCP: zuverlässige Übertragung von Daten zwischen Anwendungen auf
+  Endsystemen
+
+Diese Protokolle erbringen folgende Dienste:
+
+- *application multiplexing*: [[Ports]] werden verwendet, um die Quell und Ziel-Anwendung auf den
+  Endsystem zu identifizieren. Man spricht von application
+  multiplexing, da alle Applikationen auf einem host dieselbe
+  Netzwerverbindung nutzen.
+- *flow control*
+- *congestion control*
+- Fehlererkennung (über das =checksum= Feld des UDP und TCP headers)
+
+*** Ports
+
+- Größe des port number space: $2^{16} = 65536$
+- Port 0 - 1023: von der IANA vergebene service ports. Bsp:
+  - 21 TCP: FTP
+  - 23 TCP: Telnet
+  - 25 TCP: SMTP
+  - 80 TCP: HTTP
+  - 430 TCP: HTTPS
+- Port 1024 - 65535: dynamisch vom OS vergeben
+
 ** TODO Session Layer
 
 zentrale Dienste:
