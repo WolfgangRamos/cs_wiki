@@ -2,8 +2,9 @@
 *~
 
 # org mode temp files
-/org/*/ltxpng/
-/*/ltxpng/
+/org/*/ltxpng
+/org/*/*/ltxpng
+/*/ltxpng
 
 # jekyll derived directories
 _site

@@ -1,0 +1,193 @@
+#+TITLE: Prädikatenlogische Formeln
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Prädikatenlogische Formeln
+---
+#+END_HTML
+
+Um Aussagen in der Prädikatenlogik formuliern zu können benötigen wir
+eine Sortenmenge $S$ und eine $S$-Signatur $\Sigma$.
+
+Die Menge der *prädikatenlogische Formel* $F_{PL}(\Sigma)$ zu einer
+Sortenmenge $S$ und eine $S$-Signatur $\Sigma$ wird induktiv definiert
+durch:
+
+*IA* (atomare Formeln):
+
+- für die Konstantensymbole $\top,\bot$ gilt $\top,\bot \in F_{PL}(\Sigma)$
+- für jedes Relationssymbol $r \in R$ mit $\Sigma(r) = s_0\dots s_n$
+  und für alle $\Sigma$-Terme $t_0 \in T_{s_0}(\Sigma), \dots t_n \in
+  T_{s_n}(\Sigma)$ gilt $r(t_0, \dots, t_n) \in F_{PL}(\Sigma)$. 
+- für jede $\Sigma$-Gleichungen $t\deq t'$ gilt $t\deq t' \in F_{PL}(\Sigma)$
+
+*IS* (zusammengesetze Formeln):
+
+- Sei $J$ ein $n$-stelliger aussagenlogischer Junktor und seien
+  $\varphi_0, \dots, \varphi_{n-1}$ prädikatenlogische Formeln, dann
+  ist auch $J(\varphi_0, \dots, \varphi_{n-1}) \in F_{PL}(\Sigma)$
+- Sei $\varphi \in F_{PL}(\Sigma)$ und $s \in S$ eine Sorte, dann gilt
+  auch
+  - $\exists\: x_i^s \varphi \in F_{PL}(\Sigma)$ und
+  - $\forall x_i^s \varphi \in F_{PL}(\Sigma)$
+
+Formeln die nur aus Relationssymbol bestehen heißen *Prädikatsformel*.
+Formeln die mit einem Quantor beginnen heißen *quatifizierte Formeln*.
+Formeln ohne Quatoren heißen *quantorenfreie Formeln*.
+
+Eine prädikatenlogische Formel ist ein verwurzelter Baum mit linear
+geordneten Nachfolgern und beschrifteten Knoten. Blätter sind
+beschriftet mit Variablen, Konstanten ($\top, \bot$) Gleichungen oder
+Relationen, innere Knoten sind beschriftet mit Junktoren oder
+Quantifizierungen.
+
+Alternative Definition prädikatenlogische Formeln ohne Gleichheit:
+Definiert wie oben, aber Gleichungen sind nicht erlaubt.
+
+* Funktionen auf prädikatenlogischen Formeln
+
+Auf prädikatenlogischen Formeln lassen sich induktiv Funktionen definieren
+
+** Menge der freien Variablen
+
+$\fvars: F_{PL} \rightarrow \mathcal{P}(V_{PL})$ liefert die Menge
+aller in einer Formel *frei* vorkommenden Variablen.
+
+*IA* (für atomare Formeln): 
+
+- $\fvars(\bot} = \emptyset$
+- $\fvars(\top} = \emptyset$
+- $\fvars(t \deq t'} = \vars(t) \cup \vars(t')$ für $t, t'$ $\Sigma$-Terme mit $\vars(t)$ Menge der Variablen, die in $t$ vorkommen f
+- $\fvars(r(t_0, \dots, t_n)} = \bigcup_{i \leq n} \vars(t_i)$
+
+*IS* (für zusammengesetzte Formeln):
+
+- $\fvars(J(\varphi_0, \dots, \varphi_{n-1})) = \bigcup_{i\leq n} \fvars(\varphi_i)$ für alle $\varphi_i \in F_{PL}(\Sigma)$ mit $i < n$ ...
+- $\fvars(\exists x_i^{s}\:\varphi) = \fvars(\varphi) \setminus \{x_i^s\}$
+- $\fvars(\forall x_i^{s}\:\varphi) = \fvars(\varphi) \setminus \{x_i^s\}$
+
+*** TODO gibt es die Menge $V_{PL}$ oder ist $V_{PL} = V_{AL}$ ?
+
+
+* Beweise und Funktionen für prädikatenlogische Formeln
+
+Vorgehen zum zeigen einer Aussage für prädikatenlogische Formeln:
+
+1. Da atomare prädikatenlogische Formeln Terme enthalten können, muss
+   man eine Aussage zunächst für Terme zeigen.
+2. Danach zeigt man die Aussage für die übrigen atomaren Formeln.
+3. Abschließend zeigt man die Aussage für zusammengesetzte Formeln.
+
+Das Vorgehen bei der Definition von Funktionen auf prädikatenlogischen
+Formeln ist analog.
+
+* Semantik
+
+Um Formeln interpretieren zu können benötigen wir
+[[./strukturen.org][Strukturen]].
+
+** TODO Gültigkeit
+
+** Erfüllbarkeit
+
+Eine prädikatenlogische Formel $\varphi \in F_{PL}(\Sigma)$ ist
+*erfüllbar* wenn es eine $\Sigma$-Struktur $\St$ und eine
+$\St$-Belegung $\beta$ gibt, sodass $\St, \beta \models \varphi$ gilt.
+
+Wir schreiben dann auch $\erfb \varphi$.
+
+Eine Menge prädikatenlogischer Formeln $\Phi \subseteq F_{PL}(\Sigma)$
+heißt *erfüllbar*, wenn es /eine/ $\Sigma$-Struktur $\St$ und /eine/
+$\St$-Belegung $\beta$ gibt, sodass $\St, \beta \models \varphi$ für
+alle $\varphi \in \Phi$ gilt.
+
+Wir schreiben dann auch $\St, \beta \models \Phi$.
+
+Ist eine Formel oder Formelmenge nicht erfüllbar, so heißt sie
+*unerfüllbar*, wir schreiben dann $\unerfb \varphi$ bzw. $\unerfb
+\Phi$.
+
+** Allgemeingültigkeit
+
+Eine prädikatenlogische Formel $\varphi \in F_{PL}(\Sigma)$ ist
+*allgemeingültig*, wenn ihre Negation $\neg \varphi$ nicht erfüllbar
+ist, d.h. wenn für alle $\Sigma$-Strukturen $\St$ und allen
+$\St$-Belegungen $\beta$ gilt $\St, \beta \not\models \varphi$.
+
+Eine Menge prädikatenlogischer Formeln $\Phi \subseteq F_{PL}(\Sigma)$
+ist *allgemeingültig*, wenn für alle $\Sigma$-Strukturen $\St$ und
+allen $\St$-Belegungen $\beta$ gilt $\St, \beta \not\models \varphi$
+für alle $\varphi \in \Phi$ gilt.
+
+** TODO Erfüllbarkeitsreduktion
+
+Idee: Wenn wir ein Modell der Formel $\varphi \in F_{PL}(\Sigma)$
+haben, erhalten wir ein Modell einer anderen Formel $\psi \in
+F_{PL}(\Sigma')$ indem wir...
+
+Eine Formel $\phi$ heißt *erfüllbarkeitsreduzierbar* auf eine Formel
+$\psi$, wenn gilt:
+
+1. $\fvars(\phi) = \fvars(\psi)$
+2. Es gibt $S$-Signaturen $\Sigma$ und $\Sigma'$, mit $\Sigma
+   \subseteq \Sigma'$ (d.h. $\Sigma'$ ist Erweiterung von $\Sigma$)
+   und $\phi \in F_{PL}(\Sigma)$ und $\psi \in F_{PL}(\Sigma')$
+3. Zu jeder $\Sigma$-Struktur $\St$ gibt es eine $\Sigma'$-Expansion
+   $\St'$ sodass für alle Belegungen $\beta$ gilt: Wenn $\St, \beta
+   \models \phi$, dann gilt auch $\St', \beta \models \psi$.
+4. Für jede $\Sigma'$-Struktur $\St'$ und das zugehörige
+   $\Sigma$-Redukt $\St'|_{\Sigma}$ und jede Belegung $\beta$ gilt:
+   Wenn $\St', \beta \models \psi$, dann $\St'|_{\Sigma}, \beta
+   \models \varphi$.
+
+Wir schreiben dann $\varphi \subsetsq \psi$.
+
+*** Eigenschaften
+
+- Gilt $\varphi\sqsubseteq\psi$, so gilt $\erfb\varphi$ genau dann, wenn $\erfb\psi$ gilt.
+- Gilt $\varphi\sqsubseteq\psi$ und ist $Q$ ein Quantor und $x_i^s$
+  eine Variable, so auch $Q x_i^s \varphi\sqsubseteq Q x_i^s \psi$.
+- Die Relation $\sqsubseteq$ ist transitiv.
+
+** Äquivalenz 
+
+Eine prädikatenlogische Formel $\varphi \in F_{PL}(\Sigma)$ heißt
+*äquivalent* zu einer prädikatenlogischen Formel $\psi \in
+F_{PL}(\Sigma)$, wenn für alle $\Sigma$-Strukuren $\St$ und alle
+Belegungen $\beta$ gilt:
+
+\begin{eqution*}
+\llb \varphi \rrb^{\St}_{\beta} = \llb \psi \rrb^{\St}_{\beta}
+\end{equation*}
+
+* Quantorengesetze
+
+Für alle $x_i^s \in V_s$ und $\phi, \psi \in F_{PL}$ gilt:
+
+- *Dualität* (Austauschen):
+  - $\neg\exists x_i^s \phi \equiv \forall x_i^s \neg \phi$
+  - $\neg\exists x_i^s \phi \equiv \forall x_i^s \neg \phi$
+- *Kommutativität* (Vertauschen):
+  - $\exists x_i^s \exists x_j^{s'} \phi \equiv \exists x_j^{s'} \exists x_i^s \phi$
+  - $\forall x_i^s \forall x_j^{s'} \phi \equiv \forall x_j^{s'} \forall x_i^s \phi$
+- *Distributivität* (Verteilen):
+  - $\exists x_i^s (\phi \vee \psi) \equiv \exists x_i^s \phi \vee \exists x_i^s \psi$
+  - $\forall x_i^s (\phi \wedge \psi) \equiv \forall x_i^s \phi \wedge \forall x_i^s \psi$
+- (Eliminieren):
+  - $\exists x_i^s \phi \equiv \phi$ falls $x_i^s \not\in \fvars(\phi)$
+  - $\forall x_i^s \phi \equiv \phi$ falls $x_i^s \not\in \fvars(\phi)$
+- (Verschieben):
+  - $\phi \wedge \exists x_i^s \psi \equiv \exists x_i^s (\phi \wedge \psi)$ falls $x_i^s \not\in \fvars(\phi)$
+  - $\phi \vee \exists x_i^s \psi \equiv \exists x_i^s (\phi \vee \psi)$ falls $x_i^s \not\in \fvars(\phi)$
+  - $\phi \wedge \forall x_i^s \psi \equiv \exists x_i^s (\phi \wedge \psi)$ falls $x_i^s \not\in \fvars(\phi)$
+  - ...
+- (Umbenennen):
+  - $\forall x_i^s \phi \equiv \forall x_i^s \phi\{x_i^s \mapsto x_j^s\}$ falls $x_i^s \in \bvars_{x_j^s}(\phi)$ und $x_j^s\not\in\fvars(\phi)$
+  - ...
+- Einführen und Spezialisieren
+  - $\forall x_i^s \phi \VDash \phi\{x_i^s \mapsto t\}$, falls $\{x_i^s \mapsto t\}$ zulässig bzgl. $\phi$ und $t$ ist $s$-Term
+  - $\phi\{x_i^s \mapsto t\} \VDash \exists x_i\phi\{x_i^s \mapsto t\}$, falls $\{x_i^s \mapsto t\}$ zulässig bzgl. $\phi$ und $t$ ist $s$-Term

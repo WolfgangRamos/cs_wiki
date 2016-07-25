@@ -1,0 +1,45 @@
+#+TITLE: Gleichungen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Gleichungen
+---
+#+END_HTML
+
+Sei $S$ eine Sortenmenge, $\Sigma$ eine $S$-Signatur, dann ist eine
+$s$-$\Sigma$-Gleichung ein Ausdruck der Form $t \deq t'$ mit $t,t' \in
+T_s(\Sigma)$.
+
+Gleichungen können als Knoten-beschriftete Bäume aufgefasst werden.
+
+Statt der Infix-Schreibweise $t \deq t'$ verwenden wir manchmal auch
+die Präfix-Schreibweise $\deq(t,t')$.
+
+* Gültigkeit
+
+Eine $s$-$\Sigma$-Gleichung $t \deg t'$ gilt in einer Struktur $\St$
+unter Belegung $\beta$, wenn $\llb t\rrb_{\beta}^{\St} = \llb
+t'\rrb_{\beta}^{\St}$ gilt. Wir schreiben dann $\St,\beta \models t
+\deq t'$.
+
+Eine $s$-$\Sigma$-Gleichung $t \deg t'$ gilt in einer Struktur $\St$,
+wenn $\llb t\rrb_{\beta}^{\St} = \llb t'\rrb_{\beta}^{\St}$ für *alle*
+Belegungen $\beta$ gilt. Wir schreiben dann $\St \models_{eq} t \deq t'$.
+
+Ist $E$ eine Menge von $s$-$\Sigma$-Gleichungen, dann ist die Menge
+aller Strukturen in denen die Gleichungen aus $E$ gelten:
+
+$\Mod(E) := \{\St \mid \St \text{ ist } s\text{-}\Sigma\text{-Struktur mit } \St \models_{eq} e \text{ für alle } e\in E\}$
+
+$\Mod(E)$ heißt auch die durch $E$ *axiomatiserte Klasse* von
+Strukturen.
+
+Ist $K$ eine Klasse von Strukturen, so heißt $K$
+*gleichungsaxiomatisierbar*, falls es eine Menge $E$ von
+$s$-$\Sigma$-Gleichungen gibt, für die $K=\Mod(E)$ gilt. Falls es eine
+/endliche/ Menge von Gleichungen gibt, die diese Bedingung erfüllt, dann
+heißt die Klasse *endlich gleichungsaxiomatisierbar*.

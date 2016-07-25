@@ -1,0 +1,34 @@
+#+TITLE: Skolemisierung
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Skolemisierung
+---
+#+END_HTML
+
+#+begin_example
+Skolem($\varphi$) {
+  
+  Vorbedingung: $\varphi$ ist in pränexer Normalform
+
+  if $\varphi$ is quantifier-free
+    return $\varphi$
+  else
+    case $\varphi$ of
+      $\forall x_i^{s} \psi$ -> 
+        return $\forall x_i^s \Skolem(\psi)$
+      $\exists x_i^s \psi$ ->
+        let 
+          $\{x_{i_0}^{s0}, \dots, x_{i_{n−1}}^{s_{n-1}}\} = \fvars(\varphi)$
+          $\psi' = \Skolem(\psi)$
+        in
+          choose $f \not\in \Sigma$ (current signature)
+          add $f$ with type $\al s_0 \dots s_{n-1}, s \ar$ to the current signature
+          return $\psi' \{x_i^s \mapsto f(x^{s_0}_{i_0}, \dots , x^{s_{n-1}}_{i_{n-1}})\}$
+
+Nachbedingung: $\varphi \sqsubseteq \Skolem(\varphi)$
+#+end_example

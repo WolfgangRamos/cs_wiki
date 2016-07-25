@@ -1,0 +1,57 @@
+#+TITLE: Pränexe Normalform
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Pränexe Normalform
+---
+#+END_HTML
+
+Eine prädikatenlogische Formel $\phi \in \F_{PL}(\Sigma)$ in *pränexer
+Normalform* kann man in der Form
+
+\begin{equation*}
+\prefix(\phi) \kern(\phi)
+\end{equation*}
+
+schreiben, wobei $\prefix(\phi)$ das *Quantorenpräfix* und $\kern(\phi)$
+der *Kern* der Formel $\phi$ sind.
+
+Wir definieren
+
+1. Die Menge der $\Sigma$-Formeln in pränexer Normalform $\PNF$,
+2. der *Kern* $\kern(\phi)$ einer Formel $\phi$ in PNF,
+3. das *Quantorenpräfix* $\prefix(\phi)$ einer Formel $\phi$ in PNF und
+4. die *Menge der quantifizierten Variablen* $\qvars(\phi)$ einer Formel $\phi$ in PNF
+
+induktiv durch:
+
+*IA:*
+
+Jede quantorenfreie Formel $\phi$ ist in PNF und es gilt:
+
+- $\prefix(\phi) = \espilon$ 
+- $\kern(\phi) = \phi$ 
+- $\qvars(\phi) = \emptyset$
+
+*IS:*
+
+Sei $\phi \in \PNF$ in pränexer Normalform und sei $Q \in \{\exists,
+\forall\}$ ein Quantor, und sind $i \in \N$ und $s \in S$, sodass
+$x_i^s \in \fvars{\phi}$ gilt, dann ist auch $Q x_i^s \phi$ in PNF und
+es gilt:
+
+- $\prefix(Qx_i^s \phi) = Q x_i^s \prefix(\phi)$
+- $\kern(Qx_i^s \phi) = \kern(\phi)$
+- $\qvars(Qx_i^s \phi) = \qvars(\phi) \cup \{x_i^s\}$
+
+Tritt in dem Quantorenpräfix kein Existenzquantor auf, so spricht man
+von einer *universellen Formel*. Besitzt eine universelle Formel keine
+freien Variablen, so nennt man sie *universelle Aussage*.
+
+*Eigenschaften:*
+
+- zu jeder prädikatenlogischen Formel gibt es eine äquivalente Formel in PNF.

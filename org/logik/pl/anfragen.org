@@ -1,0 +1,28 @@
+#+TITLE: Anfragen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Anfragen
+---
+#+END_HTML
+
+Eine *Anfrage* ist ein Paar aus einer pädikatenlogischen Formel
+$\varphi \in F_{PL}(\Sigam)$ und einer wiederholungsfreien Folge von
+Variablen $x_{i_0}^{s_0} \dots x_{i_{n-1}}^{s_{n-1}}$ mit
+$\fvars(\varphi) \subseteq \{x_{i_0}^{s_0}, \dots,
+x_{i_{n-1}}^{s_{n-1}}\}$.
+
+\begin{equation*}
+\al \varphi, x_{i_0}^{s_0} \dots x_{i_{n-1}}^{s_{n-1}} \ar^{\St} := \{ \al \beta(x_{i_0}^{s_0}) \dots \beta(x_{i_{n-1}}^{s_{n-1}}) \ar \mid \beta \text{ ist } \St \text{-Belegung} \wedge \St,\beta \models \varphi\}
+\end{equation*}
+
+Die Folge $\al \varphi, x_{i_0}^{s_0} \dots x_{i_{n-1}}^{s_{n-1}}$
+heißt *Anfrage*. Die durch sie definierte Relation $\al \varphi,
+x_{i_0}^{s_0} \dots x_{i_{n-1}}^{s_{n-1}} \ar^{\St}$ bezeichnen wir
+als ihre *zugehörige Antwortrelation* in $\St$.
+
+* TODO parametrisierte Variablen

@@ -1,0 +1,55 @@
+#+TITLE: Strukturen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Strukturen
+---
+#+END_HTML
+
+Um Formeln interpretieren zu können muss jedem Bestandteil einer
+Signatur eine Bedeutung gegeben werden. Dafür verwenden wir
+Strukturen.
+
+Sei $\Sigma$ eine Signatur zu einer Sortenmenge $S$. Dann ist eine
+*$S$-$\Sigma$-Struktur* $\St$ gegeben durch:
+
+- eine $S$-sortierte *Trägermenge* $M = \{M_s\}_{s\in S}$ mit $M_s \neg
+  \emptyset$ für alle $s \in S$, die jeder Sort $s \in S$ eine Menge
+  von möglichen Werten zuordnet
+- für jedes $c\in C$ mit $\Sigma(c) = \langle \epsilon, s_0\rangle$
+  mit $s_0\in S$ ein $c^{\mathscr{S}}$ mit $c^{\mathscr{S}} \in
+  M_{s_0}$
+- für jedes Funktionssymbol $f \in F$ mit $\Sigma(f) = \langle
+  s_0\dots s_n, s'\rangle$ mit $s_0,\dots, s_n, s' \in S$ eine
+  Funktion $f^{\mathscr{S}}: M_{s_0}\times \dots \times M_{s_n}
+  \rightarrow M_{s'}$
+- für jedes Relationssymbol $r \in R$ mit $\Sigma(r) = s_0\dots s_n$
+  mit $s_0,\dots, s_n \in S$ eine Relation $r^{\mathscr{S}} \subseteq
+  M_{s_0}\times \dots \times M_{s_n}$
+
+$d^{\St}$ kann man lesen als "schlage die Definition von $d$ in der
+Struktur $\St$ nach.
+
+Die Trägermenge einer Struktur geben wir i.d.R. an indem wir für jede
+Sorte $s \in S$ die Menge $s^{\St}$ angeben.
+
+* Redukt und Expansion
+
+Sei $\Sigma$ eine $S$-Signatur mit der Symbolmenge $V$ und $Sigma_0$
+eine $S$-Signatur mit der Symbolmenge $V_0$ und sei $\Sigma_0$ eine
+[[./signaturen.org::*Einschränkung][Einschränkung]] der Signatur $\Sigma$ und sein $\St$ eine
+$\Sigma$-Stuktur. Dann ist das $\Sigma_0$ *Redukt* der Struktur $\St$
+diejenige $\Sigma_0$-Struktur:
+
+- mit derselben Trägermenge $\{M_s\}_{s\in S}$ wie von $St$, die jeder
+  Sorte $s \in S$ eine Menge möglicher Werte zuordnet
+- in der alle Smybole $v \in V_0$ so interpretiert werden wie in $St$
+
+Das $\Sigma_0$ Redukt einer $\Sigma$-Struktur $\St$ bezeichnen wir mit
+$\St|_{\Sigma_0}$.
+
+Umgekehrt heißt $\St$ "$\Sigma$ *Expansion* von $\St|_{\Sigma_0}$.

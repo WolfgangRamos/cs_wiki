@@ -1,0 +1,68 @@
+#+TITLE: Terme und Gleichungen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Terme und Gleichungen
+---
+#+END_HTML
+
+*Terme* werden aus Variablen-, Konstanten- und Funktionssymbolen
+zusammengesetzt und in einer Struktur unter einer Belegung
+interpretiert.
+
+Für jede Sorte $s\in S$ definieren wir die Menge der $s$-Variablen
+$V_s := \{x_0^s, x_1^s, \dots \}$. Die Menge der $s$-$\Sigma$-Terme
+$T_s(\Sigma)$ definieren wir induktiv:
+
+*IA* (Basisterme):
+
+- für jedes $i \in \mathbb{N}$ und $s\in S$ gilt $x_i^s \in
+  T_s(\Sigma)$, d.h. $x_i^s$ ist ein $s$-$\Sigma$-Term.
+- für jedes $c \in C$ mit $\Sigma(c) = \langle \epsilon, s\rangle$
+  gilt $c \in T_s(\Sigma)$, d.h. $c$ ein $s$-$\Sigma$-Term.
+
+*IS* (Funktionsterme):
+
+Ist $f \in F$ mit $\Sigma(f) = \langle s_0\dots s_m, s\rangle$ und ist
+$t_i \in T_{s_i}(\Sigma)$ für jedes $i \leq m$ ein
+$s_i$-$\Sigma$-Term, dann ist auch $f(t_0,\dots,t_m) \in T_s(\Sigma)$
+ein $s$-$\Sigma$-Term.
+
+Wir definieren die $S$-sortierte Menge $T(\Sigma) := \{T_s(\Sigma)
+\mid s \in S\}$. Die Elemente von $T(\Sigma)$ heißen $\Sigma$-Terme.
+
+Es gilt $V_s \subseteq T_s(\Sigma)$, da für jedes $i \in \N$ und jede
+Sort $s\in S$ gilt: $x_i^s \in T_s(\Sigma)$.
+
+Terme im Kontext der Prädikatenlogik sind Bäume, die mit Variablen,
+Konstanten- und Funktionssymbolen beschriftet sind.
+
+* Semantik
+
+Sei $S$ eine Sortenmenge, $\Sigma$ eine $S$-Signatur und $\St$ eine
+$S$-$\Sigma$-Struktur und sei $\beta$ eine Belegung, die jeder
+Variablen $x_i^s$ ein Element aus $s^{\St}$ zuordnet. Dann definieren
+wir den Wert $\llb t \rrb_{\beta}^{\St} \in s^{\St}$ eines
+$s$-$\Sigma$-Terms $t$ in der Struktur $\St$ induktiv durch:
+
+*IA:*
+
+- es gilt $\llb x_i^s \rrb_{\beta}^{\St} = \beta(x_i^s)$ für alle $i\in\mathbb{N}$ und $s \in S$
+- es gilt $\llb c \rrb_{\beta}^{\St} = c^{\St}$ für alle $c\in C$
+
+*IS:*
+
+Sei $f \in F$ mit $\Sigma(f) = \langle s_0 \dots s_n, s\rangle$ und
+sei $t_i \in T_{s_i}(\Sigma)$ für alle $i\leq n$, dann gilt:
+
+\begin{equation*}
+\llb f(t_0,\dots,t_n)\rrb_{\beta}^{\St} = f^{\St}(\llb t_0 \rrb_{\beta}^{\St}, \dots, \llb t_n \rrb_{\beta}^{\St})
+\end{equation*}
+
+
+
+

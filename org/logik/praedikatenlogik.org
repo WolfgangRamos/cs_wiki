@@ -2,167 +2,21 @@
 #+STARTUP: content
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Pädikatenlogik
+---
+#+END_HTML
 
-* Prädikatenlogik
+* Inhalt
 
-** Sorten
+- Prädikatenlogik
+  - [[./pl/sorten.org][Sorten]]
+  - [[./pl/signaturen.org][Signaturen]]
+  - [[./pl/strukturen.org][Strukturen]]
 
-Sorten kann man sich wie Datentypen von Programmiersprachen
-vorstellen. Sorten schreiben wir mit großem Anfangsbuchstaben, z.B.
-$\text{Number}$.
-
-** Sortenmenge
-
-Eine nichtleere Menge von Sorten $S = \{s_0, s_1,\dots\}$ heißt /Sortenmenge/.
-Die Elemente von $S$ heißen /Sorten/.
-
-Enthält $S$ lediglich ein Element, so spricht man von *Einsortigkeit*.
-
-Mengenoperationen auf sortierten Mengen zur selben Sortenmenge werden
-sortenweise auf die Elemente der sortierten Mengen übertragen, d.h. es
-gilt z.B.:
-
-$\{M_s\}_{s\in S} \cap \{N_s\}_{s \in S} := \{M_s \cap N_s\}_{s\in S}$
-
-** sortierte Menge
-
-Eine $S$-sortiert Menge $M$ ist eine Menge von nichtleeren Mengen, in
-der jede nicht-leeren Menge einer Sorte der Sortenmenge $S$ zugeordent
-werden kann. Wir sagen die Elemtente von $M$ können mit den Elementen
-von $S$ /indiziert/ werden und schreiben $M = \{M_s\}_{s\in S}$, wobei
-$M_s \neq \emptyset$ für jedes $s\in S$ gilt.
-
-** Algebraische Signatur
-
-Eine /algebraische Signatur/ besteht aus:
-
-- einer Menge von /Konstantensymbolen/ $C$
-- einer Menge von /Funktionssymbolen/ $F$
-- einem daraus gebildeten /Vokabular/ $V = C \dot{\cup} F$
-- einer Funktion $\Sigma: V \rightarrow S^+ \cup (S^{*} \times S)$ mit den Eigenschaften
-  - $\Sigma(c) \in \{\epsilon\}\times S = \{\langle\rangle\} \times S$ für alle $c \in C$
-  - $\Sigma(f) \in S^+\times S$ für alle $f \in F$
-
-Ein Funktionswert $\Sigma(v)$ heißt /Signatur von/ $v$. $\Sigma$ heißt
-/$S$-Signatur/.
-
-Funktionssymbole schreiben wir mit kleinem Anfangsbuchstaben, z.B. $d$
-für "decrypt".
-
-Im einsortigen Fall deutet man die Signatur eines $n$-stelliges
-Funktionssymbols verkürzt durch $f//n$ an.
-
-Eine Signatur kann man sich wie die Angabe eines "Interface"
-vorstellen (vgl. z.B. die Syntax von =export= in Erlang oder Prolog)
-
-*** Terme
-
-Terme werden aus Variablen-, Konstanten- und Funktionssymbolen
-zusammengesetzt und in einer Struktur unter einer Belegung
-interpretiert.
-
-Für jede Sorte $s\in S$ mit $M_s := \{x_0^s, x_1^s, \dots \}$
-definieren wir die Menge der $s$-$\Sigma$-Terme $T_s(\Sigma)$
-induktiv:
-
-*IA:*
-
-- für jedes $i \in \mathbb{N}$ und $s\in S$ gilt $x_i^s \in
-  T_s(\Sigma)$, d.h. $x_i^s$ ist ein $s$-$\Sigma$-Term. Es gilt also $M_s \subseteq T_s(\Sigma)$.
-- für jedes $c \in C$ mit $\Sigma(c) = \langle
-  \epsilon, s\rangle$ gilt $c \in T_s(\Sigma)$, d.h. $c$ ein $s$-$\Sigma$-Term.
-
-*IS:*
-
-Ist $f \in F$ bzw. $f \in V$ mit $\Sigma(f) = \langle s_0\dots s_m,
-s\rangle$ und ist $t_i \in T_{s_i}(\Sigma)$ für jedes $i \leq m$ ein
-$s_i$-$\Sigma$-Term, dann ist auch $f(t_0,\dots,t_m) \in T_s(\Sigma)$
-ein $s$-$\Sigma$-Term.
-
-Wir definieren die $S$-sortierte Menge $T(\Sigma) := \{T_s(\Sigma)
-\mid s \in S\}$. Die Elemente von $T(\Sigma)$ heißen $\Sigma$-Terme.
-
-**** Semantik
-
-Sei $S$ eine Sortenmenge, $\Sigma$ eine $S$-Signatur und $\St$ eine
-$S$-$\Sigma$-Struktur und sei $\beta$ eine $M$-Belegung, die jeder
-Variablen $x_i^s$ ein Element aus $s^{\St}$ zuordnet. Dann definieren
-wir den Wert $\llb t \rrb_{\beta}^{\St} \in s^{\St}$ eines
-$s$-$\Sigma$-Terms $t$ in der Struktur $\St$ induktiv durch:
-
-*IA:*
-
-- es gilt $\llb x_i^s \rrb_{\beta}^{\St} = \beta(x_i^s)$ für alle $i\in\mathbb{N}$ und $s \in S$
-- es gilt $\llb c \rrb_{\beta}^{\St} = c^{\St}$ für alle $c\in C$
-
-*IS:*
-
-Es gilt $\llb f(t_0,\dots,t_n)\rrb_{\beta}^{\St} = f^{\St}(\llb t_0
-\rrb_{\beta}^{\St}, \dots, \llb t_n \rrb_{\beta}^{\St})$ für alle $f
-\in F$ mit $\Sigma(f) = \langle s_0 \dots s_n,
-s\rangle$ und alle $t_i \in T_{s_i}(\Sigma)$ mit $i\leq n$.
-
-*** Gleichungen
-
-Sei $S$ eine Sortenmenge, $\Sigma$ eine $S$-Signatur, dann ist eine
-$s$-$\Sigma$-Gleichung ein Ausdruck der Form $t \deq t'$ mit $t,t' \in
-T_s(\Sigma)$. Gleichungen können als Knoten-beschriftete Bäume
-aufgefasst werden. Statt der Infix-Schreibweise $t \deq t'$ verwenden
-wir manchmal auch die Präfix-Schreibweise $\deq(t,t')$.
-
-Eine $s$-$\Sigma$-Gleichung $t \deg t'$ gilt in einer Struktur $\St$
-unter Belegung $\beta$, wenn $\llb t\rrb_{\beta}^{\St} = \llb
-t'\rrb_{\beta}^{\St}$ gilt. Wir schreiben dann $\St,\beta \models t
-\deq t'$.
-
-Eine $s$-$\Sigma$-Gleichung $t \deg t'$ gilt in einer Struktur $\St$,
-wenn $\llb t\rrb_{\beta}^{\St} = \llb t'\rrb_{\beta}^{\St}$ für alle
-Belegungen $\beta$ gilt. Wir schreiben dann $\St \models_{eq} t \deq t'$.
-
-Ist $E$ eine Menge von $s$-$\Sigma$-Gleichungen, dann ist die Menge
-aller Strukturen in denen die Gleichungen aus $E$ gelten:
-
-$\Mod(E) := \{\St \mid \St \text{ ist } s\text{-}\Sigma\text{-Struktur mit } \St \models_{eq} e \text{ für alle } e\in E\}$
-
-$\Mod(E)$ heißt auch die durch $E$ *axiomatiserte Klasse* von
-Strukturen.
-
-Ist $K$ eine Klasse von Strukturen, so heißt $K$
-*gleichungsaxiomatisierbar*, falls es eine Menge $E$ von
-$s$-$\Sigma$-Gleichungen gibt, für die $K=\Mod(E)$ gilt. Falls es eine
-/endliche/ Menge von Gleichungen gibt, die diese Bedingung erfüllt, dann
-heißt die Klasse *endlich gleichungsaxiomatisierbar*.
-
-** Relationale Signatur
-
-Eine /relationale Signatur/ $\mathscr{S}$ besteht aus:
-
-- einer Menge von /Konstantesymbolen/ $C$
-- einer Menge von /Relationssymbolen/ $R$
-- einem daraus gebildeten /Vokabular/ $V = C \dot{\cup} R$
-- einer Funktion $\Sigma: V \rightarrow S^+ \cup (S^{*} \times S)$ mit den Eigenschaften
-  - $\Sigma(c) \in \{\epsilon\}\times S = \{\langle\rangle\} \times S$ für alle $c \in C$
-  - $\Sigma(r) \in S^+$ für alle $r \in R$
-
-Ein Funktionswert $\Sigma(v)$ heißt /Signatur von/ $v$. $\Sigma$ heißt
-/Signatur/.
-
-Relationssymbole schreiben wir mit kleinem Anfangsbuchstaben, z.B. $e$
-für "edge".
-
-Da sich $V$ aus $C$ und $R$ ergibt, genügt es entweder $V$ oder $C$
-/und/ $R$ anzugeben. Welche Elemente aus $V$ Konstanten sind und welche
-Relationen erkennt man ggf. an der Signatur der Elemente, die
-angegeben wird als $\Sigma(v) = \dots$ für alle $v\in V$.
-
-Im einsortigen Fall deutet man die Signatur eines $n$-stelliges
-Relationssymbols verkürzt durch $r/n$ an.
-
-Ist $\Sigma$ eine relationale Struktur, dann sind $\Sigma$-Strukturen,
-wie bei algebraischen Strukturen definiert mit dem Unterschied:
-
-- ist $c \in C$, so gilt:
-- ist $r \in R$, so gilt: $r^{\mathscr{S}} \subseteq s_0\times\dots\times S_{n}$ für $f$ mit $\Sigma(r) = s_{0}\dots s_n$
 
 *** Homomorphismus
 
@@ -188,63 +42,10 @@ Ein Homomorphismus muss folgende Eigenschaften erfüllen:
 Wir schreiben auch $r^{\St}(a_0, \dots, a_n)$ statt $\langle a_0,
 \dots, a_n \rangle \in r^{\St}$.
 
-Wir bezeichnen die Menge der Homomorphismen von $\St$ nach $\mathscr{T}$ mit $\homs(\St, \mathscr{T})$.
+Wir bezeichnen die Menge der Homomorphismen von $\St$ nach $\Tt$ mit
+$\homs(\St, \mathscr{T})$.
 
-** Struktur
 
-Um Formeln interpretieren zu können muss jedem Bestandteil einer
-Signatur eine Bedeutung gegeben werden. Dafür verwenden wir
-Strukturen.
-
-Sei $\Sigma$ eine Signatur zu einer Sortenmenge $S$. Dann ist eine
-$S$-$\Sigma$-Struktur $\mathscr{S}$ gegeben durch:
-
-- eine $S$-sortierte Menge $M = \{M_s\}_{s\in S}$
-- für jedes $c\in C$ mit $\Sigma(c) = \langle \epsilon, s_0\rangle$
-  mit $s_0\in S$ ein $c^{\mathscr{S}}$ mit $c^{\mathscr{S}} \in
-  M_{s_0}$
-- für jedes Funktionssymbol $f \in F$ mit $\Sigma(f) = \langle
-  s_0\dots s_n, s'\rangle$ mit $s_0,\dots, s_n, s' \in S$ eine
-  Funktion $f^{\mathscr{S}}: M_{s_0}\times \dots \times M_{s_n}
-  \rightarrow M_{s'}$
-- für jedes Relationssymbol $r \in R$ mit $\Sigma(r) = s_0\dots s_n$
-  mit $s_0,\dots, s_n \in S$ eine Relation $r^{\mathscr{S}} \subseteq
-  M_{s_0}\times \dots \times M_{s_n}$
-
-$d^{\St}$ kann man lesen als "schlage die Definition von $d$ in der Struktur $\mathscr{S}$ nach.
-
-Die ne $S$-sortierte Menge $M$ heißt auch /Trägermenge/ der Struktur $\St$.
-
-** Formeln
-
-*IA:* atomare Formeln:
-
-- $\top,\bot$
-- Gleichungen $t\deq t'$
-- Prädikatsfomrmeln $(t_0, \dots, t_n)$
-
-*IS:* zusammengesetze Formeln
-
-- $J(\varphi_0, \dots, \varphi_{n-1})$
-- $\exists\: x_i^s \varphi$, $\forall x_i^s \varphi$ mit Sorte $s \in S$
-
-Alternative: /Prädikatenlogik ohne Gleichheit/: Definiert wie oben, aber
-Gleichungen sind nicht erlaubt.
-
-Induktive Definition der Menge aller in einer Formel /frei/ vorkommenden Variablen
-
-*IA:* Basiszuordnung
-
-- $\fvars(\bot} = \emptyset$
-- $\fvars(\top} = \emptyset$
-- $\fvars(t \deq t'} = \vars(t) \cup \vars(t')$ für $t, t'$ $\Sigma$-Terme mit $\vars(t)$ Menge der Variablen, die in $t$ vorkommen f
-- $\fvars(r(t_0, \dots, t_n)} = \bigcup_{i \leq n} \vars(t_i)$
-
-*IS:*
-
-- $\fvars(J(\varphi_0, \dots, \varphi_{n-1})) = \bigcup_{i\leq n} \fvars(\varphi_i)$ für alle $\varphi_i \in F_{PL}(\Sigma)$ mit $i < n$ ...
-- $\fvars(\exists x_i^{s}\:\varphi) = \fvars(\varphi) \setminus \{x_i^s\}$
-- $\fvars(\forall x_i^{s}\:\varphi) = \fvars(\varphi) \setminus \{x_i^s\}$
 
 *** TODO Variablen spezifizieren
 
@@ -257,11 +58,6 @@ $\beta|\fvars(\varphi) = \beta'|\fvars(\varphi)$ gilt:
 $\llb \varphi\rrb_{\beta}^{\St} = \llb \varphi\rrb_{\beta'}^{\St}$
 
 Wir können also wieder mit partiellen Belegungen arbeiten.
-** TODO Anfrage
-
-Eine Anfrage ist ein Paar aus einer pädikatenlogischen Formel $\varphi \in F_{PL}$ und einer Menge von Variablen:
-
-$\al \varphi, x_0 \ar^{\St} = \{ \al a \ar \mid a \in s^{\St} \wedge \St,\{x_0 \mapsto a \} \models \varphi\}$ definiert eine Relation.
 
 ** Substitution
 
@@ -271,9 +67,11 @@ s. Substituion in der Ausagenlogik
 
 *** Termsubstitution
 
-/(Term-)Substitution/ ist das Ersetzen von freien Variablen durch Terme in einer PL-Formel $\varphi$.
+*(Term-)Substitution* ist das Ersetzen von freien Variablen durch
+Terme in einer Formel $\varphi \in F_{PL}(\Sigma)$.
 
-Eine Substitution ist eine Abbildung, die Variablen Terme derselben Sorte zuordnet.
+Eine Substitution ist eine Abbildung, die Variablen Terme derselben
+Sorte zuordnet.
 
 Eine partielle Funktion $\sigma: V_{FO} \rightarrow T(\Sigma)$ heißt
 *Termsubstitution* (auch $\Sigma$-Substitution), falls für jedes $i \in
@@ -293,7 +91,7 @@ x_i^s\sigma = \begin{cases}
 
 *IS:*
 
- ist $f in F$ ... dann gilt 
+ ist $f in F$ ... dann gilt ...
 
 *** Termsubstitution auf Formeln
 
@@ -309,100 +107,14 @@ x_i^s\sigma = \begin{cases}
 - Sei $J$ ein $n$-stelliger Junktor, dann gilt $J(\varphi_0, \dots, \varphi_{n-1})\sigma
 
 Wir definieren die Menge der Variablen, die im Wirkungsbereich einer Quantifizierung von $x_i^s$ liegen durch $\bvars_{x_i^s}$
-** Quantoren
 
 
-Für alle $x_i^s \in V_s$ und $\phi, \psi \in F_{PL}$
 
-- *Dualität* (Austauschen):
-  - $\neg\exists x_i^s \phi \equiv \forall x_i^s \neg \phi$
-  - $\neg\exists x_i^s \phi \equiv \forall x_i^s \neg \phi$
-- *Kommutativität* (Vertauschen):
-  - $\exists x_i^s \exists x_j^{s'} \phi \equiv \exists x_j^{s'} \exists x_i^s \phi$
-  - $\forall x_i^s \forall x_j^{s'} \phi \equiv \forall x_j^{s'} \forall x_i^s \phi$
-- *Distributivität* (Verteilen):
-  - $\exists x_i^s (\phi \vee \psi) \equiv \exists x_i^s \phi \vee \exists x_i^s \psi$
-  - $\forall x_i^s (\phi \wedge \psi) \equiv \forall x_i^s \phi \wedge \forall x_i^s \psi$
-- (Eliminieren):
-  - $\exists x_i^s \phi \equiv \phi$ falls $x_i^s \not\in \fvars(\phi)$
-  - $\forall x_i^s \phi \equiv \phi$ falls $x_i^s \not\in \fvars(\phi)$
-- (Verschieben):
-  - $\phi \wedge \exists x_i^s \psi \equiv \exists x_i^s (\phi \wedge \psi)$ falls $x_i^s \not\in \fvars(\phi)$
-  - $\phi \vee \exists x_i^s \psi \equiv \exists x_i^s (\phi \vee \psi)$ falls $x_i^s \not\in \fvars(\phi)$
-  - $\phi \wedge \forall x_i^s \psi \equiv \exists x_i^s (\phi \wedge \psi)$ falls $x_i^s \not\in \fvars(\phi)$
-  - ...
-- (Umbenennen):
-  - $\forall x_i^s \phi \equiv \forall x_i^s \phi\{x_i^s \mapsto x_j^s\}$ falls $x_i^s \in \bvars_{x_j^s}(\phi)$ und $x_j^s\not\in\fvars(\phi)$
-  - ...
-- Einführen und Spezialisieren
-  - $\forall x_i^s \phi \VDash \phi\{x_i^s \mapsto t\}$, falls $\{x_i^s \mapsto t\}$ zulässig bzgl. $\phi$ und $t$ ist $s$-Term
-  - $\phi\{x_i^s \mapsto t\} \VDash \exists x_i\phi\{x_i^s \mapsto t\}$, falls $\{x_i^s \mapsto t\}$ zulässig bzgl. $\phi$ und $t$ ist $s$-Term
-
-** TODO Pränexe Normalform
-
-Eine Formel $\phi$ in /pränexer Normalform/ kann man in der Form
-
-$\prefix(\phi) \kern(\phi)$
-
-schreiben, wobei $\prefix(\phi)$ das *Quantorenpräfix* und $\kern(\phi)$
-der *Kern* der Formel $\phi$ sind.
-
-1. Die Menge der $\Sigma$-Formeln in /pränexer Normalform/ (PNF),
-2. der *Kern* $\kern(\phi)$ einer Formel $\phi$ in PNF,
-3. das *Quantorenpräfix* $\prefix(\phi)$ einer Formel $\phi$ in PNF und
-4. die *Menge der quantifizierten Variablen* $\qvars(\phi)$ einer Formel $\phi$ in PNF
-
-sind wie folgt induktiv definiert:
-
-*IA:*
-
-Jede quantorenfreie Formel $\phi$ ist in PNF und es gilt:
-
-- $\prefix(\phi) = \espilon$ 
-- $\kern(\phi) = \phi$ 
-- $\qvars(\phi) = \emptyset$
-
-*IS:*
-
-Ist $\phi$ in PNF, $Q \in \{\exists, \forall\}$, und sind $i \in \N$
-und $s \in S$, sodass $x_i^s \in \fvars{\phi}$ gilt, dann ist auch $Q
-x_i^s \phi$ in PNF und es gilt:
-
-- $\prefix(Qx_i^s \phi) = Q x_i^s \prefix(\phi)$
-- $\kern(Qx_i^s \phi) = \kern(\phi)$
-- $\qvars(Qx_i^s \phi) = \qvars(\phi) \cup \{x_i^s\}$
-
-Tritt in dem Quantorenpräfix kein Existenzquantor auf, so spricht man
-von einer *universellen Formel*. Besitzt eine universelle Formel keine
-freien Variablen, so nennt man sie *universelle Aussage*.
-
-*Eigenschaften:*
-
-- zu jeder prädikatenlogischen Formel gibt es eine äquivalente Formel in PNF.
 
 ** TODO Skolemisierung
 
 Für Formeln, in denen keine freien Variablen auftreten.
 
-** TODO Erfüllbarkeitsreduktion
-
-Idee: Wenn wir ein Modell der ersten Formel haben, erhalten wir ein Modell der zweiten Formel wenn wir die 
-
-Eine Formel $\phi$ heißt erfüllbarkeitsreduzierbar auf eine Formel $\psi$, wenn gilt
-
-1. $\fvars(\phi) = \fvars(\psi)$
-2. Es gibt Signaturen $\Sigma$ und $\Sigma'$, mit $\Sigma \subseteq
-   \Sigma'$ und $\phi \in F_{PL}(\Sigma)$ und $\psi \in
-   F_{PL}(\Sigma')$.
-3. Zu jeder $\Sigma$-Struktur $\St$ gibt es eine $\Sigma'$-Expansion
-   $\St'$ mit: für alle Belegungen $\beta$ gilt: Wenn $\St, \beta
-   \models \phi$, dann gilt auch $\St', \beta \models \psi$.
-4. Für jede $\Sigma'$-Struktur $\St'$ und für jede Belegung $\beta$
-   gilt: Wenn $\St, \beta \models \psi$, dann $\St'|_{\Sigma}, \beta
-   \models \phi$. Dabei heißt $\St'|_{\Sigma}$ /Redukt/ von $\St'$, d.h.
-   wir "vergessen" die Symbole aus $\Sigma'\setminus\Sigma$.
-
-Wir schreiben dann $\phi \subsetsq \psi$.
 
 ** TODO Erfüllarkeitstests
 
@@ -427,3 +139,10 @@ der Programmierung.
 
 
 Wir definieren die Relation $$
+
+* TODO Fragen
+
+- [[http://stueckwerk-logik.uni-kiel.de/stuecke/redukte-expansionen.html#841aacaba53c5d287fd3076296f38f12][Expansion
+  und Redukt (Bemerkung 1)]]: wie soll hier die richtung
+  $\Longleftarrow$ gezeigt werden?
+

@@ -1,0 +1,75 @@
+#+TITLE: Signaturen
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Signaturen
+---
+#+END_HTML
+
+Eine *Signatur* kann man sich wie die Angabe eines "Interface"
+vorstellen (vgl. z.B. die Syntax von =export= in Erlang oder Prolog).
+
+Eine *Signatur* zu einer Sortenmenge $S$ besteht aus:
+
+- einer Menge von *Konstantensymbolen* $C$
+- einer Menge von *Relationssymbolen* $R$
+- einer Menge von *Funktionssymbolen* $F$
+- einem daraus gebildeten *Vokabular* oder auch *Symbolmenge* $V := C
+  \dcup F \dcup R$
+- einer *$S$-Signatur(-funktion)* $\Sigma: V \rightarrow S^+ \cup (S^{*}
+  \times S)$ mit den Eigenschaften
+  - $\Sigma(c) \in \{\epsilon\}\times S$ für alle $c \in C$
+  - $\Sigma(f) \in S^+\times S$ für alle $f \in F$
+  - $\Sigma(r) \in S^+$ für alle $r \in R$
+
+Ein Funktionswert $\Sigma(v)$ heißt *Signatur* von $v$.
+
+Funktions- und Relationssymbole schreiben wir mit kleinem
+Anfangsbuchstaben, z.B. $d$ für "decrypt" oder $e$ für "edge".
+
+Im einsortigen Fall deutet man die Signatur eines $n$-stelligen
+Funktionssymbols verkürzt durch $f//n$ und die Signatur eines
+$n$-stelliges Relationssymbols verkürzt durch $r/n$ an.
+
+Gilt $F = \emptyset$, so sprechen wir auch von einer *relationalen
+Signatur*. Gilt $R = \emptyset$ so sprechen wir auch von einer *algebraischen
+Signatur*.
+
+Da sich $V$ aus $C$, $F$ und $R$ ergibt, genügt es entweder $V$ oder
+$C$, $F$ und $R$ anzugeben. Welche Elemente $v \in V$ Konstanten sind
+und welche Relationen oder Funktionen erkennt man nun noch an der
+Signatur der Elemente $\Sigma(v)$, welche ohnehin anzugeben ist.
+
+* TODO in Strukturen verschieben
+
+Ist $\Sigma$ eine relationale Struktur, dann sind $\Sigma$-Strukturen,
+wie bei algebraischen Strukturen definiert mit dem Unterschied:
+
+- ist $c \in C$, so gilt:
+- ist $r \in R$, so gilt: $r^{\mathscr{S}} \subseteq s_0\times\dots\times s_n$ für $f$ mit $\Sigma(r) = s_{0}\dots s_n$
+  
+* Einschränkung
+
+Sei $\Sigma$ eine $S$-Signatur mit der Symbolmenge $V$ und $Sigma_0$
+eine $S$-Signatur mit der Symbolmenge $V_0$, dann heißt $\Sigma_0$
+*Einschränkung* von $\Sigma$, wenn $V_0 \subset \V$
+gilt.
+
+*Wichtig*: Beide Signaturen verwenden /dieselbe/ Sortenmenge $S$!
+
+* Erweiterung
+
+Sei $\Sigma$ eine $S$-Signatur mit der Symbolmenge $V$ und $Sigma_0$
+eine $S$-Signatur mit der Symbolmenge $V_0$, dann heißt $\Sigma_0$
+*Erweiterung* von $\Sigma$, wenn $V \subset \V_{0}$ gilt.
+
+$\Sigma$, wenn $\Sigma \subset \Sigma_0$ gilt.
+
+*Wichtig*: Beide Signaturen verwenden /dieselbe/ Sortenmenge $S$!
+
+
+
