@@ -19,21 +19,41 @@ Gleichungen können als Knoten-beschriftete Bäume aufgefasst werden.
 Statt der Infix-Schreibweise $t \deq t'$ verwenden wir manchmal auch
 die Präfix-Schreibweise $\deq(t,t')$.
 
-* Gültigkeit
+* Semantik
 
-Eine $s$-$\Sigma$-Gleichung $t \deg t'$ gilt in einer Struktur $\St$
-unter Belegung $\beta$, wenn $\llb t\rrb_{\beta}^{\St} = \llb
-t'\rrb_{\beta}^{\St}$ gilt. Wir schreiben dann $\St,\beta \models t
-\deq t'$.
+Um eine $s$-$\Sigma$-Gleichung $t \deq t'$ interpretieren zu
+können benötigen wir eine $\Sigma$-[[./strukturen.org][Struktur]]
+$\St$ und $\St$-Belegung $\beta$.
 
-Eine $s$-$\Sigma$-Gleichung $t \deg t'$ gilt in einer Struktur $\St$,
+Den Wert einer $s$-$\Sigma$-Gleichung $t \deq t'$ in einer Struktur
+$\St$ und unter einer Belegung $\beta$ bezeichnen wir mit $\rrb t \deq
+t' \llb_{\beta}^{\St}$. Er ist wie folgt definiert:
+
+\begin{equation*}
+\llb t \deq t' \rrb_{\beta}^{\St} = 
+\begin{cases}
+1 & \text{ falls } \llb t\rrb_{\beta}^{\St} = \llb t'\rrb_{\beta}^{\St} \\
+0 & \text{ sonst}
+\end{cases}
+\end{equation*}
+
+Wir schreiben auch $\St,\beta \models t \deq t'$ für $\llb t \deq t'
+\llb_{\beta}^{\St} = 1$ und sagen, dass "die Gleichung $t \deq t'$ in
+der Struktur $\St$ unter der $\St$-Belegung $\beta$ gilt".
+
+Eine $s$-$\Sigma$-Gleichung $t \deq t'$ gilt in einer Struktur $\St$,
 wenn $\llb t\rrb_{\beta}^{\St} = \llb t'\rrb_{\beta}^{\St}$ für *alle*
 Belegungen $\beta$ gilt. Wir schreiben dann $\St \models_{eq} t \deq t'$.
 
-Ist $E$ eine Menge von $s$-$\Sigma$-Gleichungen, dann ist die Menge
-aller Strukturen in denen die Gleichungen aus $E$ gelten:
+* axiomatisierte Klassen von Strukturen
 
-$\Mod(E) := \{\St \mid \St \text{ ist } s\text{-}\Sigma\text{-Struktur mit } \St \models_{eq} e \text{ für alle } e\in E\}$
+Ist $E$ eine Menge von $s$-$\Sigma$-Gleichungen, dann ist die Menge
+aller Strukturen in denen die Gleichungen aus $E$ allgemeingültig
+sind:
+
+\begin{equation*}
+\Mod(E) := \{\St \mid \St \text{ ist } \Sigma\text{-Struktur mit } \St \models_{eq} e \text{ für alle } e\in E\}$
+\end{equation*}
 
 $\Mod(E)$ heißt auch die durch $E$ *axiomatiserte Klasse* von
 Strukturen.

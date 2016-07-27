@@ -13,14 +13,18 @@ title: Modulorelation
 
 * Modulorelation
 
-Die Relation
-$\equiv \cdot \mod m \subseteq \mathbb{Z} \times \mathbb{Z}$ mit
-$x \equiv y \mod m :\Longleftrightarrow m | (x-y)$ (s.a.
-[[teilbarkeitsrelation][Teilbarkeitsrelation]]) für
-$m \in \mathbb{N} \setminus \\{0\\}$ heißt /Modulorelation/. Nach
-Definition der [[teilbarkeitsrelation][Teilbarkeitsrelation]] gilt also:
-$m | (x-y) \Longleftrightarrow \exists z \in \mathbb{Z}: zm = (x-y)$.
-Gilt $x \equiv y \mod m$, so sagt man "$x$ ist kongruent zu $y$ Modulo
+Die Relation $\equiv \cdot \mod m \subseteq \mathbb{Z} \times
+\mathbb{Z}$, die definiert ist durch
+
+$x \equiv y \mod m :\Longleftrightarrow m | (x-y)$
+
+(s.a. [[./teilbarkeitsrelation.org][Teilbarkeitsrelation]]) für $m \in
+\mathbb{N} \setminus\{0\}$ heißt *Modulorelation*. 
+
+Nach Definition der
+[[./teilbarkeitsrelation.org][Teilbarkeitsrelation]] gilt also: $m |
+(x-y) \Longleftrightarrow \exists z \in \mathbb{Z}: zm = (x-y)$. Gilt
+$x \equiv y \mod m$, so sagt man "$x$ ist kongruent zu $y$ Modulo
 $m$".
 
 *Eigenschaften:*

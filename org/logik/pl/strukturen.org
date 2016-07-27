@@ -53,3 +53,45 @@ Das $\Sigma_0$ Redukt einer $\Sigma$-Struktur $\St$ bezeichnen wir mit
 $\St|_{\Sigma_0}$.
 
 Umgekehrt heißt $\St$ "$\Sigma$ *Expansion* von $\St|_{\Sigma_0}$.
+
+* Homomorphismus
+
+Homomorhpismen sind strukturverträgliche Abbildungen zwischen
+Strukturen.
+
+Sei $S$ eine Sortenmenge und $\Sigma$ eine $S$-Signatur und seien
+$\St$ und $\Tt$ $\Sigma$-Strukturen. Ein *Homomorphismus* ist eine
+Familie von Funktionen $h_s:s^{\St} \rightarrow s^{\Tt}$, d.h. für
+jede Sorte $s \in S$ gibt es eine Abbildung $h_s: s^{\St}\rightarrow
+s^{\Tt}$ mit folgenden Eigenschaften:
+
+- für alle $c\in C$ mit $\Sigma(c) = \al \epsilon, s\ar$ gilt
+  $h_s(c^{\St}) = c^{\mathscr{T}}$
+- Für alle $f \in F$ mit $\Sigma(f) = \langle s_0 \dots s_n, s\rangle$
+  und alle $t_0, \dots t_n$ mit $t_i \in T_{s_i}(\Sigma)$ für alle $0
+  \leq i \leq n$ gilt
+
+  \begin{equation*}
+  h_s(f^{\St}(t_0, \dots, t_n)) = f^{\Tt}(h_{s_0}(t_0), \dots, h_{s_n}(t_n))
+  \end{equation*}
+
+- Für alle $r \in R$ mit $\Sigma(r) = s_0\dots s_n$ und alle $a_0, \dots, a_n$ mit $a_i \in
+  s_i^{\St}$ für alle $0 \leq i \leq n$ gilt: Wenn $\langle a_0, \dots,
+  a_n \rangle \in r^{\St}$ gilt, dann gilt auch $\langle h_{s_0}(a_0) \dots
+  h_{s_n}(a_n)\rangle \in r^{\Tt}$
+
+Es gilt also Konstanten werden auf
+
+Wir schreiben auch $r^{\St}(a_0, \dots, a_n)$ statt $\langle a_0,
+\dots, a_n \rangle \in r^{\St}$.
+
+Die Menge der Homomorphismen von $\St$ *nach* $\Tt$ bezeichnen wir mit
+$\homs(\St, \mathscr{T})$.
+
+
+
+
+
+
+
+

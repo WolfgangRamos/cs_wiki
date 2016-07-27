@@ -1,0 +1,84 @@
+---
+layout: page
+title: Gleichungen
+---
+
+<p>
+Sei \(S\) eine Sortenmenge, \(\Sigma\) eine \(S\)-Signatur, dann ist eine
+\(s\)-\(\Sigma\)-Gleichung ein Ausdruck der Form \(t \deq t'\) mit \(t,t' \in
+T_s(\Sigma)\).
+</p>
+
+<p>
+Gleichungen können als Knoten-beschriftete Bäume aufgefasst werden.
+</p>
+
+<p>
+Statt der Infix-Schreibweise \(t \deq t'\) verwenden wir manchmal auch
+die Präfix-Schreibweise \(\deq(t,t')\).
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Semantik</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Um eine \(s\)-\(\Sigma\)-Gleichung \(t \deq t'\) interpretieren zu
+können benötigen wir eine \(\Sigma\)-<a href="./strukturen.html">Struktur</a>
+\(\St\) und \(\St\)-Belegung \(\beta\).
+</p>
+
+<p>
+Den Wert einer \(s\)-\(\Sigma\)-Gleichung \(t \deq t'\) in einer Struktur
+\(\St\) und unter einer Belegung \(\beta\) bezeichnen wir mit \(\rrb t \deq
+t' \llb_{\beta}^{\St}\). Er ist wie folgt definiert:
+</p>
+
+\begin{equation*}
+\llb t \deq t' \rrb_{\beta}^{\St} = 
+\begin{cases}
+1 & \text{ falls } \llb t\rrb_{\beta}^{\St} = \llb t'\rrb_{\beta}^{\St} \\
+0 & \text{ sonst}
+\end{cases}
+\end{equation*}
+
+<p>
+Wir schreiben auch \(\St,\beta \models t \deq t'\) für \(\llb t \deq t'
+\llb_{\beta}^{\St} = 1\) und sagen, dass "die Gleichung \(t \deq t'\) in
+der Struktur \(\St\) unter der \(\St\)-Belegung \(\beta\) gilt".
+</p>
+
+<p>
+Eine \(s\)-\(\Sigma\)-Gleichung \(t \deq t'\) gilt in einer Struktur \(\St\),
+wenn \(\llb t\rrb_{\beta}^{\St} = \llb t'\rrb_{\beta}^{\St}\) für <b>alle</b>
+Belegungen \(\beta\) gilt. Wir schreiben dann \(\St \models_{eq} t \deq t'\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> axiomatisierte Klassen von Strukturen</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Ist \(E\) eine Menge von \(s\)-\(\Sigma\)-Gleichungen, dann ist die Menge
+aller Strukturen in denen die Gleichungen aus \(E\) allgemeingültig
+sind:
+</p>
+
+\begin{equation*}
+\Mod(E) := \{\St \mid \St \text{ ist } \Sigma\text{-Struktur mit } \St \models_{eq} e \text{ für alle } e\in E\}$
+\end{equation*}
+
+<p>
+\(\Mod(E)\) heißt auch die durch \(E\) <b>axiomatiserte Klasse</b> von
+Strukturen.
+</p>
+
+<p>
+Ist \(K\) eine Klasse von Strukturen, so heißt \(K\)
+<b>gleichungsaxiomatisierbar</b>, falls es eine Menge \(E\) von
+\(s\)-\(\Sigma\)-Gleichungen gibt, für die \(K=\Mod(E)\) gilt. Falls es eine
+<i>endliche</i> Menge von Gleichungen gibt, die diese Bedingung erfüllt, dann
+heißt die Klasse <b>endlich gleichungsaxiomatisierbar</b>.
+</p>
+</div>
+</div>

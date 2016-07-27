@@ -11,10 +11,11 @@ title: Aequivalenzrelation
 ---
 #+END_HTML
 
-* Äquivalenzrelation
+Eine Relation $R \subseteq M \times M$ heißt *Äquivalenzrelation*,
+wenn gilt:
 
--  Reflexivität
--  Symmetrie
--  Transitivität
+- *Reflexivität*: $\forall x \in M: x \Rel x$
+- *Symmetrie*: $\forall x, y \in M: x \Rel y \Rightarrow y \Rel x$
+- *Transitivität*: $\forall x,y,z \in M: x \Rel y \wedge y \Rel z \Rightarrow x \Rel z$
 
 siehe auch [[aequivalenzklassen][Äquivalenzklassen]]

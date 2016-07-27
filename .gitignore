@@ -5,6 +5,7 @@
 /org/*/ltxpng
 /org/*/*/ltxpng
 /*/ltxpng
+/*/*/ltxpng
 
 # jekyll derived directories
 _site

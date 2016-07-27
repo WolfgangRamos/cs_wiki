@@ -87,10 +87,71 @@ Formeln ist analog.
 
 * Semantik
 
-Um Formeln interpretieren zu können benötigen wir
-[[./strukturen.org][Strukturen]].
+Um eine $\Sigma$-Formel $\varphi \in F_{PL}(\Sigma)$ interpretieren zu
+können benötigen wir eine $\Sigma$-[[./strukturen.org][Struktur]]
+$\St$ und $\St$-Belegung $\beta$.
 
-** TODO Gültigkeit
+Den Wert einer Formel $\varphi \in F_{PL}(\Sigma)$ in einer Struktur
+$\St$ und unter einer Belegung $\beta$ bezeichnen wir mit $\rrb
+\varphi \llb_{\beta}^{\St}$ und definieren ihn induktiv:
+
+*IA* (atomare Formeln): Es gilt
+
+- $\llb \top \rrb_{\beta}^{\St} = 1$
+- $\llb \bot \rrb_{\beta}^{\St} = 0$
+- für alle $r \in R$ mit $\Sigma(r) = s_0 \dots s_n$ und alle $t_0,
+  \dots t_n$ mit $t_i \in T_{s_i}(\Sigma)$ für alle $0 \leq i \leg n$
+  gilt:
+
+  \begin{equation*}
+  \llb r(t_0, \dots, t_n) \rrb_{\beta}^{\St} = 
+  \begin{cases}
+  1 & \text{ falls } \al \llb t_0 \rrb_{\beta}^{\St}, \dots \llb t_n \rrb_{\beta}^{\St} \ar \in r^{\St} \\
+  0 & \text{ sonst}
+  \end{cases}
+  \end{equation*}
+
+- für jede $s$-$\Sigma$-Gleichung $t \deq t'$ mit $s \in S$ gilt
+
+  \begin{equation*}
+  \llb t \deq t' \rrb_{\beta}^{\St} = 
+  \begin{cases}
+  1 & \text{ falls } \al \llb t \rrb_{\beta}^{\St} = \llb t' \rrb_{\beta}^{\St} \\
+  0 & \text{ sonst}
+  \end{cases}
+  \end{equation*}
+
+*IS* (zusammengesetzte Formeln):
+
+- Sei $J$ eine $n$-stelliger aussagenlogischer Junktor mit zugehöriger
+  boolescher Funktion $f_{J}$ und seien $\varphi_0, \dots, \varphi_n
+  \in F_{PL}(\Sigma)$, dann gilt
+
+  \begin{equation*}
+  \llb J(\varphi_0, \dots, \varphi_n) \rrb_{\beta}^{\St} = f_J(\llb \varphi_0 \rrb_{\beta}^{\St}, \dots, \llb \varphi_n \rrb_{\beta}^{\St})
+  \end{equation*}
+
+- Sei $\varphi \in F_{PL}(\Sigma)$ eine Formel und sei $x_i^s \in
+  V_{PL} eine Variable, dann gilt
+
+  \begin{equation*}
+  \llb \exists x_i^s \varphi \rrb_{\beta}^{\St} = 
+  \begin{cases}
+  1 & \text{ falls es } a \in s^{\St} \text{ gibt, sodass } \llb \varphi \rrb_{\beta[x_i^s \mapsto a]}^{\St} = 1 \text{ gilt} \\
+  0 & \text{ sonst}
+  \end{cases}
+  \end{equation*}
+
+- Sei $\varphi \in F_{PL}(\Sigma)$ eine Formel und sei $x_i^s \in
+  V_{PL} eine Variable, dann gilt
+
+  \begin{equation*}
+  \llb \forall x_i^s \varphi \rrb_{\beta}^{\St} = 
+  \begin{cases}
+  1 & \text{ falls für alle } a \in s^{\St} \text{ gilt: } \llb \varphi \rrb_{\beta[x_i^s \mapsto a]}^{\St} = 1 \\
+  0 & \text{ sonst}
+  \end{cases}
+  \end{equation*}
 
 ** Erfüllbarkeit
 
@@ -123,7 +184,17 @@ ist *allgemeingültig*, wenn für alle $\Sigma$-Strukturen $\St$ und
 allen $\St$-Belegungen $\beta$ gilt $\St, \beta \not\models \varphi$
 für alle $\varphi \in \Phi$ gilt.
 
-** TODO Erfüllbarkeitsreduktion
+** Folgerungsbeziehung
+
+Sei $S$ eine Sortenmenge, $\Sigma$ eine $S$-Signatur und $\St$ eine
+$\Sigma$-Struktur und seinen $\varphi, \psi \in F_{PL}(\Sigma)$
+prädikatenlogische Formeln, dann *folgt* $\psi$ aus $\varphi$, wenn
+jede $\St$-Belegung $\beta$, die $\varphi$ erfüllt auch $\psi$
+erfüllt. D.h. wenn $\St, \beta \models \varphi$, dann auch $\St, \beta
+\models \psi$. Wir schreiben dann $\varphi \VDash \psi$.
+
+
+** Erfüllbarkeitsreduktion
 
 Idee: Wenn wir ein Modell der Formel $\varphi \in F_{PL}(\Sigma)$
 haben, erhalten wir ein Modell einer anderen Formel $\psi \in
@@ -144,7 +215,7 @@ $\psi$, wenn gilt:
    Wenn $\St', \beta \models \psi$, dann $\St'|_{\Sigma}, \beta
    \models \varphi$.
 
-Wir schreiben dann $\varphi \subsetsq \psi$.
+Wir schreiben dann $\varphi \sqsubseteq \psi$.
 
 *** Eigenschaften
 
@@ -158,11 +229,13 @@ Wir schreiben dann $\varphi \subsetsq \psi$.
 Eine prädikatenlogische Formel $\varphi \in F_{PL}(\Sigma)$ heißt
 *äquivalent* zu einer prädikatenlogischen Formel $\psi \in
 F_{PL}(\Sigma)$, wenn für alle $\Sigma$-Strukuren $\St$ und alle
-Belegungen $\beta$ gilt:
+$\St$-Belegungen $\beta$ gilt:
 
-\begin{eqution*}
-\llb \varphi \rrb^{\St}_{\beta} = \llb \psi \rrb^{\St}_{\beta}
-\end{equation*}
+$\llb \varphi \rrb^{\St}_{\beta} = \llb \psi \rrb^{\St}_{\beta}$
+
+Oder anders ausgedrückt, wenn $\St, \beta \models \varphi$ gdw, $\St,
+\beta \models \psi$ für alle $\Sigma$-Strukturen $\St$ und
+$\St$-Belegungen $\beta$ gilt.
 
 * Quantorengesetze
 
@@ -170,24 +243,36 @@ Für alle $x_i^s \in V_s$ und $\phi, \psi \in F_{PL}$ gilt:
 
 - *Dualität* (Austauschen):
   - $\neg\exists x_i^s \phi \equiv \forall x_i^s \neg \phi$
-  - $\neg\exists x_i^s \phi \equiv \forall x_i^s \neg \phi$
+  - $\neg\forall x_i^s \phi \equiv \exists x_i^s \neg \phi$
 - *Kommutativität* (Vertauschen):
   - $\exists x_i^s \exists x_j^{s'} \phi \equiv \exists x_j^{s'} \exists x_i^s \phi$
   - $\forall x_i^s \forall x_j^{s'} \phi \equiv \forall x_j^{s'} \forall x_i^s \phi$
 - *Distributivität* (Verteilen):
   - $\exists x_i^s (\phi \vee \psi) \equiv \exists x_i^s \phi \vee \exists x_i^s \psi$
   - $\forall x_i^s (\phi \wedge \psi) \equiv \forall x_i^s \phi \wedge \forall x_i^s \psi$
-- (Eliminieren):
+- *Elimination*:
   - $\exists x_i^s \phi \equiv \phi$ falls $x_i^s \not\in \fvars(\phi)$
   - $\forall x_i^s \phi \equiv \phi$ falls $x_i^s \not\in \fvars(\phi)$
-- (Verschieben):
+- *Verschieben*:
   - $\phi \wedge \exists x_i^s \psi \equiv \exists x_i^s (\phi \wedge \psi)$ falls $x_i^s \not\in \fvars(\phi)$
   - $\phi \vee \exists x_i^s \psi \equiv \exists x_i^s (\phi \vee \psi)$ falls $x_i^s \not\in \fvars(\phi)$
   - $\phi \wedge \forall x_i^s \psi \equiv \exists x_i^s (\phi \wedge \psi)$ falls $x_i^s \not\in \fvars(\phi)$
-  - ...
-- (Umbenennen):
-  - $\forall x_i^s \phi \equiv \forall x_i^s \phi\{x_i^s \mapsto x_j^s\}$ falls $x_i^s \in \bvars_{x_j^s}(\phi)$ und $x_j^s\not\in\fvars(\phi)$
-  - ...
+  - $\phi \vee \forall x_i^s \psi \equiv \exists x_i^s (\phi \vee \psi)$ falls $x_i^s \not\in \fvars(\phi)$
+- *Umbenennen*:
+  - $\forall x_i^s \phi \equiv \forall x_j^s \phi\{x_i^s \mapsto x_j^s\}$ falls $x_i^s \not\in \bvars_{x_j^s}(\phi)$ und $x_j^s\not\in\fvars(\phi)$
+  - $\exists x_i^s \phi \equiv \exists x_j^s \phi\{x_i^s \mapsto x_j^s\}$ falls $x_i^s \not\in \bvars_{x_j^s}(\phi)$ und $x_j^s\not\in\fvars(\phi)$
 - Einführen und Spezialisieren
   - $\forall x_i^s \phi \VDash \phi\{x_i^s \mapsto t\}$, falls $\{x_i^s \mapsto t\}$ zulässig bzgl. $\phi$ und $t$ ist $s$-Term
   - $\phi\{x_i^s \mapsto t\} \VDash \exists x_i\phi\{x_i^s \mapsto t\}$, falls $\{x_i^s \mapsto t\}$ zulässig bzgl. $\phi$ und $t$ ist $s$-Term
+
+* Universelle Formeln
+
+Eine Formel in PNF in der keine Existenzquantoren auftreten heißt *universelle Aussage*.
+
+* Universelle Aussage
+
+Eine universelle Formel (also eine Formel in PNF, in der keine
+Existenzquantoren auftreten) ohne freie Variablen heißt *universelle
+Aussage*.
+
+* Konjunktive Normalform

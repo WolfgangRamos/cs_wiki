@@ -1,0 +1,116 @@
+---
+layout: page
+title: Signaturen
+---
+
+<p>
+Eine <b>Signatur</b> kann man sich wie die Angabe eines "Interface"
+vorstellen (vgl. z.B. die Syntax von <code>export</code> in Erlang oder Prolog).
+</p>
+
+<p>
+Eine <b>Signatur</b> zu einer Sortenmenge \(S\) besteht aus:
+</p>
+
+<ul class="org-ul">
+<li>einer Menge von <b>Konstantensymbolen</b> \(C\)
+</li>
+<li>einer Menge von <b>Relationssymbolen</b> \(R\)
+</li>
+<li>einer Menge von <b>Funktionssymbolen</b> \(F\)
+</li>
+<li>einem daraus gebildeten <b>Vokabular</b> oder auch <b>Symbolmenge</b> \(V := C
+  \dcup F \dcup R\)
+</li>
+<li>einer <b>\(S\)-Signatur(-funktion)</b> \(\Sigma: V \rightarrow S^+ \cup (S^{*}
+  \times S)\) mit den Eigenschaften
+<ul class="org-ul">
+<li>\(\Sigma(c) \in \{\epsilon\}\times S\) für alle \(c \in C\)
+</li>
+<li>\(\Sigma(f) \in S^+\times S\) für alle \(f \in F\)
+</li>
+<li>\(\Sigma(r) \in S^+\) für alle \(r \in R\)
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Ein Funktionswert \(\Sigma(v)\) heißt <b>Signatur</b> von \(v\).
+</p>
+
+<p>
+Funktions- und Relationssymbole schreiben wir mit kleinem
+Anfangsbuchstaben, z.B. \(d\) für "decrypt" oder \(e\) für "edge".
+</p>
+
+<p>
+Im einsortigen Fall deutet man die Signatur eines \(n\)-stelligen
+Funktionssymbols verkürzt durch \(f//n\) und die Signatur eines
+\(n\)-stelliges Relationssymbols verkürzt durch \(r/n\) an.
+</p>
+
+<p>
+Gilt \(F = \emptyset\), so sprechen wir auch von einer <b>relationalen
+Signatur</b>. Gilt \(R = \emptyset\) so sprechen wir auch von einer <b>algebraischen
+Signatur</b>.
+</p>
+
+<p>
+Da sich \(V\) aus \(C\), \(F\) und \(R\) ergibt, genügt es entweder \(V\) oder
+\(C\), \(F\) und \(R\) anzugeben. Welche Elemente \(v \in V\) Konstanten sind
+und welche Relationen oder Funktionen erkennt man nun noch an der
+Signatur der Elemente \(\Sigma(v)\), welche ohnehin anzugeben ist.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> in Strukturen verschieben</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Ist \(\Sigma\) eine relationale Struktur, dann sind \(\Sigma\)-Strukturen,
+wie bei algebraischen Strukturen definiert mit dem Unterschied:
+</p>
+
+<ul class="org-ul">
+<li>ist \(c \in C\), so gilt:
+</li>
+<li>ist \(r \in R\), so gilt: \(r^{\mathscr{S}} \subseteq s_0\times\dots\times s_n\) für \(f\) mit \(\Sigma(r) = s_{0}\dots s_n\)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Einschränkung</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Sei \(\Sigma\) eine \(S\)-Signatur mit der Symbolmenge \(V\) und \(Sigma_0\)
+eine \(S\)-Signatur mit der Symbolmenge \(V_0\), dann heißt \(\Sigma_0\)
+<b>Einschränkung</b> von \(\Sigma\), wenn \(V_0 \subset \V\)
+gilt.
+</p>
+
+<p>
+<b>Wichtig</b>: Beide Signaturen verwenden <i>dieselbe</i> Sortenmenge $S$!
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Erweiterung</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Sei \(\Sigma\) eine \(S\)-Signatur mit der Symbolmenge \(V\) und \(Sigma_0\)
+eine \(S\)-Signatur mit der Symbolmenge \(V_0\), dann heißt \(\Sigma_0\)
+<b>Erweiterung</b> von \(\Sigma\), wenn \(V \subset \V_{0}\) gilt.
+</p>
+
+<p>
+\(\Sigma\), wenn \(\Sigma \subset \Sigma_0\) gilt.
+</p>
+
+<p>
+<b>Wichtig</b>: Beide Signaturen verwenden <i>dieselbe</i> Sortenmenge $S$!
+</p>
+</div>
+</div>

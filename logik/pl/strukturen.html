@@ -1,0 +1,127 @@
+---
+layout: page
+title: Strukturen
+---
+
+<p>
+Um Formeln interpretieren zu können muss jedem Bestandteil einer
+Signatur eine Bedeutung gegeben werden. Dafür verwenden wir
+Strukturen.
+</p>
+
+<p>
+Sei \(\Sigma\) eine Signatur zu einer Sortenmenge \(S\). Dann ist eine
+<b>\(S\)-\(\Sigma\)-Struktur</b> \(\St\) gegeben durch:
+</p>
+
+<ul class="org-ul">
+<li>eine \(S\)-sortierte <b>Trägermenge</b> \(M = \{M_s\}_{s\in S}\) mit \(M_s \neg
+  \emptyset\) für alle \(s \in S\), die jeder Sort \(s \in S\) eine Menge
+von möglichen Werten zuordnet
+</li>
+<li>für jedes \(c\in C\) mit \(\Sigma(c) = \langle \epsilon, s_0\rangle\)
+  mit \(s_0\in S\) ein \(c^{\mathscr{S}}\) mit \(c^{\mathscr{S}} \in
+  M_{s_0}\)
+</li>
+<li>für jedes Funktionssymbol \(f \in F\) mit \(\Sigma(f) = \langle
+  s_0\dots s_n, s'\rangle\) mit \(s_0,\dots, s_n, s' \in S\) eine
+Funktion \(f^{\mathscr{S}}: M_{s_0}\times \dots \times M_{s_n}
+  \rightarrow M_{s'}\)
+</li>
+<li>für jedes Relationssymbol \(r \in R\) mit \(\Sigma(r) = s_0\dots s_n\)
+  mit \(s_0,\dots, s_n \in S\) eine Relation \(r^{\mathscr{S}} \subseteq
+  M_{s_0}\times \dots \times M_{s_n}\)
+</li>
+</ul>
+
+<p>
+\(d^{\St}\) kann man lesen als "schlage die Definition von \(d\) in der
+Struktur \(\St\) nach.
+</p>
+
+<p>
+Die Trägermenge einer Struktur geben wir i.d.R. an indem wir für jede
+Sorte \(s \in S\) die Menge \(s^{\St}\) angeben.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Redukt und Expansion</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sei \(\Sigma\) eine \(S\)-Signatur mit der Symbolmenge \(V\) und \(Sigma_0\)
+eine \(S\)-Signatur mit der Symbolmenge \(V_0\) und sei \(\Sigma_0\) eine
+<a href="./signaturen.html">Einschränkung</a> der Signatur \(\Sigma\) und sein \(\St\) eine
+\(\Sigma\)-Stuktur. Dann ist das \(\Sigma_0\) <b>Redukt</b> der Struktur \(\St\)
+diejenige \(\Sigma_0\)-Struktur:
+</p>
+
+<ul class="org-ul">
+<li>mit derselben Trägermenge \(\{M_s\}_{s\in S}\) wie von \(St\), die jeder
+Sorte \(s \in S\) eine Menge möglicher Werte zuordnet
+</li>
+<li>in der alle Smybole \(v \in V_0\) so interpretiert werden wie in \(St\)
+</li>
+</ul>
+
+<p>
+Das \(\Sigma_0\) Redukt einer \(\Sigma\)-Struktur \(\St\) bezeichnen wir mit
+\(\St|_{\Sigma_0}\).
+</p>
+
+<p>
+Umgekehrt heißt \(\St\) "\(\Sigma\) <b>Expansion</b> von \(\St|_{\Sigma_0}\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Homomorphismus</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Homomorhpismen sind strukturverträgliche Abbildungen zwischen
+Strukturen.
+</p>
+
+<p>
+Sei \(S\) eine Sortenmenge und \(\Sigma\) eine \(S\)-Signatur und seien
+\(\St\) und \(\Tt\) \(\Sigma\)-Strukturen. Ein <b>Homomorphismus</b> ist eine
+Familie von Funktionen \(h_s:s^{\St} \rightarrow s^{\Tt}\), d.h. für
+jede Sorte \(s \in S\) gibt es eine Abbildung \(h_s: s^{\St}\rightarrow
+s^{\Tt}\) mit folgenden Eigenschaften:
+</p>
+
+<ul class="org-ul">
+<li>für alle \(c\in C\) mit \(\Sigma(c) = \al \epsilon, s\ar\) gilt
+\(h_s(c^{\St}) = c^{\mathscr{T}}\)
+</li>
+<li>Für alle \(f \in F\) mit \(\Sigma(f) = \langle s_0 \dots s_n, s\rangle\)
+  und alle \(t_0, \dots t_n\) mit \(t_i \in T_{s_i}(\Sigma)\) für alle \(0
+  \leq i \leq n\) gilt
+
+\begin{equation*}
+h_s(f^{\St}(t_0, \dots, t_n)) = f^{\Tt}(h_{s_0}(t_0), \dots, h_{s_n}(t_n))
+\end{equation*}
+</li>
+
+<li>Für alle \(r \in R\) mit \(\Sigma(r) = s_0\dots s_n\) und alle \(a_0, \dots, a_n\) mit \(a_i \in
+  s_i^{\St}\) für alle \(0 \leq i \leq n\) gilt: Wenn \(\langle a_0, \dots,
+  a_n \rangle \in r^{\St}\) gilt, dann gilt auch \(\langle h_{s_0}(a_0) \dots
+  h_{s_n}(a_n)\rangle \in r^{\Tt}\)
+</li>
+</ul>
+
+<p>
+Es gilt also Konstanten werden auf
+</p>
+
+<p>
+Wir schreiben auch \(r^{\St}(a_0, \dots, a_n)\) statt \(\langle a_0,
+\dots, a_n \rangle \in r^{\St}\).
+</p>
+
+<p>
+Die Menge der Homomorphismen von \(\St\) <b>nach</b> \(\Tt\) bezeichnen wir mit
+\(\homs(\St, \mathscr{T})\).
+</p>
+</div>
+</div>

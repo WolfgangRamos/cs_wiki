@@ -1,0 +1,65 @@
+---
+layout: page
+title: Termstruktur
+---
+
+<p>
+Sei \(S\) eine Sortenmenge ud \(\Sigma\) eine \(S\)-Signatur, in der es
+mindestens ein Konstantensymbol von jeder Sorte \(s \in S\) gibt.
+</p>
+
+<p>
+Ein \(s\)-\(\Sigma\)-Grundterm ist ein \(s\)-\(\Sigma\)-Term, in dem keine
+Variablen vorkommen. Die Menge der Grundterme bezeichnen wir mit
+\(G_s(\Sigma)\).
+</p>
+
+<p>
+Eine Grundforml ist eine Gleichung oder ein Relationsterm, in der/dem
+keine Variablen vorkommen.
+</p>
+
+<p>
+Ein Prädikatsgrundterm ist ein Relationsterm, in dem keine Variablen
+vorkommen.
+</p>
+
+<p>
+Eine <b>Grundsubstitution</b> ist eine Substitution \(\sigma\), die jeder
+Variablen \(x \in \def(\sigma)\) einen Grundterm zuordnet.
+</p>
+
+<p>
+Eine \(\Sigma\)-Struktur \(\Tt\) heißt \(\Sigma\)-Termstruktur, falls für
+alle \(s \in S\) gilt:
+</p>
+
+<ol class="org-ol">
+<li>\(s^{\Tt} = G_s(\Sigma)\) für alle \(s \in S\)
+</li>
+<li>\(c^{\Tt} = c\) für alle \(c \in C\) mit \(\Sigma(c) = \al \epsilon, s
+   \ar\)
+</li>
+<li>\(f^{\Tt}(t_0, \dots, t_n) = f(t_0, \dots, t_n)\) für alle \(f \in F\)
+   mit \(\Sigma(f) = \al s_0 \dots s_n, s \ar\) und \(t_i \in s_i^{\St} =
+   G_{s_i}(\Sigma)\) für alle \(0 \leq i \leq n\)
+</li>
+</ol>
+
+<p>
+Lediglich die Interpretation der Relationssymbole ist frei. Dher gibt
+es zu jeder algebraischen Struktur genau eine Termstruktur.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Termmodell</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Eine \(\Sigma\)-Termstruktur \(\Tt\) heißt <b>Termmodell</b> einer Formel
+\(\varphi \in F_{PL}(\Sigma)\) oder einer Menge von Formeln \(\Phi
+\subsetes F_{PL}(\Sigma)\), wenn eine \(\Tt\)-Belegung \(\beta\) gibt,
+sodass \(\Tt, \beta \models \varphi\) bzw. \(\Tt, \beta \models \Phi\)
+gilt.
+</p>
+</div>
+</div>

@@ -18,35 +18,6 @@ title: Pädikatenlogik
   - [[./pl/strukturen.org][Strukturen]]
 
 
-*** Homomorphismus
-
-Sei $S$ eine Sortenmenge und $\Sigma$ eine relationale $S$-Signatur.
-
-Ein *Homomorphismus* ist eine Familie von Funktionen von einer
-$S$-$\Sigma$-Struktur $\St$ auf eine andere $S$-$\Sigma$-Struktur $h:\St
-\rightarrow \mathscr{T}$, d.h. für jede Sorte $s \in S$ gibt es eine
-Abbildung $h_s: s^{\St}\rightarrow s^{\mathscr{T}}$.
-
-Ein Homomorphismus muss folgende Eigenschaften erfüllen:
-
-- Für alle $c\in C$ mit $\Sigma(c) = \langle \epsilon, s\rangle$ gilt $h_s(c^{\St}) = c^{\mathscr{T}}$.
-- Für alle $f \in F$ mit $\Sigma(f) = \langle s_0 \dots s_n,
-  s\rangle$ und alle $a_0 \in s_0^{\St}, \dots, a_n \in s_n^{\St}$
-  gilt $h_s(f^{\St}(a_0, \dots, a_n)) = f^{\mathscr{T}}(h_{s_0}(a_0),
-  \dots, h_{s_n}(a_n))$
-- Für alle $r \in R$ mit $\Sigma(r) = s_0\dots s_n$ und alle $a_0 \in
-  s_0^{\St}, \dots, a_n \in s_n^{\St}$ gilt: Wenn $\langle a_0, \dots,
-  a_n \rangle \in r^{\St}$ gilt, dann gilt auch $\langle h_{s_0}(a_0) \dots
-  h_{s_n}(a_n)\rangle \in r^{\mathscr{T}}$
-
-Wir schreiben auch $r^{\St}(a_0, \dots, a_n)$ statt $\langle a_0,
-\dots, a_n \rangle \in r^{\St}$.
-
-Wir bezeichnen die Menge der Homomorphismen von $\St$ nach $\Tt$ mit
-$\homs(\St, \mathscr{T})$.
-
-
-
 *** TODO Variablen spezifizieren
 
 *** Koinzidenzlemma

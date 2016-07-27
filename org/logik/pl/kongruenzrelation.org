@@ -1,0 +1,113 @@
+#+TITLE: Kongruenzrelation
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Kongruenzrelation
+---
+#+END_HTML
+
+Eine Kongruenzrelation ist eine
+[[../../mathe/aequivalenzrelation.org][Äquivalenzrelation]], die mit
+der Anwendung von Funktionen und Relationen verträglich ist. Das bedeutet:
+
+1. sind die Argumente zweier Funktionsaufrufe jeweils paarweise
+   kongruent, dann sind auch die "Rückgabewerte" der Funktionsaufrufe
+   kongruent zueienander.
+2. sind die Elemente zweier Tupel einer Relation jeweils paarweise
+   kongruent, dann sind entweder beide Tupel in der Relation, oder
+   beide Tupel sind nicht in der Relation.
+
+Sei $S$ eine Sortenmenge, $\Sigma$ eine $S$-Signatur und $\St$ eine
+$\Sigma$-Struktur und $\{\sim_s\}_{s \in S}$ eine $S$-sortierte
+Äquivalenzrelation auf der Trägermenge $\{s^{\St}\}_{s \in S}$ von
+$\St$, dann heißt $\{\sim_s\}_{s \in S}$ *Kongruenzrelation*, wenn
+sie folgende *Kongruenzeigenschaften* erfüllt:
+
+1. Für jedes $f \in F$ mit $\Sigma(f) = \al s_0\dots s_n, s \ar$ und
+   alle $a_0, \dots, a_n, b_0, \dots, b_n$ mit $a_i, b_i \in
+   s_i^{\St}$ und $a_i \sim_{s_i} b_i$ für alle $0 \leq i \leq n$
+   gilt: $f^{\St}(a_0, \dots, a_n) \sim_s f^{\St}(b_0, \dots, b_n)$.
+2. Für jedes $r \in R$ mit $\Sigma(r) = s_0\dots s_n$ und alle $a_0,
+   \dots, a_n, b_0, \dots, b_n$ mit $a_i, b_i \in s_i^{\St}$ und $a_i
+   \sim_{s_i} b_i$ für alle $0 \leq i \leq n$ gilt: $\al a_0, \dots,
+   a_n \ar \in r^{\St}$ gdw. $\al b_0, \dots, b_n \ar \in r^{\St}$.
+
+* Beschreibung von Kongruenzrelationen durch Formeln
+
+$\{e_s\}_{s \in S}$ mit $\Sigma(e_s) = ss$ ist eine $S$-sortierte
+Kongruenzrelation, wenn gilt:
+
+1. *Reflexivität*: $\forall x_0^s\: e_s(x_0^s, x_0^s)$ für alle $s\in S$
+2. *Symmetrie*: $\forall x_0^s \forall x_1^s\: (e_s(x_0^s, x_1^s)
+   \rightarrow e_s(x_1^s, x_0^s))$ für alle $s \in S$
+3. *Transitivität*: $\forall x_0^s \forall x_1^s \forall x_2^s\:
+   (e_s(x_0^s, x_1^s) \wedge e_s(x_1^s, x_2^s) \rightarrow e_s(x_0^s,
+   x_2^s))$ für alle $s \in S$
+4. *Kongruenzaxiom für Funktionssymbole*: $\forall
+   x_0^{s_0}\:\dots\:\forall x_n^{s_n}\:\forall
+   x_{n+1}^{s_0}\:\dots\:\forall x_{2n+1}^{s_n}\:
+   \left(\left(\bigwedge_{i=0}^{n} e_{s_i}(x_i^{s_i},
+   x_{i+n}^{s_i})\right) \rightarrow e_s(f(x_0^{s_0}, \dots,
+   x_n^{s_n}), f(x_{n+1}^{s_0}, \dots, x_{2n+1}^{s_n}))\right)$ für
+   alle $f \in F$
+5. *Kongruenzaxiom für Relationssymbole*: $\forall
+   x_0^{s_0}\:\dots\:\forall x_n^{s_n}\:\forall
+   x_{n+1}^{s_0}\:\dots\:\forall x_{2n+1}^{s_n}\:
+   \left(\left(\bigwedge_{i=0}^{n} e_{s_i}(x_i^{s_i},
+   x_{i+n}^{s_i})\right) \rightarrow (r(x_0^{s_0}, \dots, x_n^{s_n})
+   \leftrigtharrow r(x_{n+1}^{s_0}, \dots, x_{2n+1}^{s_n}))\right)$
+   für alle $r \in R$
+
+Reflexivität, Symmetrie und Transitivität heißen auch
+*Äquivalenzaxiome*.
+
+* Kongruenzerweiterung
+
+Sei $\Sigma$ eine Signatur, in der die Symbole $e_s$ für alle $s \in
+S$ *nicht* enthalten sind, dann bezeichnen wir 
+
+- die Erweiterung von $\Sigma$ durch $e_s$ mit $\Sigma(e_s) = ss$ für
+  alle $s \in S$ mit $\Sigma_e$
+- die Formelmenge, welche die Äquivalenz- und Kongruenzaxiome enthält mit $\CRset(\Sigma, e)$
+
+* Elimination von Gleichheit
+
+Das Gleichhietssymbol $\deq$ lässt sich bei der Frage nach der
+Erfüllbarkeit durch Kongruenzrelationen ersetzen.
+
+Sei $\Sigma$ eine Signatur, in der die Smybole $e_s$ für $s \in S$
+nicht enthalten sind und sein $\Phi \subseteq F_{PL}(\Sigma)$ eine
+Menge prädikatenlogischer Formeln, dann bezeichnen wir mit $\Phi\{\deq
+\mapsto e\}$ die $\Sigma_e$-Formelmenge, die aus $\Phi$ entsteht, wenn
+alle Vorkommen von $\deq$ durch die jeweilig Kongruenzrelation $e_s$
+ersetzt werden.
+
+Es gilt $\erfb \Phi$ gdw. $\erfb \Phi\{\deq \mapsto e\} \cup
+\CRset(\Sigma, e)$ gilt.
+
+* Faktorstruktur
+
+Ist $\sim$ eine Kongruenzrelation, dann lässt sich auf den
+[[../../mathe/aequivalenzklassen.org][Äquivalenzklassen]] von $\sim$
+eine neue Struktur $\Stfak$ definieren mit:
+
+1. Trägermengen $s^{\Stfak} = s^{\St}/\sim_s$ für jedes $s \in S$,
+   wobei $s^{\St}/\sim_s$ die Menge der Äquivalenzklassen von $\sim_s$
+   ist.
+2. Für jedes $c \in C$ mit $\Sigma(c) = \al \epsilon, s \ar$ gilt:
+   $c^{\Stfac} = [c^{\St}]_{\sim_s}$
+3. Für jedes $f \in F$ mit $\Sigma(f) = \al s_0 \dots s_n, s \ar$ und
+   alle $a_0, \dots, a_n$ mit $a_i \in s_i^{\St}$ für alle $0 \leq i
+   \leq n$ gilt: $f^{\Stfac}([a_0]_{\sim_s_0}, \dots,
+   [a_n]_{\sim_{s_n}}) = [f^{\St}(a_0, \dots, a_n)]_{\sim_s}$
+4. Für jedes $r \in R$ mit $\Sigma(r) = s_0 \dots s_n$ und alle $a_0,
+   \dots, a_n$ mit $a_i \in s_i^{\St}$ für alle $0 \leq i \leq n$
+   gilt: $\al [a_0]_{\sim_s_0}, \dots, [a_n]_{\sim_{s_n}} \ar \in
+   r^{\Stfac}$ gdw. $\al a_0, \dots, a_n \ar \in r^{\St}$.
+
+$\Stfak$ heißt *Faktorstruktur*.
+

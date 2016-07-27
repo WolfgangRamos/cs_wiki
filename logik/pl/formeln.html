@@ -1,0 +1,472 @@
+---
+layout: page
+title: Prädikatenlogische Formeln
+---
+
+<p>
+Um Aussagen in der Prädikatenlogik formuliern zu können benötigen wir
+eine Sortenmenge \(S\) und eine \(S\)-Signatur \(\Sigma\).
+</p>
+
+<p>
+Die Menge der <b>prädikatenlogische Formel</b> \(F_{PL}(\Sigma)\) zu einer
+Sortenmenge \(S\) und eine \(S\)-Signatur \(\Sigma\) wird induktiv definiert
+durch:
+</p>
+
+<p>
+<b>IA</b> (atomare Formeln):
+</p>
+
+<ul class="org-ul">
+<li>für die Konstantensymbole \(\top,\bot\) gilt \(\top,\bot \in F_{PL}(\Sigma)\)
+</li>
+<li>für jedes Relationssymbol \(r \in R\) mit \(\Sigma(r) = s_0\dots s_n\)
+  und für alle \(\Sigma\)-Terme \(t_0 \in T_{s_0}(\Sigma), \dots t_n \in
+  T_{s_n}(\Sigma)\) gilt \(r(t_0, \dots, t_n) \in F_{PL}(\Sigma)\). 
+</li>
+<li>für jede \(\Sigma\)-Gleichungen \(t\deq t'\) gilt \(t\deq t' \in F_{PL}(\Sigma)\)
+</li>
+</ul>
+
+<p>
+<b>IS</b> (zusammengesetze Formeln):
+</p>
+
+<ul class="org-ul">
+<li>Sei \(J\) ein \(n\)-stelliger aussagenlogischer Junktor und seien
+\(\varphi_0, \dots, \varphi_{n-1}\) prädikatenlogische Formeln, dann
+ist auch \(J(\varphi_0, \dots, \varphi_{n-1}) \in F_{PL}(\Sigma)\)
+</li>
+<li>Sei \(\varphi \in F_{PL}(\Sigma)\) und \(s \in S\) eine Sorte, dann gilt
+auch
+<ul class="org-ul">
+<li>\(\exists\: x_i^s \varphi \in F_{PL}(\Sigma)\) und
+</li>
+<li>\(\forall x_i^s \varphi \in F_{PL}(\Sigma)\)
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Formeln die nur aus Relationssymbol bestehen heißen <b>Prädikatsformel</b>.
+Formeln die mit einem Quantor beginnen heißen <b>quatifizierte Formeln</b>.
+Formeln ohne Quatoren heißen <b>quantorenfreie Formeln</b>.
+</p>
+
+<p>
+Eine prädikatenlogische Formel ist ein verwurzelter Baum mit linear
+geordneten Nachfolgern und beschrifteten Knoten. Blätter sind
+beschriftet mit Variablen, Konstanten (\(\top, \bot\)) Gleichungen oder
+Relationen, innere Knoten sind beschriftet mit Junktoren oder
+Quantifizierungen.
+</p>
+
+<p>
+Alternative Definition prädikatenlogische Formeln ohne Gleichheit:
+Definiert wie oben, aber Gleichungen sind nicht erlaubt.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Funktionen auf prädikatenlogischen Formeln</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Auf prädikatenlogischen Formeln lassen sich induktiv Funktionen definieren
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Menge der freien Variablen</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+\(\fvars: F_{PL} \rightarrow \mathcal{P}(V_{PL})\) liefert die Menge
+aller in einer Formel <b>frei</b> vorkommenden Variablen.
+</p>
+
+<p>
+<b>IA</b> (für atomare Formeln): 
+</p>
+
+<ul class="org-ul">
+<li>\(\fvars(\bot} = \emptyset\)
+</li>
+<li>\(\fvars(\top} = \emptyset\)
+</li>
+<li>\(\fvars(t \deq t'} = \vars(t) \cup \vars(t')\) für \(t, t'\) \(\Sigma\)-Terme mit \(\vars(t)\) Menge der Variablen, die in \(t\) vorkommen f
+</li>
+<li>\(\fvars(r(t_0, \dots, t_n)} = \bigcup_{i \leq n} \vars(t_i)\)
+</li>
+</ul>
+
+<p>
+<b>IS</b> (für zusammengesetzte Formeln):
+</p>
+
+<ul class="org-ul">
+<li>\(\fvars(J(\varphi_0, \dots, \varphi_{n-1})) = \bigcup_{i\leq n} \fvars(\varphi_i)\) für alle \(\varphi_i \in F_{PL}(\Sigma)\) mit \(i < n\) &#x2026;
+</li>
+<li>\(\fvars(\exists x_i^{s}\:\varphi) = \fvars(\varphi) \setminus \{x_i^s\}\)
+</li>
+<li>\(\fvars(\forall x_i^{s}\:\varphi) = \fvars(\varphi) \setminus \{x_i^s\}\)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> <span class="todo TODO">TODO</span> gibt es die Menge \(V_{PL}\) oder ist \(V_{PL} = V_{AL}\) ?</h4>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Beweise und Funktionen für prädikatenlogische Formeln</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Vorgehen zum zeigen einer Aussage für prädikatenlogische Formeln:
+</p>
+
+<ol class="org-ol">
+<li>Da atomare prädikatenlogische Formeln Terme enthalten können, muss
+man eine Aussage zunächst für Terme zeigen.
+</li>
+<li>Danach zeigt man die Aussage für die übrigen atomaren Formeln.
+</li>
+<li>Abschließend zeigt man die Aussage für zusammengesetzte Formeln.
+</li>
+</ol>
+
+<p>
+Das Vorgehen bei der Definition von Funktionen auf prädikatenlogischen
+Formeln ist analog.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Semantik</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Um eine \(\Sigma\)-Formel \(\varphi \in F_{PL}(\Sigma)\) interpretieren zu
+können benötigen wir eine \(\Sigma\)-<a href="./strukturen.html">Struktur</a>
+\(\St\) und \(\St\)-Belegung \(\beta\).
+</p>
+
+<p>
+Den Wert einer Formel \(\varphi \in F_{PL}(\Sigma)\) in einer Struktur
+\(\St\) und unter einer Belegung \(\beta\) bezeichnen wir mit \(\rrb
+\varphi \llb_{\beta}^{\St}\) und definieren ihn induktiv:
+</p>
+
+<p>
+<b>IA</b> (atomare Formeln): Es gilt
+</p>
+
+<ul class="org-ul">
+<li>\(\llb \top \rrb_{\beta}^{\St} = 1\)
+</li>
+<li>\(\llb \bot \rrb_{\beta}^{\St} = 0\)
+</li>
+<li>für alle \(r \in R\) mit \(\Sigma(r) = s_0 \dots s_n\) und alle \(t_0,
+  \dots t_n\) mit \(t_i \in T_{s_i}(\Sigma)\) für alle \(0 \leq i \leg n\)
+  gilt:
+
+\begin{equation*}
+\llb r(t_0, \dots, t_n) \rrb_{\beta}^{\St} = 
+\begin{cases}
+1 & \text{ falls } \al \llb t_0 \rrb_{\beta}^{\St}, \dots \llb t_n \rrb_{\beta}^{\St} \ar \in r^{\St} \\
+0 & \text{ sonst}
+\end{cases}
+\end{equation*}
+</li>
+
+<li>für jede \(s\)-\(\Sigma\)-Gleichung \(t \deq t'\) mit \(s \in S\) gilt
+
+\begin{equation*}
+\llb t \deq t' \rrb_{\beta}^{\St} = 
+\begin{cases}
+1 & \text{ falls } \al \llb t \rrb_{\beta}^{\St} = \llb t' \rrb_{\beta}^{\St} \\
+0 & \text{ sonst}
+\end{cases}
+\end{equation*}
+</li>
+</ul>
+
+<p>
+<b>IS</b> (zusammengesetzte Formeln):
+</p>
+
+<ul class="org-ul">
+<li>Sei \(J\) eine \(n\)-stelliger aussagenlogischer Junktor mit zugehöriger
+boolescher Funktion \(f_{J}\) und seien \(\varphi_0, \dots, \varphi_n
+  \in F_{PL}(\Sigma)\), dann gilt
+
+\begin{equation*}
+\llb J(\varphi_0, \dots, \varphi_n) \rrb_{\beta}^{\St} = f_J(\llb \varphi_0 \rrb_{\beta}^{\St}, \dots, \llb \varphi_n \rrb_{\beta}^{\St})
+\end{equation*}
+</li>
+
+<li>Sei \(\varphi \in F_{PL}(\Sigma)\) eine Formel und sei $x<sub>i</sub><sup>s</sup> &isin;
+  V<sub>PL</sub> eine Variable, dann gilt
+
+\begin{equation*}
+\llb \exists x_i^s \varphi \rrb_{\beta}^{\St} = 
+\begin{cases}
+1 & \text{ falls es } a \in s^{\St} \text{ gibt, sodass } \llb \varphi \rrb_{\beta[x_i^s \mapsto a]}^{\St} = 1 \text{ gilt} \\
+0 & \text{ sonst}
+\end{cases}
+\end{equation*}
+</li>
+
+<li>Sei \(\varphi \in F_{PL}(\Sigma)\) eine Formel und sei $x<sub>i</sub><sup>s</sup> &isin;
+  V<sub>PL</sub> eine Variable, dann gilt
+
+\begin{equation*}
+\llb \forall x_i^s \varphi \rrb_{\beta}^{\St} = 
+\begin{cases}
+1 & \text{ falls für alle } a \in s^{\St} \text{ gilt: } \llb \varphi \rrb_{\beta[x_i^s \mapsto a]}^{\St} = 1 \\
+0 & \text{ sonst}
+\end{cases}
+\end{equation*}
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Erfüllbarkeit</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Eine prädikatenlogische Formel \(\varphi \in F_{PL}(\Sigma)\) ist
+<b>erfüllbar</b> wenn es eine \(\Sigma\)-Struktur \(\St\) und eine
+\(\St\)-Belegung \(\beta\) gibt, sodass \(\St, \beta \models \varphi\) gilt.
+</p>
+
+<p>
+Wir schreiben dann auch \(\erfb \varphi\).
+</p>
+
+<p>
+Eine Menge prädikatenlogischer Formeln \(\Phi \subseteq F_{PL}(\Sigma)\)
+heißt <b>erfüllbar</b>, wenn es <i>eine</i> \(\Sigma\)-Struktur \(\St\) und <i>eine</i>
+\(\St\)-Belegung \(\beta\) gibt, sodass \(\St, \beta \models \varphi\) für
+alle \(\varphi \in \Phi\) gilt.
+</p>
+
+<p>
+Wir schreiben dann auch \(\St, \beta \models \Phi\).
+</p>
+
+<p>
+Ist eine Formel oder Formelmenge nicht erfüllbar, so heißt sie
+<b>unerfüllbar</b>, wir schreiben dann \(\unerfb \varphi\) bzw. \(\unerfb
+\Phi\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Allgemeingültigkeit</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Eine prädikatenlogische Formel \(\varphi \in F_{PL}(\Sigma)\) ist
+<b>allgemeingültig</b>, wenn ihre Negation \(\neg \varphi\) nicht erfüllbar
+ist, d.h. wenn für alle \(\Sigma\)-Strukturen \(\St\) und allen
+\(\St\)-Belegungen \(\beta\) gilt \(\St, \beta \not\models \varphi\).
+</p>
+
+<p>
+Eine Menge prädikatenlogischer Formeln \(\Phi \subseteq F_{PL}(\Sigma)\)
+ist <b>allgemeingültig</b>, wenn für alle \(\Sigma\)-Strukturen \(\St\) und
+allen \(\St\)-Belegungen \(\beta\) gilt \(\St, \beta \not\models \varphi\)
+für alle \(\varphi \in \Phi\) gilt.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Folgerungsbeziehung</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Sei \(S\) eine Sortenmenge, \(\Sigma\) eine \(S\)-Signatur und \(\St\) eine
+\(\Sigma\)-Struktur und seinen \(\varphi, \psi \in F_{PL}(\Sigma)\)
+prädikatenlogische Formeln, dann <b>folgt</b> \(\psi\) aus \(\varphi\), wenn
+jede \(\St\)-Belegung \(\beta\), die \(\varphi\) erfüllt auch \(\psi\)
+erfüllt. D.h. wenn \(\St, \beta \models \varphi\), dann auch \(\St, \beta
+\models \psi\). Wir schreiben dann \(\varphi \VDash \psi\).
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Erfüllbarkeitsreduktion</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Idee: Wenn wir ein Modell der Formel \(\varphi \in F_{PL}(\Sigma)\)
+haben, erhalten wir ein Modell einer anderen Formel \(\psi \in
+F_{PL}(\Sigma')\) indem wir&#x2026;
+</p>
+
+<p>
+Eine Formel \(\phi\) heißt <b>erfüllbarkeitsreduzierbar</b> auf eine Formel
+\(\psi\), wenn gilt:
+</p>
+
+<ol class="org-ol">
+<li>\(\fvars(\phi) = \fvars(\psi)\)
+</li>
+<li>Es gibt \(S\)-Signaturen \(\Sigma\) und \(\Sigma'\), mit \(\Sigma
+   \subseteq \Sigma'\) (d.h. \(\Sigma'\) ist Erweiterung von \(\Sigma\))
+und \(\phi \in F_{PL}(\Sigma)\) und \(\psi \in F_{PL}(\Sigma')\)
+</li>
+<li>Zu jeder \(\Sigma\)-Struktur \(\St\) gibt es eine \(\Sigma'\)-Expansion
+\(\St'\) sodass für alle Belegungen \(\beta\) gilt: Wenn \(\St, \beta
+   \models \phi\), dann gilt auch \(\St', \beta \models \psi\).
+</li>
+<li>Für jede \(\Sigma'\)-Struktur \(\St'\) und das zugehörige
+\(\Sigma\)-Redukt \(\St'|_{\Sigma}\) und jede Belegung \(\beta\) gilt:
+Wenn \(\St', \beta \models \psi\), dann \(\St'|_{\Sigma}, \beta
+   \models \varphi\).
+</li>
+</ol>
+
+<p>
+Wir schreiben dann \(\varphi \sqsubseteq \psi\).
+</p>
+</div>
+
+<div id="outline-container-sec-3-4-1" class="outline-4">
+<h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> Eigenschaften</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<ul class="org-ul">
+<li>Gilt \(\varphi\sqsubseteq\psi\), so gilt \(\erfb\varphi\) genau dann, wenn \(\erfb\psi\) gilt.
+</li>
+<li>Gilt \(\varphi\sqsubseteq\psi\) und ist \(Q\) ein Quantor und \(x_i^s\)
+  eine Variable, so auch \(Q x_i^s \varphi\sqsubseteq Q x_i^s \psi\).
+</li>
+<li>Die Relation \(\sqsubseteq\) ist transitiv.
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Äquivalenz</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+Eine prädikatenlogische Formel \(\varphi \in F_{PL}(\Sigma)\) heißt
+<b>äquivalent</b> zu einer prädikatenlogischen Formel \(\psi \in
+F_{PL}(\Sigma)\), wenn für alle \(\Sigma\)-Strukuren \(\St\) und alle
+\(\St\)-Belegungen \(\beta\) gilt:
+</p>
+
+<p>
+\(\llb \varphi \rrb^{\St}_{\beta} = \llb \psi \rrb^{\St}_{\beta}\)
+</p>
+
+<p>
+Oder anders ausgedrückt, wenn \(\St, \beta \models \varphi\) gdw, \(\St,
+\beta \models \psi\) für alle \(\Sigma\)-Strukturen \(\St\) und
+\(\St\)-Belegungen \(\beta\) gilt.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Quantorengesetze</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Für alle \(x_i^s \in V_s\) und \(\phi, \psi \in F_{PL}\) gilt:
+</p>
+
+<ul class="org-ul">
+<li><b>Dualität</b> (Austauschen):
+<ul class="org-ul">
+<li>\(\neg\exists x_i^s \phi \equiv \forall x_i^s \neg \phi\)
+</li>
+<li>\(\neg\forall x_i^s \phi \equiv \exists x_i^s \neg \phi\)
+</li>
+</ul>
+</li>
+<li><b>Kommutativität</b> (Vertauschen):
+<ul class="org-ul">
+<li>\(\exists x_i^s \exists x_j^{s'} \phi \equiv \exists x_j^{s'} \exists x_i^s \phi\)
+</li>
+<li>\(\forall x_i^s \forall x_j^{s'} \phi \equiv \forall x_j^{s'} \forall x_i^s \phi\)
+</li>
+</ul>
+</li>
+<li><b>Distributivität</b> (Verteilen):
+<ul class="org-ul">
+<li>\(\exists x_i^s (\phi \vee \psi) \equiv \exists x_i^s \phi \vee \exists x_i^s \psi\)
+</li>
+<li>\(\forall x_i^s (\phi \wedge \psi) \equiv \forall x_i^s \phi \wedge \forall x_i^s \psi\)
+</li>
+</ul>
+</li>
+<li><b>Elimination</b>:
+<ul class="org-ul">
+<li>\(\exists x_i^s \phi \equiv \phi\) falls \(x_i^s \not\in \fvars(\phi)\)
+</li>
+<li>\(\forall x_i^s \phi \equiv \phi\) falls \(x_i^s \not\in \fvars(\phi)\)
+</li>
+</ul>
+</li>
+<li><b>Verschieben</b>:
+<ul class="org-ul">
+<li>\(\phi \wedge \exists x_i^s \psi \equiv \exists x_i^s (\phi \wedge \psi)\) falls \(x_i^s \not\in \fvars(\phi)\)
+</li>
+<li>\(\phi \vee \exists x_i^s \psi \equiv \exists x_i^s (\phi \vee \psi)\) falls \(x_i^s \not\in \fvars(\phi)\)
+</li>
+<li>\(\phi \wedge \forall x_i^s \psi \equiv \exists x_i^s (\phi \wedge \psi)\) falls \(x_i^s \not\in \fvars(\phi)\)
+</li>
+<li>\(\phi \vee \forall x_i^s \psi \equiv \exists x_i^s (\phi \vee \psi)\) falls \(x_i^s \not\in \fvars(\phi)\)
+</li>
+</ul>
+</li>
+<li><b>Umbenennen</b>:
+<ul class="org-ul">
+<li>\(\forall x_i^s \phi \equiv \forall x_j^s \phi\{x_i^s \mapsto x_j^s\}\) falls \(x_i^s \not\in \bvars_{x_j^s}(\phi)\) und \(x_j^s\not\in\fvars(\phi)\)
+</li>
+<li>\(\exists x_i^s \phi \equiv \exists x_j^s \phi\{x_i^s \mapsto x_j^s\}\) falls \(x_i^s \not\in \bvars_{x_j^s}(\phi)\) und \(x_j^s\not\in\fvars(\phi)\)
+</li>
+</ul>
+</li>
+<li>Einführen und Spezialisieren
+<ul class="org-ul">
+<li>\(\forall x_i^s \phi \VDash \phi\{x_i^s \mapsto t\}\), falls \(\{x_i^s \mapsto t\}\) zulässig bzgl. \(\phi\) und \(t\) ist \(s\)-Term
+</li>
+<li>\(\phi\{x_i^s \mapsto t\} \VDash \exists x_i\phi\{x_i^s \mapsto t\}\), falls \(\{x_i^s \mapsto t\}\) zulässig bzgl. \(\phi\) und \(t\) ist \(s\)-Term
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Universelle Formeln</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Eine Formel in PNF in der keine Existenzquantoren auftreten heißt <b>universelle Aussage</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Universelle Aussage</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Eine universelle Formel (also eine Formel in PNF, in der keine
+Existenzquantoren auftreten) ohne freie Variablen heißt <b>universelle
+Aussage</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Konjunktive Normalform</h2>
+</div>

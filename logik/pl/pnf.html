@@ -1,0 +1,89 @@
+---
+layout: page
+title: Pränexe Normalform
+---
+
+<p>
+Eine prädikatenlogische Formel \(\phi \in \F_{PL}(\Sigma)\) in <b>pränexer
+Normalform</b> kann man in der Form
+</p>
+
+\begin{equation*}
+\prefix(\phi) \kern(\phi)
+\end{equation*}
+
+<p>
+schreiben, wobei \(\prefix(\phi)\) das <b>Quantorenpräfix</b> und \(\kern(\phi)\)
+der <b>Kern</b> der Formel \(\phi\) sind.
+</p>
+
+<p>
+Wir definieren
+</p>
+
+<ol class="org-ol">
+<li>Die Menge der \(\Sigma\)-Formeln in pränexer Normalform \(\PNF\),
+</li>
+<li>der <b>Kern</b> \(\kern(\phi)\) einer Formel \(\phi\) in PNF,
+</li>
+<li>das <b>Quantorenpräfix</b> \(\prefix(\phi)\) einer Formel \(\phi\) in PNF und
+</li>
+<li>die <b>Menge der quantifizierten Variablen</b> \(\qvars(\phi)\) einer Formel \(\phi\) in PNF
+</li>
+</ol>
+
+<p>
+induktiv durch:
+</p>
+
+<p>
+<b>IA:</b>
+</p>
+
+<p>
+Jede quantorenfreie Formel \(\phi\) ist in PNF und es gilt:
+</p>
+
+<ul class="org-ul">
+<li>\(\prefix(\phi) = \espilon\) 
+</li>
+<li>\(\kern(\phi) = \phi\) 
+</li>
+<li>\(\qvars(\phi) = \emptyset\)
+</li>
+</ul>
+
+<p>
+<b>IS:</b>
+</p>
+
+<p>
+Sei \(\phi \in \PNF\) in pränexer Normalform und sei \(Q \in \{\exists,
+\forall\}\) ein Quantor, und sind \(i \in \N\) und \(s \in S\), sodass
+\(x_i^s \in \fvars{\phi}\) gilt, dann ist auch \(Q x_i^s \phi\) in PNF und
+es gilt:
+</p>
+
+<ul class="org-ul">
+<li>\(\prefix(Qx_i^s \phi) = Q x_i^s \prefix(\phi)\)
+</li>
+<li>\(\kern(Qx_i^s \phi) = \kern(\phi)\)
+</li>
+<li>\(\qvars(Qx_i^s \phi) = \qvars(\phi) \cup \{x_i^s\}\)
+</li>
+</ul>
+
+<p>
+Tritt in dem Quantorenpräfix kein Existenzquantor auf, so spricht man
+von einer <b>universellen Formel</b>. Besitzt eine universelle Formel keine
+freien Variablen, so nennt man sie <b>universelle Aussage</b>.
+</p>
+
+<p>
+<b>Eigenschaften:</b>
+</p>
+
+<ul class="org-ul">
+<li>zu jeder prädikatenlogischen Formel gibt es eine äquivalente Formel in PNF.
+</li>
+</ul>
