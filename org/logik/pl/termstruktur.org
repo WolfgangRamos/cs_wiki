@@ -10,6 +10,9 @@ title: Termstruktur
 ---
 #+END_HTML
 
+Termsturkturen und Termmodelle entsprechen algebraischen Datentypen in
+der Programmierung.
+
 Sei $S$ eine Sortenmenge ud $\Sigma$ eine $S$-Signatur, in der es
 mindestens ein Konstantensymbol von jeder Sorte $s \in S$ gibt.
 
@@ -47,6 +50,5 @@ es zu jeder algebraischen Struktur genau eine Termstruktur.
 
 Eine $\Sigma$-Termstruktur $\Tt$ heißt *Termmodell* einer Formel
 $\varphi \in F_{PL}(\Sigma)$ oder einer Menge von Formeln $\Phi
-\subsetes F_{PL}(\Sigma)$, wenn eine $\Tt$-Belegung $\beta$ gibt,
-sodass $\Tt, \beta \models \varphi$ bzw. $\Tt, \beta \models \Phi$
-gilt.
+\subsetes F_{PL}(\Sigma)$, wenn für alle $\Tt$-Belegung $\beta$ gilt,
+$\Tt, \beta \models \varphi$ bzw. $\Tt, \beta \models \Phi$.

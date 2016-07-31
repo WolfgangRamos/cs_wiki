@@ -237,6 +237,16 @@ Oder anders ausgedrückt, wenn $\St, \beta \models \varphi$ gdw, $\St,
 \beta \models \psi$ für alle $\Sigma$-Strukturen $\St$ und
 $\St$-Belegungen $\beta$ gilt.
 
+** Koinzidenzlemma
+
+Sei $S$ eine Sortenmenge, $\Sigma$ eine $S$-Signatur, $\St$ eine
+$\Sigma$-Struktur und seien $\beta,\beta'$ $\St$-Belegungen mit
+$\beta|_{\fvars(\varphi)} = \beta'|_{\fvars(\varphi)}$ gilt: 
+
+$\llb \varphi\rrb_{\beta}^{\St} = \llb \varphi\rrb_{\beta'}^{\St}$
+
+Wir können also wieder mit partiellen Belegungen arbeiten.
+
 * Quantorengesetze
 
 Für alle $x_i^s \in V_s$ und $\phi, \psi \in F_{PL}$ gilt:

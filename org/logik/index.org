@@ -12,6 +12,18 @@ title: Logik
 
 * Logik
 
--  [[./aussagenlogik.org][Aussagenlogik]]
--  [[./praedikatenlogik.org][Prädikatenlogik]]
+- [[./aussagenlogik.org][Aussagenlogik]]
+- Prädikatenlogik
+  - [[./pl/sorten.org][Sorten]]
+  - [[./pl/signaturen.org][Signaturen]]
+  - [[./pl/strukturen.org][Strukturen]]
+  - [[./pl/terme.org][Terme]]
+  - [[./pl/gleichungen.org][Gleichungen]]
+  - [[./pl/formeln.org][Formeln]]
+  - [[./pl/substitution.org][Substitution]]
+  - [[./pl/anfragen.org][Anfragen]]
+  - [[./pl/pnf.org][Pränexe Normalform]]
+  - [[./pl/skolemisierung.org][Skolemisierung]]
+  - [[./pl/kongruenzrelation.org][Kongruenzrelation]]
+  - [[./pl/termstruktur.org][Termstruktur]]
 

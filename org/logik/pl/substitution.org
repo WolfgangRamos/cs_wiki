@@ -1,0 +1,52 @@
+#+TITLE: Substitution
+#+STARTUP: content
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+OPTIONS: toc:nil
+#+BEGIN_HTML
+---
+layout: page
+title: Substitution
+---
+#+END_HTML
+
+*(Term-)Substitution* ist das Ersetzen von freien Variablen in einer
+Formel $\varphi \in F_{PL}(\Sigma)$ durch [[./terme.org][Terme]]
+
+Eine Substitution ist eine Abbildung, die Variablen Terme derselben
+Sorte zuordnet.
+
+Eine partielle Funktion $\sigma: V_{FO} \rightarrow T(\Sigma)$ heißt
+*Termsubstitution* (auch $\Sigma$-Substitution), falls für jedes $i \in
+\N$ und jedes $s\in S$ mit $x_i^s \in \def(\sigma)$ auch
+$\sigma(x_i^s) \in T_s(\Sigma)$ gilt. Wir definieren die Anwendung
+einer Substitution induktiv durch:
+
+*IA:*
+
+- $c\sigma = c$ für alle $c\in C$ und
+
+\begin{equation}
+x_i^s\sigma = \begin{cases}
+  \dots \\
+\end{cases}
+\end{equation}
+
+*IS:*
+
+ ist $f in F$ ... dann gilt ...
+
+* Termsubstitution auf Formeln
+
+*IA:*
+
+- $\top\sigma = \top$
+- $\bot\sigma = \bot$
+- $(t \deq t')\sigma = t\sigma \deq t'\sigma$
+- $r(t_0, \dots t_n)\sigma = r(t_0\sigma, \dots t_n\sigma)$
+
+*IS:*
+
+- Sei $J$ ein $n$-stelliger Junktor, dann gilt $J(\varphi_0, \dots, \varphi_{n-1})\sigma
+
+Wir definieren die Menge der Variablen, die im Wirkungsbereich einer Quantifizierung von $x_i^s$ liegen durch $\bvars_{x_i^s}$

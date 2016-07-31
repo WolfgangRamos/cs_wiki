@@ -15,3 +15,4 @@ Sei $M$ eine (nichtleere?) Menge und sei $\equiv : M \times M$ eine
 [[./aequivalenzrelation.org][Äquivalenzrelation]]. Dann heißt die zu
 $x \in M$ festgelegte Menge $$[x]_{\equiv} := \\{y \in M | y \equiv
 x\\}$$ *Äquivalenzklasse* von $x$.
+

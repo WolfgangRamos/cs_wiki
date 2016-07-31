@@ -4,18 +4,29 @@ title: Termstruktur
 ---
 
 <p>
+Termsturkturen und Termmodelle entsprechen algebraischen Datentypen in
+der Programmierung.
+</p>
+
+<p>
 Sei \(S\) eine Sortenmenge ud \(\Sigma\) eine \(S\)-Signatur, in der es
 mindestens ein Konstantensymbol von jeder Sorte \(s \in S\) gibt.
 </p>
 
 <p>
-Ein \(s\)-\(\Sigma\)-Grundterm ist ein \(s\)-\(\Sigma\)-Term, in dem keine
-Variablen vorkommen. Die Menge der Grundterme bezeichnen wir mit
+Ein \(s\)-\(\Sigma\)-Grundterm ist ein \(s\)-\(\Sigma\)-<a href="./terme.html">Term</a>, in dem keine Variablen vorkommen.
+Die Menge der Grundterme einer Sorte \(s \in S\) bezeichnen wir mit
 \(G_s(\Sigma)\).
 </p>
 
 <p>
-Eine Grundforml ist eine Gleichung oder ein Relationsterm, in der/dem
+<b>Anm:</b> Ein \(s\)-\(\Sigma\)-Grundterm ist also eine Konstante, oder ein
+Funktionsterm, der keine Variablen enthält (verschachtelte
+Funktionsaufrufe sind dabei möglich!)
+</p>
+
+<p>
+Eine Grundformel ist eine Gleichung oder ein Relationsterm, in der/dem
 keine Variablen vorkommen.
 </p>
 
@@ -57,9 +68,8 @@ es zu jeder algebraischen Struktur genau eine Termstruktur.
 <p>
 Eine \(\Sigma\)-Termstruktur \(\Tt\) heißt <b>Termmodell</b> einer Formel
 \(\varphi \in F_{PL}(\Sigma)\) oder einer Menge von Formeln \(\Phi
-\subsetes F_{PL}(\Sigma)\), wenn eine \(\Tt\)-Belegung \(\beta\) gibt,
-sodass \(\Tt, \beta \models \varphi\) bzw. \(\Tt, \beta \models \Phi\)
-gilt.
+\subsetes F_{PL}(\Sigma)\), wenn für alle \(\Tt\)-Belegung \(\beta\) gilt,
+\(\Tt, \beta \models \varphi\) bzw. \(\Tt, \beta \models \Phi\).
 </p>
 </div>
 </div>
