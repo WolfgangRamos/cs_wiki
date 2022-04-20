@@ -1,6 +1,9 @@
 # temp files
 *~
 
+# ignore pdfs by default because they are usually protected by copy rights
+*.pdf
+
 # org mode temp files
 /org/*/ltxpng
 /org/*/*/ltxpng
