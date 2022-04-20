@@ -1,0 +1,424 @@
+#+TITLE: Domain Driven Design
+
+* Domain Driven Design
+
+- Useful for software with complex business logic
+- Not useful for
+  - high performance
+  - big data
+  - technical complex software (e.g. with special hardware requirements)
+- Focuses on
+  - focus (YAGNI)
+  - simplification (KISS)
+
+** Main Concepts
+
+- Ubiquitous Language: shared language between developers and project managers, sales, etc.
+- Bounded context: separate different parts of the system
+- Domain (aka Problem Domain): The actual problem that the software is solving
+- Core Domain (the part of the problem domain that cannot be delegated
+  to third-party applications): Focus on the most important part of
+  the system
+- Business Logic (aka Domain Logic aka Business Rules aka Domain
+  Knowledge aka Domain Model):
+  - usually in layer 1 and 2 of the onion architecture
+- Problem = the reason why the project is created
+- Solution = the artifact that is created to solve the problem
+
+*** Onion Architecture
+
+- layer 1 (most inner): contains business logic
+  - entities
+  - value objects
+  - domain events
+  - aggregates
+- layer 2
+  - repositories and DB (table) mappers encapsulate the DB
+    (persistence)
+  - factories: construction
+  - domain services
+- layer 3
+  - application services (e.g. ViewModels in MVVM)
+    - coordinate communication between domain classes and UI (outside world)
+    - validate inputs from UI (outside world)
+- layer 4
+  - UI
+- classes in layer 1 and 2 are also called /Domain Classes/ because they
+  implement the domain logic
+
+* Entities and Value objects
+
+- reference equality: same address in memory
+- identifier equality: same ID field value memory
+- structural equality: all members match
+- entities
+  - are (almost always) mutable
+  - only use identifier equality
+  - are persisted
+- value objects
+  - use structural equality
+  - are immutable
+  - are owned by entities (i.e. they share the lifetime of its
+    owner)
+  - are (usually) persisted in-lined into owner tables
+- How to identify if a type is value objects:
+  - Could instances of this type be replaced with structurally
+    identical instances (e.g. like integers)
+  - Look for fields that are always changed together
+- Always prefer value objects to entities
+  - are more light-weight
+  - put most of the business logic into value objects (and let
+    entities act as wrappers)
+- why not use C# =struct= or =record= types for value objects?
+  - immutable fields are often not supported by ORM (as is the case
+    for NHibernate and EF Core)
+  - do not support inheritance (no way to abstract value object
+    behavior)
+
+* Persistence with ORM
+
+- ORM = object relational mappers
+- Decoupling of Entity Classes from persistence functionality
+- Primary Key Assignment Strategies
+  - Use SQL Identity Column feature
+  - Use GUIDs
+  - Use Hi/Lo Algorithm to retrieve batches of IDs:
+    - What is Hi/Lo:
+      https://stackoverflow.com/questions/282099/whats-the-hi-lo-algorithm/282113#282113
+    - EF Core support for Hi/Lo:
+      https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.sqlserverpropertybuilderextensions.usehilo?view=efcore-3.0
+
+* Aggregates
+
+- aggregates encapsulate combinations of entities
+- every aggregate
+  - has a set of invariants (that it maintains during its lifetime)
+  - should have a root entity:
+    - avoid exposing non-root entities as much as possible
+    - classes outside the aggregate can only hold permanent references
+      to the root entity, references to any non-root entity should
+      only be held temporarily (e.g. as a local variable in a method)
+  - has to be saved in a transaction (i.e. save all entities at once,
+    not separately to maintain consistency)
+  - invariants spanning across several aggregates are only eventually
+    consistent
+- guidelines for choosing boundaries for aggregates
+  - central question: Does an entity make sense without some other
+    entity? (aka is the lifetime of some sub-entity bound to the
+    lifetime of some root-entity? see also [[file:uml.org::#relationships][UML Composition
+    relationship]])
+  - high cohesion within aggregates
+  - low coupling between aggregates
+  - usually contains at max 3 entities
+
+* Repository (Pattern)
+
+- repositories encapsulate all persistence related (business) logic
+  (i.e. reading and writing from/to some kind of data storage/database)
+- only aggregate-roots should be available through repositories
+- one repository for each aggregate root-entity (this repository can
+  contain root-entity-specific read and write methods)
+- public methods should only work with root-entities
+- get sub-entities only through their root-entities
+
+** Reducing Repository Interfaces
+1. Specification Pattern
+2. Use one generic interface for all repositories
+3. Define separate repository interfaces for reading and writing
+
+*** Specification Pattern
+
+- a specification is a predicate that determines if an object satisfies some
+  criteria
+- some specifications can be translated by ORMs to filter operations
+  that execute on the DBMS
+- specifications are used to specify the state of an object
+  - validation
+  - selection and querying
+  - creation for specific purposes
+- Reference implementation: https://www.nuget.org/packages/Ardalis.Specification
+- specifications are value objects
+
+** The False Myth of Abstracting the Database
+
+- source: https://enterprisecraftsmanship.com/posts/should-you-abstract-database/
+- pros and cons of abstracting the database
+  - pros
+    - avoid vendor lock-in
+  - cons
+    - any abstraction can only rely on features that are available in
+      all DBMS systems (i.e. it cannot advance features of individual
+      DBMS)
+    - high maintenance cost for a feature that might never be needed
+- because of the cons, abstracting your database is an anti-pattern
+
+** Reference Data
+
+- reference data = data that is predefined (i.e. a table in the DB
+  that can contain only predefined rows that users cannot change
+  directly)
+- reference data can be modeled with static instances in the code
+- integration tests are necessary to check that the static instances
+  and the rows in the DB match
+
+* Bounded Context
+
+- a bounded context is a part of the solution (artifacts)
+- bounded contexts and subdomains
+  - subdomain belongs to the problem space, i.e. it is part of the
+    problem
+  - bounded contexts are part of the solution space, i.e. it is a part
+    of the solution
+  - there should be one bounded context for each subdomain (not
+    always possible; in legacy projects it's sometimes good to create
+    a new bounded context for new functionality for the same
+    subdomain)
+  - one subdomain might be covered by several bounded context
+    (especially in legacy projects), but each bounded context should
+    cover only one subdomain
+- bounded context help reduce communication overhead across team
+  boundaries, i.e. bounded contexts should not be share across teams
+  (but one team might be working on several bounded contexts)
+- if two bounded contexts share code (value objects, domain and
+  utility classes), created a shared kernel
+- choosing boundaries for bounded contexts
+  - identify subdomains (and create one bounded context for each)
+  - other rule of thumbs for splitting up a bounded context. Split up
+    a bounded context if
+    - it cannot be covered by one team with 5 to 7 developers
+    - its code base is too large (to decrease mental load for
+      developers)
+
+** Isolation of Bounded Contexts
+
+- types of isolation (ordered from low to high isolation)
+  1. separate namespaces in the same assembly
+     - cons
+       - shared database (but each bounded context should define a
+         separate database schemata)
+  2. separate assemblies
+  3. separate processes, i.e. separately deployed (micro) services
+- higher isolation
+  - requires more maintenance
+  - ensures that isolation is not violated easily
+- use higher isolation only when the benefits outweigh the costs
+
+** Communication Between Bounded Contexts
+
+- the way in which entities in two different bounded contexts
+  communicate with each other depends on the isolation of the bounded
+  contexts
+- for isolation type 1 or 2 (separate namespaces in the same assembly
+  or separate assemblies)
+  - when the bounded contexts are *not* separated by an anti-corruption
+    layer
+    - direct calls: entities from one bounded context can just call
+      the methods of entities from the other context
+    - domain events: entities from one bounded context can just
+      subscribe to the events of entities from the other bounded
+      context
+  - when the bounded context are separated by an anti-corruption
+    layer, entities from one bounded context can call entities from
+    the other context only through proxies
+- for isolation type 3 (separate processes): communication through
+  network or message queues (this message exchange mechanism act as
+  anti-corruption layer)
+
+** Anti-Corruption Layer
+
+- a unilateral facade/adapter layer between different bounded contexts
+  (or systems) that don't share the same semantics
+- Examples
+  - ViewModels are anti-corruption layers toward the UI (aka View)
+  - Repositories are anti-corruption layers toward the DB
+    -
+
+** Code reuse across bounded context
+
+- usually it is best to avoid reusing code across domains
+- code carrying business logic
+  - should not be reused (unless they really model the same concept in all bounded contexts)
+  - extract to a shared kernel
+- domain base classes (e.g. =Entity= or =Aggregate=)
+  - reuse them in a single team only
+- utility code
+  - reuse them in a single team only
+  - reuse across team only if it provides a lot of value
+
+* Domain Events
+
+- decouple different bounded contexts or entities within the same
+  bounded contexts from one another
+- allow communication between bounded contexts without bidirectional
+  relationships
+- guidelines for defining domain events
+  - use past-tense names
+  - event data should be immutable
+  - included as little data as possible
+  - events should be data structures (i.e. they should not have behavior)
+  - do not put domain classes in events (always use primitive data)
+
+** How to deliver events
+
+- events can be physically delivered via
+  - in memory data structures (when both bounded contexts run in the
+    same process)
+  - service bus (when both bounded contexts run in different
+    processes)
+    - the bounded context that produces the event is responsible for
+      dispatching the event to the service bus
+
+** Raising Domain Events
+
+- event raisers and handlers are domain services (entity classes
+  shouldn't know anything about raising or handling of events)
+- for a clean implementation creation and dispatching have to be
+  separated
+- domain entities are responsible for creating events, but not for
+  raising them
+- when entities raise events themselves
+  - they communicate with the outside world
+  - it's hard to implement "units of work", i.e. freely compose
+    operations and events (e.g. do multiple operations and raise
+    multiple events at different points in between)
+- events should only be raised when the changed data was successfully
+  validated (i.e. the entity was persisted)
+- unit or work: https://martinfowler.com/eaaCatalog/unitOfWork.html
+
+* Always-Valid and Not-Always-Valid approach
+
+- Always-Valid approach:
+  - Operations that lead to invalid states should throw exceptions
+  - validation should be performed in the application services
+    using =CanXyz= defined queries in the entities
+- Not-Always-Valid approach
+  - temporarily allow invalid states during operations
+- Pros and Cons of Always-Valid approach
+  - Pros
+    - developers can be sure that entities are always valid
+    - supports fail fast principle:
+      https://enterprisecraftsmanship.com/posts/fail-fast-principle/
+  - Cons
+    - entities cannot easily be validated in their entirety (but that
+      shouldn't be necessary)
+- Pros and Cons of Not-Always-Valid approach
+  - Pros: (most of the) validations for an entity can be put in one place
+  - Cons: =IsValid= has to be called explicitly, possibly multiple times
+    during an operation (which might be forgotten)
+
+* Further Enhancements when Developing with DDD
+
+** Factories
+
+- encapsulate complex creation logic (this shouldn't be the entity's
+  responsibility and keeps entities simple)
+- only introduce factories when necessary
+
+** Domain and Application Services
+
+- Domain services
+  - hold domain knowledge that doesn't belong to entities or value
+    objects
+  - do not have a state
+  - do not communicate with the outside world
+- Application services
+  - do not contain domain logic, like e.g. domain event dispatchers
+    and handlers
+  - can have a state (e.g. a ViewModel)
+  - communicate with the outside world (e.g. UIs, external APIs)
+
+* CQRS
+
+- https://enterprisecraftsmanship.com/posts/types-of-cqrs/
+
+* Anti-Patterns
+
+** Anemic Domain Model
+
+- domain entities are only data structures
+- all domain logic is extracted to domain services
+- encapsulation is broken because all field of the entities must be
+  public (in order for domain services to be able to access them)
+- https://www.martinfowler.com/bliki/AnemicDomainModel.html
+- anemic domain models have two types of classes
+  - /data/ classes: hold stat in data in public fields
+  - /operation/ classes: stateless holding business rules
+- Cons of anemic domain modeled
+  - low discoverability (what domain objects can do is not obvious in
+    their interface; can be mitigated by conventions)
+  - more code duplication (because it is unclear where behavior can
+    be found)
+  - lacking encapsulation (see [[file:clean_code.org::#encapsulation][encapsulation]])
+- Pros of anemic domain model
+  - higher velocity in projects with no invariants to maintain
+    (e.g. in functional programs where all data is immutable), in
+    small projects or in the beginning of large projects
+
+*** How to refactore anemic domain models into rich domain models
+
+1. Decouple domain classes from application (layer) data contracts
+   (e.g. API input an output data contracts) with DTOs (aka request
+   and response models)
+2. Introduce value objects to make the domain model more expressive
+   (see also primitive obsession)
+
+** Fat Entities
+
+- entities hold too much logic, e.g. when
+  - isolation of entities is broken (e.g. entities communicate with
+    external layers or the database)
+  - entities have unnatural responsibilities
+
+** Returning partially initialized entities from Repositories
+
+- always return fully initialized entities from repository methods
+- partially initialized entities cannot ensure that they are always
+  valid
+- do not return entities when only partial data is returned (for
+  performance reasons), like e.g. DTOS of atomic types (int, etc.)
+
+** Mechanical approach to DDD
+
+- automatic creation of entities with a corresponding repository,
+  factory and domain services
+- create domain types only when they are needed
+- code generation of domain classes is a sign for mechanical approach
+  to DDD.:;
+
+* Testing
+
+- additional sources
+  - https://enterprisecraftsmanship.com/posts/test-induced-design-damage-or-why-tdd-is-so-painful/
+  - https://enterprisecraftsmanship.com/posts/painless-tdd/
+    - tests are a compromise between
+      - protection against regressions
+      - maintainability (resistance to refactoring)
+      - speed
+    - We need to (unit-)test only a specific type of code which
+      - doesn't have external dependencies
+      - Expresses your domain logic
+  - https://enterprisecraftsmanship.com/posts/integration-testing-or-how-to-sleep-well-at-nights/
+  - https://martinfowler.com/articles/is-tdd-dead/
+- Code-first vs Test-first
+  - Use test first when you know how the code should look like
+  - use code-first when you are experimenting with different
+    implementations
+
+* Open Questions
+
+- Why are snack machines and ATMs bounded context in the same solution
+  space? What could the problem to a solution be that contains snack
+  machines and ATMs?
+- Could absence types be considered reference data? I.e. could we have
+  static instances for all 50 types in code?
+- Can entities exist outside of aggregates?
+- What remains when geocoding, distance calculation and optimization
+  are stripped from VISITOUR?
+- Why don't we have domain events? E.g. when changing the type of a
+  tour to an absence, the =TourEntity= could raise an event. The
+  optimization service could listen for that event and escalate all
+  calls on that tour. But maybe it has to be checked that the tour
+  doesn't have any calls before setting an absence is allowed, i.e. we
+  would need to call the optimization service even before we are
+  allowed to set it, i.e. we can never check this in the =TourEntity=
+  itself :( Is this a sign that our bounded contexts are badly cut?

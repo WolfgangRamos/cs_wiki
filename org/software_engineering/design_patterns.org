@@ -1,0 +1,16 @@
+#+TITLE: Design Patterns
+
+* Structural Patterns
+
+** Facade
+
+- a facade is a component that provides an improved interface for one
+  or multiple existing components, i.e. a facade can hide
+  - multiple components behind one interface
+  - complex component(s) behind a simplified interface
+
+** Adapter
+
+- used to map one component's interface to a certain fixed target
+  interface (i.e. the wrapper implements the target interface and maps
+  calls to the wrapped components interface)

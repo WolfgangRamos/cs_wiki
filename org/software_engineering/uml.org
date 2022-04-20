@@ -1,0 +1,12 @@
+#+TITLE: Universal Modelling Language (UML)
+
+* Relationships
+:PROPERTIES:
+:CUSTOM_ID: relationships
+:END:
+
+- Association: a relationship between objects of two classes
+- Aggregation and Composition: one object of one class (parent) owns
+  objects of another class (child)
+  - Aggregation: the child objects can exist without their parent
+  - Composition: the child object cannot exist without their parent

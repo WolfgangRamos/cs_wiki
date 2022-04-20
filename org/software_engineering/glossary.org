@@ -1,0 +1,7 @@
+#+TITLE: Glossary
+#+bibliography: ../bibliography/bibliography.bib
+
+* Referential Transparency
+
+A method has /referential transparency/, when any call to the method can
+be replaced by its return value.

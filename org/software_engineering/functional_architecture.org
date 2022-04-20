@@ -1,0 +1,46 @@
+#+TITLE: Functional Architecture
+#+bibliography: ../bibliography/bibliography.bib
+
+* Goals of Functional Architecture
+:PROPERTIES:
+:CUSTOM_ID: functional-architecture-goals
+:END:
+
+Source: [cite:@khorikov-unit-testing p. 132]
+
+- pushing side effects to the edges of a business operation, i.e.
+  - maximize the amount of code that is written in a purely functional
+    way (i.e. operating on and returning immutable objects)
+  - minimize code that deals with side effects
+- separate code that incurs side effects (/mutable shell/) from code
+  that contains business logic (/functional core/ aka /immutable core/)
+  and from (/application layer/) /glue code/
+  - /functional core/:
+    - accepts immutable objects as inputs
+    - generate decisions based on business rules
+    - return immutable *value* objects representing instructions on how
+      to incur the side effects
+    - inputs and outputs must be as close as possible to the framework
+      types that are used to incur side effects by the mutable shell
+  - /mutable shell/
+    - provides a method
+      - to generate the inputs for the functional core
+      - to incur side effects from the outputs of the functional core
+    - uses framework methods to incur side effects
+    - does not
+      - make any decisions (i.e. no branching)
+      - do (complex) transformations of the outputs of the functional
+        core so that the code for incurring the side effects is
+        trivial
+  - /application layer glue code/ (aka an application service)
+    - generate inputs for functional core from mutable shell
+    - call functional core
+    - pass outputs of functional core to mutable shell to incur side
+      effects
+    - makes superficial decisions based on the outputs of the
+      functional core, e.g.
+      - check for errors (i.e. only call mutable shell when there are
+        no errors)
+      - call different methods of the mutable shell for different
+        return types of the functional cores
+

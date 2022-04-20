@@ -1,0 +1,29 @@
+#+TITLE: Refactoring Anemic Domain Models
+
+* Anemic Domain Model
+
+- domain entities are only data structures
+- all domain logic is extracted to domain services
+- encapsulation is broken because all field of the entities must be
+  public (in order for domain services to be able to access them)
+- https://www.martinfowler.com/bliki/AnemicDomainModel.html
+- anemic domain modeles have to types of classes
+  - /data/ classes: hold state (data) in public fields
+  - /operation/ classes: stateless holding business rules
+- Cons of anemic domain modeles
+  - low discoverability (behaviour is not obivous on the domain
+    classes)
+  - more code duplication (because it is unclear where behaviour can
+    be found)
+  - lacking encapsulation
+- suitable for small bounded context (here it can be benefitial for development speed)
+  
+** Encapsulation
+
+- encapsulation is about protecting data integrity
+- low integrity increases the complexity of code (invariants have to
+  be checked over and over)
+- maintaining data integrity is the responsibility of the domain
+  classes
+- encapsulation is only necessary for mutable types (immutable types
+  cannot change their state from a valid one to an invalid one)
