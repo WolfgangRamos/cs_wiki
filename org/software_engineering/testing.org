@@ -3,7 +3,7 @@
 
 * What Makes a Good Unit Test Suite
 
-- Premise: Tests enable sustainable groth of complex software
+- Premise: Tests enable sustainable growth of complex software
   projects, but they are a liability ([cite:@khorikov-unit-testing
   pp. 6,8,154]), i.e.
   - *tests come at a cost*
@@ -18,7 +18,7 @@
     expected behavior of the tested code
 - What makes a good unit test suite ([cite:@khorikov-unit-testing pp. 16,154])
   - focus on testing the important parts of the application
-    (i.e. business logic, resp. the domain model)
+    (i.e. business logic, resp. domain model)
   - maximum value at minimum maintenance costs (i.e. the value of each
     test in the test suite should always exceed its cost, if it
     doesn't, the test should be removed;
@@ -26,7 +26,6 @@
   - tight integration into development cycle
 
 * Recognizing and Writing Valuable Tests
-
 ** What is a Unit Test?
 
 - A unit test ([cite:@khorikov-unit-testing])
@@ -39,14 +38,13 @@
   /Method Under Test/ (MUT)
 
 ** What is a Unit? What is Isolation?
-
 *** /London School/ (aka /Mockist/)
 
 - isolating the SUT from all its /mutable/ dependencies (aka
   /collaborators/) by replacing all of them with test doubles
   ([cite:@khorikov-unit-testing pp. 21,30])
-- no test doubles for immutable dependencies (aka values or value
-  objects; [cite:@khorikov-unit-testing p. 31])
+- test doubles for all mutable dependencies (i.e. everything but
+  values or value objects; [cite:@khorikov-unit-testing p. 31])
 - as a result: the units of testing are (isolated) classes (because
   other production dependencies are replaced with test doubles)
 - Pros:
@@ -62,49 +60,99 @@
       layer services and models
 - Cons:
   - Risk of overspecification: Tests are more fragile because test
-    doubles stub/mock intra-process communication (i.e. implementation
+    doubles stub/mock [[tbd][intra-process communication]] (i.e. implementation
     details) of the SUT
-  - Introducing interfaces only for testing: To replace dependencies
-    with test doubles, each dependency must be referenced through an
-    interface
+  - Introducing interfaces only for testing: To replace mutual
+    dependencies with test doubles, each dependency must be referenced
+    through an interface
 
 *** /Classical School/ (aka /Detroit School/)
 
-- isolating tests from one another (so that they don't affect each
-  others outcome, e.g. through changing a shared mutable dependency)
+- isolating tests from one another so that they cannot affect each
+  others outcome ([cite:@khorikov-unit-testing p.27])
 - as a result:
-  - a /unit/ of testing can be anything from one class to a
-    set of classes
-  - test doubles are only necessary to replaced
-    - shared mutable dependencies (to isolate tests from another;
-      effectively eliminating it as as shared dependency of the SUT)
-    - slow dependencies, if they slow down test execution to much
-      ([cite:@khorikov-unit-testing p.33])
+  - a /unit/ of testing is not limited to a single class, it can be
+    anything from one class to a set of classes
+  - test doubles are only necessary to replace
+    - /shared/ mutable dependencies (to isolate tests from another;
+      effectively eliminating the dependency as a shared dependency of
+      the SUT)
+    - slow dependencies, if they slow down test execution too much for
+      unit tests ([cite:@khorikov-unit-testing p.33])
 - Pros:
   - tests can focus on testing /units of behavior/ (they are not
     restricted on testing units of code, which are less stable than
-    behavior)
+    units of behavior)
   - only shared (and slow) dependencies require introduction of
     interfaces only for testing
-- Cons: 
+- Cons:
   - writing tests inside-out is easier, i.e. start writing tests for
     domain models and services, then for application layer services
-    using domain models and services,
+    using domain models and services, then for API layer, using
+    application and domain layer models and services.
 
+** What are Dependencies, Test Doubles, Behavior and Implementation Details?
 *** What is a Unit of Behavior?
 
 - A /unit of behavior/ is something
   - that is meaningful in the domain
   - that is recognized as useful by a business person
+    ([cite:@khorikov-unit-testing p. 34]) i.e. it
+    - contributes to the /business value/ of the application
+      ([cite:@north-introducing-bdd])
+    - satisfies a /business requirement/ ([cite:@north-introducing-bdd])
+- /User stories/ are an established way to specify (desired) behavior in
+  the form of: /As [Actor] I want [Goal] so that [Motivation]/
+  ([cite:@bellware-bdd;@north-introducing-bdd]). This widely used
+  template for specifying behavior shows two important characteristics
+  of behavior: Behavior is
+  - motivated
+  - *directed towards a goal*
+- From this, [cite:@khorikov-unit-testing] derives a definition to
+  judge if a piece of code is part of a components observable behavior
+  or if it is an implementation detail:
+  - a piece of code is part of a components observable behavior if is
+    immediately related to exposing an operation or a state *helps a
+    client to achieve one of its goals* ([cite:@khorikov-unit-testing
+    pp. 99-100])
+    - an operation is a method that performs a calculation or incurs a
+      side effect or both
+    - state is the current condition of the system (as a whole)
+    - what a client is depends on where the code resides, i.e. it can
+      be anything from a piece of code in the same code base to an
+      external application
+  - any code that is not related to that is an implementation detail
+
+**** Observable Behavior and Public API
+
+- the behavior of a component is *not* the same as its public API
+- the visibility (public/private) of a piece of code is a separate
+  dimension of categorization ([cite:@khorikov-unit-testing p. 99])
+- a component is well /encapsulated/ (and provides minimal surface for
+  /coupling/) when the public API of a component coincides with the
+  component's observable behavior
+    
+*** Implementation details vs. Observable behavior
+
+- /Observable Behavior/:
+- /Implementation Details/: Everything that is not observable behavior
 
 *** Types of Test Dependencies
 
 #+CAPTION: Overview of dependency types ([cite:@khorikov-unit-testing])
 [[file:overview_dependency_types.png]]
 
+**** Immutable and Mutable Dependencies (collaborators)
+
+- /Mutable Dependencies/: mutable dependencies are also called a
+  /collaborators/
+- /Immutable Dependencies/: immutable, in-process dependencies are also
+  called /value objects/ ([cite:@khorikov-value-objects-explained],
+  [cite:@khorikov-entity-va-value-object])
+  
 **** Explicit and Implicit Dependencies
 
-- /Explicit Dependencies/: a dependency that you must pass as an
+- /Explicit Dependencies/: a dependency that you must pass as
   (constructor) argument to the class or method under test
 - /Implicit Dependencies/: any dependency that is not explicit
 
@@ -132,11 +180,12 @@ public class User
 **** Out-of-Process and /In-Process/ Dependencies
 
 - /Out-of-Process Dependencies/:
-  - a dependency that run outside the application's execution process
+  - a dependency that runs outside the application's execution process
+    (e.g. a DB)
   - a dependency that is proxy for data that is not (yet) in your
-    application's memory
-  - e.g. the DB and the proxy classes for DB access
-- /In-Process/: any dependency that is not /out-of-process/
+    application's memory (e.g. repository classes/interfaces;
+    [cite:@khorikov-unit-testing p. 28])
+- /In-Process Dependencies/: any dependency that is not /out-of-process/
 
 #+CAPTION: Examples for out-of- and in-process dependencies
 #+BEGIN_SRC
@@ -151,31 +200,50 @@ public void UpdateEmail(int userId, string newEmail)
 
 **** Shared and Private Dependencies
 
-- /Shared Dependencies/:
-  - a dependency that is shared between tests and provides means for
-    tests to affect each other's outcome (i.e. only mutable
-    dependencies can be shared dependencies)
-  - e.g. a static mutable field, database, filesystem
-- /Private Dependencies/:
-  - a dependency that is not shared
-  - immutable dependencies are always private
-- database and filesystem are common shared, Out-of-process
-  dependencies
-- a read-only third-party API is a common example for an private,
-  out-of-process dependency
-- mutable dependencies are also called a /collaborators/
-- immutable, in-process dependencies are also called /value objects/
-  (see
-  https://enterprisecraftsmanship.com/posts/value-objects-explained/
-  and
-  https://enterprisecraftsmanship.com/posts/entity-vs-value-object-the-ultimate-list-of-differences)
+- /Shared Dependencies/: a dependency that is shared between tests and
+  provides means for tests to affect each other's outcome (i.e. only
+  mutable dependencies can be shared dependencies; e.g. a static
+  mutable field, database, filesystem, etc)
+- /Private Dependencies/: any dependency that is not shared
+  (i.e. immutable dependencies are always private), e.g. a read-only
+  API ([cite:@khorikov-unit-testing p. 28])
 
-* Categories of Test Doubles
+*** Test/Verification Styles
 
-- Mocks (Mock, Spy): Allow faking collaborator behaviour and allow
+- Test styles ordered best to worst by their test value (source
+  https://enterprisecraftsmanship.com/posts/styles-of-unit-testing/
+  and [cite:@khorikov-unit-testing p. 120]
+  - Property Based Testing (source https://fsharpforfunandprofit.com/pbt/)
+  - /Output verfication/
+    - Checking that the SUT returns the correct output for a given
+      input.
+    - Lowest chance of false positives.
+    - cannot cover functions with
+      - /hidden inputs/: Inputs that aren't visible in the signature,
+        like =DateTime.Now=, reading data from a DB, static fields, etc.
+      - /hidden outputs/
+        - side effects (update the state of an object, file, DB, etc)
+        - exceptions (exceptions are additional outputs, that can be
+          caught anywhere in the call stack)
+  - /State verficiation/
+    - Checking that the SUT (or one of its collaborators) ends up in a
+      certain state after a certain operation.
+    - Low chance of false positive if the state is checked via the
+      SUTs public API (and not via its private API or by reflection).
+    - State verfication is good enough when domain logic is tested
+      (it shouldn't be used for non-domain logic).
+  - /Collaboration verification/
+    - Checking that the SUT invokes its collaborators in correct order
+      with correct parameters.
+    - High change of false positives because these tests are tightly
+      coupled to implemantation details of the SUT.
+
+*** Categories of Test Doubles
+
+- /Mocks/ (Mock, Spy): Allow faking collaborator behavior /and/ allow
   inspection of interactions between the SUT and the (mocked)
   collaborator
-- Stub (Dummy, Stub, Fake): Allow faking collaborator behaviour
+- /Stub/ (Dummy, Stub, Fake): Allow faking collaborator behavior
 - Mocks
   - Because mocks usually fake some collaborator behaviour (and not a
     the entire collaborator behaviour), the usage mocks couples tests
@@ -244,45 +312,9 @@ public void UpdateEmail(int userId, string newEmail)
   make the test reproducible (e.g. a dependency of the SUT, data in
   the database or a file in the file system).
 
-* Implementation details vs. Observable behavior
+* How to Write Valuable Tests?
 
-- White-box tests are more tightly coupled to implementation details
-  of the SUT (i.e. they have more direct knowledge of the SUT)
-
-* Test Styles
-
-- Test styles ordered best to worst by their test value (source
-  https://enterprisecraftsmanship.com/posts/styles-of-unit-testing/
-  and [cite:@khorikov-unit-testing p. 120]
-  - Property Based Testing (source https://fsharpforfunandprofit.com/pbt/)
-  - /Output verfication/
-    - Checking that the SUT returns the correct output for a given
-      input.
-    - Lowest chance of false positives.
-    - cannot cover functions with
-      - /hidden inputs/: Inputs that aren't visible in the signature,
-        like =DateTime.Now=, reading data from a DB, static fields, etc.
-      - /hidden outputs/
-        - side effects (update the state of an object, file, DB, etc)
-        - exceptions (exceptions are additional outputs, that can be
-          caught anywhere in the call stack)
-  - /State verficiation/
-    - Checking that the SUT (or one of its collaborators) ends up in a
-      certain state after a certain operation.
-    - Low chance of false positive if the state is checked via the
-      SUTs public API (and not via its private API or by reflection).
-    - State verfication is good enough when domain logic is tested
-      (it shouldn't be used for non-domain logic).
-  - /Collaboration verification/
-    - Checking that the SUT invokes its collaborators in correct order
-      with correct parameters.
-    - High change of false positives because these tests are tightly
-      coupled to implemantation details of the SUT.
-
-* Test Doubles
-
-* Guidelines for Writing Readable Tests
-
+** Guidelines for Writing Readable Tests
 - /act/ sections that span more than one line are a sign that the SUT's
   public API has a bad design
 - use /multiple/ asserts when the unit of behavior that is tested has
@@ -301,10 +333,12 @@ public void UpdateEmail(int userId, string newEmail)
     create objects for tests
 - Do not use rigid technical test method naming conventions.
   - For domain and application logic tests use test method names that
-    are meaningful for domain experts.
+    are meaningful for domain experts. These test method names should
+    be sentences ([cite:@north-introducing-bdd]).
   - For utility code tests use technical methods names.
   - Separate words in method names with underscores, i.e. use
     /Snake_case/.
+  - 
 - Name the class instance that is the focus of the test (i.e. the SUT)
   =sut=.
 
