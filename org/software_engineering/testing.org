@@ -34,7 +34,7 @@
   - tests code in an /isolated/ manner
 - the class that is the focus of the test is called /System Under Test/
   (SUT)
-- the method that is in the focus of the test is somethimes calles
+- the method that is in the focus of the test is sometimes called
   /Method Under Test/ (MUT)
 
 ** What is a Unit? What is Isolation?
@@ -59,7 +59,7 @@
       mocking domain layer services and models and at last test domain
       layer services and models
 - Cons:
-  - Risk of overspecification: Tests are more fragile because test
+  - Risk of over-specification: Tests are more fragile because test
     doubles stub/mock [[tbd][intra-process communication]] (i.e. implementation
     details) of the SUT
   - Introducing interfaces only for testing: To replace mutual
