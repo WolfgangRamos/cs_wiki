@@ -1,5 +1,5 @@
 #+TITLE: Testing Code
-#+bibliography: ../bibliography/bibliography.bib
+#+bibliography: ../bibliography/bibliography.json
 
 * What Makes a Good Unit Test Suite
 
@@ -214,6 +214,14 @@ public void UpdateEmail(int userId, string newEmail)
   https://enterprisecraftsmanship.com/posts/styles-of-unit-testing/
   and [cite:@khorikov-unit-testing p. 120]
   - Property Based Testing (source https://fsharpforfunandprofit.com/pbt/)
+    - Checking that invariants are always preserved.
+    - Do the opposite: Introduce /mutations/ that turn valid values to
+      invalid representations and check that these invalid
+      representations violate these invariants (for an example see
+      [cite:@bailly-property-based-testing])
+    - E.g. that the serialization result of a valid domain type can
+      successfully de-serialized to damain types again (see [[file:anti_pattern.org][primitive
+      obsession anti pattern]]).
   - /Output verfication/
     - Checking that the SUT returns the correct output for a given
       input.

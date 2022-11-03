@@ -1,0 +1,342 @@
+[
+	{
+    	"id": "fowler-is-tdd-dead",
+		"type": "webpage",
+		"title": "Is TDD Dead?",
+		"URL": "https://martinfowler.com/articles/is-tdd-dead/",
+		"author": [
+			{
+				"family": "Fowler",
+				"given": "Martin"
+			},
+			{
+				"family": "Beck",
+				"given": "Kent"
+			},
+			{
+				"family": "Hansson",
+				"given": "David Heinemeier"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2014",
+					5
+				]
+			]
+		}
+	},
+	{
+		"id": "khorikov-unit-test-value",
+		"type": "webpage",
+		"title": "Unit tests value proposition",
+		"URL": "https://enterprisecraftsmanship.com/posts/unit-test-value-proposition/",
+		"author": [
+			{
+				"family": "Khorikov",
+				"given": "Vladimir"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2016",
+					6
+				]
+			]
+		}
+	},
+	{
+		"id": "khorikov-test-dependencies",
+		"type": "webpage",
+		"title": "Unit Testing Dependencies: The Complete Guide",
+		"URL": "https://enterprisecraftsmanship.com/posts/unit-testing-dependencies/",
+		"author": [
+			{
+				"family": "Khorikov",
+				"given": "Vladimir"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2020",
+					4
+				]
+			]
+		}
+	},
+	{
+		"id": "pluralsight-ddd-fundamentals",
+		"type": "webpage",
+		"title": "Domain-Driven Design Fundamentals",
+		"URL": "https://app.pluralsight.com/library/courses/fundamentals-domain-driven-design",
+		"author": [
+			{
+				"family": "Smith",
+				"given": "Steve"
+			},
+			{
+				"family": "Lerman",
+				"given": "Julie"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2021",
+					5
+				]
+			]
+		}
+	},
+	{
+		"id": "fowler-role-interface",
+		"type": "webpage",
+		"title": "Role Interface",
+		"URL": "https://martinfowler.com/bliki/RoleInterface.html",
+		"author": [
+			{
+				"family": "Fowler",
+				"given": "Martin"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2020",
+					12
+				]
+			]
+		}
+	},
+	{
+		"id": "north-introducing-bdd",
+		"type": "webpage",
+		"title": "Behavior Modification: The evolution of behavior-driven development",
+		"URL": "https://www.stickyminds.com/better-software-magazine/behavior-modification",
+        "author": [
+			{
+			"family": "North",
+			"given": "Dan"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2006",
+					6
+				]
+			]
+		}
+	},
+	{
+		"id": "bellware-bdd",
+		"type": "webpage",
+		"title": "Behavior-Driven Development",
+		"URL": "https://www.codemag.com/article/0805061",
+        "author": [
+			{
+				"family": "Bellware",
+				"given": "Scott"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2020",
+					6
+				]
+			]
+		}
+	},
+	{
+		"id": "khorikov-unit-testing",
+		"type": "book",
+		"publisher": "Manning",
+		"title": "Unit Testing: Principles, Practices and Patterns",
+		"URL": "https://www.manning.com/books/unit-testing",
+		"author": [
+			{
+				"family": "Khorikov",
+				"given": "Vladimir"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2020"
+				]
+			]
+		}
+	},
+	{
+		"id": "khorikov-ddd-in-practice",
+		"type": "webpage",
+		"title": "Domain-Driven Design in Practice",
+		"URL": "https://app.pluralsight.com/library/courses/domain-driven-design-in-practice",
+		"author": [
+			{
+				"family": "Khorikov",
+				"given": "Vladimir"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2019",
+					9
+				]
+			]
+		}
+	},
+	{
+		"id": "khorikov-anemic-to-rich-domain-model",
+		"type": "webpage",
+		"title": "Refactoring from Anemic Domain Model Towards a Rich One",
+		"URL": "https://app.pluralsight.com/library/courses/refactoring-anemic-domain-model; https://github.com/vkhorikov/AnemicDomainModel",
+		"author": [
+			{
+				"family": "Khorikov",
+				"given": "Vladimir"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2017",
+					11
+				]
+			]
+		}
+	},
+	{
+		"id": "khorikov-test-induced-dedign-damage",
+		"type": "webpage",
+		"title": "Test-induced design damage or why TDD is so painful",
+		"URL": "https://enterprisecraftsmanship.com/tags/test-induced-design-damage/",
+        "author": [
+			{
+			"family": "Khorikov",
+			"given": "Vladimir"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2015",
+					6
+				]
+			]
+		}
+	},
+	{
+		"id": "khorikov-value-objects-explained",
+		"type": "webpage",
+		"title": "Value Objects explained",
+		"URL": "https://enterprisecraftsmanship.com/posts/value-objects-explained/",
+        "author": [
+			{
+			"family": "Khorikov",
+			"given": "Vladimir"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2015",
+					1
+				]
+			]
+		}
+	},
+	{
+		"id": "khorikov-entity-va-value-object",
+		"type": "webpage",
+		"title": "Entity vs Value Object: the ultimate list of differences",
+		"URL": "https://enterprisecraftsmanship.com/posts/entity-vs-value-object-the-ultimate-list-of-differences/",
+        "author": [
+			{
+			"family": "Khorikov",
+			"given": "Vladimir"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2016",
+					1
+				]
+			]
+		}
+	},
+	{
+		"id": "dhh-test-induced-design-damage",
+		"type": "webpage",
+		"title": "Test-induced design damage",
+		"URL": "https://dhh.dk/2014/test-induced-design-damage.html",
+        "author": [
+			{
+			"family": "Fowler",
+			"given": "Martin"
+		},
+			{
+			"family": "Beck",
+			"given": "Kent"
+		},
+			{
+			"family": "Hansson",
+			"given": "David Heinemeier"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2014",
+					4
+				]
+			]
+		}
+	},
+    {
+		"id": "khorikov-primitive-obsession",
+		"type": "webpage",
+		"title": "Functional C#: Primitive obsession",
+		"URL": "https://enterprisecraftsmanship.com/posts/functional-c-primitive-obsession/",
+        "author": [
+			{
+			"family": "Khorikov",
+			"given": "Vladimir"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+				"2015",
+				3
+			]
+			]
+		}
+	},
+    {
+		"id": "bailly-property-based-testing",
+		"type": "website",
+		"title": "50 shades of TDD",
+		"URL": "https://www.youtube.com/watch?v=T4SvCLLxTDg",
+        "author": [
+			{
+			"family": "Bailly",
+			"given": "Arnaud"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+				"2022",
+				10
+			]
+			]
+		}
+	}
+]
