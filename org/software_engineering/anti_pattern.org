@@ -1,14 +1,14 @@
 #+TITLE: Sofware Engineering Anti Patter
-#+bibliography: ../bibliography/bibliography.bib
+#+bibliography: ../bibliography/bibliography.json
 
 * Primitive Obsession
 
 - An anti pattern where (build-in) primitive data types of a
   programming language are used "to model domain" ideas/concepts
-  ([cite:@khorikov-primitive-obsession]).
+  [cite:@khorikov-primitive-obsession].
 - Symptom: validating that primitive values comply to the domain model
   is repeated in several places in the code, e.g. in the domain and in
-  the application layer ([cite:@khorikov-primitive-obsession]).
+  the application layer [cite:@khorikov-primitive-obsession].
 - Solution:
   1. Introduce value types for these domain concepts.
   2. Introduce parsing methods that return either a value type as

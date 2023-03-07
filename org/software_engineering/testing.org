@@ -1,34 +1,220 @@
 #+TITLE: Testing Code
 #+bibliography: ../bibliography/bibliography.json
 
-* What Makes a Good Unit Test Suite
+* Common Misconceptions
 
-- Premise: Tests enable sustainable growth of complex software
-  projects, but they are a liability ([cite:@khorikov-unit-testing
-  pp. 6,8,154]), i.e.
-  - *tests come at a cost*
-  - bad tests can slow down development unnecessarily ("It is better
-    to not write a test at all than to write a bad test";
-    [cite:@khorikov-unit-testing pp. 154])
-- Costs of test ([cite:@khorikov-unit-testing p. 8])
-  - refactoring test when refactoring the tested code
+1. Tests/TDD leads to better code design/architecture.
+2. High test-coverage metrics indicate good tests.
+
+** Tests/TDD leads to Better Code Design/Architecture
+
+- while tests (and especially TDD) /can/ lead to better designs, the
+  ability to test code is
+  - good as a /negative indicator/, i.e. bad testability indicates bad
+    design [cite:@khorikov-unit-testing p.5]
+  - not good as a /positive indicator/, i.e. good testability does not
+    indicate good design [cite:@khorikov-unit-testing p.5], TDD can
+    even induce design damages
+    [cite:@dhh-test-induced-design-damage;@fowler-is-tdd-dead;@khorikov-test-induced-design-damage])
+    - TDD can even induce design damages
+      [cite:@dhh-test-induced-design-damage;@fowler-is-tdd-dead;@khorikov-test-induced-design-damage]
+    - a very good example of test-induced design damage is given
+      by [cite/t/c:@khorikov-goos-critique]
+- Ease of testability should not be the justification for design
+  decisions [cite:@dhh-test-induced-design-damage].\\
+  E.g. instead of forcing code to be testable by unit tests,
+  UI-centered applications can end up with a better design when they
+  chose to rely more on end-to-end tests.
+
+** High Test-Coverage Metrics Indicate Good Tests
+
+- Code coverage metrics cannot ensure that *all* results of a method are
+  asserted. A method might change some state *and* return a value. A
+  test of this method might achieve 100% coverage, yet only check the
+  returned value.
+  #+BEGIN_SRC csharp
+    public static bool WasLastStringLong { get; private set; }
+
+    public static bool IsStringLong(string input)
+    {
+        bool result = input.Length > 5 ? true : false;
+        WasLastStringLong = result;  // first outcome
+        return result;               // second outcome
+    }
+
+    public void Test()
+    {
+        bool result = IsStringLong("abc");
+        Assert.Equal(false, result); // only second outcome is asserted; coverage is 100%
+    }
+  #+END_SRC
+- Code coverage metrics are
+  - good as /negative indicators/, i.e. a low coverage means that there is lot
+    of untested (possibly buggy) code in the codebase
+  - bad as /positive indicators/, i.e. a high coverage metric doesn't
+    indicate good protection against regressions (only that a lot of
+    code was executed by the test suite;
+    [cite/l/b:@khorikov-unit-testing pp. 9, 15])
+
+** Tests Enable Sustainable Growth of Complex Software
+
+- It is often claimed that test help projects/teams to maintain
+  development speed in the long run:
+  #+attr_html: :width 200px
+  [[./test-enable-sustainable-growth.png]]
+- This is only partially true
+  - It is true, that without tests development speed deteriorates.
+  - but *bad tests* can also slow down development unnecessarily because
+    tests (while providing protection against regressions) come at a
+    cost [cite:@khorikov-unit-testing pp. 6-8, 154]. So only projects
+    with good tests maintain development speed:
+    #+attr_html: :width 200px
+    [[./bad-tests-slow-down-development.jpg]]
+- Costs of test [cite:@khorikov-unit-testing p. 8]
+  - creating the test
+  - changing tests when the tested code is changed
   - running tests on each code change
   - fixing false alarms
   - time spend to read/understand tests when trying to understand the
     expected behavior of the tested code
-- What makes a good unit test suite ([cite:@khorikov-unit-testing pp. 16,154])
-  - focus on testing the important parts of the application
-    (i.e. business logic, resp. domain model)
-  - maximum value at minimum maintenance costs (i.e. the value of each
-    test in the test suite should always exceed its cost, if it
-    doesn't, the test should be removed;
-    [cite:@khorikov-unit-testing p. 17])
-  - tight integration into development cycle
+- Therefore: "It is better to not write a test at all than to write a
+  bad test" [cite:@khorikov-unit-testing p. 154]
+    
+* What Makes a Good Unit Test Suite
 
-* Recognizing and Writing Valuable Tests
-** What is a Unit Test?
+- tight integration into development cycle
+- maximum value at minimum costs, i.e.
+  - Tests whose costs outweigh the benefits (bad tests) should be
+    removed [cite:@khorikov-unit-testing p. 17]
+  - Each test in the suite should provide maximum value at minimum
+    cost. The best cost-benefit ratio is provided by unit tests that
+    test important business logic in the domain layer
+    [cite:@khorikov-unit-testing pp. 16, 154], i.e. without external
+    dependencies.
+- Therefore: Developers must be able to
+  1. recognize valuable tests
+  2. write valuable tests
 
-- A unit test ([cite:@khorikov-unit-testing])
+* Shared Framework of Thought and Test Concepts
+
+- unclear concepts are a fundamental problem of any communication:
+  people use the same word, but mean different things.
+- Therefore it is crucial to establish a shared framework of thought
+  about testing concepts.
+- This will allow fruitful discussion about the pros and cons of test
+  practices.
+
+* Conclusion Preview
+
+- Using the /Detroit School/ approach to testing yields tests that
+  - focus on /units of behavior/ (instead of /units of code/)
+  - use as little test doubles as possible, thus making less likely:
+    - /over-specification/, and
+    - fragile/brittle tests that raise false alarms in refactorings.
+- Writing as few tests as necessary allows sustainable growth of
+  software projects.
+  - Domain entities and service *should* be covered exclusively by unit
+    tests (as they should not require /out-of-process/ dependencies, like
+    the database and file system) that do not require test doubles.
+  - It *should* be sufficient to cover application layer services by
+    integration tests only (as they should not contain domain logic,
+    they should usually not require extensive testing).
+
+* Recognizing Valuable Tests
+
+Recognizing valuable tests requires a concept of what the value of a
+test is and within which limits it can be maximized
+[cite:@khorikov-unit-testing p. 17].
+
+** Value of a Test
+
+- A good test has the following /value-attributes/:
+  [cite:@khorikov-unit-test-value p. 68]:
+  1. Protection against regression
+  2. Resistance to refactoring
+  3. fast feedback
+  4. maintainability
+- The value of a test is the product of its value-attributes,
+  i.e. *when one of these attributes is zero, the total value of the
+  test is zero* [cite:@khorikov-unit-testing p. 80].
+  
+*** Protection Against Regressions
+
+- Protection against regressions is higher the more
+  - complex the tested code is (regressions in simple code are unlikely)
+  - code is exercised by the test (also code in third-party libraries
+    counts)
+  - the higher the business value of the tested code is (it is more
+    important to catch regressions in code that is more important for
+    the domain)
+
+*** Resistance to Refactoring
+
+- Tests that are tightly coupled to implementation details of the SUT
+  have a high chance to produce false alarms (because implementation
+  details are usually volatile)
+- Tests that assert interactions are likely to produce false alarms
+
+*** Fast Feedback
+
+- End-to-end tests have a high chance of detecting regressions and a
+  low chance for false positives but take a long time to execute.
+
+*** Maintainability
+
+- the maintainability of a test is good when the test is easy
+  - to understand (test with a big arrange sections are harder to
+    understand)
+  - to run (tests that work with out-of-process dependencies like
+    databases are harder to run)
+- i.e. end-to-end tests usually have high maintainability because they
+  require out-of-process dependencies and big arrange sections
+
+** Limitations of Maximizing the Value of a Test
+
+- Tests cannot score perfectly in all first three attributes
+  (Protection against regression, resistance to refactoring and fast
+  feedback), only two of these three can be maximized
+  [cite:@khorikov-unit-testing pp. 81ff.].
+- /Resistance to refactoring/ should be maximized as much as possible
+  (while keeping the test reasonably quick), because it reduces /false
+  positives/ (i.e. false alarms; tests that produce a lot of false
+  alarms are called /brittle tests/) and ensures that teams keep their
+  velocity [cite:@khorikov-unit-testing pp. 78, 85].
+  #+attr_html: :width 200px
+  [[./effect-false-positives.png]]
+- Therefore: The choice is really only between maximizing /protection
+  against regression/ or /fast feedback/
+  [cite:@khorikov-unit-testing p. 85].
+
+** Test Pyramid Levels and Different Tradeoff Choices
+
+- tests at different levels of the test pyramid correspond to
+  different trade-offs between /protection against refactoring/ and
+  /fast feedback/ [cite:@khorikov-unit-testing pp. 87ff.]
+  #+attr_html: :width 200px
+  [[./test-pyramid.png]]
+  #+attr_html: :width 200px
+  [[./test-pyramid-different-tradeoff-choices.png]]
+
+* Recognizing Valuable Unit Tests
+
+By design, unit tests provide the fastest feedback of all test types
+while only providing limited /protection against regression/. The main
+challenges for unit tests is, to make them as resistant to refactoring
+as possible to avoid /brittle unit tests/. To achive this, developers
+need to know common threats to the /resistance to refactoring/ of a unit
+test which is: Writing /mockist/ tests, that are tied to implementation
+details instead of (observable) behavior (this issue is also known as
+/over-specification/) through overuse of
+- stubs (over-specifying /which/ parts of a dependency are used to
+  retrieve data)
+- assertions of interaction with mocks (over-specifying /how/ the parts
+  of the dependency are used).
+
+** Definition of a Unit Test
+
+- A unit test [cite:@khorikov-unit-testing]
   - tests a small piece of code (aka a /unit/)
   - provides fast feedback
   - tests code in an /isolated/ manner
@@ -37,16 +223,15 @@
 - the method that is in the focus of the test is sometimes called
   /Method Under Test/ (MUT)
 
-** What is a Unit? What is Isolation?
-*** /London School/ (aka /Mockist/)
+*** /London School/ (aka /Mockist/) Definition
 
 - isolating the SUT from all its /mutable/ dependencies (aka
   /collaborators/) by replacing all of them with test doubles
-  ([cite:@khorikov-unit-testing pp. 21,30])
-- test doubles for all mutable dependencies (i.e. everything but
-  values or value objects; [cite:@khorikov-unit-testing p. 31])
+  [cite:@khorikov-unit-testing pp. 21,30],\\
+  i.e. test doubles for everything but integral values or value objects
+  [cite:@khorikov-unit-testing p. 31]
 - as a result: the units of testing are (isolated) classes (because
-  other production dependencies are replaced with test doubles)
+  all other dependencies of the SUT are replaced with test doubles)
 - Pros:
   - test doubles avoid complex instanciation of dependencies
   - failing tests can be attributed to the SUT (because other
@@ -54,31 +239,33 @@
   - writing tests (and TDD) is straight forward
     - write one test class for each production code class
     - writing tests from client-perspective (aka /outside-in/) is
-      easier, i.e. start writing tests for the API layer, mocking
-      application layer services, then test application layer services
-      mocking domain layer services and models and at last test domain
-      layer services and models
+      easier, i.e.
+      - start writing tests for the API layer, mocking application
+        layer services
+      - then test application layer services mocking domain layer
+        services and models
+      - at last test domain layer services and models
 - Cons:
   - Risk of over-specification: Tests are more fragile because test
-    doubles stub/mock [[tbd][intra-process communication]] (i.e. implementation
-    details) of the SUT
+    doubles mock behavior of the SUT that is not visible to the
+    outside world (i.e. implementation details)
   - Introducing interfaces only for testing: To replace mutual
     dependencies with test doubles, each dependency must be referenced
     through an interface
 
-*** /Classical School/ (aka /Detroit School/)
+*** /Classical School/ (aka /Detroit School/) Definition
 
 - isolating tests from one another so that they cannot affect each
-  others outcome ([cite:@khorikov-unit-testing p.27])
+  others outcome [cite:@khorikov-unit-testing p.27]
 - as a result:
   - a /unit/ of testing is not limited to a single class, it can be
     anything from one class to a set of classes
   - test doubles are only necessary to replace
-    - /shared/ mutable dependencies (to isolate tests from another;
+    - /shared/ mutable dependencies (to isolate tests from another)
       effectively eliminating the dependency as a shared dependency of
       the SUT)
     - slow dependencies, if they slow down test execution too much for
-      unit tests ([cite:@khorikov-unit-testing p.33])
+      unit tests [cite:@khorikov-unit-testing p.33]
 - Pros:
   - tests can focus on testing /units of behavior/ (they are not
     restricted on testing units of code, which are less stable than
@@ -86,71 +273,65 @@
   - only shared (and slow) dependencies require introduction of
     interfaces only for testing
 - Cons:
-  - writing tests inside-out is easier, i.e. start writing tests for
-    domain models and services, then for application layer services
-    using domain models and services, then for API layer, using
-    application and domain layer models and services.
+  - writing tests inside-out is easier, i.e.
+    - start writing tests for domain models and services
+    - then for application layer services using domain models and
+      services
+    - then for API layer, using application and domain layer models
+      and services.
 
-** What are Dependencies, Test Doubles, Behavior and Implementation Details?
-*** What is a Unit of Behavior?
+** What is Behavior and What are Implementation Details?
 
-- A /unit of behavior/ is something
-  - that is meaningful in the domain
-  - that is recognized as useful by a business person
-    ([cite:@khorikov-unit-testing p. 34]) i.e. it
+- /Behavior/ (also /observable behavior/ or /unit of behavior)/ is something
+  - that is meaningful in the domain [cite:@khorikov-unit-testing p. 34]
+  - that is ideally recognized as useful by a business person
+    [cite:@khorikov-unit-testing p. 34] i.e. it
     - contributes to the /business value/ of the application
-      ([cite:@north-introducing-bdd])
-    - satisfies a /business requirement/ ([cite:@north-introducing-bdd])
+      [cite:@north-introducing-bdd]
+    - satisfies a /business requirement/ [cite:@north-introducing-bdd]
 - /User stories/ are an established way to specify (desired) behavior in
   the form of: /As [Actor] I want [Goal] so that [Motivation]/
-  ([cite:@bellware-bdd;@north-introducing-bdd]). This widely used
-  template for specifying behavior shows two important characteristics
-  of behavior: Behavior is
-  - motivated
-  - *directed towards a goal*
-- From this, [cite:@khorikov-unit-testing] derives a definition to
-  judge if a piece of code is part of a components observable behavior
-  or if it is an implementation detail:
-  - a piece of code is part of a components observable behavior if is
-    immediately related to exposing an operation or a state *helps a
-    client to achieve one of its goals* ([cite:@khorikov-unit-testing
-    pp. 99-100])
-    - an operation is a method that performs a calculation or incurs a
-      side effect or both
-    - state is the current condition of the system (as a whole)
-    - what a client is depends on where the code resides, i.e. it can
-      be anything from a piece of code in the same code base to an
-      external application
-  - any code that is not related to that is an implementation detail
+  [cite:@bellware-bdd;@north-introducing-bdd].\\
+  This widely used template for specifying behavior immediately shows
+  a central aspect of behavior: *it is directed towards a goal*
+- [cite/t:@khorikov-unit-testing] uses this as a criterion to
+  differentiate between implementation detail and observable
+  behavior:\\
+  A piece of code is part of a component's observable behavior if is
+  part of *exposing* an operation or a state that helps a *client* achieve
+  one of its goals, any code that isn't is implementation detail
+  [cite:@khorikov-unit-testing pp. 99-100]
+- what a client is and what its goals are depends on where the code
+  resides: the goals from the user story are broken apart into
+  sub-goals for code on different layers
+  #+attr_html: :width 300px
+  [[./fractal_nature_of_goals.jpg]]
+- Examples: Consider a method, that helps a client update a domain
+  object (this is the goal of the client)
+  - the signature of the method that helps the client update the
+    domain object is observable behavior
+  - the query specification that is used to retrieve the domain entity
+    from the repository is an implementation detail
+- The observable behavior of a component is not necessarily the same
+  as its public API: a public method or field might not be related to
+  the client's goals [cite:@khorikov-unit-testing p. 99].\\
+  A component is well /encapsulated/ (and provides minimal surface for
+  /coupling/) when its public API coincides with its observable behavior.
 
-**** Observable Behavior and Public API
+** Excursion Types of Test Dependencies
 
-- the behavior of a component is *not* the same as its public API
-- the visibility (public/private) of a piece of code is a separate
-  dimension of categorization ([cite:@khorikov-unit-testing p. 99])
-- a component is well /encapsulated/ (and provides minimal surface for
-  /coupling/) when the public API of a component coincides with the
-  component's observable behavior
-    
-*** Implementation details vs. Observable behavior
+#+attr_html: :width 300px
+[[./overview_dependency_types.png]]
 
-- /Observable Behavior/:
-- /Implementation Details/: Everything that is not observable behavior
-
-*** Types of Test Dependencies
-
-#+CAPTION: Overview of dependency types ([cite:@khorikov-unit-testing])
-[[file:overview_dependency_types.png]]
-
-**** Immutable and Mutable Dependencies (collaborators)
+*** Immutable and Mutable Dependencies (collaborators)
 
 - /Mutable Dependencies/: mutable dependencies are also called a
   /collaborators/
 - /Immutable Dependencies/: immutable, in-process dependencies are also
-  called /value objects/ ([cite:@khorikov-value-objects-explained],
-  [cite:@khorikov-entity-va-value-object])
+  called /value objects/
+  [cite:@khorikov-value-objects-explained;@khorikov-entity-va-value-object]
   
-**** Explicit and Implicit Dependencies
+*** Explicit and Implicit Dependencies
 
 - /Explicit Dependencies/: a dependency that you must pass as
   (constructor) argument to the class or method under test
@@ -168,23 +349,23 @@ public class User
 }
 #+END_SRC
 
-- in tests explicite /and/ implicite types of dependencies have to be
+- in tests explicit /and/ implicit types of dependencies have to be
   managed
-- explicite dependencies
-  - are easier to discover (they show up in costrustor and methode
-    signatures)
+- explicit dependencies
+  - are easier to discover because they show up in constructor and
+    methode signatures
   - can usually be treated more directly (use production code or
     stubs/mocks), implicit ones usually require more work
 - therefore: make as many dependencies explicit as possible
 
-**** Out-of-Process and /In-Process/ Dependencies
+*** Out-of-Process and /In-Process/ Dependencies
 
 - /Out-of-Process Dependencies/:
   - a dependency that runs outside the application's execution process
     (e.g. a DB)
   - a dependency that is proxy for data that is not (yet) in your
     application's memory (e.g. repository classes/interfaces;
-    [cite:@khorikov-unit-testing p. 28])
+    [cite/l/b:@khorikov-unit-testing p. 28])
 - /In-Process Dependencies/: any dependency that is not /out-of-process/
 
 #+CAPTION: Examples for out-of- and in-process dependencies
@@ -198,7 +379,7 @@ public void UpdateEmail(int userId, string newEmail)
 }
 #+END_SRC
 
-**** Shared and Private Dependencies
+*** Shared and Private Dependencies
 
 - /Shared Dependencies/: a dependency that is shared between tests and
   provides means for tests to affect each other's outcome (i.e. only
@@ -208,20 +389,21 @@ public void UpdateEmail(int userId, string newEmail)
   (i.e. immutable dependencies are always private), e.g. a read-only
   API ([cite:@khorikov-unit-testing p. 28])
 
-*** Test/Verification Styles
+** Test/Verification Styles
 
 - Test styles ordered best to worst by their test value (source
   https://enterprisecraftsmanship.com/posts/styles-of-unit-testing/
   and [cite:@khorikov-unit-testing p. 120]
-  - Property Based Testing (source https://fsharpforfunandprofit.com/pbt/)
-    - Checking that invariants are always preserved.
-    - Do the opposite: Introduce /mutations/ that turn valid values to
+  - /Property Based Testing/
+    [cite:@wlaschin-property-based-testing;@bailly-property-based-testing]
+    - Checking that invariants are always preserved, e.g. test that
+      the serialization result of a valid domain type can successfully
+      de-serialized to a domain type again (for an example see [[file:anti_pattern.org][primitive obsession
+      anti pattern]]).
+    - Also do the opposite: Introduce /mutations/ that turn valid values to
       invalid representations and check that these invalid
       representations violate these invariants (for an example see
-      [cite:@bailly-property-based-testing])
-    - E.g. that the serialization result of a valid domain type can
-      successfully de-serialized to damain types again (see [[file:anti_pattern.org][primitive
-      obsession anti pattern]]).
+      [cite/l/b:@bailly-property-based-testing])
   - /Output verfication/
     - Checking that the SUT returns the correct output for a given
       input.
@@ -260,28 +442,6 @@ public void UpdateEmail(int userId, string newEmail)
   - Mocks are useful to substitue a dependency which you do not
     controll yourself.
 
-* Value of a Unit Test
-
-- A good unit test has the following attributes (source
-  [cite:@khorikov-unit-test-value p. 68])
-  1. Protection against regression
-  2. Resistance to refactoring
-  3. fast feedback
-  4. maintainability
-- when one of these attributes is zero, the value of the test is zero
-- tests cannot score perfectly in the first three attributes
-  (Protection against regression, resistance to refactoring and fast
-  feedback); only two of these three can be maximized
-- resistance to refactoring is
-  - a binary choice (there are almost no intermediate stages)
-  - non-negotiable (it ensures that teams keep their velocity)
-- tests at different levels of the test pyramid correspond to
-  different trade-offs between protection against refactoring and fast
-  feedback
-  - end-to-end tests maximize protection against regression
-  - unit test maximize fast feedback
-  - integration tests are in the middle
-
 ** Protection Against Regressions
 
 - Protection against regressions is higher the more
@@ -313,14 +473,13 @@ public void UpdateEmail(int userId, string newEmail)
 - end-to-end tests usually have low maintainability because they
   require out-of-process dependencies and big arrange sections
 
-* Terminology
+* Writing Valuable Tests
 
-- /Fixture/: A fixture is an object that the test runs against and that
-  has to be in a known /fixed/ state before the test run in order to
-  make the test reproducible (e.g. a dependency of the SUT, data in
-  the database or a file in the file system).
-
-* How to Write Valuable Tests?
+Writing valuable tests requires knowledge about good (and testable)
+code design. "Unit tests and the underlying code are highly
+intertwined, and it's impossible to create valuable test without
+putting significant effort into the code base they cover"
+[cite:@khorikov-unit-testing p. 17].
 
 ** Guidelines for Writing Readable Tests
 - /act/ sections that span more than one line are a sign that the SUT's
@@ -359,34 +518,3 @@ public void UpdateEmail(int userId, string newEmail)
 - cover mutable shell with (a much smaller number) of integration
   tests
 
-* Common Misconceptions
-
-** Tests/TDD leads to Better Code Design/Architecture
-
-- while tests (and especially TDD) /can/ lead to better designs, the
-  ability to test code is
-  - good as a /negative indicator/, i.e. bad testability indicates bad
-    design
-  - not good as a /positive indicator/, i.e. good testability does not
-    indicate good design, TDD can even induce design damages
-    ([cite:@dhh-test-induced-design-damage],
-    [cite:@fowler-is-tdd-dead],
-    [cite:@khorikov-test-induced-dedign-damage])
-- Ease of testability should not be the justification for design
-  descisions ([cite:@dhh-test-induced-design-damage]). E.g. instead of
-  forcing code to be testable by unit tests, UI-centered applications
-  can end up with a better design when they chose to mostly on
-  end-to-end tests.
-
-** High Test-Coverage Metrics Indicate Good Tests
-
-- Code coverage metrics cannot tell if all results of a method are
-  asserted. A method might update the DB and return a value. A test of
-  this method might achieve 100% coverage, yet only check the returned
-  value.
-- Code coverage metrics are
-  - good as /negative indicators/, i.e. a low coverage means that there is lot
-    of untested code in the codebase
-  - bad as /positive indicators/, i.e. a high coverage metric doesn't
-    indicate good tests (only that a lot of code was executed by the
-    test suite; [cite:@khorikov-unit-testing pp. 9, 15]

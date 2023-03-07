@@ -151,12 +151,52 @@
 			]
 		}
 	},
+    {
+		"id": "khorikov-test-names",
+		"type": "webpage",
+		"title": "You are naming your tests wrong!",
+		"URL": "https://enterprisecraftsmanship.com/posts/you-naming-tests-wrong/",
+        "author": [
+			{
+			"family": "Khorikov",
+			"given": "Vladimir"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+				"2019",
+				8
+			]
+			]
+		}
+	},
+    {
+		"id": "khorikov-goos-critique",
+		"type": "webpage",
+		"title": "Growing Object-Oriented Software, Guided by Tests Without Mocks",
+		"URL": "https://enterprisecraftsmanship.com/posts/growing-object-oriented-software-guided-by-tests-without-mocks/",
+        "author": [
+			{
+			"family": "Khorikov",
+			"given": "Vladimir"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+				"2016",
+				7
+			]
+			]
+		}
+	},
 	{
 		"id": "khorikov-unit-testing",
 		"type": "book",
 		"publisher": "Manning",
 		"title": "Unit Testing: Principles, Practices and Patterns",
-		"URL": "https://www.manning.com/books/unit-testing",
+		"URL": "https://livebook.manning.com/book/unit-testing",
 		"author": [
 			{
 				"family": "Khorikov",
@@ -212,7 +252,7 @@
 		}
 	},
 	{
-		"id": "khorikov-test-induced-dedign-damage",
+		"id": "khorikov-test-induced-design-damage",
 		"type": "webpage",
 		"title": "Test-induced design damage or why TDD is so painful",
 		"URL": "https://enterprisecraftsmanship.com/tags/test-induced-design-damage/",
@@ -277,19 +317,11 @@
 		"title": "Test-induced design damage",
 		"URL": "https://dhh.dk/2014/test-induced-design-damage.html",
         "author": [
-			{
-			"family": "Fowler",
-			"given": "Martin"
-		},
-			{
-			"family": "Beck",
-			"given": "Kent"
-		},
-			{
-			"family": "Hansson",
-			"given": "David Heinemeier"
-		}
-		],
+            {
+            "family": "Hansson",
+            "given": "David Heinemeier"
+        }
+        ],
 		"issued": {
 			"date-parts": [
 				[
@@ -321,7 +353,7 @@
 	},
     {
 		"id": "bailly-property-based-testing",
-		"type": "website",
+		"type": "webpage",
 		"title": "50 shades of TDD",
 		"URL": "https://www.youtube.com/watch?v=T4SvCLLxTDg",
         "author": [
@@ -335,6 +367,26 @@
 				[
 				"2022",
 				10
+			]
+			]
+		}
+	},
+    {
+		"id": "wlaschin-property-based-testing",
+		"type": "webpage",
+		"title": "The Lazy Programmer's Guide to Writing 1000's of Tests",
+		"URL": "https://fsharpforfunandprofit.com/pbt/",
+		"author": [
+			{
+			"family": "Wlaschin",
+			"given": "Scott"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+				"2020",
+				6
 			]
 			]
 		}
