@@ -1,0 +1,49 @@
+#+TITLE: C# Performance
+#+bibliography: ../bibliography/bibliography.json
+
+* Garbage Collection
+
+- on initializing the .NET GC, a segment of memory is allocated as
+  /managed heap/
+- C# uses generational garbage collection
+  - Generation 0: Short-lived Objects, e.g. objects declared inside a
+    method that are no longer accessible after the method exists
+  - Generation 1: A buffer between short lived and long lived objects
+  - Generation 2: Long lived objects
+  - Large Object Heap: for objects larger than 85 kB [cite:@stannard-systems-programming]
+- Compaction of Generation 0 and 1 is fast (negligible) -> keep
+  allocations in generation 0 or 1
+- keep generation 2 objects in memory forever (only the act of
+  collection the object is expensive)
+  - use =ObjectPool<T>=, e.g. for =StringBuilder=
+  - use =MemoryPool= for =byte= arrays
+  - rent objects from the pool, then return them (no allocation as
+    long as the pool capacity is not exhausted
+  - pooling is most efficient in applications with multiple threads
+  - pooling decreases memory usage and also latency (by reducing allocations)
+- GC is only happending on the managed heap (not on the stack)
+- instance methods require an allocation on the managed heap *for each*
+  object instance
+- static methods require only one allocation on the managed heap
+- reference types are allocated on the heap, value types are allocated
+  on the stack
+
+** GC Modes
+
+- Workstation GC (default)
+  - blocking GC, application thread is suspended when GC happens
+  - for console app, not for server applications
+- Server GC
+  - GC occurs on dedicated threads
+  - application threads are *not* blocked
+  - one heap for each core, i.e. GC happens on a per-core basis
+  - set =ServerGarbageCollection= property to =true= in project file or
+    through an environment variable or =appsettings.json= file
+- Background GC (default)
+  - generation 2 is collected in the background
+- starting from .NET 7 set =TieredPGO= to =true=: turns on
+  /profile_guided_optimization/ in the JIT
+- avoid /sloppy allocations/
+  - avoid delegate allocations by delegates or declaring =static=
+    delegates (C# 9)
+    

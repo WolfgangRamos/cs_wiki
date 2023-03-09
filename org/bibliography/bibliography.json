@@ -1,7 +1,8 @@
 [
 	{
     	"id": "fowler-is-tdd-dead",
-		"type": "webpage",
+	    "type": "webpage",
+        "abstract": "TDD works for Fowler and Beck in many circumstances, but not all. Hansson reports that TDD works for him only in few situations. Developers should use what works for them.",
 		"title": "Is TDD Dead?",
 		"URL": "https://martinfowler.com/articles/is-tdd-dead/",
 		"author": [
@@ -387,6 +388,26 @@
 				[
 				"2020",
 				6
+			]
+			]
+		}
+	},
+    {
+		"id": "stannard-systems-programming",
+		"type": "webpage",
+		"title": ".NET Systems Programming Learned the Hard Way",
+		"URL": "https://www.youtube.com/watch?v=dIwJJXYRbh8",
+		"author": [
+			{
+			"family": "Stannard",
+			"given": "Aaron"
+		}
+		],
+		"issued": {
+			"date-parts": [
+				[
+				"2023",
+				2
 			]
 			]
 		}
