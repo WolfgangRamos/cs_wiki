@@ -1,0 +1,4 @@
+#+TITLE: CSL documentation
+
+- documentation: https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html
+- JSON bibliography schema: https://github.com/Juris-M/schema/blob/master/csl-data.json
