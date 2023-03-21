@@ -30,6 +30,7 @@
 
 ** GC Modes
 
+- official documentation is in [cite:@dotnet-garbage-collection]
 - Workstation GC (default)
   - blocking GC, application thread is suspended when GC happens
   - for console app, not for server applications
@@ -46,4 +47,3 @@
 - avoid /sloppy allocations/
   - avoid delegate allocations by delegates or declaring =static=
     delegates (C# 9)
-    
