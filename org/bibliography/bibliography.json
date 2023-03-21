@@ -430,5 +430,26 @@
             ]
             ]
         }
+    },
+    {
+      "id": "fowler-unit-tests",
+      "type": "webpage",
+      "abstract": "Fowler reports that he did not (and probably does not) attempt to make test solitary in his projects. Sociable tests did (and probably do) not lead to problems in practice for him. He and other classicist unit testers use mocks to avoid using slow and non-deterministic (shared) dependencies, like databases and filesystems in tests.",
+      "title": "UnitTest",
+      "URL": "https://martinfowler.com/bliki/UnitTest.html",
+      "author": [
+        {
+        "family": "Fowler",
+        "given": "Martin"
+      }
+      ],
+      "issued": {
+        "date-parts": [
+          [
+          "2014",
+          5
+        ]
+        ]
+      }
     }
 ]
