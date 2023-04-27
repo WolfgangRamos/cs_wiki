@@ -2,8 +2,8 @@
     {
         "id": "fowler-is-tdd-dead",
         "type": "webpage",
-        "abstract": "TDD works for Fowler and Beck in many circumstances, but not all. Hansson reports that TDD works for him only in few situations. Developers should use what works for them.",
         "title": "Is TDD Dead?",
+        "abstract": "TDD works for Fowler and Beck in many circumstances, but not all. Hansson reports that TDD works for him only in few situations. Developers should use what works for them.",
         "URL": "https://martinfowler.com/articles/is-tdd-dead/",
         "author": [
             {
@@ -434,8 +434,8 @@
     {
       "id": "fowler-unit-tests",
       "type": "webpage",
-      "abstract": "Fowler reports that he did not (and probably does not) attempt to make test solitary in his projects. Sociable tests did (and probably do) not lead to problems in practice for him. He and other classicist unit testers use mocks to avoid using slow and non-deterministic (shared) dependencies, like databases and filesystems in tests.",
       "title": "UnitTest",
+      "abstract": "Fowler reports that he did not (and probably does not) attempt to make test solitary in his projects. Sociable tests did (and probably do) not lead to problems in practice for him. He and other classicist unit testers use mocks to avoid using slow and non-deterministic (shared) dependencies, like databases and filesystems in tests.",
       "URL": "https://martinfowler.com/bliki/UnitTest.html",
       "author": [
         {
@@ -448,6 +448,27 @@
           [
           "2014",
           5
+        ]
+        ]
+      }
+    },
+    {
+      "id": "shore-nullables",
+      "type": "webpage",
+      "title": "Testing Without Mocks: A Pattern Language",
+      "abstract": "Nullable pattern: Make production-code infrastructure services usable in tests by embedding a mock/stub. This patten can be used to reduce the use of mocks and make tests more robust to refactoring.",
+      "URL": "https://www.jamesshore.com/v2/projects/nullables/testing-without-mocks",
+      "author": [
+        {
+        "family": "Shore",
+        "given": "James"
+      }
+      ],
+      "issued": {
+        "date-parts": [
+          [
+          "2023",
+          2
         ]
         ]
       }
