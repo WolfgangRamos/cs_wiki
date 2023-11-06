@@ -471,6 +471,8 @@
   - it must not be possible to created/update a domain objects into
     an invalid state
   - reduces cognitive load/complexity when reasoning about behavior
+- Hide orchestration of business rules in entities, value objects and
+  specifications.
 
 *** Value Objects
 
@@ -486,6 +488,16 @@
 
 - have an identity
 - are mutable
+
+** Specifications
+
+- Instead of implementing a business rule as a method on a domain
+  object, business rules can be modelled as _specification_ domain
+  object, that encapsulates that business rule.
+- _Specifications_ are first class domain objects.
+- Example: Instead of having a =Discount(Price price)= method on a
+  =Customer=, create a =Discount= class that provides an =Apply(Price
+  price)= method.
 
 *** Domain Services
 
