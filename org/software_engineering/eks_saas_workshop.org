@@ -1,0 +1,90 @@
+- *EKS* = Amazon Elastic Kubernetes Service
+- *ELB* = Elastic Load Balacing
+- SaaS Identiy = custom:tenant-id claim in ID JWT token.
+
+* Key Architecture Considerations
+
+- Routing of tenant loads?
+-
+
+*
+
+- EKS provides a web UI interface for onboarding tenants
+- Admin console for SaaS provider (us)
+- Control plane: contains common logic for all tenants, e.g.
+  - tenant onboarding service
+  - data layer to store tenant data
+  - user handling for tenants
+- Application plane: contains services that are actively used by the
+  SaaS application (these services can be different for different tenants).
+  - different isolation patterns
+- with EKS resources can be shared amongst tenants
+  - silo approach: one EKS namespace per tenant
+  - pooled approach: namespaces shared by multiple tenants
+
+** Control Plane
+
+- EWS backplane consists of regions (countries, continents)
+- each region consists of multiple availability zones
+- each availability zone consists of at least three data centers
+  connected with low latency and high throughput
+- to guarantee even more availability, a multi availability zone
+  strategy can be used
+- a global accelerator can be used to reduce to minimize the latency
+  when connecting to a very remote region, alternatively data can be
+  synchronized accross regions.
+
+** Managing Tenants and Users
+
+- managment is done by the admin console
+- tenant user pools (aka ID pool) can be shared of separated
+
+** Onboarding Experience
+
+- Use AWS CodePipeline to provision resources for new tenants,
+  e.g. create namespaces, networks, pods, etc.
+- AWS CodePipeline is configured through =buildspec.yml= file(s)
+
+** Isolating Tenant Data
+
+- by tenant ID in JWT token
+- Short-term credentilals are created from that token using
+  Token-Vending machine pattern
+  - this allows scoping of these short-term credentials at runtime
+
+** Isolating Tenants
+
+- by Kubernetes namespaces
+
+** Traffic Routing
+
+- Routing is configured with Istio (Nginx) Ingress routing policies
+- Routing policies can be configured on the level of tenants
+
+
+* Serverless SaaS Patterns
+
+- you don't need to manage the infrastructure (that is managed by AWS)
+- e.g. Lambda, DynamoDB (serverless database)
+
+** Architectural Integration Patterns
+
+1. Synchronous pattern: sender sends message to receiver
+2. Asynchronous pattern: sender creates messages on a queue
+3. Publish-subscribe pattern: One-to-many communication
+   - problem: consumers need to be scaled
+
+These patterns need to be combined to solve problems.
+
+** Webhook
+
+- aka HTTP callbacks or Reverse APIs
+
+** Amazon EvenBridge
+
+- implements publish-subscribe patterns, integrated with many AWS services
+
+** AWS Step Functions
+
+- define tasks and how they are executed (sequentially or in concurrently)
+- Can call AWS Lambda functions
