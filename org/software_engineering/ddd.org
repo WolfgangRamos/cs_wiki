@@ -195,7 +195,7 @@
   1. separate namespaces in the same assembly
      - cons
        - shared database (but each bounded context should define a
-         separate database schemata)
+         separate database schema)
   2. separate assemblies
   3. separate processes, i.e. separately deployed (micro) services
 - higher isolation
@@ -422,3 +422,171 @@
   would need to call the optimization service even before we are
   allowed to set it, i.e. we can never check this in the =TourEntity=
   itself :( Is this a sign that our bounded contexts are badly cut?
+
+* DDDEurope Workshop 2023-09-18
+[2023-09-18 Mon]
+
+** Organizational Matters
+
+** What is DDD?
+
+- Example core domain and auxilliary domains: core: ticket selling,
+  aux: invoicing
+- complex software requires a shared understanding of the domain by
+  all stakeholders (Devs, QA, Product owner, etc)
+  - Ubiquitous Language (UL) -> split into bounded contexts
+  - Models
+- Understanding
+  - is rooted in language
+  - is expressed in domain models
+- Complex models cannot be expressed as one universal model, but have
+  to separated into bounded contexts (with own UL and domain model)
+- domain models are subject to iterative evolution/refinement/improvement
+- DDD is a design discipline where you
+  - Grasp the domain
+  - Agree on a language
+  - Express it in shared models
+  - Embrace complexity
+  - Separate models in contexts
+  - and evolve them continuously
+
+** What are domain models?
+
+- A /domain model/ is a system of abstractions that describes selected aspects of a domain
+  and can be used to solve problems related to that domain.
+- models are good/useful when they make solving problems/challenges in
+  the domain easy \\
+  "All models are wrong, but some are useful"
+- Domain models are expressed in code, conversations, documentation, diagrams
+
+** Tactical Patterns
+
+*** Domain Objects
+
+- part of the modelling, expressed in code
+- used within only a single bounded context
+- e.g. entities, value objects
+- domain objects are responsible for maintaining a valid state
+  (always-valid approach)
+  - it must not be possible to created/update a domain objects into
+    an invalid state
+  - reduces cognitive load/complexity when reasoning about behavior
+
+*** Value Objects
+
+- represents any value (with business constraints?) in our domain model
+- value objects are immutable
+- value objects have no identity, they are defined by their value only
+- try to use value objects as much as possible, because they are
+  easier to reason about.
+- cannot be composed of entities, because that would make that value
+  object mutable.
+
+*** Entities
+
+- have an identity
+- are mutable
+
+*** Domain Services
+
+- a business-logic operation that is not a natural part of an entity
+  or a value object.
+- Note: Operations that deal with collections of domain objects are
+  often natural parts of repositories (and should not be modelled as
+  domain services in that case).
+- /should/ have no state
+
+*** Repository
+
+- A /repository/
+  - is a collection of domain objects
+  - is /often/ backed by persistence (but not necessarily)
+
+** Domain Centered Architecture (Layers Architecture)
+
+- no dependencies for the domain layer
+
+** Parsing
+
+- handle structure in the application layer
+- handle business rules in the domain layer
+- rule of thumb: parse API data as quickly as possible into domain
+  objects (entities/value objects)
+
+** Ubiquituous language
+
+- Do not introduce /technical/ non-functional requirements to the
+  ubuquituous language.
+- But domains can include "performance" requirements, like
+  e.g. delivery time thresholds.
+- If the code base is in english and the business terminology is in
+  another language:
+  - Pro: it allows developers from all over the world to work on the
+    code base
+  - But make this transparent to the domain experts you work with.
+- The ubiquituous language is *not* the same as the business language:
+  - in the business language you can have synonyms and words with fuzzy meanings
+  - in the ubuquituous language of a bounded context, you agree on one
+    term and words have precise meanings
+- Should the ubiquituous language change when the the business language changes?
+  - Yes, the ubiquituous language should be adapter *where feasible*.
+  - Usually (old) documentation/diagrams and the language in a
+    database cannot be adapted easily. The translation could become a
+    (tiny?) bounded context of its own.
+
+** Mikado Method
+
+1. Write down your goal (red sticky notes)
+2. Experiment: Try to make code changes that bring you closer to your
+   goal.
+3. Visualalize: If you were not able to make a change, write down your
+   discoveries Write down discoveries (on sticky notes). Draw a line
+   to visualize relationships between discoveries.
+4. Revert: If you were not able to make a change, go back to step 2
+   (Experiment)
+5. If you don't find any more obstacles: Use your graph to reach your
+   goal step-by-step
+
+Rule of thumb: First create a simple solution, then refactor the
+solution to make it simple.(as a model).
+
+** Bounded Contexts
+
+*** Complexity and Cognitive Load
+
+- Local and global complexity
+  -
+  - If contexts are too small, there will be more dependencies between
+    teams and less autonomy.
+  - If contexts are too big, the cognitive load for one team will be
+    too much.
+- Upstream and downsteam bounded contexts: Changes of the upstream
+  bounded contexts will affect the downstream bounded context(s).
+
+*** Conformist
+
+- A downstream bounded context uses the model of an upstream bounded
+  context directly.
+- Can be a good choice in situations where there is a partnership
+  between the two bounded contexts, i.e. amongst the teams that
+  own them.
+
+*** Anti-Corruption Layer
+
+- implemented by the downstream bounded context (team)
+- Complex Anti-Corruption layers can be extracted into their own
+  bounded contexts
+
+** Aggregate
+
+- a consistence boundary around a group of domain objects
+- the aggregate ensures consistency of all domain objects and their
+  relationships are always valid
+- aggregates cannot be nested because if they are nested, all access
+  to the inner aggregate would have to go through the outer aggregate
+  and this would make the inner aggregate part of the outer aggregate
+  and not an aggregate of its own
+- if you run into a situation where two aggregates have to change together:
+  1. consider redesigning
+  2. create a domain service that changes both
+  3. change both in an application layer service (in a transaction)
