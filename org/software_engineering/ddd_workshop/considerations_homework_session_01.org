@@ -1,0 +1,45 @@
+* Using MediatR
+
+Pros:
+
+- Minimizes the number of constructor arguments of api controller: all application layer dependencies are wrapped in the MediatR constructor argument.
+- Application layer services are instanciated on-demand: Usually an api controller contains methods for multiple endpoint, but each endpoint method only uses one application layer service.  MediatR delays the instanciation until the point where theb=Send()= method is called.
+
+Cons:
+
+- MediatR increases the number of types because it requires dedicated application layer request types. The reason for this that MediatR follows the Open-Closed principle and instanciates application layer services based on the type that is =Send()= (avoiding =switch=-=case= statements). The request types need to be part of the application layer because the application layer must not depend on the api layer.
+
+Conclusion:
+
+Using MediatR is benefitial when api controllers contain more than one endpoint method.
+
+* Using AutoMapper
+
+Important:
+
+AutoMapper must only be used for projections, not validations.
+
+Pros:
+
+- Reduces the amount of trivial mapping code through convention-based mapping.
+- Support separation of mapping and validation by making mapping easy and validation hard.
+
+Cons:
+
+- Performance: The mapping is a Lite slower than manual mapping code.
+
+Coclusion:
+
+Using AutoMapper is benefitial when the same api layer types must always be projected to the same application layer types.
+
+* Dedicated Interface project
+
+TBD
+
+* Dedicated Program Project
+
+TBD
+
+* Questions
+
+- What is a good name for the =Program= project? It is the "layer" that provides the entry point and creates the DI container with registrations for application and api layer services.
