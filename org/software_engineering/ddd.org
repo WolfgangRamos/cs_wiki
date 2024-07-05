@@ -122,6 +122,7 @@
 - get sub-entities only through their root-entities
 
 ** Reducing Repository Interfaces
+
 1. Specification Pattern
 2. Use one generic interface for all repositories
 3. Define separate repository interfaces for reading and writing
@@ -231,7 +232,6 @@
 - Examples
   - ViewModels are anti-corruption layers toward the UI (aka View)
   - Repositories are anti-corruption layers toward the DB
-    -
 
 ** Code reuse across bounded context
 
